@@ -1,0 +1,70 @@
+---
+alwaysApply: true
+---
+
+# .cursorrules (Project-Specific)
+
+# Contexto del Proyecto
+
+- El proyecto es una calculadora hipotecaria web construida con Astro, TypeScript y TailwindCSS 4.
+- La aplicación tiene tres secciones principales: Calculadora de Hipoteca, Calculadora de Alquiler y Calculadora de ITP.
+- Enfoque absoluto en SEO y posicionamiento en Google.
+
+# SEO y Accesibilidad
+
+- Genera HTML semántico (por ejemplo, `<main>`, `<section>`, `<article>`) para todas las páginas.
+- Asegura que todas las imágenes tengan atributos `alt` descriptivos (por ejemplo, `alt="Formulario de entrada de la calculadora hipotecaria"`).
+- Usa una jerarquía de encabezados adecuada (un solo `<h1>` por página, seguido de `<h2>`, `<h3>`, etc.).
+- Agrega metaetiquetas (`title`, `description`, `keywords`) en cada página, optimizadas con palabras clave relevantes (por ejemplo, "calculadora hipoteca", "estimador de alquiler", "calculadora ITP").
+- Incluye metadatos de Open Graph y Twitter Card para compartir en redes sociales.
+- Asegura que todos los elementos interactivos (botones, campos) sean accesibles (por ejemplo, `aria-label`, navegación por teclado).
+- Usa `lang="es"` en la etiqueta `<html>` para contenido en español.
+- Genera datos estructurados de schema.org (JSON-LD) para las calculadoras (por ejemplo, esquema `Calculator`).
+
+# Página de Inicio
+
+- Crea un diseño limpio y responsivo con TailwindCSS 4.
+- Incluye tres secciones destacadas con enlaces a Hipoteca, Alquiler e ITP.
+- Usa clases de Tailwind para un diseño moderno y minimalista (por ejemplo, `flex`, `grid`, `gap-4`, `text-center`).
+- Añade una sección hero con un llamado a la acción claro (por ejemplo, "Calcula tu hipoteca ahora").
+- Optimiza para una carga rápida (por ejemplo, lazy loading de imágenes, uso de optimización de imágenes de Astro).
+
+# Calculadoras
+
+- Cada calculadora (Hipoteca, Alquiler, ITP) debe ser una página Astro independiente (`/mortgage`, `/rental`, `/itp`).
+- Usa TypeScript para cálculos precisos:
+  - Hipoteca: calcular cuotas mensuales, intereses totales y tablas de amortización basadas en importe, interés y plazo.
+  - Alquiler: estimar costes de alquiler, incluyendo fianza, honorarios de agencia y renta mensual.
+  - ITP: calcular el Impuesto de Transmisiones Patrimoniales en España según el valor del inmueble y la región.
+- Valida los inputs del usuario (por ejemplo, números positivos, campos obligatorios) con mensajes de error claros.
+- Muestra los resultados en formato tabular limpio usando TailwindCSS (por ejemplo, `table-auto`, `border`).
+- Permite al usuario guardar o compartir resultados (por ejemplo, mediante parámetros en la URL o descarga en PDF).
+
+# Rendimiento
+
+- Usa generación de sitio estático de Astro para todas las páginas para asegurar tiempos de carga rápidos.
+- Minimiza el JavaScript del lado del cliente; delega cálculos al servidor cuando sea posible.
+- Optimiza la salida de TailwindCSS con PurgeCSS para reducir el tamaño del bundle.
+
+# SEO Específico
+
+- Genera URLs únicas y ricas en palabras clave (por ejemplo, `/calculadora-hipoteca`, `/calculadora-coste-alquiler`).
+- Crea un sitemap.xml y robots.txt para mejorar el rastreo.
+- Usa enlaces internos entre calculadoras y página de inicio para mejorar la estructura del sitio.
+
+# Localización
+
+- Todo el contenido debe estar en español por defecto.
+- Usa terminología clara y profesional en español (por ejemplo, “hipoteca”, “alquiler”, “ITP”).
+- Prepárate para una futura traducción al inglés (por ejemplo, uso de gestión de textos compatible con i18n).
+
+# Analítica
+
+- Incluye marcadores para Google Analytics u otro sistema de seguimiento (por ejemplo, `<script>` en el `<head>`).
+- Rastrea interacciones del usuario con las calculadoras (por ejemplo, envíos de formularios, visualización de resultados).
+
+# Estructura de Archivos
+
+- Organiza las calculadoras en `src/pages/[calculator].astro` (por ejemplo, `src/pages/mortgage.astro`).
+- Crea componentes reutilizables en `src/components` (por ejemplo, `CalculatorForm.astro`, `ResultTable.tsx`).
+- Guarda las interfaces de TypeScript en `src/types` (por ejemplo, `src/types/mortgage.ts`).

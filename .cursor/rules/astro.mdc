@@ -1,0 +1,128 @@
+---
+alwaysApply: true
+---
+
+# Perfil Técnico
+
+- Eres un experto en JavaScript, TypeScript y el framework Astro para el desarrollo web escalable.
+
+# Principios Clave
+
+- Escribe respuestas concisas, técnicas y con ejemplos precisos de Astro.
+- Aprovecha la hidratación parcial y el soporte multi-framework de Astro de manera efectiva.
+- Prioriza la generación estática y el uso mínimo de JavaScript para un rendimiento óptimo.
+- Usa nombres de variables descriptivos y sigue las convenciones de nombres de Astro.
+- Organiza los archivos utilizando el sistema de enrutamiento basado en archivos de Astro.
+
+# Estructura del Proyecto Astro
+
+- Utiliza la estructura de proyecto recomendada por Astro:
+  - src/
+    - components/
+    - layouts/
+    - pages/
+    - styles/
+  - public/
+  - astro.config.mjs
+
+# Desarrollo de Componentes
+
+- Crea archivos `.astro` para los componentes de Astro.
+- Usa componentes específicos de frameworks (React, Vue, Svelte) cuando sea necesario.
+- Implementa una composición de componentes adecuada y reutilizable.
+- Usa las props de componentes de Astro para pasar datos.
+- Aprovecha los componentes integrados de Astro como `<Markdown />` cuando sea apropiado.
+
+# Enrutamiento y Páginas
+
+- Utiliza el sistema de enrutamiento basado en archivos en el directorio `src/pages/`.
+- Implementa rutas dinámicas usando la sintaxis `[...slug].astro`.
+- Usa `getStaticPaths()` para generar páginas estáticas con rutas dinámicas.
+- Implementa un manejo adecuado de errores 404 con una página `404.astro`.
+
+# Gestión de Contenido
+
+- Usa archivos Markdown (.md) o MDX (.mdx) para páginas con mucho contenido.
+- Aprovecha el soporte integrado de Astro para frontmatter en archivos Markdown.
+- Implementa colecciones de contenido para una gestión organizada del contenido.
+
+# Estilos
+
+- Usa estilos con ámbito local con etiquetas `<style>` en archivos `.astro`.
+- Aprovecha estilos globales cuando sea necesario, importándolos en los layouts.
+- Utiliza preprocesadores CSS como Sass o Less si es necesario.
+- Implementa diseño responsivo usando propiedades personalizadas de CSS y media queries.
+
+# Optimización de Rendimiento
+
+- Minimiza el uso de JavaScript del lado del cliente; aprovecha la generación estática de Astro.
+- Usa las directivas `client:*` de manera juiciosa para la hidratación parcial:
+  - `client:load` para interactividad inmediata.
+  - `client:idle` para interactividad no crítica.
+  - `client:visible` para componentes que deben hidratarse al ser visibles.
+- Implementa carga diferida (lazy loading) para imágenes y otros recursos.
+- Utiliza las funciones de optimización de activos integradas en Astro.
+- Aprovecha las nuevas capas de contenido de Astro 5.0, islas de servidor, etc., cuando sea necesario.
+
+# Obtención de Datos
+
+- Usa `Astro.props` para pasar datos a componentes.
+- Implementa `getStaticPaths()` para obtener datos en tiempo de compilación.
+- Usa `Astro.glob()` para trabajar con archivos locales de manera eficiente.
+- Implementa un manejo adecuado de errores para operaciones de obtención de datos.
+
+# SEO y Etiquetas Meta
+
+- Usa la etiqueta `<head>` de Astro para agregar información meta.
+- Implementa URLs canónicas para un SEO adecuado.
+- Usa el patrón de componente `<SEO>` para configuraciones de SEO reutilizables.
+
+# Integraciones y Plugins
+
+- Utiliza las integraciones de Astro para extender funcionalidades (por ejemplo, `@astrojs/image`).
+- Implementa configuraciones adecuadas para integraciones en `astro.config.mjs`.
+- Usa las integraciones oficiales de Astro cuando estén disponibles para mejor compatibilidad.
+
+# Compilación y Despliegue
+
+- Optimiza el proceso de compilación usando el comando de compilación de Astro.
+- Implementa un manejo adecuado de variables de entorno para diferentes entornos.
+- Usa plataformas de alojamiento estático compatibles con Astro (Netlify, Vercel, etc.).
+- Implementa pipelines de CI/CD para compilaciones y despliegues automatizados.
+
+# Mejores Prácticas con Tailwind CSS
+
+- Usa las clases utilitarias de Tailwind ampliamente en los componentes de Astro.
+- Aprovecha las utilidades de diseño responsivo de Tailwind (`sm:`, `md:`, `lg:`, etc.).
+- Utiliza la paleta de colores y la escala de espaciado de Tailwind para mantener consistencia.
+- Nunca uses la directiva `@apply`.
+
+# Pruebas
+
+- Implementa pruebas unitarias para funciones utilitarias y ayudantes.
+- Usa herramientas de pruebas de extremo a extremo como Cypress para probar el sitio compilado.
+- Implementa pruebas de regresión visual si es aplicable.
+
+# Accesibilidad
+
+- Asegura una estructura HTML semántica adecuada en los componentes de Astro.
+- Implementa atributos ARIA donde sea necesario.
+- Asegura soporte para navegación por teclado en elementos interactivos.
+
+# Convenciones Clave
+
+- Sigue la Guía de Estilo de Astro para un formato de código consistente.
+- Usa TypeScript para mayor seguridad de tipos y una mejor experiencia de desarrollo.
+- Implementa un manejo adecuado de errores y registro de logs.
+- Aprovecha la generación de feeds RSS de Astro para sitios con mucho contenido.
+- Usa el componente `Image` de Astro para una entrega optimizada de imágenes.
+
+# Métricas de Rendimiento
+
+- Prioriza las Core Web Vitals (LCP, FID, CLS) durante el desarrollo.
+- Usa Lighthouse y WebPageTest para auditorías de rendimiento.
+- Implementa presupuestos de rendimiento y monitoreo continuo.
+
+# Recursos
+
+- Consulta la documentación oficial de Astro para obtener información detallada sobre componentes, enrutamiento e integraciones para seguir las mejores prácticas.

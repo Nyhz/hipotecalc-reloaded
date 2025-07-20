@@ -1,0 +1,34 @@
+---
+import { Icon } from 'astro-icon/components';
+export interface Tool {
+  icon: string;
+  title: string;
+  description: string;
+  href?: string;
+  active?: boolean;
+}
+export interface Props {
+  tools: Tool[];
+}
+const { tools } = Astro.props;
+---
+<section class="w-full bg-gradient-to-b from-blue-50 to-whitemb-16">
+  <div class="max-w-6xl mx-auto px-4">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+      {tools.map(tool => (
+        <div class="bg-white/80 border border-blue-100 rounded-xl p-8 flex flex-col items-start shadow-sm hover:shadow-md transition">
+          <div class="mb-4 text-blue-600">
+            <Icon name={tool.icon} size={32} class="text-blue-600" />
+          </div>
+          <h3 class="text-xl font-bold mb-2 text-blue-900">{tool.title}</h3>
+          <p class="text-blue-800 mb-4">{tool.description}</p>
+          {tool.active !== false && tool.href ? (
+            <a href={tool.href} class="text-blue-600 font-semibold hover:underline flex items-center gap-1">Saber más <span aria-hidden="true">→</span></a>
+          ) : (
+            <span class="text-blue-400 font-semibold flex items-center gap-1 cursor-not-allowed">Próximamente</span>
+          )}
+        </div>
+      ))}
+    </div>
+  </div>
+</section> 

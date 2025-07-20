@@ -1,0 +1,30 @@
+---
+export interface Post {
+  title: string;
+  excerpt: string;
+  href: string;
+}
+export interface Props {
+  posts: Post[];
+  title?: string;
+  description?: string;
+}
+const { posts, title = 'Últimos Posts', description = 'Descubre las últimas novedades, consejos y guías sobre hipotecas, alquiler e impuestos en España.' } = Astro.props;
+---
+<section class="w-full max-w-6xl mx-auto py-16">
+  <div class="flex flex-col md:flex-row md:items-end md:justify-between mb-8 px-4">
+    <div>
+      <h2 class="text-3xl md:text-4xl font-bold text-blue-900 mb-2">{title}</h2>
+      <p class="text-blue-800 max-w-2xl">{description}</p>
+    </div>
+  </div>
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-8 px-4">
+    {posts.map(post => (
+      <article class="bg-white border border-blue-100 rounded-xl p-6 shadow-sm flex flex-col h-full">
+        <h3 class="text-xl font-semibold mb-2 text-blue-900">{post.title}</h3>
+        <p class="text-blue-800 mb-4">{post.excerpt}</p>
+        <a href={post.href} class="mt-auto text-blue-600 font-semibold hover:underline flex items-center gap-1" aria-label={`Leer más sobre ${post.title}`}>Leer más <span aria-hidden="true">→</span></a>
+      </article>
+    ))}
+  </div>
+</section>

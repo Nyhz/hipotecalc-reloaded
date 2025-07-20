@@ -1,11 +1,16 @@
 ---
-import Welcome from '../components/Welcome.astro';
+import Herramientas from '../components/home/Herramientas.astro';
+import { tools } from '../constants/tools';
+import { mockPosts } from '../constants/mock-posts';
+import PostsSection from '../components/home/PostsSection.astro';
+import Hero from '../components/home/Hero.astro';
 import Layout from '../layouts/Layout.astro';
-
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
 ---
-
 <Layout>
-	<Welcome />
+  <Hero
+    title="Calculadora Hipotecaria"
+    description="Herramientas profesionales para calcular tu hipoteca, alquiler o ITP en España. Precisión, rapidez y confianza para tus decisiones financieras."
+  />
+  <Herramientas tools={tools} />
+<!--   <PostsSection posts={mockPosts} title="Últimos Posts" description="Descubre las últimas novedades, consejos y guías sobre hipotecas, alquiler e impuestos en España." /> -->
 </Layout>
