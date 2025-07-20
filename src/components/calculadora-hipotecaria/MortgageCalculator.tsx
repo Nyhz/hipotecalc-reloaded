@@ -1,10 +1,11 @@
-import React, { useState } from "react"
+import React, { useState, useMemo } from "react"
 import {
   cuotaMensual,
   porcentajeFinanciado,
   interesTotal,
   importeTotal,
   calcularITP,
+  calcularIVA,
   calcularTIN,
 } from "../../utils/calculadora-hipotecaria"
 import { COMUNIDADES } from "../../constants/comunidades"
@@ -33,22 +34,81 @@ const initialState = {
 const MortgageCalculator: React.FC = () => {
   const [form, setForm] = useState(initialState)
 
-  // Cálculos
-  const itp = calcularITP(Number(form.precio))
-  const precioFinal = Number(form.precio) + Number(form.otrosCostes || 0) + itp
-  const cantidadHipoteca = precioFinal - Number(form.ahorro || 0)
-  const tin = calcularTIN(Number(form.tae))
+  // Cálculos memoizados que se recalculan automáticamente cuando cambian los inputs
+  const calculations = useMemo(() => {
+    const precioNum = Number(form.precio) || 0
+    const otrosCostesNum = Number(form.otrosCostes) || 0
+    const ahorroNum = Number(form.ahorro) || 0
+    const taeNum = Number(form.tae) || 0
+    const plazoNum = Number(form.plazo) || 0
 
-  // Resultados
-  const cuota = cuotaMensual({ ...form, cantidadHipoteca, tin })
-  const porcentaje = porcentajeFinanciado({ ...form, cantidadHipoteca })
-  const interes = interesTotal({ ...form, cantidadHipoteca, tin })
-  const importe = importeTotal({ ...form, cantidadHipoteca, tin })
+    // Determinar si es obra nueva o segunda mano
+    const esObraNueva = form.tipoVivienda === "Obra nueva"
+    
+    // Obtener el porcentaje de ITP de la comunidad seleccionada
+    const comunidadSeleccionada = COMUNIDADES.find(c => c.nombre === form.comunidad)
+    const porcentajeITP = comunidadSeleccionada?.ITP || 6 // Porcentaje por defecto si no hay comunidad seleccionada
+    
+    // Cálculos básicos
+    const impuesto = esObraNueva 
+      ? calcularIVA(precioNum) 
+      : calcularITP(precioNum, porcentajeITP)
+    
+    const precioFinal = precioNum + otrosCostesNum + impuesto
+    const cantidadHipoteca = Math.max(0, precioFinal - ahorroNum)
+    const tin = calcularTIN(taeNum)
+
+    // Parámetros para las funciones de cálculo
+    const params = {
+      ...form,
+      cantidadHipoteca,
+      tin,
+    }
+
+    // Resultados de los cálculos
+    const cuota = cuotaMensual(params)
+    const porcentaje = porcentajeFinanciado(params)
+    const interes = interesTotal(params)
+    const importe = importeTotal(params)
+
+    return {
+      impuesto,
+      esObraNueva,
+      porcentajeITP,
+      precioFinal,
+      cantidadHipoteca,
+      tin,
+      cuota,
+      porcentaje,
+      interes,
+      importe,
+    }
+  }, [form]) // Se recalcula cuando cambia cualquier valor del formulario
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
-    setForm({ ...form, [e.target.name]: e.target.value })
+    const { name, value } = e.target
+    
+    // Validación para prevenir valores negativos en campos numéricos
+    if (["precio", "tasacion", "otrosCostes", "ahorro", "tae", "plazo"].includes(name)) {
+      const numValue = Number(value)
+      if (numValue < 0) {
+        return // No actualizar si el valor es negativo
+      }
+    }
+    
+    setForm(prev => ({ ...prev, [name]: value }))
+  }
+
+  // Función para formatear el label del impuesto según el tipo de vivienda
+  const getImpuestoLabel = () => {
+    if (calculations.esObraNueva) {
+      return "IVA (10%)"
+    }
+    return form.comunidad 
+      ? `ITP (${calculations.porcentajeITP}%)`
+      : "ITP (6%)"
   }
 
   return (
@@ -70,7 +130,6 @@ const MortgageCalculator: React.FC = () => {
                 onChange={handleChange}
                 type='number'
                 min={0}
-                max={4}
                 placeholder='Ej: 250000'
                 className={inputClass}
               />
@@ -89,7 +148,7 @@ const MortgageCalculator: React.FC = () => {
                 name='comunidad'
                 value={form.comunidad}
                 onChange={handleChange}
-                options={COMUNIDADES.map((c) => ({ value: c, label: c }))}
+                options={COMUNIDADES.map((c) => ({ value: c.nombre, label: c.nombre }))}
                 className={inputClass}
               />
               <Select
@@ -108,9 +167,9 @@ const MortgageCalculator: React.FC = () => {
             </legend>
             <div className='grid gap-4'>
               <Input
-                label='ITP (6%)'
-                name='itp'
-                value={itp}
+                label={getImpuestoLabel()}
+                name='impuesto'
+                value={calculations.impuesto}
                 onChange={() => {}}
                 type='number'
                 readOnly
@@ -129,7 +188,7 @@ const MortgageCalculator: React.FC = () => {
               <Input
                 label='Precio final (€)'
                 name='precioFinal'
-                value={precioFinal}
+                value={calculations.precioFinal}
                 onChange={() => {}}
                 type='number'
                 readOnly
@@ -155,7 +214,7 @@ const MortgageCalculator: React.FC = () => {
               <Input
                 label='Cantidad hipoteca (€)'
                 name='cantidadHipoteca'
-                value={cantidadHipoteca}
+                value={calculations.cantidadHipoteca}
                 onChange={() => {}}
                 type='number'
                 readOnly
@@ -183,7 +242,7 @@ const MortgageCalculator: React.FC = () => {
               <Input
                 label='TIN (%)'
                 name='tin'
-                value={tin}
+                value={calculations.tin}
                 onChange={() => {}}
                 type='number'
                 readOnly
@@ -209,7 +268,7 @@ const MortgageCalculator: React.FC = () => {
         </h2>
         <div className='flex flex-col items-center justify-center bg-blue-50 rounded-xl p-6 mb-4 shadow-inner'>
           <span className='text-3xl font-extrabold text-blue-800 mb-2'>
-            {cuota} €
+            {calculations.cuota} €
           </span>
           <div className='text-blue-900 font-semibold text-lg'>
             Cuota mensual estimada
@@ -221,7 +280,7 @@ const MortgageCalculator: React.FC = () => {
               Principal total
             </span>
             <span className='text-lg font-bold text-blue-900'>
-              {cantidadHipoteca} €
+              {calculations.cantidadHipoteca} €
             </span>
           </div>
           <div className='flex flex-col bg-blue-100/60 rounded-lg p-4'>
@@ -229,20 +288,20 @@ const MortgageCalculator: React.FC = () => {
               % Financiado
             </span>
             <span className='text-lg font-bold text-blue-900'>
-              {porcentaje} %
+              {calculations.porcentaje} %
             </span>
           </div>
           <div className='flex flex-col bg-blue-100/60 rounded-lg p-4'>
             <span className='text-xs text-blue-700 font-semibold uppercase tracking-wide mb-1'>
               Interés total
             </span>
-            <span className='text-lg font-bold text-blue-900'>{interes} €</span>
+            <span className='text-lg font-bold text-blue-900'>{calculations.interes} €</span>
           </div>
           <div className='flex flex-col bg-blue-100/60 rounded-lg p-4'>
             <span className='text-xs text-blue-700 font-semibold uppercase tracking-wide mb-1'>
               Importe total
             </span>
-            <span className='text-lg font-bold text-blue-900'>{importe} €</span>
+            <span className='text-lg font-bold text-blue-900'>{calculations.importe} €</span>
           </div>
         </div>
       </aside>
