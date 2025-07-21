@@ -19,14 +19,4 @@ export const tools = [
     nav: true,
     active: true,
   },
-  {
-    icon: "lucide:house",
-    title: "Calculadora ITP",
-    label: "ITP",
-    description:
-      "Calcula el Impuesto de Transmisiones Patrimoniales según tu comunidad autónoma.",
-    href: "/calculadora-itp",
-    nav: true,
-    active: true,
-  },
 ]

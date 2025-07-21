@@ -1,7 +1,7 @@
 import React from "react"
 
 interface InputProps {
-  label: string
+  label: React.ReactNode
   name: string
   value: string | number
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void
@@ -12,6 +12,7 @@ interface InputProps {
   placeholder?: string
   readOnly?: boolean
   className?: string
+  labelIcon?: React.ReactNode
 }
 
 const Input: React.FC<InputProps> = ({
@@ -26,10 +27,15 @@ const Input: React.FC<InputProps> = ({
   placeholder,
   readOnly,
   className,
+  labelIcon,
 }) => (
   <div>
-    <label className='block text-sm font-medium mb-1' htmlFor={name}>
+    <label
+      className='flex text-sm font-medium mb-1 items-center gap-1'
+      htmlFor={name}
+    >
       {label}
+      {labelIcon && <span>{labelIcon}</span>}
     </label>
     <input
       id={name}

@@ -5,6 +5,7 @@ import { mockPosts } from '../constants/mock-posts';
 import PostsSection from '../components/home/PostsSection.astro';
 import Hero from '../components/home/Hero.astro';
 import Layout from '../layouts/Layout.astro';
+import EuriborChart from '../components/home/EuriborChart';
 ---
 <Layout>
   <Hero
@@ -12,5 +13,6 @@ import Layout from '../layouts/Layout.astro';
     description="Herramientas profesionales para calcular tu hipoteca, alquiler o ITP en España. Precisión, rapidez y confianza para tus decisiones financieras."
   />
   <Herramientas tools={tools} />
+  <EuriborChart client:only="react" />
 <!--   <PostsSection posts={mockPosts} title="Últimos Posts" description="Descubre las últimas novedades, consejos y guías sobre hipotecas, alquiler e impuestos en España." /> -->
 </Layout>
