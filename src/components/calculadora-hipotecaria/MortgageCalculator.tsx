@@ -102,6 +102,11 @@ const MortgageCalculator: React.FC = () => {
     const interes = interesTotal(params)
     const importe = importeTotal(params)
 
+    // Cálculo del porcentaje de hipoteca vs tasación
+    const tasacionNum = Number(form.tasacion) || 0
+    const porcentajeHipotecaTasacion = tasacionNum > 0 ? (cantidadHipoteca / tasacionNum) * 100 : 0
+    const esPorcentajeAlto = porcentajeHipotecaTasacion > 80
+
     return {
       impuesto,
       esObraNueva,
@@ -113,6 +118,8 @@ const MortgageCalculator: React.FC = () => {
       porcentaje,
       interes,
       importe,
+      porcentajeHipotecaTasacion,
+      esPorcentajeAlto,
     }
   }, [form, itpCalculado, itpTipoAplicado, itpDescripcion]) // Incluir las dependencias del modal
 
@@ -401,37 +408,45 @@ const MortgageCalculator: React.FC = () => {
             Cuota mensual estimada
           </div>
         </div>
-        <div className='grid grid-cols-1 gap-3'>
-          <div className='flex flex-col bg-blue-100/60 rounded-lg p-4'>
-            <span className='text-xs text-blue-700 font-semibold uppercase tracking-wide mb-1'>
+        <div className='space-y-2'>
+          <div className='flex justify-between items-center py-2 border-b border-gray-200'>
+            <span className='text-blue-900 font-semibold'>
               Principal total
             </span>
-            <span className='text-lg font-bold text-blue-900'>
-              {calculations.cantidadHipoteca} €
+            <span className='text-blue-900 font-semibold'>
+              {new Intl.NumberFormat('es-ES').format(calculations.cantidadHipoteca)} €
             </span>
           </div>
-          <div className='flex flex-col bg-blue-100/60 rounded-lg p-4'>
-            <span className='text-xs text-blue-700 font-semibold uppercase tracking-wide mb-1'>
+          <div className='flex justify-between items-center py-2 border-b border-gray-200'>
+            <span className='text-blue-900 font-semibold'>
               % Financiado
             </span>
-            <span className='text-lg font-bold text-blue-900'>
+            <span className='text-blue-900 font-semibold'>
               {calculations.porcentaje} %
             </span>
           </div>
-          <div className='flex flex-col bg-blue-100/60 rounded-lg p-4'>
-            <span className='text-xs text-blue-700 font-semibold uppercase tracking-wide mb-1'>
-              Interés total
+          <div className='flex justify-between items-center py-2 border-b border-gray-200'>
+            <span className='text-blue-900 font-semibold'>
+              % Hipoteca/Tasación
             </span>
-            <span className='text-lg font-bold text-blue-900'>
-              {calculations.interes} €
+            <span className={`font-semibold ${calculations.esPorcentajeAlto ? 'text-red-600' : 'text-blue-900'}`}>
+              {calculations.porcentajeHipotecaTasacion.toFixed(1)} %
             </span>
           </div>
-          <div className='flex flex-col bg-blue-100/60 rounded-lg p-4'>
-            <span className='text-xs text-blue-700 font-semibold uppercase tracking-wide mb-1'>
+          <div className='flex justify-between items-center py-2 border-b border-gray-200'>
+            <span className='text-blue-900 font-semibold'>
+              Interés total
+            </span>
+            <span className='text-blue-900 font-semibold'>
+              {new Intl.NumberFormat('es-ES').format(calculations.interes)} €
+            </span>
+          </div>
+          <div className='flex justify-between items-center py-2'>
+            <span className='text-blue-900 font-semibold'>
               Importe total
             </span>
-            <span className='text-lg font-bold text-blue-900'>
-              {calculations.importe} €
+            <span className='text-blue-900 font-semibold'>
+              {new Intl.NumberFormat('es-ES').format(calculations.importe)} €
             </span>
           </div>
         </div>

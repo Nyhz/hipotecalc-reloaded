@@ -349,15 +349,28 @@ export const COMUNIDADES: Comunidad[] = [
     nombre: "Madrid",
     ITP: 6.0,
     specialRates: {
-      largeFamily: 4.0,
-      youngBuyer: 0.0 // 100% bonificación en municipios <2.500 hab
+      largeFamily: 4.0, // Tipo reducido para familia numerosa
+      youngBuyer: 0.0, // 100% bonificación en municipios <2.500 hab
+      firstHome: 5.4 // Bonificación 10% sobre cuota (6% * 0.9 = 5.4%)
     },
+    hasRuralDepopulationZones: true,
     camposDinamicos: {
       edad: true,
       primeraVivienda: true,
       familiaNumerosa: true,
       ventaAnterior: true,
-      zonaDespoblada: true
+      zonaDespoblada: true,
+      situacionFamiliar: true,
+      ingresos: false // Madrid no tiene límites de renta
+    },
+    bonificaciones: {
+      porcentaje: 10, // Bonificación general del 10% para vivienda habitual ≤250.000€
+      condiciones: [
+        "Vivienda habitual",
+        "Valor ≤ 250.000€",
+        "Persona física",
+        "No compatible con familia numerosa"
+      ]
     }
   },
   {

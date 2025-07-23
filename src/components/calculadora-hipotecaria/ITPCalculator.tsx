@@ -524,7 +524,7 @@ const ITPCalculator: React.FC<ITPCalculatorProps> = ({
                         checked={form.zonaDespoblada}
                         onChange={handleInput}
                       />
-                      Vivienda en municipio con riesgo de despoblación
+                      Vivienda en municipio con menos de 2.500 habitantes (Madrid)
                     </label>
                   )}
                   
@@ -548,7 +548,7 @@ const ITPCalculator: React.FC<ITPCalculatorProps> = ({
                         checked={form.ventaAnterior}
                         onChange={handleInput}
                       />
-                      ¿Venderá su vivienda anterior en los próximos 2 años?
+                      ¿Venderá su vivienda anterior en los próximos 2 años? (requisito para familia numerosa en Madrid)
                     </label>
                   )}
                 </div>

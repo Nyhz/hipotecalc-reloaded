@@ -140,6 +140,64 @@ function calcularITPPorTramos(precio: number, brackets: any[]): number {
   return Math.round(itpTotal * 100) / 100
 }
 
+// Función específica para calcular ITP en Madrid según el flujo de decisión detallado
+function calcularITPMadrid(params: ITPParams): ITPResult {
+  const { precio, edad, situacion, zonaDespoblada, primeraVivienda, ventaAnterior } = params
+
+  // Paso 1: Determinar la base imponible
+  const baseImponible = precio
+
+  // Paso 2: Verificar si es empresa inmobiliaria (no implementado en la UI actual)
+  // Si fuera empresa inmobiliaria con fin de reventa, aplicar 2%
+  // Por ahora asumimos persona física
+
+  // Paso 3: Comprobación de bonificación joven 100% (<35 años en municipio <2.500 hab)
+  if (edad <= 35 && zonaDespoblada && primeraVivienda && precio <= 250000) {
+    return {
+      itp: 0,
+      tipoAplicado: 0,
+      descripcion: "ITP 0% - Exención total para jóvenes <35 años en municipios <2.500 habitantes"
+    }
+  }
+
+  // Paso 4: Comprobación de tipo reducido 4% por familia numerosa
+  if (situacion.includes("familia-numerosa") && primeraVivienda) {
+    // Verificar requisito de venta de vivienda anterior
+    if (ventaAnterior !== undefined) {
+      return {
+        itp: calcularITP(precio, 4),
+        tipoAplicado: 4,
+        descripcion: "ITP 4% - Tipo reducido para familia numerosa (vivienda habitual)"
+      }
+    } else {
+      // Si no se especifica venta anterior, aplicar tipo general
+      return {
+        itp: calcularITP(precio, 6),
+        tipoAplicado: 6,
+        descripcion: "ITP 6% - Tipo general (familia numerosa sin cumplir requisito de venta anterior)"
+      }
+    }
+  }
+
+  // Paso 5: Comprobación de bonificación 10% por vivienda habitual ≤250.000€
+  if (primeraVivienda && precio <= 250000) {
+    const itpBasico = calcularITP(precio, 6)
+    const itpBonificado = itpBasico * 0.9 // Bonificación del 10%
+    return {
+      itp: itpBonificado,
+      tipoAplicado: 5.4, // 6% * 0.9 = 5.4%
+      descripcion: "ITP 5.4% - Bonificación del 10% sobre cuota (vivienda habitual ≤250.000€)"
+    }
+  }
+
+  // Paso 6: Caso general sin beneficios
+  return {
+    itp: calcularITP(precio, 6),
+    tipoAplicado: 6,
+    descripcion: "ITP 6% - Tipo general"
+  }
+}
+
 // Función principal para calcular ITP avanzado
 export function calcularITPAvanzado(params: ITPParams): ITPResult {
   const { precio, tipoVivienda, comunidad: nombreComunidad } = params
@@ -167,6 +225,11 @@ export function calcularITPAvanzado(params: ITPParams): ITPResult {
       tipoAplicado: 6, 
       descripcion: "ITP 6% (comunidad no especificada)" 
     }
+  }
+
+  // Lógica específica para Madrid con flujo de decisión detallado
+  if (nombreComunidad === "Madrid") {
+    return calcularITPMadrid(params)
   }
 
   // Aplicar bonificación especial para Ceuta y Melilla
