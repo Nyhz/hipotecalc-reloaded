@@ -2,9 +2,8 @@
 export interface Props {
   title: string;
   description: string;
-  image?: string;
 }
-const { title, description, image = '/assets/background.svg' } = Astro.props;
+const { title, description} = Astro.props;
 ---
 <section class="relative w-full bg-blue-50 flex flex-col items-center justify-center min-h-[340px] md:min-h-[420px] overflow-hidden">
   <div class="relative z-10 flex flex-col items-center justify-center py-16 px-4">

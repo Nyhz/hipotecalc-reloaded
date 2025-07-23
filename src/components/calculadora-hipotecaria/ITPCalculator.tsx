@@ -1,7 +1,10 @@
 import React, { useState } from "react"
 import Modal from "./Modal"
 import { COMUNIDADES } from "../../constants/comunidades"
-import { calcularITPAvanzado, calcularIVA } from "../../utils/calculadora-hipotecaria"
+import {
+  calcularITPAvanzado,
+  calcularIVA,
+} from "../../utils/calculadora-hipotecaria"
 
 interface ITPCalculatorProps {
   open: boolean
@@ -77,7 +80,10 @@ const ITPCalculator: React.FC<ITPCalculatorProps> = ({
     edad: initialEdad !== undefined ? String(initialEdad) : "",
     situacion: initialSituacion || "",
     discapacidad: initialDiscapacidad || false,
-    porcentajeDiscapacidad: initialPorcentajeDiscapacidad !== undefined ? String(initialPorcentajeDiscapacidad) : "",
+    porcentajeDiscapacidad:
+      initialPorcentajeDiscapacidad !== undefined
+        ? String(initialPorcentajeDiscapacidad)
+        : "",
     primeraVivienda: initialPrimeraVivienda || false,
     numHijos: initialNumHijos !== undefined ? String(initialNumHijos) : "",
     victimaViolencia: initialVictimaViolencia || false,
@@ -98,7 +104,10 @@ const ITPCalculator: React.FC<ITPCalculatorProps> = ({
         edad: initialEdad !== undefined ? String(initialEdad) : "",
         situacion: initialSituacion || "",
         discapacidad: initialDiscapacidad || false,
-        porcentajeDiscapacidad: initialPorcentajeDiscapacidad !== undefined ? String(initialPorcentajeDiscapacidad) : "",
+        porcentajeDiscapacidad:
+          initialPorcentajeDiscapacidad !== undefined
+            ? String(initialPorcentajeDiscapacidad)
+            : "",
         primeraVivienda: initialPrimeraVivienda || false,
         numHijos: initialNumHijos !== undefined ? String(initialNumHijos) : "",
         victimaViolencia: initialVictimaViolencia || false,
@@ -108,9 +117,9 @@ const ITPCalculator: React.FC<ITPCalculatorProps> = ({
       }))
     }
   }, [
-    open, 
-    comunidadSeleccionada, 
-    initialPrecio, 
+    open,
+    comunidadSeleccionada,
+    initialPrecio,
     initialTipoVivienda,
     initialEdad,
     initialSituacion,
@@ -126,11 +135,11 @@ const ITPCalculator: React.FC<ITPCalculatorProps> = ({
 
   const comunidad = COMUNIDADES.find((c) => c.nombre === form.comunidad)
   const esObraNueva = form.tipoVivienda === "Obra nueva"
-  
+
   // Para obra nueva, mostrar campos específicos de IVA
-  const camposDinamicos = esObraNueva 
+  const camposDinamicos = esObraNueva
     ? { vpo: true } // Solo mostrar VPO para obra nueva
-    : (comunidad?.camposDinamicos || {})
+    : comunidad?.camposDinamicos || {}
 
   const handleInput = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
@@ -149,7 +158,7 @@ const ITPCalculator: React.FC<ITPCalculatorProps> = ({
       setForm((prev) => ({ ...prev, [name]: checked }))
     } else {
       setForm((prev) => ({ ...prev, [name]: value }))
-      
+
       // Sincronizar cambios con el formulario principal
       if (name === "precio" && onPrecioChange) {
         onPrecioChange(value)
@@ -173,12 +182,12 @@ const ITPCalculator: React.FC<ITPCalculatorProps> = ({
       // Para obra nueva, calcular IVA con posible reducción por VPO
       let tipoIVA = 10
       let descripcion = "IVA 10% (obra nueva)"
-      
+
       if (form.vpo) {
         tipoIVA = 4 // IVA reducido para VPO
         descripcion = "IVA 4% (obra nueva, VPO)"
       }
-      
+
       const iva = calcularIVA(precio, tipoIVA)
       onResult(iva, tipoIVA, descripcion)
     } else {
@@ -187,7 +196,7 @@ const ITPCalculator: React.FC<ITPCalculatorProps> = ({
         setError("Selecciona una comunidad autónoma.")
         return
       }
-      
+
       const { itp, tipoAplicado, descripcion } = calcularITPAvanzado({
         precio,
         tipoVivienda: form.tipoVivienda,
@@ -211,14 +220,14 @@ const ITPCalculator: React.FC<ITPCalculatorProps> = ({
       })
       onResult(itp, tipoAplicado, descripcion)
     }
-    
+
     onClose()
   }
 
   return (
     <Modal open={open} onClose={onClose}>
       <h2 className='text-xl font-bold text-blue-900 mb-4'>
-        {esObraNueva ? 'Calculadora IVA' : 'Calculadora ITP Avanzada'}
+        {esObraNueva ? "Calculadora IVA" : "Calculadora ITP Avanzada"}
       </h2>
       {error && <div className='mb-2 text-red-600 text-sm'>{error}</div>}
       <form
@@ -241,10 +250,44 @@ const ITPCalculator: React.FC<ITPCalculatorProps> = ({
                 type='number'
                 name='precio'
                 value={form.precio}
-                onChange={handleInput}
-                className='w-full border border-blue-200 rounded px-3 py-2 h-10'
+                onChange={(e) => {
+                  // Validar números negativos
+                  const inputValue = e.target.value
+                  if (inputValue.startsWith("-")) {
+                    e.target.value = inputValue.replace("-", "")
+                    return
+                  }
+                  const numValue = Number(inputValue)
+                  if (!isNaN(numValue) && numValue < 0) {
+                    e.target.value = "0"
+                    const correctedEvent = {
+                      ...e,
+                      target: {
+                        ...e.target,
+                        value: "0",
+                      },
+                    }
+                    handleInput(
+                      correctedEvent as React.ChangeEvent<HTMLInputElement>
+                    )
+                    return
+                  }
+
+                  handleInput(e)
+                }}
+                onKeyDown={(e) => {
+                  if (e.key === "-" || e.key === "Minus") {
+                    e.preventDefault()
+                  }
+                }}
+                className='w-full border border-blue-200 rounded px-3 py-2 h-10 pr-8'
                 min={0}
                 placeholder='Ej: 250000'
+                style={{
+                  WebkitAppearance: "none",
+                  MozAppearance: "textfield",
+                  appearance: "textfield",
+                }}
               />
             </div>
             <div>
@@ -302,7 +345,7 @@ const ITPCalculator: React.FC<ITPCalculatorProps> = ({
             )}
           </div>
         </fieldset>
-        
+
         {!esObraNueva && (
           <fieldset className='border border-blue-100 rounded-lg p-4'>
             <legend className='font-semibold text-blue-900 mb-2'>
@@ -325,7 +368,7 @@ const ITPCalculator: React.FC<ITPCalculatorProps> = ({
                   />
                 </div>
               )}
-              
+
               {camposDinamicos.ingresos && (
                 <div>
                   <label className='block text-sm font-medium text-blue-900 mb-1'>
@@ -335,10 +378,44 @@ const ITPCalculator: React.FC<ITPCalculatorProps> = ({
                     type='number'
                     name='ingresos'
                     value={form.ingresos}
-                    onChange={handleInput}
-                    className='w-full border border-blue-200 rounded px-3 py-2 h-10'
+                    onChange={(e) => {
+                      // Validar números negativos
+                      const inputValue = e.target.value
+                      if (inputValue.startsWith("-")) {
+                        e.target.value = inputValue.replace("-", "")
+                        return
+                      }
+                      const numValue = Number(inputValue)
+                      if (!isNaN(numValue) && numValue < 0) {
+                        e.target.value = "0"
+                        const correctedEvent = {
+                          ...e,
+                          target: {
+                            ...e.target,
+                            value: "0",
+                          },
+                        }
+                        handleInput(
+                          correctedEvent as React.ChangeEvent<HTMLInputElement>
+                        )
+                        return
+                      }
+
+                      handleInput(e)
+                    }}
+                    onKeyDown={(e) => {
+                      if (e.key === "-" || e.key === "Minus") {
+                        e.preventDefault()
+                      }
+                    }}
+                    className='w-full border border-blue-200 rounded px-3 py-2 h-10 pr-8'
                     min={0}
                     placeholder='Ej: 32000'
+                    style={{
+                      WebkitAppearance: "none",
+                      MozAppearance: "textfield",
+                      appearance: "textfield",
+                    }}
                   />
                 </div>
               )}
@@ -492,7 +569,7 @@ const ITPCalculator: React.FC<ITPCalculatorProps> = ({
                       )}
                     </>
                   )}
-                  
+
                   {camposDinamicos.victimas && (
                     <>
                       <label className='flex items-center gap-2'>
@@ -515,7 +592,7 @@ const ITPCalculator: React.FC<ITPCalculatorProps> = ({
                       </label>
                     </>
                   )}
-                  
+
                   {camposDinamicos.zonaDespoblada && (
                     <label className='flex items-center gap-2'>
                       <input
@@ -524,10 +601,11 @@ const ITPCalculator: React.FC<ITPCalculatorProps> = ({
                         checked={form.zonaDespoblada}
                         onChange={handleInput}
                       />
-                      Vivienda en municipio con menos de 2.500 habitantes (Madrid)
+                      Vivienda en municipio con menos de 2.500 habitantes
+                      (Madrid)
                     </label>
                   )}
-                  
+
                   {camposDinamicos.primeraVivienda && (
                     <label className='flex items-center gap-2'>
                       <input
@@ -548,7 +626,8 @@ const ITPCalculator: React.FC<ITPCalculatorProps> = ({
                         checked={form.ventaAnterior}
                         onChange={handleInput}
                       />
-                      ¿Venderá su vivienda anterior en los próximos 2 años? (requisito para familia numerosa en Madrid)
+                      ¿Venderá su vivienda anterior en los próximos 2 años?
+                      (requisito para familia numerosa en Madrid)
                     </label>
                   )}
                 </div>
@@ -556,13 +635,13 @@ const ITPCalculator: React.FC<ITPCalculatorProps> = ({
             </div>
           </fieldset>
         )}
-        
+
         <div className='flex justify-end'>
           <button
             type='submit'
             className='bg-blue-600 hover:bg-blue-700 text-white font-semibold px-6 py-2 rounded-lg shadow'
           >
-            {esObraNueva ? 'Calcular IVA' : 'Calcular ITP'}
+            {esObraNueva ? "Calcular IVA" : "Calcular ITP"}
           </button>
         </div>
       </form>

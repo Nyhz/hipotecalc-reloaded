@@ -11,7 +11,6 @@ import {
 import { COMUNIDADES } from "../../constants/comunidades"
 import Input from "./Input"
 import Select from "./Select"
-import { Icon } from "@iconify/react"
 import ITPCalculator from "./ITPCalculator"
 
 const tiposVivienda = ["Obra nueva", "Segunda mano"]
@@ -62,15 +61,16 @@ const MortgageCalculator: React.FC = () => {
 
     // Determinar si es obra nueva o segunda mano
     const esObraNueva = form.tipoVivienda === "Obra nueva"
-    
+
     // Si hay un cálculo previo del modal y es del tipo correcto, usarlo
     let impuesto: number
     let descripcionImpuesto: string
-    
+
     if (itpCalculado && itpTipoAplicado !== null) {
       // Usar el valor calculado del modal
       impuesto = Number(form.precio) * (itpTipoAplicado / 100)
-      descripcionImpuesto = itpDescripcion || `${esObraNueva ? 'IVA' : 'ITP'} ${itpTipoAplicado}%`
+      descripcionImpuesto =
+        itpDescripcion || `${esObraNueva ? "IVA" : "ITP"} ${itpTipoAplicado}%`
     } else {
       // Cálculo automático por defecto
       if (esObraNueva) {
@@ -78,13 +78,15 @@ const MortgageCalculator: React.FC = () => {
         descripcionImpuesto = "IVA 10%"
       } else {
         // Obtener el porcentaje de ITP de la comunidad seleccionada
-        const comunidadSeleccionada = COMUNIDADES.find(c => c.nombre === form.comunidad)
+        const comunidadSeleccionada = COMUNIDADES.find(
+          (c) => c.nombre === form.comunidad
+        )
         const porcentajeITP = comunidadSeleccionada?.ITP || 6 // Porcentaje por defecto si no hay comunidad seleccionada
         impuesto = calcularITP(precioNum, porcentajeITP)
         descripcionImpuesto = `ITP ${porcentajeITP}%`
       }
     }
-    
+
     const precioFinal = precioNum + otrosCostesNum + impuesto
     const cantidadHipoteca = Math.max(0, precioFinal - ahorroNum)
     const tin = calcularTIN(taeNum)
@@ -104,7 +106,8 @@ const MortgageCalculator: React.FC = () => {
 
     // Cálculo del porcentaje de hipoteca vs tasación
     const tasacionNum = Number(form.tasacion) || 0
-    const porcentajeHipotecaTasacion = tasacionNum > 0 ? (cantidadHipoteca / tasacionNum) * 100 : 0
+    const porcentajeHipotecaTasacion =
+      tasacionNum > 0 ? (cantidadHipoteca / tasacionNum) * 100 : 0
     const esPorcentajeAlto = porcentajeHipotecaTasacion > 80
 
     return {
@@ -127,28 +130,34 @@ const MortgageCalculator: React.FC = () => {
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
     const { name, value } = e.target
-    
+
     // Validación para prevenir valores negativos en campos numéricos
-    if (["precio", "tasacion", "otrosCostes", "ahorro", "tae", "plazo"].includes(name)) {
+    if (
+      ["precio", "tasacion", "otrosCostes", "ahorro", "tae", "plazo"].includes(
+        name
+      )
+    ) {
       const numValue = Number(value)
       if (numValue < 0) {
         return // No actualizar si el valor es negativo
       }
     }
-    
+
     // Si cambia el tipo de vivienda, limpiar el cálculo del modal
     if (name === "tipoVivienda") {
       setItpCalculado(false)
       setItpTipoAplicado(null)
       setItpDescripcion("")
     }
-    
-    setForm(prev => ({ ...prev, [name]: value }))
+
+    setForm((prev) => ({ ...prev, [name]: value }))
   }
 
   // Función para formatear el label del impuesto según el tipo de vivienda
   const getImpuestoLabel = () => {
-    return calculations.esObraNueva ? "IVA (10%)" : calculations.descripcionImpuesto
+    return calculations.esObraNueva
+      ? "IVA (10%)"
+      : calculations.descripcionImpuesto
   }
 
   // Si el usuario edita el campo ITP manualmente, ocultar el aviso
@@ -166,15 +175,15 @@ const MortgageCalculator: React.FC = () => {
 
   // Funciones para sincronizar cambios del modal con el formulario principal
   const handleModalPrecioChange = (precio: string) => {
-    setForm(prev => ({ ...prev, precio }))
+    setForm((prev) => ({ ...prev, precio }))
   }
 
   const handleModalComunidadChange = (comunidad: string) => {
-    setForm(prev => ({ ...prev, comunidad }))
+    setForm((prev) => ({ ...prev, comunidad }))
   }
 
   const handleModalTipoViviendaChange = (tipoVivienda: string) => {
-    setForm(prev => ({ ...prev, tipoVivienda }))
+    setForm((prev) => ({ ...prev, tipoVivienda }))
   }
 
   // Determinar si la comunidad seleccionada requiere campos especiales
@@ -195,7 +204,7 @@ const MortgageCalculator: React.FC = () => {
   const requiereDespoblada = camposDinamicos.zonaDespoblada
 
   return (
-    <div className='w-full max-w-7xl flex flex-col md:flex-row gap-8 pt-10'>
+    <div className='w-full max-w-7xl flex flex-col md:flex-row gap-8 px-4 pt-10'>
       <form
         className='flex-1 bg-white rounded-xl shadow p-6'
         autoComplete='off'
@@ -215,6 +224,7 @@ const MortgageCalculator: React.FC = () => {
                 min={0}
                 placeholder='Ej: 250000'
                 className={inputClass}
+                showEuroSymbol={true}
               />
               <Input
                 label='Tasación de la vivienda (€)'
@@ -225,6 +235,7 @@ const MortgageCalculator: React.FC = () => {
                 min={0}
                 placeholder='Ej: 240000'
                 className={inputClass}
+                showEuroSymbol={true}
               />
               <Select
                 label='Comunidad autónoma'
@@ -253,60 +264,119 @@ const MortgageCalculator: React.FC = () => {
             </legend>
             <div className='grid gap-4'>
               <div className='relative'>
-                <Input
-                  label={
-                    <span className='flex items-center gap-2'>
+                <div>
+                  <label
+                    className='flex text-sm font-medium mb-1 items-center gap-2'
+                    htmlFor='impuesto'
+                  >
+                    <span>
                       {itpTipoAplicado
                         ? `ITP (${itpTipoAplicado}%)`
                         : getImpuestoLabel()}
+                    </span>
+                    <button
+                      type='button'
+                      aria-label={`Abrir calculadora ${
+                        calculations.esObraNueva ? "IVA" : "ITP"
+                      }`}
+                      className='text-blue-600 hover:underline hover:text-blue-800 focus:outline-none bg-transparent border-0 p-0 h-auto text-sm font-normal cursor-pointer'
+                      style={{ lineHeight: "1", height: "1.5em" }}
+                      onClick={() => setShowItpModal(true)}
+                    >
+                      Calcula tu {calculations.esObraNueva ? "IVA" : "ITP"}
+                    </button>
+                    {itpCalculado && (
+                      <div className='text-xs text-green-700 bg-green-100 rounded px-2 ml-2 py-1 shadow'>
+                        {calculations.esObraNueva ? "IVA" : "ITP"} Calculado
+                      </div>
+                    )}
+                  </label>
+                  <div className='relative'>
+                    <input
+                      id='impuesto'
+                      name='impuesto'
+                      type='number'
+                      value={calculations.impuesto}
+                      onChange={(e) => {
+                        // Validar números negativos
+                        const inputValue = e.target.value
+                        if (inputValue.startsWith("-")) {
+                          e.target.value = inputValue.replace("-", "")
+                          return
+                        }
+                        const numValue = Number(inputValue)
+                        if (!isNaN(numValue) && numValue < 0) {
+                          e.target.value = "0"
+                          const correctedEvent = {
+                            ...e,
+                            target: {
+                              ...e.target,
+                              value: "0",
+                            },
+                          }
+                          handleImpuestoManual(
+                            correctedEvent as React.ChangeEvent<HTMLInputElement>
+                          )
+                          setItpTipoAplicado(null)
+                          setItpDescripcion("")
+                          return
+                        }
+
+                        handleImpuestoManual(e)
+                        setItpTipoAplicado(null)
+                        setItpDescripcion("")
+                      }}
+                      onKeyDown={(e) => {
+                        if (e.key === "-" || e.key === "Minus") {
+                          e.preventDefault()
+                        }
+                      }}
+                      readOnly
+                      className={`${inputReadOnlyClass} ${
+                        itpCalculado ? "pr-16" : "pr-8"
+                      }`}
+                      style={{
+                        WebkitAppearance: "none",
+                        MozAppearance: "textfield",
+                        appearance: "textfield",
+                      }}
+                    />
+                    <span className='absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 pointer-events-none'>
+                      €
+                    </span>
+                    {itpCalculado && (
                       <button
                         type='button'
-                        aria-label={`Abrir calculadora ${calculations.esObraNueva ? 'IVA' : 'ITP'}`}
-                        className='ml-2 text-blue-600 hover:underline hover:text-blue-800 focus:outline-none bg-transparent border-0 p-0 h-auto text-sm font-normal'
-                        style={{ lineHeight: "1", height: "1.5em" }}
-                        onClick={() => setShowItpModal(true)}
+                        onClick={handleResetImpuesto}
+                        className='absolute right-8 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-red-600 focus:outline-none bg-transparent border cursor-pointer rounded-full p-1'
+                        aria-label='Restablecer cálculo de impuesto'
+                        title='Restablecer cálculo de impuesto'
                       >
-                        Calcula tu {calculations.esObraNueva ? 'IVA' : 'ITP'}
+                        <svg
+                          className='w-4 h-4'
+                          fill='none'
+                          stroke='currentColor'
+                          viewBox='0 0 24 24'
+                        >
+                          <path
+                            strokeLinecap='round'
+                            strokeLinejoin='round'
+                            strokeWidth={2}
+                            d='M6 18L18 6M6 6l12 12'
+                          />
+                        </svg>
                       </button>
-                    </span>
-                  }
-                  name='impuesto'
-                  value={calculations.impuesto}
-                  onChange={(e) => {
-                    handleImpuestoManual(e)
-                    setItpTipoAplicado(null)
-                    setItpDescripcion("")
-                  }}
-                  type='number'
-                  readOnly
-                  className={inputReadOnlyClass}
-                  labelIcon={null}
-                />
+                    )}
+                  </div>
+                </div>
                 {itpDescripcion && itpCalculado && (
                   <div className='text-green-800 bg-green-50 border border-green-200 rounded px-3 py-2 mt-2 text-sm text-center'>
                     <span className='font-semibold'>
-                      {calculations.esObraNueva ? 'IVA' : 'Bonificación'} aplicada:
+                      {calculations.esObraNueva ? "IVA" : "Bonificación"}{" "}
+                      aplicada:
                     </span>{" "}
                     {itpDescripcion}
                   </div>
-                )}
-                {itpCalculado && (
-                  <div className='absolute right-0 top-0 mt-1 mr-2 text-xs text-green-700 bg-green-100 rounded px-2 py-1 shadow'>
-                    {calculations.esObraNueva ? 'IVA' : 'ITP'} Calculado
-                  </div>
-                )}
-                {itpCalculado && (
-                  <button
-                    type='button'
-                    onClick={handleResetImpuesto}
-                    className='absolute right-0 top-1/2 transform -translate-y-1/2 mr-2 text-gray-500 hover:text-red-600 focus:outline-none bg-white rounded-full p-1 shadow-sm border border-gray-200'
-                    aria-label='Restablecer cálculo de impuesto'
-                    title='Restablecer cálculo de impuesto'
-                  >
-                    <svg className='w-4 h-4' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
-                      <path strokeLinecap='round' strokeLinejoin='round' strokeWidth={2} d='M6 18L18 6M6 6l12 12' />
-                    </svg>
-                  </button>
                 )}
               </div>
               <Input
@@ -318,6 +388,7 @@ const MortgageCalculator: React.FC = () => {
                 min={0}
                 placeholder='Ej: 5000'
                 className={inputClass}
+                showEuroSymbol={true}
               />
               <Input
                 label='Precio final (€)'
@@ -327,6 +398,7 @@ const MortgageCalculator: React.FC = () => {
                 type='number'
                 readOnly
                 className={inputReadOnlyClass}
+                showEuroSymbol={true}
               />
             </div>
           </fieldset>
@@ -344,6 +416,7 @@ const MortgageCalculator: React.FC = () => {
                 min={0}
                 placeholder='Ej: 40000'
                 className={inputClass}
+                showEuroSymbol={true}
               />
               <Input
                 label='Cantidad hipoteca (€)'
@@ -353,6 +426,7 @@ const MortgageCalculator: React.FC = () => {
                 type='number'
                 readOnly
                 className={inputReadOnlyClass}
+                showEuroSymbol={true}
               />
               <Select
                 label='Tipo de hipoteca'
@@ -376,7 +450,7 @@ const MortgageCalculator: React.FC = () => {
               <Input
                 label='TIN (%)'
                 name='tin'
-                value={calculations.tin}
+                value={calculations.tin.toFixed(2)}
                 onChange={() => {}}
                 type='number'
                 readOnly
@@ -410,17 +484,16 @@ const MortgageCalculator: React.FC = () => {
         </div>
         <div className='space-y-2'>
           <div className='flex justify-between items-center py-2 border-b border-gray-200'>
+            <span className='text-blue-900 font-semibold'>Principal total</span>
             <span className='text-blue-900 font-semibold'>
-              Principal total
-            </span>
-            <span className='text-blue-900 font-semibold'>
-              {new Intl.NumberFormat('es-ES').format(calculations.cantidadHipoteca)} €
+              {new Intl.NumberFormat("es-ES").format(
+                calculations.cantidadHipoteca
+              )}{" "}
+              €
             </span>
           </div>
           <div className='flex justify-between items-center py-2 border-b border-gray-200'>
-            <span className='text-blue-900 font-semibold'>
-              % Financiado
-            </span>
+            <span className='text-blue-900 font-semibold'>% Financiado</span>
             <span className='text-blue-900 font-semibold'>
               {calculations.porcentaje} %
             </span>
@@ -429,24 +502,24 @@ const MortgageCalculator: React.FC = () => {
             <span className='text-blue-900 font-semibold'>
               % Hipoteca/Tasación
             </span>
-            <span className={`font-semibold ${calculations.esPorcentajeAlto ? 'text-red-600' : 'text-blue-900'}`}>
+            <span
+              className={`font-semibold ${
+                calculations.esPorcentajeAlto ? "text-red-600" : "text-blue-900"
+              }`}
+            >
               {calculations.porcentajeHipotecaTasacion.toFixed(1)} %
             </span>
           </div>
           <div className='flex justify-between items-center py-2 border-b border-gray-200'>
+            <span className='text-blue-900 font-semibold'>Interés total</span>
             <span className='text-blue-900 font-semibold'>
-              Interés total
-            </span>
-            <span className='text-blue-900 font-semibold'>
-              {new Intl.NumberFormat('es-ES').format(calculations.interes)} €
+              {new Intl.NumberFormat("es-ES").format(calculations.interes)} €
             </span>
           </div>
           <div className='flex justify-between items-center py-2'>
+            <span className='text-blue-900 font-semibold'>Importe total</span>
             <span className='text-blue-900 font-semibold'>
-              Importe total
-            </span>
-            <span className='text-blue-900 font-semibold'>
-              {new Intl.NumberFormat('es-ES').format(calculations.importe)} €
+              {new Intl.NumberFormat("es-ES").format(calculations.importe)} €
             </span>
           </div>
         </div>
@@ -459,12 +532,12 @@ const MortgageCalculator: React.FC = () => {
         comunidadSeleccionada={form.comunidad}
         initialPrecio={form.precio}
         initialTipoVivienda={form.tipoVivienda}
-        initialEdad=""
-        initialSituacion=""
+        initialEdad=''
+        initialSituacion=''
         initialDiscapacidad={false}
-        initialPorcentajeDiscapacidad=""
+        initialPorcentajeDiscapacidad=''
         initialPrimeraVivienda={false}
-        initialNumHijos=""
+        initialNumHijos=''
         initialVictimaViolencia={false}
         initialVictimaTerrorismo={false}
         initialZonaDespoblada={false}

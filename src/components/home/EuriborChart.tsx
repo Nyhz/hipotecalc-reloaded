@@ -1,34 +1,6 @@
 import React from "react"
 import ReactECharts from "echarts-for-react"
-
-// Datos de ejemplo: euribor 12 meses, últimos 25 años (1999-2024, valores aproximados)
-const euriborData = [
-  { year: 2000, value: 4.88 },
-  { year: 2001, value: 4.57 },
-  { year: 2002, value: 3.48 },
-  { year: 2003, value: 2.7 },
-  { year: 2004, value: 2.22 },
-  { year: 2005, value: 2.31 },
-  { year: 2006, value: 3.83 },
-  { year: 2007, value: 4.64 },
-  { year: 2008, value: 4.35 },
-  { year: 2009, value: 1.24 },
-  { year: 2010, value: 1.52 },
-  { year: 2011, value: 2.04 },
-  { year: 2012, value: 1.84 },
-  { year: 2013, value: 0.54 },
-  { year: 2014, value: 0.56 },
-  { year: 2015, value: 0.16 },
-  { year: 2016, value: -0.01 },
-  { year: 2017, value: -0.19 },
-  { year: 2018, value: -0.19 },
-  { year: 2019, value: -0.26 },
-  { year: 2020, value: -0.5 },
-  { year: 2021, value: -0.5 },
-  { year: 2022, value: 3.02 },
-  { year: 2023, value: 3.67 },
-  { year: 2024, value: 2.44 },
-]
+import { euriborData } from "../../constants/euribor-values"
 
 const years = euriborData.map((d) => d.year)
 const values = euriborData.map((d) => d.value)
@@ -43,6 +15,9 @@ const option = {
       fontWeight: "bold",
       fontSize: 20,
     },
+  },
+  toolbox: {
+    show: false,
   },
   tooltip: {
     trigger: "axis",
@@ -100,7 +75,7 @@ const option = {
 }
 
 const EuriborChart: React.FC = () => (
-  <div className='w-full max-w-6xl mx-auto px-4 my-12'>
+  <div className='w-full max-w-7xl mx-auto px-4 my-12'>
     <div className='bg-white/80 rounded-xl shadow border border-blue-100'>
       <div className='py-6'>
         <ReactECharts option={option} style={{ height: 400, width: "100%" }} />
@@ -110,7 +85,7 @@ const EuriborChart: React.FC = () => (
             href='https://www.euribor-rates.eu/en/euribor-rates-by-year/'
             target='_blank'
             rel='noopener noreferrer'
-            className='underline text-blue-600'
+            className='underline text-blue-600 cursor-pointer'
           >
             euribor-rates.eu
           </a>{" "}
