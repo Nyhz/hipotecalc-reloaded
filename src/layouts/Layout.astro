@@ -1,24 +1,141 @@
 ---
 import { ClientRouter } from "astro:transitions";
-import Navbar from '../components/Navbar.astro';
+import Navbar from '../components/Navbar.tsx';
 import Footer from '../components/Footer.astro';
 import '../style/globals.css';
+
+export interface Props {
+  title?: string;
+  description?: string;
+  keywords?: string;
+  ogImage?: string;
+  canonicalURL?: string;
+}
+
+const { 
+  title = "Calculadora Hipotecaria - España | Herramientas Financieras",
+  description = "Calculadora hipotecaria, de alquiler e ITP para España. Herramientas financieras precisas y profesionales para calcular tu hipoteca, impuestos y más.",
+  keywords = "calculadora hipoteca, calculadora alquiler, calculadora ITP, finanzas, España, euribor, impuestos, vivienda",
+  ogImage = "/og-image.svg",
+  canonicalURL = Astro.url.href
+} = Astro.props;
 ---
 <html lang="es">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Calculadora Hipotecaria</title>
-    <meta name="description" content="Calculadora hipotecaria, de alquiler e ITP para España. Herramientas financieras precisas y profesionales." />
-    <meta name="keywords" content="calculadora hipoteca, calculadora alquiler, calculadora ITP, finanzas, España" />
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap">
+    
+    <!-- Basic SEO -->
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="keywords" content={keywords} />
+    <meta name="author" content="Hipotecalc" />
+    <link rel="canonical" href={canonicalURL} />
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonicalURL} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:locale" content="es_ES" />
+    <meta property="og:site_name" content="Hipotecalc" />
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content={canonicalURL} />
+    <meta property="twitter:title" content={title} />
+    <meta property="twitter:description" content={description} />
+    <meta property="twitter:image" content={ogImage} />
+    
+    <!-- Additional SEO -->
+    <meta name="robots" content="index, follow" />
+    <meta name="googlebot" content="index, follow" />
+    <meta name="theme-color" content="#2563eb" />
+    
+    <!-- Resource hints for better performance -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="dns-prefetch" href="//fonts.googleapis.com" />
+    <link rel="dns-prefetch" href="//fonts.gstatic.com" />
+    
+    <!-- Critical CSS and fonts with optimized loading -->
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'" />
+    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" /></noscript>
+    
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Calculadora Hipotecaria España",
+      "description": "Calculadora hipotecaria profesional para España con cálculo de ITP, impuestos y análisis del Euribor",
+      "url": "https://hipotecalc-reloaded.vercel.app",
+      "applicationCategory": "FinanceApplication",
+      "operatingSystem": "Web Browser",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "EUR"
+      },
+      "creator": {
+        "@type": "Organization",
+        "name": "Hipotecalc"
+      },
+      "keywords": "calculadora hipoteca, ITP, impuestos, vivienda, España, euribor"
+    }
+    </script>
+    
     <ClientRouter />  
   </head>
   <body class="bg-white text-black min-h-screen flex flex-col">
-    <Navbar />
+    <Navbar client:load />
     <main class="flex-1 flex flex-col items-center justify-start w-full">
       <slot />
     </main>
     <Footer />
+    
+    <!-- Service Worker for Performance -->
+    <script>
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register('/sw.js')
+            .then((registration) => {
+              // Handle updates for performance improvements
+              registration.addEventListener('updatefound', () => {
+                const newWorker = registration.installing;
+                if (newWorker) {
+                  newWorker.addEventListener('statechange', () => {
+                    if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+                      // Performance update available
+                      console.log('Performance improvements available');
+                      // Auto-refresh for better performance (no user prompt needed)
+                      setTimeout(() => window.location.reload(), 1000);
+                    }
+                  });
+                }
+              });
+            })
+            .catch((registrationError) => {
+              console.log('Performance SW registration failed:', registrationError);
+            });
+        });
+        
+        // Listen for performance messages
+        navigator.serviceWorker.addEventListener('message', (event) => {
+          if (event.data && event.data.type === 'PERFORMANCE_UPDATED') {
+            console.log('Performance cache updated');
+          }
+        });
+      }
+      
+      // Back/forward cache optimization (performance only)
+      window.addEventListener('pageshow', (event) => {
+        if (event.persisted && !navigator.serviceWorker.controller) {
+          // Only reload if SW is not handling performance
+          window.location.reload();
+        }
+      });
+    </script>
   </body>
 </html>

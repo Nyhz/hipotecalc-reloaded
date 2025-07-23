@@ -1,13 +1,3 @@
-// Import shared functions
-import { calcularITP, calcularIVA } from "./common-calculators"
-
-// Re-export shared functions
-export { calcularITP, calcularIVA }
-
-// Re-export ITP advanced function
-export { calcularITPAvanzado } from "./calculadora-itp"
-
-// Mortgage calculator specific types and functions
 interface MortgageParams {
   precio: string
   tasacion: string

@@ -1,14 +1,13 @@
 ### DEV
 
-Campo ITP/IVA
+Calculadora ITP
 
-- Depende del tipo de vivienda
+- Solo sirve para deducciones de ITP
+- Añadir una interrogación para abrir un modal en el Form de la Calculadora hipotecaria
+- Una vez rellenada, activa un override en el valor del ITP (puede volver a quitarse)
 
-Valor ITP
+Home
 
-- Depende de la Comunidad Autonoma
-- Debe poder forzarse a otro valor
+- Añadir gráfica evolución del Euribor
 
-TIN
-
-- Debe calcularse a partir del TAE
+Tabla sensibilidad precio vs ahorro
