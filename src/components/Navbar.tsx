@@ -1,5 +1,6 @@
 import { useState } from "react"
 import { tools } from "../constants/tools"
+import ContactButton from "./ContactButton"
 
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
@@ -42,17 +43,7 @@ export default function Navbar() {
           </div>
 
           {/* Botón de contacto a la derecha */}
-          <div className='flex justify-end'>
-            <a
-              href='/contacto'
-              className='relative overflow-hidden bg-gradient-to-r from-blue-50 to-blue-100 text-blue-900 font-medium hover:from-blue-100 hover:to-blue-200 hover:text-blue-800 border border-blue-200 hover:border-blue-300 px-4 py-2 rounded-lg shadow-sm hover:shadow-md transition-all duration-200 cursor-pointer transform hover:-translate-y-0.5 before:absolute before:inset-0 before:bg-gradient-to-r before:from-transparent before:via-blue-200/30 before:to-transparent before:translate-x-[-100%] before:animate-[shimmer_3s_ease-in-out_infinite] hover:before:animate-none'
-              style={{
-                animationDelay: "0s",
-              }}
-            >
-              Contacta con nuestro broker
-            </a>
-          </div>
+          <ContactButton variant='desktop' />
         </div>
 
         {/* Mobile Layout */}
@@ -66,15 +57,7 @@ export default function Navbar() {
           </a>
 
           {/* Botón de contacto en el centro */}
-          <a
-            href='/contacto'
-            className='relative overflow-hidden bg-gradient-to-r from-blue-50 to-blue-100 text-blue-900 font-medium hover:from-blue-100 hover:to-blue-200 hover:text-blue-800 border border-blue-200 hover:border-blue-300 px-3 py-1.5 rounded-lg shadow-sm hover:shadow-md transition-all duration-200 cursor-pointer text-sm transform hover:-translate-y-0.5 before:absolute before:inset-0 before:bg-gradient-to-r before:from-transparent before:via-blue-200/30 before:to-transparent before:translate-x-[-100%] before:animate-[shimmer_3s_ease-in-out_infinite] hover:before:animate-none'
-            style={{
-              animationDelay: "0s",
-            }}
-          >
-            Contactar
-          </a>
+          <ContactButton variant='mobile' />
 
           {/* Botón hamburguesa a la derecha */}
           <button

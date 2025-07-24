@@ -12,6 +12,7 @@ import { COMUNIDADES } from "../../constants/comunidades"
 import Input from "./Input"
 import Select from "./Select"
 import ITPCalculator from "./ITPCalculator"
+import ContactButton from "../ContactButton"
 
 const tiposVivienda = ["Obra nueva", "Segunda mano"]
 const tiposHipoteca = ["Fija", "Variable", "Mixta"]
@@ -521,6 +522,9 @@ const MortgageCalculator: React.FC = () => {
             <span className='text-blue-900 font-semibold'>
               {new Intl.NumberFormat("es-ES").format(calculations.importe)} €
             </span>
+          </div>
+          <div className='w-full flex items-center justify-center'>
+            <ContactButton variant='desktop' />
           </div>
         </div>
       </aside>
