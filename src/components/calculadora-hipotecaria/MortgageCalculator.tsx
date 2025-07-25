@@ -1,6 +1,18 @@
 import React, { useState, useMemo } from "react"
 import { COMUNIDADES } from "../../constants/comunidades"
-import { cuotaMensual, porcentajeFinanciado, interesTotal, importeTotal, calcularTIN, calcularITP, calcularIVA } from "../../utils/calculadora-hipotecaria"
+import {
+  cuotaMensual,
+  porcentajeFinanciado,
+  interesTotal,
+  importeTotal,
+  calcularTIN,
+  calcularITP,
+  calcularIVA,
+  getEuriborActual,
+  getEuriborHistorico,
+  calcularInteresVariable,
+  crearTablaEscenarios,
+} from "../../utils/calculadora-hipotecaria"
 import Input from "./Input"
 import Select from "./Select"
 import ITPCalculator from "./ITPCalculator"
@@ -21,9 +33,11 @@ const initialState = {
   tipoVivienda: "",
   otrosCostes: "",
   ahorro: "",
-  tipoHipoteca: "",
+  tipoHipoteca: "Fija",
   tae: "",
   plazo: "30",
+  diferencial: "1.0",
+  periodoAnalisis: "10",
 }
 
 const MortgageCalculator: React.FC = () => {
@@ -52,9 +66,12 @@ const MortgageCalculator: React.FC = () => {
     const ahorroNum = Number(form.ahorro) || 0
     const taeNum = Number(form.tae) || 0
     const plazoNum = Number(form.plazo) || 0
+    const diferencialNum = Number(form.diferencial) || 0
+    const periodoAnalisisNum = Number(form.periodoAnalisis) || 10
 
     // Determinar si es obra nueva o segunda mano
     const esObraNueva = form.tipoVivienda === "Obra nueva"
+    const esHipotecaVariable = form.tipoHipoteca === "Variable"
 
     // Si hay un cálculo previo del modal y es del tipo correcto, usarlo
     let impuesto: number
@@ -83,7 +100,23 @@ const MortgageCalculator: React.FC = () => {
 
     const precioFinal = precioNum + otrosCostesNum + impuesto
     const cantidadHipoteca = Math.max(0, precioFinal - ahorroNum)
-    const tin = calcularTIN(taeNum)
+
+    // Cálculo del interés según el tipo de hipoteca
+    let tin: number
+    let euriborActual: number = 0
+    let euriborHistorico: { min: number; max: number } = { min: 0, max: 0 }
+    let tablaEscenarios: any[] = []
+
+    if (esHipotecaVariable) {
+      // Para hipotecas variables: Euribor + Diferencial
+      euriborActual = getEuriborActual()
+      euriborHistorico = getEuriborHistorico(periodoAnalisisNum)
+      tin = calcularInteresVariable(euriborActual, diferencialNum)
+      tablaEscenarios = crearTablaEscenarios(diferencialNum, periodoAnalisisNum)
+    } else {
+      // Para hipotecas fijas: TAE convertido a TIN
+      tin = calcularTIN(taeNum)
+    }
 
     // Parámetros para las funciones de cálculo
     const params = {
@@ -97,6 +130,23 @@ const MortgageCalculator: React.FC = () => {
     const porcentaje = porcentajeFinanciado(params)
     const interes = interesTotal(params)
     const importe = importeTotal(params)
+
+    // Cálculos adicionales para hipotecas variables
+    let cuotaMinima = 0
+    let cuotaMaxima = 0
+    if (esHipotecaVariable) {
+      // Usar los valores de la tabla de escenarios
+      const escenarioMinimo = tablaEscenarios.find(e => e.escenario === "Mínimo histórico")
+      const escenarioMaximo = tablaEscenarios.find(e => e.escenario === "Máximo histórico")
+      
+      if (escenarioMinimo && escenarioMaximo) {
+        const paramsMinimo = { ...params, tin: escenarioMinimo.interesTotal }
+        const paramsMaximo = { ...params, tin: escenarioMaximo.interesTotal }
+        
+        cuotaMinima = cuotaMensual(paramsMinimo)
+        cuotaMaxima = cuotaMensual(paramsMaximo)
+      }
+    }
 
     // Cálculo del porcentaje de hipoteca vs tasación
     const tasacionNum = Number(form.tasacion) || 0
@@ -117,6 +167,12 @@ const MortgageCalculator: React.FC = () => {
       importe,
       porcentajeHipotecaTasacion,
       esPorcentajeAlto,
+      esHipotecaVariable,
+      euriborActual,
+      euriborHistorico,
+      tablaEscenarios,
+      cuotaMinima,
+      cuotaMaxima,
     }
   }, [form, itpCalculado, itpTipoAplicado, itpDescripcion]) // Incluir las dependencias del modal
 
@@ -127,7 +183,7 @@ const MortgageCalculator: React.FC = () => {
 
     // Validación para prevenir valores negativos en campos numéricos
     if (
-      ["precio", "tasacion", "otrosCostes", "ahorro", "tae", "plazo"].includes(
+      ["precio", "tasacion", "otrosCostes", "ahorro", "tae", "plazo", "diferencial", "periodoAnalisis"].includes(
         name
       )
     ) {
@@ -430,17 +486,19 @@ const MortgageCalculator: React.FC = () => {
                 options={tiposHipoteca.map((t) => ({ value: t, label: t }))}
                 className={inputClass}
               />
-              <Input
-                label='TAE (%)'
-                name='tae'
-                value={form.tae}
-                onChange={handleChange}
-                type='number'
-                min={0}
-                step={0.01}
-                placeholder='Ej: 3.25'
-                className={inputClass}
-              />
+              {!calculations.esHipotecaVariable && (
+                <Input
+                  label='TAE (%)'
+                  name='tae'
+                  value={form.tae}
+                  onChange={handleChange}
+                  type='number'
+                  min={0}
+                  step={0.01}
+                  placeholder='Ej: 3.25'
+                  className={inputClass}
+                />
+              )}
               <Input
                 label='TIN (%)'
                 name='tin'
@@ -450,6 +508,63 @@ const MortgageCalculator: React.FC = () => {
                 readOnly
                 className={inputReadOnlyClass}
               />
+              
+              {/* Campos específicos para hipotecas variables */}
+              {calculations.esHipotecaVariable && (
+                <>
+                  <Input
+                    label='Diferencial (%)'
+                    name='diferencial'
+                    value={form.diferencial}
+                    onChange={handleChange}
+                    type='number'
+                    min={0}
+                    step={0.01}
+                    placeholder='Ej: 1.0'
+                    className={inputClass}
+                  />
+                  
+                  <Input
+                    label='Período de análisis histórico (años)'
+                    name='periodoAnalisis'
+                    value={form.periodoAnalisis}
+                    onChange={handleChange}
+                    type='number'
+                    min={1}
+                    max={25}
+                    placeholder='Ej: 10'
+                    className={inputClass}
+                  />
+                  
+                  {/* Tabla de escenarios */}
+                  <div className='bg-gray-50 rounded-lg p-4'>
+                    <h4 className='font-semibold text-sm text-gray-700 mb-3'>
+                      Escenarios de interés variable
+                    </h4>
+                    <div className='overflow-x-auto'>
+                      <table className='w-full text-xs'>
+                        <thead>
+                          <tr className='border-b border-gray-300'>
+                            <th className='text-left py-2 px-2 font-medium text-gray-600'>Escenario</th>
+                            <th className='text-right py-2 px-2 font-medium text-gray-600'>Euribor (%)</th>
+                            <th className='text-right py-2 px-2 font-medium text-gray-600'>Interés total (%)</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {calculations.tablaEscenarios.map((escenario, index) => (
+                            <tr key={index} className='border-b border-gray-200'>
+                              <td className='py-2 px-2 text-gray-700'>{escenario.escenario}</td>
+                              <td className='py-2 px-2 text-right text-gray-700'>{escenario.euribor.toFixed(2)}</td>
+                              <td className='py-2 px-2 text-right font-medium text-gray-900'>{escenario.interesTotal.toFixed(2)}</td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </>
+              )}
+              
               <Input
                 label='Plazo (años)'
                 name='plazo'
@@ -457,6 +572,7 @@ const MortgageCalculator: React.FC = () => {
                 onChange={handleChange}
                 type='number'
                 min={1}
+                max={40}
                 placeholder='Ej: 30'
                 className={inputClass}
               />
@@ -477,6 +593,29 @@ const MortgageCalculator: React.FC = () => {
           </div>
         </div>
         
+        {/* Escenarios para hipotecas variables */}
+        {calculations.esHipotecaVariable && (
+          <div className='bg-gray-50 rounded-lg p-4 mb-4'>
+            <h4 className='font-semibold text-sm text-gray-700 mb-3 text-center'>
+              Escenarios de cuota variable
+            </h4>
+            <div className='space-y-2 text-xs'>
+              <div className='flex justify-between items-center'>
+                <span className='text-gray-600'>Mínimo histórico:</span>
+                <span className='font-medium text-green-700'>
+                  {new Intl.NumberFormat("es-ES").format(calculations.cuotaMinima)} €
+                </span>
+              </div>
+              <div className='flex justify-between items-center'>
+                <span className='text-gray-600'>Máximo histórico:</span>
+                <span className='font-medium text-red-700'>
+                  {new Intl.NumberFormat("es-ES").format(calculations.cuotaMaxima)} €
+                </span>
+              </div>
+            </div>
+          </div>
+        )}
+
         {/* Información de la hipoteca */}
         <div className='space-y-3'>
           <div className='flex justify-between items-center py-2'>
