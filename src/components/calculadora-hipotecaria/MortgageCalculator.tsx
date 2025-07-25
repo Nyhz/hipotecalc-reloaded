@@ -1,18 +1,11 @@
 import React, { useState, useMemo } from "react"
-import {
-  cuotaMensual,
-  porcentajeFinanciado,
-  interesTotal,
-  importeTotal,
-  calcularITP,
-  calcularIVA,
-  calcularTIN,
-} from "../../utils/calculadora-hipotecaria"
 import { COMUNIDADES } from "../../constants/comunidades"
+import { cuotaMensual, porcentajeFinanciado, interesTotal, importeTotal, calcularTIN, calcularITP, calcularIVA } from "../../utils/calculadora-hipotecaria"
 import Input from "./Input"
 import Select from "./Select"
 import ITPCalculator from "./ITPCalculator"
 import ContactButton from "../ContactButton"
+import MortgageSummaryCharts from "./MortgageSummaryCharts"
 
 const tiposVivienda = ["Obra nueva", "Segunda mano"]
 const tiposHipoteca = ["Fija", "Variable", "Mixta"]
@@ -473,7 +466,7 @@ const MortgageCalculator: React.FC = () => {
       </form>
       <aside className='w-full md:w-96 bg-white rounded-xl shadow-lg p-6 flex flex-col gap-6 border border-blue-100'>
         <h2 className='text-xl font-bold text-blue-900 mb-2'>
-          Resumen de tu hipoteca
+          Tu cuota mensual
         </h2>
         <div className='flex flex-col items-center justify-center bg-blue-50 rounded-xl p-6 mb-4 shadow-inner'>
           <span className='text-3xl font-extrabold text-blue-800 mb-2'>
@@ -483,26 +476,46 @@ const MortgageCalculator: React.FC = () => {
             Cuota mensual estimada
           </div>
         </div>
-        <div className='space-y-2'>
-          <div className='flex justify-between items-center py-2 border-b border-gray-200'>
-            <span className='text-blue-900 font-semibold'>Principal total</span>
+        
+        {/* Información de la hipoteca */}
+        <div className='space-y-3'>
+          <div className='flex justify-between items-center py-2'>
+            <div className='flex items-center gap-2'>
+              <span className='text-blue-900 font-semibold'>Importe hipoteca</span>
+              <svg className="w-4 h-4 text-blue-500" fill="currentColor" viewBox="0 0 20 20">
+                <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-8-3a1 1 0 00-.867.5 1 1 0 11-1.731-1A3 3 0 0113 8a3.001 3.001 0 01-2 2.83V11a1 1 0 11-2 0v-1a1 1 0 011-1 1 1 0 100-2zm0 8a1 1 0 100-2 1 1 0 000 2z" clipRule="evenodd" />
+              </svg>
+            </div>
             <span className='text-blue-900 font-semibold'>
-              {new Intl.NumberFormat("es-ES").format(
-                calculations.cantidadHipoteca
-              )}{" "}
-              €
+              {new Intl.NumberFormat("es-ES").format(calculations.cantidadHipoteca)} €
             </span>
           </div>
-          <div className='flex justify-between items-center py-2 border-b border-gray-200'>
-            <span className='text-blue-900 font-semibold'>% Financiado</span>
+          <div className='flex justify-between items-center py-2'>
+            <div className='flex items-center gap-2'>
+              <span className='text-blue-900 font-semibold'>Porcentaje de financiación</span>
+              <svg className="w-4 h-4 text-blue-500" fill="currentColor" viewBox="0 0 20 20">
+                <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-8-3a1 1 0 00-.867.5 1 1 0 11-1.731-1A3 3 0 0113 8a3.001 3.001 0 01-2 2.83V11a1 1 0 11-2 0v-1a1 1 0 011-1 1 1 0 100-2zm0 8a1 1 0 100-2 1 1 0 000 2z" clipRule="evenodd" />
+              </svg>
+            </div>
             <span className='text-blue-900 font-semibold'>
               {calculations.porcentaje} %
             </span>
           </div>
+        </div>
+
+        {/* Gráficas */}
+        <MortgageSummaryCharts
+          precioInmueble={Number(form.precio) || 0}
+          impuestosGastos={calculations.impuesto + (Number(form.otrosCostes) || 0)}
+          ahorroAportado={Number(form.ahorro) || 0}
+          cantidadHipoteca={calculations.cantidadHipoteca}
+          interesTotal={calculations.interes}
+        />
+
+        {/* Información adicional */}
+        <div className='space-y-2'>
           <div className='flex justify-between items-center py-2 border-b border-gray-200'>
-            <span className='text-blue-900 font-semibold'>
-              % Hipoteca/Tasación
-            </span>
+            <span className='text-blue-900 font-semibold'>% Hipoteca/Tasación</span>
             <span
               className={`font-semibold ${
                 calculations.esPorcentajeAlto ? "text-red-600" : "text-blue-900"
@@ -511,21 +524,16 @@ const MortgageCalculator: React.FC = () => {
               {calculations.porcentajeHipotecaTasacion.toFixed(1)} %
             </span>
           </div>
-          <div className='flex justify-between items-center py-2 border-b border-gray-200'>
+          <div className='flex justify-between items-center py-2'>
             <span className='text-blue-900 font-semibold'>Interés total</span>
             <span className='text-blue-900 font-semibold'>
               {new Intl.NumberFormat("es-ES").format(calculations.interes)} €
             </span>
           </div>
-          <div className='flex justify-between items-center py-2'>
-            <span className='text-blue-900 font-semibold'>Importe total</span>
-            <span className='text-blue-900 font-semibold'>
-              {new Intl.NumberFormat("es-ES").format(calculations.importe)} €
-            </span>
-          </div>
-          <div className='w-full flex items-center justify-center'>
-            <ContactButton variant='desktop' />
-          </div>
+        </div>
+
+        <div className='w-full flex items-center justify-center'>
+          <ContactButton variant='desktop' />
         </div>
       </aside>
       {/* Modal Calculadora ITP */}
