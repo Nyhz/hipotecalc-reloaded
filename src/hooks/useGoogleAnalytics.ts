@@ -1,12 +1,37 @@
 // Hook para Google Analytics 4 with CookieYes consent
 export const useGoogleAnalytics = () => {
+  const parseCookieYesConsent = () => {
+    if (typeof window === "undefined") return null
+
+    const cookies = document.cookie.split(";")
+    let consentCookie = null
+
+    for (let i = 0; i < cookies.length; i++) {
+      const cookie = cookies[i].trim()
+      if (cookie.startsWith("cookieyes-consent=")) {
+        consentCookie = cookie.substring("cookieyes-consent=".length)
+        break
+      }
+    }
+
+    if (!consentCookie) return null
+
+    const consentData: Record<string, string> = {}
+    const parts = consentCookie.split(",")
+
+    for (let j = 0; j < parts.length; j++) {
+      const keyValue = parts[j].split(":")
+      if (keyValue.length === 2) {
+        consentData[keyValue[0]] = keyValue[1]
+      }
+    }
+
+    return consentData
+  }
+
   const hasAnalyticsConsent = () => {
-    // Check if CookieYes exists and analytics consent is given
-    return (
-      typeof window !== "undefined" &&
-      (window as any).cookieyes &&
-      (window as any).cookieyes.getItem("analytics") === "yes"
-    )
+    const consent = parseCookieYesConsent()
+    return consent && consent.analytics === "yes"
   }
 
   const isGtagLoaded = () => {

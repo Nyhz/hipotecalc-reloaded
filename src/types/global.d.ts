@@ -14,6 +14,12 @@ declare global {
     gtag?: (...args: any[]) => void
     cookieyes?: CookieYes
     dataLayer?: any[]
+    gaScriptLoaded?: boolean
+    lastAnalyticsState?: string | null
+    handleConsentChange?: () => void
+    parseCookieYesConsent?: () => Record<string, string> | null
+    debugGA?: () => void
+    testConsentChange?: () => void
   }
 }
 

@@ -97,81 +97,220 @@ const {
 
     <!-- Google Analytics - Managed by CookieYes -->
     <script is:inline>
-      // Initialize dataLayer and gtag function
+      // Initialize dataLayer and gtag function immediately
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       
-      // Initialize gtag with analytics_storage denied by default
+      // Set default consent to denied
       gtag('consent', 'default', {
         'analytics_storage': 'denied'
       });
       
-      // Initialize gtag config early with minimal data
-      gtag('js', new Date());
-      gtag('config', 'G-RCYZ4N1WPT', {
-        'analytics_storage': 'denied'
-      });
+      // Flag to track if GA script is loaded
+      window.gaScriptLoaded = false;
+      window.lastAnalyticsState = null;
       
-      // Function to load GA script if not already loaded
+      // Function to parse CookieYes consent cookie
+      function parseCookieYesConsent() {
+        var cookies = document.cookie.split(';');
+        var consentCookie = null;
+        
+        for (var i = 0; i < cookies.length; i++) {
+          var cookie = cookies[i].trim();
+          if (cookie.startsWith('cookieyes-consent=')) {
+            consentCookie = cookie.substring('cookieyes-consent='.length);
+            break;
+          }
+        }
+        
+        if (!consentCookie) {
+          return null;
+        }
+        
+        var consentData = {};
+        var parts = consentCookie.split(',');
+        
+        for (var j = 0; j < parts.length; j++) {
+          var keyValue = parts[j].split(':');
+          if (keyValue.length === 2) {
+            consentData[keyValue[0]] = keyValue[1];
+          }
+        }
+        
+        return consentData;
+      }
+      
+      // Function to delete GA cookies
+      function deleteGACookies() {
+        console.log('Deleting Google Analytics cookies...');
+        var domain = window.location.hostname;
+        var cookiesToDelete = ['_ga', '_ga_G-RCYZ4N1WPT', '_gid', '_gat_gtag_G_RCYZ4N1WPT'];
+        
+        cookiesToDelete.forEach(function(cookieName) {
+          // Delete for current domain
+          document.cookie = cookieName + '=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; domain=' + domain + ';';
+          // Delete for parent domain (if subdomain)
+          document.cookie = cookieName + '=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; domain=.' + domain + ';';
+          // Delete without domain
+          document.cookie = cookieName + '=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+        });
+      }
+      
+      // Function to load Google Analytics script
       function loadGoogleAnalytics() {
-        if (!document.querySelector('script[src*="googletagmanager.com/gtag/js"]')) {
+        if (!window.gaScriptLoaded && !document.querySelector('script[src*="googletagmanager.com/gtag/js"]')) {
+          console.log('Loading Google Analytics script...');
           var script = document.createElement('script');
           script.async = true;
           script.src = 'https://www.googletagmanager.com/gtag/js?id=G-RCYZ4N1WPT';
+          script.onload = function() {
+            console.log('Google Analytics script loaded');
+            window.gaScriptLoaded = true;
+            initializeGA();
+          };
           document.head.appendChild(script);
+        } else if (window.gaScriptLoaded) {
+          initializeGA();
         }
+      }
+      
+      // Function to initialize GA with consent
+      function initializeGA() {
+        console.log('Initializing Google Analytics with consent...');
+        gtag('js', new Date());
+        gtag('config', 'G-RCYZ4N1WPT', {
+          'analytics_storage': 'granted',
+          'anonymize_ip': true,
+          'send_page_view': true
+        });
       }
       
       // Function to enable analytics
       function enableAnalytics() {
+        console.log('Enabling Google Analytics...');
         gtag('consent', 'update', {
           'analytics_storage': 'granted'
         });
-        
-        // Reinitialize config with full tracking
-        gtag('config', 'G-RCYZ4N1WPT', {
-          'analytics_storage': 'granted',
-          'anonymize_ip': true
-        });
+        loadGoogleAnalytics();
       }
       
       // Function to disable analytics
       function disableAnalytics() {
+        console.log('Disabling Google Analytics...');
         gtag('consent', 'update', {
           'analytics_storage': 'denied'
         });
+        // Delete existing GA cookies
+        deleteGACookies();
       }
       
-      // CookieYes event handlers
-      document.addEventListener('cookieyes_consent_update', function(e) {
-        var consent = e.detail;
-        if (consent.analytics === 'yes') {
-          loadGoogleAnalytics();
-          enableAnalytics();
-        } else {
-          disableAnalytics();
+      // Function to check and handle consent changes
+      function handleConsentChange() {
+        var consent = parseCookieYesConsent();
+        
+        if (!consent) {
+          return;
         }
-      });
-      
-      // Check for existing consent on page load
-      function checkExistingConsent() {
-        if (window.cookieyes) {
-          var analyticsConsent = window.cookieyes.getItem('analytics');
+        
+        var analyticsConsent = consent.analytics;
+        console.log('Current analytics consent:', analyticsConsent);
+        
+        // Only act if consent state has changed
+        if (window.lastAnalyticsState !== analyticsConsent) {
+          console.log('Analytics consent changed from', window.lastAnalyticsState, 'to', analyticsConsent);
+          window.lastAnalyticsState = analyticsConsent;
+          
           if (analyticsConsent === 'yes') {
-            loadGoogleAnalytics();
             enableAnalytics();
+          } else if (analyticsConsent === 'no') {
+            disableAnalytics();
           }
         }
       }
       
-      // Wait for CookieYes to be ready
-      if (window.cookieyes) {
-        checkExistingConsent();
-      } else {
-        document.addEventListener('DOMContentLoaded', function() {
-          setTimeout(checkExistingConsent, 100);
-        });
+      // Make function globally accessible for debugging
+      window.handleConsentChange = handleConsentChange;
+      window.parseCookieYesConsent = parseCookieYesConsent;
+      
+      // Monitor cookie changes using polling (since cookie change events don't exist)
+      function startCookieMonitoring() {
+        // Check immediately
+        handleConsentChange();
+        
+        // Then poll every 500ms for changes
+        setInterval(handleConsentChange, 500);
       }
+      
+      // Start monitoring when DOM is ready
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', startCookieMonitoring);
+      } else {
+        startCookieMonitoring();
+      }
+    </script>
+    
+    <!-- Debug script for CookieYes + GA integration -->
+    <script is:inline>
+      // Debug function to check GA and CookieYes status
+      window.debugGA = function() {
+        console.log('=== Google Analytics + CookieYes Debug ===');
+        
+        // Parse CookieYes consent
+        var cookies = document.cookie.split(';');
+        var consentCookie = null;
+        
+        for (var i = 0; i < cookies.length; i++) {
+          var cookie = cookies[i].trim();
+          if (cookie.startsWith('cookieyes-consent=')) {
+            consentCookie = cookie.substring('cookieyes-consent='.length);
+            break;
+          }
+        }
+        
+        if (consentCookie) {
+          var consentData = {};
+          var parts = consentCookie.split(',');
+          
+          for (var j = 0; j < parts.length; j++) {
+            var keyValue = parts[j].split(':');
+            if (keyValue.length === 2) {
+              consentData[keyValue[0]] = keyValue[1];
+            }
+          }
+          
+          console.log('CookieYes consent cookie found:', consentData);
+          console.log('Analytics consent:', consentData.analytics);
+        } else {
+          console.log('CookieYes consent cookie NOT found');
+        }
+        
+        console.log('CookieYes object loaded:', !!window.cookieyes);
+        console.log('gtag function exists:', typeof window.gtag);
+        console.log('dataLayer exists:', !!window.dataLayer);
+        console.log('GA script loaded:', !!window.gaScriptLoaded);
+        console.log('GA script in DOM:', !!document.querySelector('script[src*="googletagmanager.com/gtag/js"]'));
+        console.log('Last analytics state:', window.lastAnalyticsState);
+        
+        var gaCookies = document.cookie.split(';').filter(c => c.trim().startsWith('_ga'));
+        console.log('GA cookies found:', gaCookies.length > 0 ? gaCookies : 'None');
+        
+        console.log('===============================');
+      };
+      
+      // Auto-debug after 3 seconds
+      setTimeout(function() {
+        if (typeof window.debugGA === 'function') {
+          window.debugGA();
+        }
+      }, 3000);
+      
+      // Manual trigger for testing
+      window.testConsentChange = function() {
+        console.log('Manually triggering consent check...');
+        if (typeof window.handleConsentChange === 'function') {
+          window.handleConsentChange();
+        }
+      };
     </script>
     
     <ClientRouter />  
