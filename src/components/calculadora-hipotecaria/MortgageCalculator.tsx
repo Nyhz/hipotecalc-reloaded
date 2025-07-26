@@ -16,8 +16,9 @@ import {
 import Input from "./Input"
 import Select from "./Select"
 import ITPCalculator from "./ITPCalculator"
-import ContactButton from "../ContactButton"
 import MortgageSummaryCharts from "./MortgageSummaryCharts"
+import ContactButton from "../ContactButton"
+import SensitivityTable from "./SensitivityTable"
 
 const tiposVivienda = ["Obra nueva", "Segunda mano"]
 const tiposHipoteca = ["Fija", "Variable", "Mixta"]
@@ -345,7 +346,7 @@ const MortgageCalculator: React.FC = () => {
                     <input
                       id='impuesto'
                       name='impuesto'
-                      type='number'
+                type='number'
                       value={calculations.impuesto}
                       onChange={(e) => {
                         // Validar números negativos
@@ -381,7 +382,7 @@ const MortgageCalculator: React.FC = () => {
                           e.preventDefault()
                         }
                       }}
-                      readOnly
+                readOnly
                       className={`${inputReadOnlyClass} ${
                         itpCalculado ? "pr-16" : "pr-8"
                       }`}
@@ -487,17 +488,17 @@ const MortgageCalculator: React.FC = () => {
                 className={inputClass}
               />
               {!calculations.esHipotecaVariable && (
-                <Input
-                  label='TAE (%)'
-                  name='tae'
-                  value={form.tae}
-                  onChange={handleChange}
-                  type='number'
-                  min={0}
-                  step={0.01}
-                  placeholder='Ej: 3.25'
-                  className={inputClass}
-                />
+              <Input
+                label='TAE (%)'
+                name='tae'
+                value={form.tae}
+                onChange={handleChange}
+                type='number'
+                min={0}
+                step={0.01}
+                placeholder='Ej: 3.25'
+                className={inputClass}
+              />
               )}
               <Input
                 label='TIN (%)'
@@ -579,6 +580,15 @@ const MortgageCalculator: React.FC = () => {
             </div>
           </fieldset>
         </div>
+
+        {/* Sensitivity Table */}
+        <SensitivityTable
+          form={form}
+          calculations={calculations}
+          itpCalculado={itpCalculado}
+          itpTipoAplicado={itpTipoAplicado}
+          itpDescripcion={itpDescripcion}
+        />
       </form>
       <aside className='w-full md:w-96 bg-white rounded-xl shadow-lg p-6 flex flex-col gap-6 border border-blue-100'>
         <h2 className='text-xl font-bold text-blue-900 mb-2'>
