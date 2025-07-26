@@ -93,8 +93,8 @@ async function networkFirstPerformance(request) {
   try {
     // Always try network first for fresh content
     const networkResponse = await fetch(request)
-    if (networkResponse.ok) {
-      // Cache successful responses for performance
+    if (networkResponse.ok && request.method === 'GET') {
+      // Only cache GET requests for performance
       const cache = await caches.open(STATIC_CACHE)
       cache.put(request, networkResponse.clone())
     }
@@ -125,7 +125,8 @@ async function cacheFirstPerformance(request) {
   try {
     // If not cached, fetch and cache for future performance
     const networkResponse = await fetch(request)
-    if (networkResponse.ok) {
+    if (networkResponse.ok && request.method === 'GET') {
+      // Only cache GET requests
       const cache = await caches.open(DYNAMIC_CACHE)
       cache.put(request, networkResponse.clone())
     }
