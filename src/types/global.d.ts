@@ -20,6 +20,7 @@ declare global {
     parseCookieYesConsent?: () => Record<string, string> | null
     debugGA?: () => void
     testConsentChange?: () => void
+    cookieYesBlocked?: boolean
   }
 }
 

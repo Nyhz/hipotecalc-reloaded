@@ -22,8 +22,8 @@ const {
 ---
 <html lang="es">
   <head>
-    <!-- Start cookieyes banner --> 
-    <script id="cookieyes" type="text/javascript" src="https://cdn-cookieyes.com/client_data/9f0e347f752a5c179f39585d/script.js"></script> 
+    <!-- Start cookieyes banner with error handling --> 
+    <script id="cookieyes" type="text/javascript" src="https://cdn-cookieyes.com/client_data/9f0e347f752a5c179f39585d/script.js" onerror="window.cookieYesBlocked = true;"></script> 
     <!-- End cookieyes banner -->
     
     <meta charset="UTF-8" />
@@ -142,7 +142,6 @@ const {
       
       // Function to delete GA cookies
       function deleteGACookies() {
-        console.log('Deleting Google Analytics cookies...');
         var domain = window.location.hostname;
         var cookiesToDelete = ['_ga', '_ga_G-RCYZ4N1WPT', '_gid', '_gat_gtag_G_RCYZ4N1WPT'];
         
@@ -159,12 +158,10 @@ const {
       // Function to load Google Analytics script
       function loadGoogleAnalytics() {
         if (!window.gaScriptLoaded && !document.querySelector('script[src*="googletagmanager.com/gtag/js"]')) {
-          console.log('Loading Google Analytics script...');
           var script = document.createElement('script');
           script.async = true;
           script.src = 'https://www.googletagmanager.com/gtag/js?id=G-RCYZ4N1WPT';
           script.onload = function() {
-            console.log('Google Analytics script loaded');
             window.gaScriptLoaded = true;
             initializeGA();
           };
@@ -176,7 +173,6 @@ const {
       
       // Function to initialize GA with consent
       function initializeGA() {
-        console.log('Initializing Google Analytics with consent...');
         gtag('js', new Date());
         gtag('config', 'G-RCYZ4N1WPT', {
           'analytics_storage': 'granted',
@@ -187,7 +183,6 @@ const {
       
       // Function to enable analytics
       function enableAnalytics() {
-        console.log('Enabling Google Analytics...');
         gtag('consent', 'update', {
           'analytics_storage': 'granted'
         });
@@ -196,7 +191,6 @@ const {
       
       // Function to disable analytics
       function disableAnalytics() {
-        console.log('Disabling Google Analytics...');
         gtag('consent', 'update', {
           'analytics_storage': 'denied'
         });
@@ -213,11 +207,9 @@ const {
         }
         
         var analyticsConsent = consent.analytics;
-        console.log('Current analytics consent:', analyticsConsent);
         
         // Only act if consent state has changed
         if (window.lastAnalyticsState !== analyticsConsent) {
-          console.log('Analytics consent changed from', window.lastAnalyticsState, 'to', analyticsConsent);
           window.lastAnalyticsState = analyticsConsent;
           
           if (analyticsConsent === 'yes') {
@@ -234,6 +226,11 @@ const {
       
       // Monitor cookie changes using polling (since cookie change events don't exist)
       function startCookieMonitoring() {
+        // If CookieYes is blocked, don't start monitoring
+        if (window.cookieYesBlocked) {
+          return;
+        }
+        
         // Check immediately
         handleConsentChange();
         
@@ -249,64 +246,42 @@ const {
       }
     </script>
     
-    <!-- Debug script for CookieYes + GA integration -->
+    <!-- Debug script for CookieYes + GA integration (silent mode) -->
     <script is:inline>
-      // Debug function to check GA and CookieYes status
+      // Silent debug function for development use
       window.debugGA = function() {
-        console.log('=== Google Analytics + CookieYes Debug ===');
-        
-        // Parse CookieYes consent
+        var consent = null;
         var cookies = document.cookie.split(';');
-        var consentCookie = null;
         
         for (var i = 0; i < cookies.length; i++) {
           var cookie = cookies[i].trim();
           if (cookie.startsWith('cookieyes-consent=')) {
-            consentCookie = cookie.substring('cookieyes-consent='.length);
+            var consentCookie = cookie.substring('cookieyes-consent='.length);
+            var consentData = {};
+            var parts = consentCookie.split(',');
+            
+            for (var j = 0; j < parts.length; j++) {
+              var keyValue = parts[j].split(':');
+              if (keyValue.length === 2) {
+                consentData[keyValue[0]] = keyValue[1];
+              }
+            }
+            consent = consentData;
             break;
           }
         }
         
-        if (consentCookie) {
-          var consentData = {};
-          var parts = consentCookie.split(',');
-          
-          for (var j = 0; j < parts.length; j++) {
-            var keyValue = parts[j].split(':');
-            if (keyValue.length === 2) {
-              consentData[keyValue[0]] = keyValue[1];
-            }
-          }
-          
-          console.log('CookieYes consent cookie found:', consentData);
-          console.log('Analytics consent:', consentData.analytics);
-        } else {
-          console.log('CookieYes consent cookie NOT found');
-        }
-        
-        console.log('CookieYes object loaded:', !!window.cookieyes);
-        console.log('gtag function exists:', typeof window.gtag);
-        console.log('dataLayer exists:', !!window.dataLayer);
-        console.log('GA script loaded:', !!window.gaScriptLoaded);
-        console.log('GA script in DOM:', !!document.querySelector('script[src*="googletagmanager.com/gtag/js"]'));
-        console.log('Last analytics state:', window.lastAnalyticsState);
-        
-        var gaCookies = document.cookie.split(';').filter(c => c.trim().startsWith('_ga'));
-        console.log('GA cookies found:', gaCookies.length > 0 ? gaCookies : 'None');
-        
-        console.log('===============================');
+        return {
+          blocked: !!window.cookieYesBlocked,
+          consent: consent,
+          analytics: consent && consent.analytics === 'yes',
+          gaLoaded: !!window.gaScriptLoaded,
+          cookies: document.cookie.split(';').filter(c => c.trim().startsWith('_ga')).length
+        };
       };
       
-      // Auto-debug after 3 seconds
-      setTimeout(function() {
-        if (typeof window.debugGA === 'function') {
-          window.debugGA();
-        }
-      }, 3000);
-      
-      // Manual trigger for testing
+      // Silent test function
       window.testConsentChange = function() {
-        console.log('Manually triggering consent check...');
         if (typeof window.handleConsentChange === 'function') {
           window.handleConsentChange();
         }
