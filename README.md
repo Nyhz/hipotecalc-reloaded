@@ -1,16 +1,92 @@
-# Astro Starter Kit: Basics
+# Calculadora Hipotecaria España
 
-```sh
-npm create astro@latest -- --template basics
+A professional mortgage calculator for Spain with ITP calculation, taxes, and Euribor analysis built with Astro.
+
+## 🚀 Features
+
+- Mortgage calculator with Spanish parameters
+- ITP (Property Transfer Tax) calculator
+- Rental calculator
+- Euribor rate tracking and charts
+- Responsive design optimized for mobile and desktop
+- SEO optimized with structured data
+- Performance optimized with service worker
+- PWA ready
+
+## 🛠️ Tech Stack
+
+- **Framework**: Astro 5
+- **UI**: React 19 + Tailwind CSS 4
+- **Charts**: ECharts
+- **Icons**: Iconify
+- **Deployment**: Vercel
+- **Analytics**: Google Analytics 4
+
+## 📦 Installation
+
+```bash
+npm install
 ```
 
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/withastro/astro/tree/latest/examples/basics)
-[![Open with CodeSandbox](https://assets.codesandbox.io/github/button-edit-lime.svg)](https://codesandbox.io/p/sandbox/github/withastro/astro/tree/latest/examples/basics)
-[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/withastro/astro?devcontainer_path=.devcontainer/basics/devcontainer.json)
+## 🏃‍♂️ Development
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+```bash
+npm run dev
+```
 
-![just-the-basics](https://github.com/withastro/astro/assets/2244813/a0a5533c-a856-4198-8470-2d67b1d7c554)
+## 🏗️ Build
+
+```bash
+npm run build
+```
+
+## 🚀 Deployment on Vercel
+
+This project is optimized for Vercel deployment:
+
+1. **Push to GitHub**: Make sure your code is pushed to a GitHub repository
+
+2. **Connect to Vercel**:
+
+   - Go to [vercel.com](https://vercel.com)
+   - Import your GitHub repository
+   - Vercel will automatically detect it's an Astro project
+
+3. **Environment Variables** (if needed):
+
+   - No environment variables required for basic deployment
+   - Google Analytics is configured via the GA_MEASUREMENT_ID in the code
+
+4. **Custom Domain** (optional):
+   - In Vercel dashboard, go to your project settings
+   - Add your custom domain
+   - Update the `site` field in `astro.config.mjs` to match your domain
+
+## ⚡ Performance Features
+
+- **Static Site Generation**: Pre-rendered pages for optimal performance
+- **Code Splitting**: Automatic chunking for faster loading
+- **Image Optimization**: Optimized images and assets
+- **Compression**: Gzip/Brotli compression enabled
+- **Caching**: Optimized cache headers for static assets
+- **Service Worker**: Performance-focused SW for asset caching
+
+## � PWA Features
+
+- Offline functionality
+- App-like experience on mobile devices
+- Installable on devices
+- Optimized manifest.json
+
+## 🔧 Configuration
+
+The app is pre-configured with:
+
+- **Vercel adapter**: For seamless deployment
+- **Sitemap generation**: Automatic XML sitemap
+- **Compression**: CSS, HTML, and JS minification
+- **Analytics**: Google Analytics 4 integration
+- **Security headers**: CSRF, XSS protection
 
 ## 🚀 Project Structure
 
