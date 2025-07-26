@@ -588,36 +588,31 @@ const MortgageCalculator: React.FC = () => {
           <span className='text-3xl font-extrabold text-blue-800 mb-2'>
             {calculations.cuota} €
           </span>
-          <div className='text-blue-900 font-semibold text-lg'>
+          <div className='text-blue-900 font-semibold text-lg mb-3'>
             Cuota mensual estimada
           </div>
-        </div>
-        
-        {/* Escenarios para hipotecas variables */}
-        {calculations.esHipotecaVariable && (
-          <div className='bg-gray-50 rounded-lg p-4 mb-4'>
-            <h4 className='font-semibold text-sm text-gray-700 mb-3 text-center'>
-              Escenarios de cuota variable
-            </h4>
-            <div className='space-y-2 text-xs'>
-              <div className='flex justify-between items-center'>
-                <span className='text-gray-600'>Mínimo histórico:</span>
-                <span className='font-medium text-green-700'>
+          
+          {/* Escenarios para hipotecas variables integrados */}
+          {calculations.esHipotecaVariable && (
+            <div className='flex gap-6 text-sm'>
+              <div className='text-center'>
+                <div className='text-gray-600 text-xs'>Mínimo histórico</div>
+                <div className='font-medium text-green-700'>
                   {new Intl.NumberFormat("es-ES").format(calculations.cuotaMinima)} €
-                </span>
+                </div>
               </div>
-              <div className='flex justify-between items-center'>
-                <span className='text-gray-600'>Máximo histórico:</span>
-                <span className='font-medium text-red-700'>
+              <div className='text-center'>
+                <div className='text-gray-600 text-xs'>Máximo histórico</div>
+                <div className='font-medium text-red-700'>
                   {new Intl.NumberFormat("es-ES").format(calculations.cuotaMaxima)} €
-                </span>
+                </div>
               </div>
             </div>
-          </div>
-        )}
+          )}
+        </div>
 
         {/* Información de la hipoteca */}
-        <div className='space-y-3'>
+        <div className='space-y-2'>
           <div className='flex justify-between items-center py-2'>
             <div className='flex items-center gap-2'>
               <span className='text-blue-900 font-semibold'>Importe hipoteca</span>
@@ -640,6 +635,11 @@ const MortgageCalculator: React.FC = () => {
               {calculations.porcentaje} %
             </span>
           </div>
+        </div>
+
+        {/* Botón de contacto movido arriba */}
+        <div className='w-full flex items-center justify-center'>
+          <ContactButton variant='desktop' />
         </div>
 
         {/* Gráficas */}
@@ -671,9 +671,6 @@ const MortgageCalculator: React.FC = () => {
           </div>
         </div>
 
-        <div className='w-full flex items-center justify-center'>
-          <ContactButton variant='desktop' />
-        </div>
       </aside>
       {/* Modal Calculadora ITP */}
       <ITPCalculator
