@@ -19,14 +19,6 @@ export const useGoogleAnalytics = () => {
     }
   }
 
-  const trackButtonClick = (buttonName: string, location: string) => {
-    trackEvent("button_click", {
-      button_name: buttonName,
-      button_location: location,
-      event_category: "interaction",
-    })
-  }
-
   const trackCalculatorUsage = (calculatorType: string, action: string) => {
     trackEvent("calculator_usage", {
       calculator_type: calculatorType,
@@ -46,7 +38,6 @@ export const useGoogleAnalytics = () => {
   return {
     trackEvent,
     trackPageView,
-    trackButtonClick,
     trackCalculatorUsage,
     trackContactAttempt,
   }
