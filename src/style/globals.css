@@ -1,12 +1,6 @@
 @import "tailwindcss";
 
-/* Font loading optimization to prevent FOIT/FOUT */
-@font-face {
-  font-family: "Roboto";
-  font-display: swap;
-  src: local("Roboto");
-}
-
+/* Optimized font configuration */
 body {
   font-family: "Roboto", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
   font-display: swap;
