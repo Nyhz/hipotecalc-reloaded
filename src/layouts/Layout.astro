@@ -25,6 +25,7 @@ const {
     <!-- Start cookieyes banner --> 
     <script id="cookieyes" type="text/javascript" src="https://cdn-cookieyes.com/client_data/9f0e347f752a5c179f39585d/script.js"></script> 
     <!-- End cookieyes banner -->
+    
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     
@@ -94,14 +95,83 @@ const {
     }
     </script>
 
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-RCYZ4N1WPT"></script>
+    <!-- Google Analytics - Managed by CookieYes -->
     <script is:inline>
+      // Initialize dataLayer and gtag function
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
+      
+      // Initialize gtag with analytics_storage denied by default
+      gtag('consent', 'default', {
+        'analytics_storage': 'denied'
+      });
+      
+      // Initialize gtag config early with minimal data
       gtag('js', new Date());
-
-      gtag('config', 'G-RCYZ4N1WPT');
+      gtag('config', 'G-RCYZ4N1WPT', {
+        'analytics_storage': 'denied'
+      });
+      
+      // Function to load GA script if not already loaded
+      function loadGoogleAnalytics() {
+        if (!document.querySelector('script[src*="googletagmanager.com/gtag/js"]')) {
+          var script = document.createElement('script');
+          script.async = true;
+          script.src = 'https://www.googletagmanager.com/gtag/js?id=G-RCYZ4N1WPT';
+          document.head.appendChild(script);
+        }
+      }
+      
+      // Function to enable analytics
+      function enableAnalytics() {
+        gtag('consent', 'update', {
+          'analytics_storage': 'granted'
+        });
+        
+        // Reinitialize config with full tracking
+        gtag('config', 'G-RCYZ4N1WPT', {
+          'analytics_storage': 'granted',
+          'anonymize_ip': true
+        });
+      }
+      
+      // Function to disable analytics
+      function disableAnalytics() {
+        gtag('consent', 'update', {
+          'analytics_storage': 'denied'
+        });
+      }
+      
+      // CookieYes event handlers
+      document.addEventListener('cookieyes_consent_update', function(e) {
+        var consent = e.detail;
+        if (consent.analytics === 'yes') {
+          loadGoogleAnalytics();
+          enableAnalytics();
+        } else {
+          disableAnalytics();
+        }
+      });
+      
+      // Check for existing consent on page load
+      function checkExistingConsent() {
+        if (window.cookieyes) {
+          var analyticsConsent = window.cookieyes.getItem('analytics');
+          if (analyticsConsent === 'yes') {
+            loadGoogleAnalytics();
+            enableAnalytics();
+          }
+        }
+      }
+      
+      // Wait for CookieYes to be ready
+      if (window.cookieyes) {
+        checkExistingConsent();
+      } else {
+        document.addEventListener('DOMContentLoaded', function() {
+          setTimeout(checkExistingConsent, 100);
+        });
+      }
     </script>
     
     <ClientRouter />  

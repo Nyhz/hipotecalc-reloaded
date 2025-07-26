@@ -1,7 +1,20 @@
-// Hook para Google Analytics 4
+// Hook para Google Analytics 4 with CookieYes consent
 export const useGoogleAnalytics = () => {
+  const hasAnalyticsConsent = () => {
+    // Check if CookieYes exists and analytics consent is given
+    return (
+      typeof window !== "undefined" &&
+      (window as any).cookieyes &&
+      (window as any).cookieyes.getItem("analytics") === "yes"
+    )
+  }
+
+  const isGtagLoaded = () => {
+    return typeof window !== "undefined" && (window as any).gtag
+  }
+
   const trackEvent = (eventName: string, parameters?: Record<string, any>) => {
-    if (typeof window !== "undefined" && (window as any).gtag) {
+    if (isGtagLoaded() && hasAnalyticsConsent()) {
       ;(window as any).gtag("event", eventName, {
         event_category: "engagement",
         event_label: "user_interaction",
@@ -11,28 +24,33 @@ export const useGoogleAnalytics = () => {
   }
 
   const trackPageView = (pagePath: string, pageTitle?: string) => {
-    if (typeof window !== "undefined" && (window as any).gtag) {
+    if (isGtagLoaded() && hasAnalyticsConsent()) {
       ;(window as any).gtag("config", "G-RCYZ4N1WPT", {
         page_path: pagePath,
         page_title: pageTitle,
+        analytics_storage: "granted",
       })
     }
   }
 
   const trackCalculatorUsage = (calculatorType: string, action: string) => {
-    trackEvent("calculator_usage", {
-      calculator_type: calculatorType,
-      action: action,
-      event_category: "tools",
-    })
+    if (hasAnalyticsConsent()) {
+      trackEvent("calculator_usage", {
+        calculator_type: calculatorType,
+        action: action,
+        event_category: "tools",
+      })
+    }
   }
 
   const trackContactAttempt = (source: string) => {
-    trackEvent("contact_attempt", {
-      contact_source: source,
-      event_category: "conversion",
-      value: 1,
-    })
+    if (hasAnalyticsConsent()) {
+      trackEvent("contact_attempt", {
+        contact_source: source,
+        event_category: "conversion",
+        value: 1,
+      })
+    }
   }
 
   return {
@@ -40,5 +58,6 @@ export const useGoogleAnalytics = () => {
     trackPageView,
     trackCalculatorUsage,
     trackContactAttempt,
+    hasAnalyticsConsent,
   }
 }
