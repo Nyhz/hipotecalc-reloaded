@@ -10,13 +10,13 @@ export const tools = [
     active: true,
   },
   {
-    icon: "lucide:house",
-    title: "Calculadora Alquiler",
-    label: "Calculadora Alquiler",
+    icon: "lucide:calculator",
+    title: "Calculadora de Alquiler",
+    label: "Calculadora de Alquiler",
     description:
-      "Estima el coste total de tu alquiler, incluyendo fianza y honorarios de agencia.",
+      "Analiza la rentabilidad de tu inversión inmobiliaria. Calcula ROI, cash flow y más métricas clave.",
     href: "/calculadora-alquiler",
-    nav: false,
-    active: false,
+    nav: true,
+    active: true,
   },
 ]

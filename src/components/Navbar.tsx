@@ -43,7 +43,9 @@ export default function Navbar() {
           </div>
 
           {/* Botón de contacto a la derecha */}
-          <ContactButton variant='desktop' />
+          <div className='flex justify-end'>
+            <ContactButton variant='desktop' />
+          </div>
         </div>
 
         {/* Mobile Layout */}
