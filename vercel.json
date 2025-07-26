@@ -27,24 +27,11 @@
       ]
     },
     {
-      "source": "/.*\\.(js|css|svg|png|jpg|jpeg|gif|ico|woff|woff2|ttf|eot|webp|avif)$",
+      "source": "/static/(.*)",
       "headers": [
         {
           "key": "Cache-Control",
           "value": "public, max-age=31536000, immutable"
-        },
-        {
-          "key": "Vary",
-          "value": "Accept-Encoding"
-        }
-      ]
-    },
-    {
-      "source": "/.*\\.(html|htm)$",
-      "headers": [
-        {
-          "key": "Cache-Control",
-          "value": "public, max-age=3600, s-maxage=86400"
         },
         {
           "key": "Vary",
