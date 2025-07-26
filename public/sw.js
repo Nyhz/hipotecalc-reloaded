@@ -6,7 +6,7 @@ const DYNAMIC_CACHE = "hipotecalc-dynamic-v1"
 const urlsToCache = [
   "/",
   "/calculadora-hipotecaria",
-  "/favicon.png",
+  "/favicon.svg",
   "/og-image.svg",
 ]
 

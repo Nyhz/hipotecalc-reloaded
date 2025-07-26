@@ -1,8 +1,8 @@
 // Hook para Google Analytics 4
 export const useGoogleAnalytics = () => {
   const trackEvent = (eventName: string, parameters?: Record<string, any>) => {
-    if (typeof window !== "undefined" && window.gtag) {
-      window.gtag("event", eventName, {
+    if (typeof window !== "undefined" && (window as any).gtag) {
+      ;(window as any).gtag("event", eventName, {
         event_category: "engagement",
         event_label: "user_interaction",
         ...parameters,
@@ -11,8 +11,8 @@ export const useGoogleAnalytics = () => {
   }
 
   const trackPageView = (pagePath: string, pageTitle?: string) => {
-    if (typeof window !== "undefined" && window.gtag) {
-      window.gtag("config", "G-RCYZ4N1WPT", {
+    if (typeof window !== "undefined" && (window as any).gtag) {
+      ;(window as any).gtag("config", "G-RCYZ4N1WPT", {
         page_path: pagePath,
         page_title: pageTitle,
       })
@@ -49,13 +49,5 @@ export const useGoogleAnalytics = () => {
     trackButtonClick,
     trackCalculatorUsage,
     trackContactAttempt,
-  }
-}
-
-// Declaración de tipos para TypeScript
-declare global {
-  interface Window {
-    gtag: (command: string, targetId: string, config?: any) => void
-    dataLayer: any[]
   }
 }

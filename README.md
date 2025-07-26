@@ -95,7 +95,7 @@ Inside of your Astro project, you'll see the following folders and files:
 ```text
 /
 ├── public/
-│   └── favicon.png
+│   └── favicon.svg
 ├── src
 │   ├── assets
 │   │   └── astro.svg
