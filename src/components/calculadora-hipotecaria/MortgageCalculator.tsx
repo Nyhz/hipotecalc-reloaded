@@ -19,6 +19,7 @@ import ITPCalculator from "./ITPCalculator"
 import MortgageSummaryCharts from "./MortgageSummaryCharts"
 import ContactButton from "../ContactButton"
 import SensitivityTable from "./SensitivityTable"
+import { useGoogleAnalytics } from "../../hooks/useGoogleAnalytics"
 
 const tiposVivienda = ["Obra nueva", "Segunda mano"]
 const tiposHipoteca = ["Fija", "Variable", "Mixta"]
@@ -42,6 +43,7 @@ const initialState = {
 }
 
 const MortgageCalculator: React.FC = () => {
+  const { trackCalculatorUsage } = useGoogleAnalytics()
   const [showItpModal, setShowItpModal] = useState(false)
   const [form, setForm] = useState(initialState)
 
@@ -182,6 +184,11 @@ const MortgageCalculator: React.FC = () => {
   ) => {
     const { name, value } = e.target
 
+    // Track calculator usage for important fields
+    if (['precio', 'ahorro', 'tae', 'plazo'].includes(name) && value) {
+      trackCalculatorUsage('mortgage', `field_updated_${name}`)
+    }
+
     // Validación para prevenir valores negativos en campos numéricos
     if (
       ["precio", "tasacion", "otrosCostes", "ahorro", "tae", "plazo", "diferencial", "periodoAnalisis"].includes(
@@ -199,6 +206,7 @@ const MortgageCalculator: React.FC = () => {
       setItpCalculado(false)
       setItpTipoAplicado(null)
       setItpDescripcion("")
+      trackCalculatorUsage('mortgage', `property_type_changed_${value}`)
     }
 
     setForm((prev) => ({ ...prev, [name]: value }))

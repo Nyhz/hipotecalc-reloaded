@@ -1,6 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import MortgageCalculator from '../components/calculadora-hipotecaria/MortgageCalculator'
+import PageTracking from '../components/PageTracking.tsx';
 
 ---
 
@@ -9,5 +10,6 @@ import MortgageCalculator from '../components/calculadora-hipotecaria/MortgageCa
   description="Calculadora hipotecaria completa para España. Calcula cuotas mensuales, ITP, impuestos de vivienda, porcentaje financiado y costes totales. Incluye todas las comunidades autónomas."
   keywords="calculadora hipoteca avanzada, ITP calculadora, cuota hipoteca, impuesto transmisiones patrimoniales, calculadora vivienda españa, hipoteca fija variable"
 >
+    <PageTracking client:load pagePath="/calculadora-hipotecaria" pageTitle="Calculadora Hipotecaria Avanzada" />
     <MortgageCalculator client:only="react" />
 </Layout>

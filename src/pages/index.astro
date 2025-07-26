@@ -4,12 +4,14 @@ import { tools } from '../constants/tools';
 import Hero from '../components/home/Hero.astro';
 import Layout from '../layouts/Layout.astro';
 import EuriborChart from '../components/home/EuriborChart';
+import PageTracking from '../components/PageTracking.tsx';
 ---
 <Layout 
   title="Calculadora Hipotecaria España - Herramientas Financieras Gratuitas"
   description="Calculadora hipotecaria profesional para España. Calcula tu hipoteca, ITP, impuestos de vivienda y consulta la evolución del Euribor. Herramientas financieras gratuitas y precisas."
   keywords="calculadora hipoteca españa, ITP, impuesto transmisiones patrimoniales, euribor, calculadora alquiler, herramientas financieras, comprar casa españa"
 >
+  <PageTracking client:load pagePath="/" pageTitle="Calculadora Hipotecaria España - Home" />
   <Hero
     title="Calculadora Hipotecaria"
     description="Herramientas profesionales para calcular tu hipoteca, alquiler o ITP en España. Precisión, rapidez y confianza para tus decisiones financieras."

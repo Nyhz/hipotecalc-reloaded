@@ -17,7 +17,7 @@ const {
   description = "Calculadora hipotecaria, de alquiler e ITP para España. Herramientas financieras precisas y profesionales para calcular tu hipoteca, impuestos y más.",
   keywords = "calculadora hipoteca, calculadora alquiler, calculadora ITP, finanzas, España, euribor, impuestos, vivienda",
   ogImage = "/og-image.svg",
-  canonicalURL = Astro.url.href
+  canonicalURL = 'https://www.hipotecalc.com'
 } = Astro.props;
 ---
 <html lang="es">
@@ -84,6 +84,16 @@ const {
       },
       "keywords": "calculadora hipoteca, ITP, impuestos, vivienda, España, euribor"
     }
+    </script>
+
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-BB1WE4FZET"></script>
+    <script is:inline>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-BB1WE4FZET');
     </script>
     
     <ClientRouter />  
