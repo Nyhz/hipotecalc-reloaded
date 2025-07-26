@@ -15,9 +15,9 @@ export default function ContactButton({
   const handleClick = () => {
     // Track contact attempt
     trackContactAttempt(`navbar_${variant}`)
-    
+
     // Track general button click
-    trackButtonClick('contact_broker', `navbar_${variant}`)
+    trackButtonClick("contact_broker", `navbar_${variant}`)
   }
   const baseClasses =
     "bg-blue-600 hover:bg-blue-700 text-white font-medium border border-blue-600 hover:border-blue-700 rounded-lg shadow-sm hover:shadow-md transition-all duration-200 cursor-pointer transform hover:-translate-y-0.5"
