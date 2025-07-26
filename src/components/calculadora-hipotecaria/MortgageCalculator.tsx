@@ -22,7 +22,7 @@ import SensitivityTable from "./SensitivityTable"
 import { useGoogleAnalytics } from "../../hooks/useGoogleAnalytics"
 
 const tiposVivienda = ["Obra nueva", "Segunda mano"]
-const tiposHipoteca = ["Fija", "Variable", "Mixta"]
+const tiposHipoteca = ["Fija", "Variable"] // TODO: Añadir MIXTA.
 
 const inputClass =
   "border border-blue-200 bg-white rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400 w-full"
