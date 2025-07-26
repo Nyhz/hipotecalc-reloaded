@@ -117,10 +117,8 @@ const {
                 if (newWorker) {
                   newWorker.addEventListener('statechange', () => {
                     if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
-                      // Performance update available
-                      console.log('Performance improvements available');
-                      // Auto-refresh for better performance (no user prompt needed)
-                      setTimeout(() => window.location.reload(), 1000);
+                      // Performance update available - do NOT auto-reload to preserve bfcache
+                      console.log('Performance improvements available - will apply on next navigation');
                     }
                   });
                 }
@@ -131,19 +129,26 @@ const {
             });
         });
         
-        // Listen for performance messages
-        navigator.serviceWorker.addEventListener('message', (event) => {
+        // Listen for performance messages (bfcache-safe)
+        const messageHandler = (event: MessageEvent) => {
           if (event.data && event.data.type === 'PERFORMANCE_UPDATED') {
             console.log('Performance cache updated');
           }
+        };
+        navigator.serviceWorker.addEventListener('message', messageHandler);
+        
+        // Clean up to prevent bfcache issues
+        window.addEventListener('pagehide', () => {
+          navigator.serviceWorker.removeEventListener('message', messageHandler);
         });
       }
       
-      // Back/forward cache optimization (performance only)
+      // bfcache-friendly pageshow handler
       window.addEventListener('pageshow', (event) => {
-        if (event.persisted && !navigator.serviceWorker.controller) {
-          // Only reload if SW is not handling performance
-          window.location.reload();
+        if (event.persisted) {
+          // Page was restored from bfcache - just log for debugging
+          console.log('Page restored from bfcache');
+          // Do NOT reload - let bfcache work properly
         }
       });
     </script>

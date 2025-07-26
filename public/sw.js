@@ -29,7 +29,8 @@ self.addEventListener("install", (event) => {
       })
       .then(() => {
         console.log("SW: Performance optimization ready")
-        return self.skipWaiting()
+        // Don't skip waiting to avoid bfcache issues
+        return Promise.resolve()
       })
   )
 })
@@ -56,7 +57,8 @@ self.addEventListener("activate", (event) => {
       })
       .then(() => {
         console.log("SW: Performance optimizations active")
-        return self.clients.claim()
+        // Don't claim clients immediately to avoid bfcache issues
+        return Promise.resolve()
       })
   )
 })
