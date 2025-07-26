@@ -1,12 +1,61 @@
 @import "tailwindcss";
 
+/* Font loading optimization to prevent FOIT/FOUT */
+@font-face {
+  font-family: "Roboto";
+  font-display: swap;
+  src: local("Roboto");
+}
+
 body {
-  font-family: "Roboto", sans-serif;
+  font-family: "Roboto", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+  font-display: swap;
+}
+
+/* Font display swap utility */
+.font-display-swap {
+  font-display: swap;
+}
+
+/* Size adjust for consistent layout */
+html {
+  size-adjust: 100%;
+  -webkit-size-adjust: 100%;
+  -moz-size-adjust: 100%;
 }
 
 /* CLS Prevention - Reserve space for transforms and animations */
 .hero-card-container {
   contain: layout style paint;
+}
+
+/* Optimize animations to prevent layout shifts */
+.will-change-transform {
+  will-change: transform;
+}
+
+.will-change-auto {
+  will-change: auto;
+}
+
+/* Ensure transforms don't affect layout */
+.transform-contained {
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
+}
+
+/* Layout stability for text content */
+.text-stable {
+  text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+  -moz-text-size-adjust: 100%;
+}
+
+/* Prevent layout shifts from font loading */
+.font-loading-stable {
+  font-synthesis: none;
+  font-kerning: none;
+  font-variant-ligatures: none;
 }
 
 /* Optimize animations to prevent layout shifts */
