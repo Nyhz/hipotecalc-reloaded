@@ -6,6 +6,7 @@
     "dev": "astro dev",
     "build": "astro build",
     "build:analyze": "astro build --verbose",
+    "build:dev": "astro build --mode development",
     "preview": "astro preview",
     "astro": "astro"
   },

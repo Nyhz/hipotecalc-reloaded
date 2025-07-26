@@ -23,14 +23,17 @@ export default defineConfig({
     plugins: [tailwindcss()],
     build: {
       minify: "terser",
+      sourcemap: true, // Enable source maps for debugging
       terserOptions: {
         compress: {
           drop_console: true,
           drop_debugger: true,
         },
+        sourceMap: true, // Ensure Terser maintains source maps
       },
       rollupOptions: {
         output: {
+          sourcemap: true, // Ensure Rollup generates source maps
           manualChunks: {
             "vendor-react": ["react", "react-dom"],
             "vendor-echarts": ["echarts", "echarts-for-react"],
