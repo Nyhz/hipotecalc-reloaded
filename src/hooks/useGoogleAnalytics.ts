@@ -12,7 +12,7 @@ export const useGoogleAnalytics = () => {
 
   const trackPageView = (pagePath: string, pageTitle?: string) => {
     if (typeof window !== "undefined" && window.gtag) {
-      window.gtag("config", "G-BB1WE4FZET", {
+      window.gtag("config", "G-RCYZ4N1WPT", {
         page_path: pagePath,
         page_title: pageTitle,
       })
