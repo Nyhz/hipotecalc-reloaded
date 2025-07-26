@@ -20,7 +20,7 @@ const { posts, title = 'Últimos Posts', description = 'Descubre las últimas no
   </div>
   <div class="grid grid-cols-1 md:grid-cols-3 gap-8 px-4">
     {posts.map(post => (
-      <article class="bg-white border border-blue-100 rounded-xl p-6 shadow-sm flex flex-col h-full">
+      <article class="border border-blue-100/30 rounded-xl p-6 shadow-sm flex flex-col h-full">
         <h3 class="text-xl font-semibold mb-2 text-blue-900">{post.title}</h3>
         <p class="text-blue-800 mb-4">{post.excerpt}</p>
         <a href={post.href} class="mt-auto text-blue-600 font-semibold hover:underline flex items-center gap-1 cursor-pointer" aria-label={`Leer más sobre ${post.title}`}>Leer más <span aria-hidden="true">→</span></a>
