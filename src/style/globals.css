@@ -4,6 +4,26 @@ body {
   font-family: "Roboto", sans-serif;
 }
 
+/* CLS Prevention - Reserve space for transforms and animations */
+.hero-card-container {
+  contain: layout style paint;
+}
+
+/* Optimize animations to prevent layout shifts */
+.will-change-transform {
+  will-change: transform;
+}
+
+.will-change-auto {
+  will-change: auto;
+}
+
+/* Ensure transforms don't affect layout */
+.transform-contained {
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
+}
+
 /* Animación shimmer para el botón de contacto */
 @keyframes shimmer {
   0% {
