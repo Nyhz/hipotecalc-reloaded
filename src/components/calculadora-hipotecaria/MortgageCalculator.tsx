@@ -36,7 +36,7 @@ const initialState = {
   otrosCostes: "",
   ahorro: "",
   tipoHipoteca: "Fija",
-  tae: "",
+  tae: "2.0",
   plazo: "30",
   diferencial: "1.0",
   periodoAnalisis: "10",
