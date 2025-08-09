@@ -1,5 +1,7 @@
 import { referalLink } from "../constants/referal"
 import { useGoogleAnalytics } from "../hooks/useGoogleAnalytics"
+import { getCurrentLang } from "../utils/i18n"
+import { useState, useEffect } from "react"
 
 interface ContactButtonProps {
   variant?: "desktop" | "mobile"
@@ -11,6 +13,11 @@ export default function ContactButton({
   className = "",
 }: ContactButtonProps) {
   const { trackContactAttempt } = useGoogleAnalytics()
+  const [currentLang, setCurrentLang] = useState<'es' | 'en'>('es')
+
+  useEffect(() => {
+    setCurrentLang(getCurrentLang(window.location.pathname))
+  }, [])
 
   const handleClick = () => {
     // Track contact attempt
@@ -25,8 +32,8 @@ export default function ContactButton({
   }
 
   const text = {
-    desktop: "Contacta con nuestro broker",
-    mobile: "Contactar",
+    desktop: currentLang === 'en' ? "Contact our broker" : "Contacta con nuestro broker",
+    mobile: currentLang === 'en' ? "Contact" : "Contactar",
   }
 
   return (

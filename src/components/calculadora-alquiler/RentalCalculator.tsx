@@ -5,6 +5,7 @@ import Input from "./Input"
 import Select from "./Select"
 import RentalKPIs from "./RentalKPIs"
 import RentalCharts from "./RentalCharts"
+import { useTranslations } from "../../hooks/useTranslations"
 
 const inputClass = "w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
 const inputReadOnlyClass = inputClass + " bg-gray-100"
@@ -23,7 +24,12 @@ const initialState = {
   gastosMensuales: "",
 }
 
-const RentalCalculator: React.FC = () => {
+interface RentalCalculatorProps {
+  lang?: 'es' | 'en'
+}
+
+const RentalCalculator: React.FC<RentalCalculatorProps> = ({ lang = 'es' }) => {
+  const { t } = useTranslations(lang)
   const [form, setForm] = useState(initialState)
 
   // Cálculos memoizados que se recalculan automáticamente cuando cambian los inputs
@@ -111,44 +117,44 @@ const RentalCalculator: React.FC = () => {
       {/* Datos de la Propiedad */}
       <div className="bg-white rounded-xl shadow-lg p-6 border border-blue-100">
         <h2 className="text-xl font-bold text-blue-900 mb-6">
-          Datos de la Propiedad
+          {t('rental.form.propertyDetails')}
         </h2>
         <div className="space-y-4">
           <Input
-            label="Precio Total (incl. impuestos) (€)"
+            label={t('rental.form.propertyPrice')}
             name="precio"
             value={form.precio}
             onChange={handleChange}
             type="number"
             min={0}
-            placeholder="Ej: 200000"
+            placeholder={`${t('mortgage.form.itpModal.examplePlaceholder')} 200000`}
             className={inputClass}
             showEuroSymbol={true}
           />
           <Input
-            label="Entrada (€)"
+            label={t('mortgage.form.downPaymentAmountLabel')}
             name="entrada"
             value={form.entrada}
             onChange={handleChange}
             type="number"
             min={0}
-            placeholder="Ej: 40000"
+            placeholder={`${t('mortgage.form.itpModal.examplePlaceholder')} 40000`}
             className={inputClass}
             showEuroSymbol={true}
           />
           <Input
-            label="Interés (%)"
+            label={t('rental.form.interestRate')}
             name="interes"
             value={form.interes}
             onChange={handleChange}
             type="number"
             min={0}
             step={0.01}
-            placeholder="Ej: 2.5"
+            placeholder={`${t('mortgage.form.itpModal.examplePlaceholder')} 2.5`}
             className={inputClass}
           />
           <Select
-            label="Comunidad Autónoma"
+            label={t('mortgage.form.autonomousCommunity')}
             name="comunidad"
             value={form.comunidad}
             onChange={handleChange}
@@ -156,14 +162,14 @@ const RentalCalculator: React.FC = () => {
             className={inputClass}
           />
           <Input
-            label="Plazo (años)"
+            label={t('rental.form.loanTerm')}
             name="plazo"
             value={form.plazo}
             onChange={handleChange}
             type="number"
             min={1}
             max={40}
-            placeholder="Ej: 30"
+            placeholder={`${t('mortgage.form.itpModal.examplePlaceholder')} 30`}
             className={inputClass}
           />
           
@@ -176,13 +182,13 @@ const RentalCalculator: React.FC = () => {
               </span>
             </div>
             <div className="flex justify-between items-center">
-              <span className="text-gray-600">Cantidad hipoteca:</span>
+              <span className="text-gray-600">{t('mortgage.form.mortgageAmount')}:</span>
               <span className="font-semibold text-gray-900">
                 {new Intl.NumberFormat("es-ES").format(calculations.cantidadHipoteca)} €
               </span>
             </div>
             <div className="flex justify-between items-center">
-              <span className="text-gray-600">Cuota mensual:</span>
+              <span className="text-gray-600">{t('mortgage.form.monthlyPaymentLabel')}:</span>
               <span className="font-semibold text-gray-900">
                 {new Intl.NumberFormat("es-ES").format(calculations.cuotaMensual)} €
               </span>
@@ -194,39 +200,39 @@ const RentalCalculator: React.FC = () => {
       {/* Detalles del Alquiler */}
       <div className="bg-white rounded-xl shadow-lg p-6 border border-blue-100">
         <h2 className="text-xl font-bold text-blue-900 mb-6">
-          Detalles del Alquiler
+          {t('rental.form.rentalDetails')}
         </h2>
         <div className="space-y-4">
           <Input
-            label="Alquiler Mensual (€)"
+            label={t('rental.form.monthlyRentLabel')}
             name="alquilerMensual"
             value={form.alquilerMensual}
             onChange={handleChange}
             type="number"
             min={0}
-            placeholder="Ej: 1000"
+            placeholder={`${t('mortgage.form.itpModal.examplePlaceholder')} 1000`}
             className={inputClass}
             showEuroSymbol={true}
           />
           <Input
-            label="Ocupación (%)"
+            label={t('rental.form.occupancyRate')}
             name="ocupacion"
             value={form.ocupacion}
             onChange={handleChange}
             type="number"
             min={0}
             max={100}
-            placeholder="Ej: 100"
+            placeholder={`${t('mortgage.form.itpModal.examplePlaceholder')} 100`}
             className={inputClass}
           />
           <Input
-            label="Gastos Mensuales (€)"
+            label={t('rental.form.monthlyExpensesLabel')}
             name="gastosMensuales"
             value={form.gastosMensuales}
             onChange={handleChange}
             type="number"
             min={0}
-            placeholder="Ej: 50"
+            placeholder={`${t('mortgage.form.itpModal.examplePlaceholder')} 50`}
             className={inputClass}
             showEuroSymbol={true}
           />
@@ -234,13 +240,13 @@ const RentalCalculator: React.FC = () => {
           {/* Información calculada */}
           <div className="bg-gray-50 rounded-lg p-4 space-y-2">
             <div className="flex justify-between items-center">
-              <span className="text-gray-600">Ingresos mensuales:</span>
+              <span className="text-gray-600">{t('rental.form.monthlyIncome')}:</span>
               <span className="font-semibold text-gray-900">
                 {new Intl.NumberFormat("es-ES").format(calculations.ingresosMensuales)} €
               </span>
             </div>
             <div className="flex justify-between items-center">
-              <span className="text-gray-600">Cash flow mensual:</span>
+              <span className="text-gray-600">{t('rental.results.cashFlowLabel')}:</span>
               <span className={`font-semibold ${calculations.cashFlowMensual >= 0 ? 'text-green-600' : 'text-red-600'}`}>
                 {new Intl.NumberFormat("es-ES").format(calculations.cashFlowMensual)} €
               </span>
@@ -251,12 +257,12 @@ const RentalCalculator: React.FC = () => {
 
       {/* KPIs */}
       <div className="lg:col-span-2">
-        <RentalKPIs calculations={calculations} />
+        <RentalKPIs calculations={calculations} lang={lang} />
       </div>
 
       {/* Gráficas */}
       <div className="lg:col-span-2">
-        <RentalCharts calculations={calculations} form={form} />
+        <RentalCharts calculations={calculations} form={form} lang={lang} />
       </div>
     </div>
   )

@@ -1,4 +1,5 @@
 import React from "react"
+import { useTranslations } from "../../hooks/useTranslations"
 
 interface Option {
   value: string
@@ -22,10 +23,14 @@ const Select: React.FC<SelectProps> = ({
   value,
   onChange,
   options,
-  placeholder = "Selecciona",
+  placeholder,
   className,
   readOnly,
-}) => (
+}) => {
+  const { t } = useTranslations()
+  const defaultPlaceholder = placeholder || t('mortgage.form.itpModal.selectOption')
+  
+  return (
   <div>
     <label className='block text-sm font-medium mb-1' htmlFor={name}>
       {label}
@@ -38,7 +43,7 @@ const Select: React.FC<SelectProps> = ({
       className={(className ? className + " " : "") + "py-2 h-10"}
       disabled={readOnly}
     >
-      <option value=''>{placeholder}</option>
+      <option value=''>{defaultPlaceholder}</option>
       {options.map((opt) => (
         <option key={opt.value} value={opt.value}>
           {opt.label}
@@ -46,6 +51,7 @@ const Select: React.FC<SelectProps> = ({
       ))}
     </select>
   </div>
-)
+  )
+}
 
 export default Select

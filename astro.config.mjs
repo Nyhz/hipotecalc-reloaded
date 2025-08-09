@@ -5,6 +5,7 @@ import compress from "astro-compress"
 import sitemap from "@astrojs/sitemap"
 import vercel from "@astrojs/vercel"
 
+
 import icon from "astro-icon"
 
 import react from "@astrojs/react"
@@ -48,6 +49,7 @@ export default defineConfig({
     icon(),
     react(),
     sitemap(),
+
     compress({
       CSS: true,
       HTML: true,

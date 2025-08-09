@@ -1,0 +1,15 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import MortgageCalculatorComponent from '../../components/calculadora-hipotecaria/MortgageCalculator'
+import PageTracking from '../../components/PageTracking.tsx';
+import { t } from '../../utils/i18n';
+---
+
+<Layout 
+  title={t('seo.mortgage.title', 'en')}
+  description={t('seo.mortgage.description', 'en')}
+  keywords={t('seo.mortgage.keywords', 'en')}
+>
+    <PageTracking client:load pagePath="/en/mortgage-calculator" pageTitle={t('seo.mortgage.title', 'en')} />
+    <MortgageCalculatorComponent client:only="react" />
+</Layout>

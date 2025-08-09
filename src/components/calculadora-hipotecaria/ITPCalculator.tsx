@@ -5,6 +5,7 @@ import {
   calcularITPAvanzado,
   calcularIVA,
 } from "../../utils/calculadora-hipotecaria"
+import { useTranslations } from "../../hooks/useTranslations"
 
 interface ITPCalculatorProps {
   open: boolean
@@ -72,6 +73,7 @@ const ITPCalculator: React.FC<ITPCalculatorProps> = ({
   onComunidadChange,
   onTipoViviendaChange,
 }) => {
+  const { t } = useTranslations()
   const [form, setForm] = useState({
     ...initialForm,
     comunidad: comunidadSeleccionada || "",
@@ -227,7 +229,7 @@ const ITPCalculator: React.FC<ITPCalculatorProps> = ({
   return (
     <Modal open={open} onClose={onClose}>
       <h2 className='text-xl font-bold text-blue-900 mb-4'>
-        {esObraNueva ? "Calculadora IVA" : "Calculadora ITP Avanzada"}
+        {esObraNueva ? t('mortgage.form.itpModal.vatTitle') : t('mortgage.form.itpModal.title')}
       </h2>
       {error && <div className='mb-2 text-red-600 text-sm'>{error}</div>}
       <form
@@ -239,12 +241,12 @@ const ITPCalculator: React.FC<ITPCalculatorProps> = ({
       >
         <fieldset className='border border-blue-100 rounded-lg p-4'>
           <legend className='font-semibold text-blue-900 mb-2'>
-            Información de la Vivienda
+            {t('mortgage.form.itpModal.propertyInformation')}
           </legend>
           <div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
             <div>
               <label className='block text-sm font-medium text-blue-900 mb-1'>
-                Precio de la vivienda (€)
+                {t('mortgage.form.itpModal.propertyPrice')}
               </label>
               <input
                 type='number'
@@ -292,7 +294,7 @@ const ITPCalculator: React.FC<ITPCalculatorProps> = ({
             </div>
             <div>
               <label className='block text-sm font-medium text-blue-900 mb-1'>
-                Tipo de vivienda
+                {t('mortgage.form.itpModal.propertyType')}
               </label>
               <select
                 name='tipoVivienda'
@@ -300,15 +302,15 @@ const ITPCalculator: React.FC<ITPCalculatorProps> = ({
                 onChange={handleInput}
                 className='w-full border border-blue-200 rounded px-3 py-2 h-10'
               >
-                <option value=''>Selecciona</option>
-                <option value='Obra nueva'>Obra nueva</option>
-                <option value='Segunda mano'>Segunda mano</option>
+                <option value=''>{t('mortgage.form.itpModal.select')}</option>
+                <option value='Obra nueva'>{t('mortgage.form.newConstruction')}</option>
+                <option value='Segunda mano'>{t('mortgage.form.secondHand')}</option>
               </select>
             </div>
             {!esObraNueva && (
               <div className='md:col-span-2'>
                 <label className='block text-sm font-medium text-blue-900 mb-1'>
-                  Comunidad Autónoma
+                  {t('mortgage.form.itpModal.autonomousCommunity')}
                 </label>
                 <select
                   name='comunidad'
@@ -316,7 +318,7 @@ const ITPCalculator: React.FC<ITPCalculatorProps> = ({
                   onChange={handleInput}
                   className='w-full border border-blue-200 rounded px-3 py-2 h-10'
                 >
-                  <option value=''>Selecciona</option>
+                  <option value=''>{t('mortgage.form.itpModal.select')}</option>
                   {COMUNIDADES.map((c) => (
                     <option key={c.nombre} value={c.nombre}>
                       {c.nombre} (ITP: {c.ITP}%)
@@ -334,11 +336,11 @@ const ITPCalculator: React.FC<ITPCalculatorProps> = ({
                     checked={form.vpo}
                     onChange={handleInput}
                   />
-                  ¿Es vivienda de protección oficial (VPO)?
+                  {t('mortgage.form.itpModal.vpoQuestion')}
                 </label>
                 {form.vpo && (
                   <p className='text-sm text-blue-600 mt-1'>
-                    Se aplicará IVA reducido del 4% en lugar del 10%
+                    {t('mortgage.form.itpModal.vpoInfo')}
                   </p>
                 )}
               </div>
@@ -349,13 +351,13 @@ const ITPCalculator: React.FC<ITPCalculatorProps> = ({
         {!esObraNueva && (
           <fieldset className='border border-blue-100 rounded-lg p-4'>
             <legend className='font-semibold text-blue-900 mb-2'>
-              Información del comprador
+              {t('mortgage.form.itpModal.buyerInformation')}
             </legend>
             <div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
               {camposDinamicos.edad && (
                 <div>
                   <label className='block text-sm font-medium text-blue-900 mb-1'>
-                    Edad del comprador (años)
+                    {t('mortgage.form.itpModal.ageLabel')}
                   </label>
                   <input
                     type='number'
@@ -372,7 +374,7 @@ const ITPCalculator: React.FC<ITPCalculatorProps> = ({
               {camposDinamicos.ingresos && (
                 <div>
                   <label className='block text-sm font-medium text-blue-900 mb-1'>
-                    Base imponible IRPF (€)
+                    {t('mortgage.form.itpModal.incomeLabel')}
                   </label>
                   <input
                     type='number'

@@ -1,5 +1,7 @@
 ---
 import { Icon } from 'astro-icon/components';
+import { t } from '../../utils/i18n';
+
 export interface Tool {
   icon: string;
   title: string;
@@ -9,8 +11,9 @@ export interface Tool {
 }
 export interface Props {
   tools: Tool[];
+  lang?: 'es' | 'en';
 }
-const { tools } = Astro.props;
+const { tools, lang = 'es' } = Astro.props;
 ---
 <section class="w-full mb-16">
   <div class="max-w-7xl mx-auto px-4 py-16">
@@ -30,7 +33,7 @@ const { tools } = Astro.props;
             <span class="text-xl font-bold mb-2 text-blue-900 group-hover:text-blue-700 transition-colors duration-200">{tool.title}</span>
             <p class="text-blue-800 mb-4 flex-grow group-hover:text-blue-600 transition-colors duration-200">{tool.description}</p>
             <span class="text-blue-600 font-semibold flex items-center gap-1 transition-all duration-200" aria-hidden="true">
-              Saber más <span aria-hidden="true">→</span>
+              {t('common.learnMore', lang)} <span aria-hidden="true">→</span>
             </span>
             <span class="sr-only">Enlace para acceder a {tool.title}</span>
           </a>
@@ -45,8 +48,8 @@ const { tools } = Astro.props;
             </div>
             <span class="text-xl font-bold mb-2 text-blue-700">{tool.title}</span>
             <p class="text-blue-600 mb-4 flex-grow">{tool.description}</p>
-            <span class="text-blue-400 font-semibold flex items-center gap-1 cursor-not-allowed" aria-label="Esta herramienta estará disponible próximamente">
-              Próximamente
+            <span class="text-blue-400 font-semibold flex items-center gap-1 cursor-not-allowed" aria-label={lang === 'en' ? 'This tool will be available soon' : 'Esta herramienta estará disponible próximamente'}>
+              {lang === 'en' ? 'Coming soon' : 'Próximamente'}
             </span>
           </div>
         )
