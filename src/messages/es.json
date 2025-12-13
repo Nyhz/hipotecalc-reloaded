@@ -32,6 +32,10 @@
         "title": "Calculadora de Alquiler",
         "description": "Analiza la rentabilidad de tu inversión inmobiliaria. Calcula ROI, cash flow y más métricas clave."
       }
+    },
+    "posts": {
+      "title": "Últimos Posts",
+      "description": "Descubre las últimas novedades, consejos y guías sobre hipotecas, alquiler e impuestos en España."
     }
   },
   "mortgage": {
@@ -75,6 +79,11 @@
       "scenario": "Escenario",
       "euribor": "Euribor (%)",
       "totalInterest": "Interés total (%)",
+      "scenarios": {
+        "historicalMinimum": "Mínimo histórico",
+        "current": "Actual",
+        "historicalMaximum": "Máximo histórico"
+      },
       "monthlyPayment": "Tu cuota mensual",
       "estimatedMonthlyPayment": "Cuota mensual estimada",
       "minimumHistorical": "Mínimo histórico",
@@ -128,7 +137,7 @@
         "numberOfChildren": "Número de hijos",
         "violenceVictim": "Víctima de violencia de género",
         "terrorismVictim": "Víctima de terrorismo",
-        "depopulatedArea": "Zona despoblada",
+        "depopulatedArea": "Vivienda en municipio con menos de 2.500 habitantes (Madrid)",
         "vpo": "VPO",
         "vpoQuestion": "¿Es vivienda de protección oficial (VPO)?",
         "vpoInfo": "Se aplicará IVA reducido del 4% en lugar del 10%",
@@ -139,12 +148,54 @@
         "appraisal": "Tasación (€)",
         "patrimony": "Patrimonio (€)",
         "residence": "Residencia (€)",
-        "previousSale": "Venta anterior",
+        "previousSale": "¿Venderá su vivienda anterior en los próximos 2 años? (requisito para familia numerosa en Madrid)",
         "calculate": "Calcular",
         "cancel": "Cancelar",
         "select": "Selecciona",
         "selectOption": "Selecciona",
-        "examplePlaceholder": "ej."
+        "examplePlaceholder": "ej.",
+        "errorInvalidPrice": "Introduce un precio válido.",
+        "errorNoCommunity": "Selecciona una comunidad autónoma.",
+        "vat10Description": "IVA 10% (obra nueva)",
+        "vat4Description": "IVA 4% (obra nueva, VPO)",
+        "examplePrice": "Ej: 250000",
+        "exampleAge": "Ej: 35",
+        "exampleIncome": "Ej: 32000",
+        "familySituation": "Situación familiar",
+        "individual": "Individual",
+        "largeFamilyGeneral": "Familia numerosa general",
+        "largeFamilySpecial": "Familia numerosa especial",
+        "singleParentFamily": "Familia monoparental",
+        "exampleChildren": "Ej: 3",
+        "exampleMortgage": "Ej: 200000",
+        "exampleAppraisal": "Ej: 240000",
+        "examplePatrimony": "Ej: 150000",
+        "exampleResidence": "Ej: 3",
+        "disabilityQuestion": "¿Tiene discapacidad reconocida?",
+        "calculateVAT": "Calcular IVA",
+        "calculateITP": "Calcular ITP",
+        "itpLabel": "ITP",
+        "descriptions": {
+          "invalidPrice": "Precio no válido",
+          "unspecifiedCommunity": "ITP {rate}% (comunidad no especificada)",
+          "generalRate": "ITP {rate}%",
+          "madridYoungExemption": "ITP 0% - Exención total para jóvenes <35 años en municipios <2.500 habitantes",
+          "madridLargeFamilyReduced": "ITP 4% - Tipo reducido para familia numerosa (vivienda habitual)",
+          "madridLargeFamilyGeneral": "ITP 6% - Tipo general (familia numerosa sin cumplir requisito de venta anterior)",
+          "madridFirstHomeDiscount": "ITP 5.4% - Bonificación del 10% sobre cuota (vivienda habitual ≤250.000€)",
+          "ceutaMelillaDiscount": "ITP {rate}% con bonificación del 50% ({community})",
+          "castillaLeonYoungRural": "ITP 0.01% (jóvenes en medio rural, Castilla y León)",
+          "madridYoungRural": "ITP 0% (jóvenes en municipios <2.500 hab, Madrid)",
+          "youngBuyer": "ITP {rate}% (jóvenes ≤35 años)",
+          "largeFamily": "ITP {rate}% (familia numerosa)",
+          "disability": "ITP {rate}% (discapacidad ≥65%)",
+          "genderViolence": "ITP {rate}% (víctima violencia de género)",
+          "galiciaRural": "ITP 0% (zona rural despoblada, Galicia)",
+          "ruralDepopulation": "ITP {rate}% (zona despoblada)",
+          "firstHome": "ITP {rate}% (primera vivienda habitual)",
+          "vpo": "ITP {rate}% (vivienda de protección oficial)",
+          "additionalDiscount": "con bonificación del {percentage}%"
+        }
       }
     },
     "results": {
@@ -237,7 +288,15 @@
     "secure": "Datos Seguros",
     "accurate": "Cálculos Precisos",
     "contact": "Contacta con nuestro broker",
-    "contactMobile": "Contactar"
+    "contactMobile": "Contactar",
+    "closeModal": "Cerrar modal",
+    "openCalculator": "Abrir calculadora",
+    "accessTool": "Acceder a",
+    "linkToAccess": "Enlace para acceder a",
+    "comingSoon": "Próximamente",
+    "toolComingSoon": "Esta herramienta estará disponible próximamente",
+    "readMore": "Leer más",
+    "readMoreAbout": "Leer más sobre"
   },
   "seo": {
     "home": {

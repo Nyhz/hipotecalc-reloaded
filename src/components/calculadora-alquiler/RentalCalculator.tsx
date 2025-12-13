@@ -31,6 +31,15 @@ interface RentalCalculatorProps {
 const RentalCalculator: React.FC<RentalCalculatorProps> = ({ lang = 'es' }) => {
   const { t } = useTranslations(lang)
   const [form, setForm] = useState(initialState)
+  
+  // Helper function to format numbers according to language (max 2 decimals for non-percentage values)
+  const formatNumber = (value: number): string => {
+    const locale = lang === 'en' ? 'en-US' : 'es-ES'
+    return new Intl.NumberFormat(locale, {
+      minimumFractionDigits: 0,
+      maximumFractionDigits: 2
+    }).format(value)
+  }
 
   // Cálculos memoizados que se recalculan automáticamente cuando cambian los inputs
   const calculations = useMemo(() => {
@@ -53,10 +62,16 @@ const RentalCalculator: React.FC<RentalCalculatorProps> = ({ lang = 'es' }) => {
     const numeroCuotas = plazoNum * 12
 
     // Cuota mensual de la hipoteca
-    const cuotaMensual = cantidadHipoteca > 0 && interesMensual > 0
-      ? (cantidadHipoteca * interesMensual * Math.pow(1 + interesMensual, numeroCuotas)) / 
-        (Math.pow(1 + interesMensual, numeroCuotas) - 1)
-      : 0
+    let cuotaMensual = 0
+    if (cantidadHipoteca > 0) {
+      if (interesMensual > 0) {
+        cuotaMensual = (cantidadHipoteca * interesMensual * Math.pow(1 + interesMensual, numeroCuotas)) / 
+          (Math.pow(1 + interesMensual, numeroCuotas) - 1)
+      } else {
+        // Si el interés es 0, la cuota es simplemente el monto dividido por el número de cuotas
+        cuotaMensual = cantidadHipoteca / numeroCuotas
+      }
+    }
 
     // Ingresos ajustados por ocupación
     const ingresosMensuales = alquilerMensualNum * (ocupacionNum / 100)
@@ -178,19 +193,19 @@ const RentalCalculator: React.FC<RentalCalculatorProps> = ({ lang = 'es' }) => {
             <div className="flex justify-between items-center">
               <span className="text-gray-600">ITP ({calculations.porcentajeITP}%):</span>
               <span className="font-semibold text-gray-900">
-                {new Intl.NumberFormat("es-ES").format(calculations.itp)} €
+                {formatNumber(calculations.itp)} €
               </span>
             </div>
             <div className="flex justify-between items-center">
               <span className="text-gray-600">{t('mortgage.form.mortgageAmount')}:</span>
               <span className="font-semibold text-gray-900">
-                {new Intl.NumberFormat("es-ES").format(calculations.cantidadHipoteca)} €
+                {formatNumber(calculations.cantidadHipoteca)} €
               </span>
             </div>
             <div className="flex justify-between items-center">
               <span className="text-gray-600">{t('mortgage.form.monthlyPaymentLabel')}:</span>
               <span className="font-semibold text-gray-900">
-                {new Intl.NumberFormat("es-ES").format(calculations.cuotaMensual)} €
+                {formatNumber(calculations.cuotaMensual)} €
               </span>
             </div>
           </div>
@@ -242,13 +257,13 @@ const RentalCalculator: React.FC<RentalCalculatorProps> = ({ lang = 'es' }) => {
             <div className="flex justify-between items-center">
               <span className="text-gray-600">{t('rental.form.monthlyIncome')}:</span>
               <span className="font-semibold text-gray-900">
-                {new Intl.NumberFormat("es-ES").format(calculations.ingresosMensuales)} €
+                {formatNumber(calculations.ingresosMensuales)} €
               </span>
             </div>
             <div className="flex justify-between items-center">
               <span className="text-gray-600">{t('rental.results.cashFlowLabel')}:</span>
               <span className={`font-semibold ${calculations.cashFlowMensual >= 0 ? 'text-green-600' : 'text-red-600'}`}>
-                {new Intl.NumberFormat("es-ES").format(calculations.cashFlowMensual)} €
+                {formatNumber(calculations.cashFlowMensual)} €
               </span>
             </div>
           </div>

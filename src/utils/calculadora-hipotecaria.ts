@@ -10,6 +10,9 @@ export { calcularITPAvanzado } from "./calculadora-itp"
 // Import Euribor data
 import { euriborData } from "../constants/euribor-values"
 
+// Import i18n for translations
+import { t, type Language } from "./i18n"
+
 // Mortgage calculator specific types and functions
 interface MortgageParams {
   precio: string
@@ -119,23 +122,27 @@ export const calcularInteresVariable = (euribor: number, diferencial: number): n
   return euribor + diferencial
 }
 
-export const crearTablaEscenarios = (diferencial: number, periodoAnalisis: number = 10) => {
+export const crearTablaEscenarios = (
+  diferencial: number, 
+  periodoAnalisis: number = 10,
+  lang: Language = 'es'
+) => {
   const euriborActual = getEuriborActual()
   const euriborHistorico = getEuriborHistorico(periodoAnalisis)
   
   return [
     {
-      escenario: "Mínimo histórico",
+      escenario: t('mortgage.form.scenarios.historicalMinimum', lang),
       euribor: euriborHistorico.min,
       interesTotal: calcularInteresVariable(euriborHistorico.min, diferencial)
     },
     {
-      escenario: "Actual",
+      escenario: t('mortgage.form.scenarios.current', lang),
       euribor: euriborActual,
       interesTotal: calcularInteresVariable(euriborActual, diferencial)
     },
     {
-      escenario: "Máximo histórico",
+      escenario: t('mortgage.form.scenarios.historicalMaximum', lang),
       euribor: euriborHistorico.max,
       interesTotal: calcularInteresVariable(euriborHistorico.max, diferencial)
     }

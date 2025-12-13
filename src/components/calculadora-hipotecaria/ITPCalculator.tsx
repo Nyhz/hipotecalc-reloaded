@@ -73,7 +73,7 @@ const ITPCalculator: React.FC<ITPCalculatorProps> = ({
   onComunidadChange,
   onTipoViviendaChange,
 }) => {
-  const { t } = useTranslations()
+  const { t, currentLang } = useTranslations()
   const [form, setForm] = useState({
     ...initialForm,
     comunidad: comunidadSeleccionada || "",
@@ -176,18 +176,18 @@ const ITPCalculator: React.FC<ITPCalculatorProps> = ({
     setError("")
     const precio = Number(form.precio)
     if (!precio || precio <= 0) {
-      setError("Introduce un precio válido.")
+      setError(t('mortgage.form.itpModal.errorInvalidPrice'))
       return
     }
 
     if (esObraNueva) {
       // Para obra nueva, calcular IVA con posible reducción por VPO
       let tipoIVA = 10
-      let descripcion = "IVA 10% (obra nueva)"
+      let descripcion = t('mortgage.form.itpModal.vat10Description')
 
       if (form.vpo) {
         tipoIVA = 4 // IVA reducido para VPO
-        descripcion = "IVA 4% (obra nueva, VPO)"
+        descripcion = t('mortgage.form.itpModal.vat4Description')
       }
 
       const iva = calcularIVA(precio, tipoIVA)
@@ -195,7 +195,7 @@ const ITPCalculator: React.FC<ITPCalculatorProps> = ({
     } else {
       // Para segunda mano, usar la función avanzada de ITP
       if (!comunidad) {
-        setError("Selecciona una comunidad autónoma.")
+        setError(t('mortgage.form.itpModal.errorNoCommunity'))
         return
       }
 
@@ -219,6 +219,7 @@ const ITPCalculator: React.FC<ITPCalculatorProps> = ({
         patrimonio: Number(form.patrimonio) || 0,
         residencia: Number(form.residencia) || 0,
         ventaAnterior: form.ventaAnterior,
+        lang: currentLang,
       })
       onResult(itp, tipoAplicado, descripcion)
     }
@@ -226,10 +227,13 @@ const ITPCalculator: React.FC<ITPCalculatorProps> = ({
     onClose()
   }
 
+  const titleText = esObraNueva ? t('mortgage.form.itpModal.vatTitle') : t('mortgage.form.itpModal.title')
+  const calculateButtonText = esObraNueva ? t('mortgage.form.itpModal.calculateVAT') : t('mortgage.form.itpModal.calculateITP')
+
   return (
     <Modal open={open} onClose={onClose}>
       <h2 className='text-xl font-bold text-blue-900 mb-4'>
-        {esObraNueva ? t('mortgage.form.itpModal.vatTitle') : t('mortgage.form.itpModal.title')}
+        {titleText}
       </h2>
       {error && <div className='mb-2 text-red-600 text-sm'>{error}</div>}
       <form
@@ -284,7 +288,7 @@ const ITPCalculator: React.FC<ITPCalculatorProps> = ({
                 }}
                 className='w-full border border-blue-200 rounded px-3 py-2 h-10 pr-8'
                 min={0}
-                placeholder='Ej: 250000'
+                placeholder={t('mortgage.form.itpModal.examplePrice')}
                 style={{
                   WebkitAppearance: "none",
                   MozAppearance: "textfield",
@@ -321,7 +325,7 @@ const ITPCalculator: React.FC<ITPCalculatorProps> = ({
                   <option value=''>{t('mortgage.form.itpModal.select')}</option>
                   {COMUNIDADES.map((c) => (
                     <option key={c.nombre} value={c.nombre}>
-                      {c.nombre} (ITP: {c.ITP}%)
+                      {c.nombre} ({t('mortgage.form.itpModal.itpLabel')}: {c.ITP}%)
                     </option>
                   ))}
                 </select>
@@ -366,7 +370,7 @@ const ITPCalculator: React.FC<ITPCalculatorProps> = ({
                     onChange={handleInput}
                     className='w-full border border-blue-200 rounded px-3 py-2 h-10'
                     min={0}
-                    placeholder='Ej: 35'
+                    placeholder={t('mortgage.form.itpModal.exampleAge')}
                   />
                 </div>
               )}
@@ -412,7 +416,7 @@ const ITPCalculator: React.FC<ITPCalculatorProps> = ({
                     }}
                     className='w-full border border-blue-200 rounded px-3 py-2 h-10 pr-8'
                     min={0}
-                    placeholder='Ej: 32000'
+                    placeholder={t('mortgage.form.itpModal.exampleIncome')}
                     style={{
                       WebkitAppearance: "none",
                       MozAppearance: "textfield",
@@ -425,7 +429,7 @@ const ITPCalculator: React.FC<ITPCalculatorProps> = ({
               {camposDinamicos.familiaNumerosa && (
                 <div className='md:col-span-2'>
                   <label className='block text-sm font-medium text-blue-900 mb-1'>
-                    Situación familiar
+                    {t('mortgage.form.itpModal.familySituation')}
                   </label>
                   <select
                     name='situacion'
@@ -433,16 +437,16 @@ const ITPCalculator: React.FC<ITPCalculatorProps> = ({
                     onChange={handleInput}
                     className='w-full border border-blue-200 rounded px-3 py-2 h-10'
                   >
-                    <option value=''>Selecciona</option>
-                    <option value='individual'>Individual</option>
+                    <option value=''>{t('mortgage.form.itpModal.select')}</option>
+                    <option value='individual'>{t('mortgage.form.itpModal.individual')}</option>
                     <option value='familia-numerosa-general'>
-                      Familia numerosa general
+                      {t('mortgage.form.itpModal.largeFamilyGeneral')}
                     </option>
                     <option value='familia-numerosa-especial'>
-                      Familia numerosa especial
+                      {t('mortgage.form.itpModal.largeFamilySpecial')}
                     </option>
                     <option value='familia-monoparental'>
-                      Familia monoparental
+                      {t('mortgage.form.itpModal.singleParentFamily')}
                     </option>
                   </select>
                 </div>
@@ -456,7 +460,7 @@ const ITPCalculator: React.FC<ITPCalculatorProps> = ({
               ].includes(form.situacion) && (
                 <div className='md:col-span-2'>
                   <label className='block text-sm font-medium text-blue-900 mb-1'>
-                    Número de hijos
+                    {t('mortgage.form.itpModal.numberOfChildren')}
                   </label>
                   <input
                     type='number'
@@ -465,7 +469,7 @@ const ITPCalculator: React.FC<ITPCalculatorProps> = ({
                     onChange={handleInput}
                     className='w-full border border-blue-200 rounded px-3 py-2 h-10'
                     min={0}
-                    placeholder='Ej: 3'
+                    placeholder={t('mortgage.form.itpModal.exampleChildren')}
                   />
                 </div>
               )}
@@ -474,7 +478,7 @@ const ITPCalculator: React.FC<ITPCalculatorProps> = ({
               {camposDinamicos.hipoteca && (
                 <div>
                   <label className='block text-sm font-medium text-blue-900 mb-1'>
-                    Importe hipoteca (€)
+                    {t('mortgage.form.itpModal.mortgageAmount')}
                   </label>
                   <input
                     type='number'
@@ -483,7 +487,7 @@ const ITPCalculator: React.FC<ITPCalculatorProps> = ({
                     onChange={handleInput}
                     className='w-full border border-blue-200 rounded px-3 py-2 h-10'
                     min={0}
-                    placeholder='Ej: 200000'
+                    placeholder={t('mortgage.form.itpModal.exampleMortgage')}
                   />
                 </div>
               )}
@@ -491,7 +495,7 @@ const ITPCalculator: React.FC<ITPCalculatorProps> = ({
               {camposDinamicos.tasacion && (
                 <div>
                   <label className='block text-sm font-medium text-blue-900 mb-1'>
-                    Valor tasación (€)
+                    {t('mortgage.form.itpModal.appraisal')}
                   </label>
                   <input
                     type='number'
@@ -500,7 +504,7 @@ const ITPCalculator: React.FC<ITPCalculatorProps> = ({
                     onChange={handleInput}
                     className='w-full border border-blue-200 rounded px-3 py-2 h-10'
                     min={0}
-                    placeholder='Ej: 240000'
+                    placeholder={t('mortgage.form.itpModal.exampleAppraisal')}
                   />
                 </div>
               )}
@@ -508,7 +512,7 @@ const ITPCalculator: React.FC<ITPCalculatorProps> = ({
               {camposDinamicos.patrimonio && (
                 <div>
                   <label className='block text-sm font-medium text-blue-900 mb-1'>
-                    Patrimonio neto (€)
+                    {t('mortgage.form.itpModal.patrimony')}
                   </label>
                   <input
                     type='number'
@@ -517,7 +521,7 @@ const ITPCalculator: React.FC<ITPCalculatorProps> = ({
                     onChange={handleInput}
                     className='w-full border border-blue-200 rounded px-3 py-2 h-10'
                     min={0}
-                    placeholder='Ej: 150000'
+                    placeholder={t('mortgage.form.itpModal.examplePatrimony')}
                   />
                 </div>
               )}
@@ -525,7 +529,7 @@ const ITPCalculator: React.FC<ITPCalculatorProps> = ({
               {camposDinamicos.residencia && (
                 <div>
                   <label className='block text-sm font-medium text-blue-900 mb-1'>
-                    Años de residencia
+                    {t('mortgage.form.itpModal.residence')}
                   </label>
                   <input
                     type='number'
@@ -534,7 +538,7 @@ const ITPCalculator: React.FC<ITPCalculatorProps> = ({
                     onChange={handleInput}
                     className='w-full border border-blue-200 rounded px-3 py-2 h-10'
                     min={0}
-                    placeholder='Ej: 3'
+                    placeholder={t('mortgage.form.itpModal.exampleResidence')}
                   />
                 </div>
               )}
@@ -555,7 +559,7 @@ const ITPCalculator: React.FC<ITPCalculatorProps> = ({
                           checked={form.discapacidad}
                           onChange={handleInput}
                         />
-                        ¿Tiene discapacidad reconocida?
+                        {t('mortgage.form.itpModal.disabilityQuestion')}
                       </label>
                       {form.discapacidad && (
                         <input
@@ -566,7 +570,7 @@ const ITPCalculator: React.FC<ITPCalculatorProps> = ({
                           className='w-full border border-blue-200 rounded px-3 py-2 h-10 mt-1'
                           min={0}
                           max={100}
-                          placeholder='% de discapacidad'
+                          placeholder={t('mortgage.form.itpModal.disabilityPercentage')}
                         />
                       )}
                     </>
@@ -581,7 +585,7 @@ const ITPCalculator: React.FC<ITPCalculatorProps> = ({
                           checked={form.victimaViolencia}
                           onChange={handleInput}
                         />
-                        ¿Es víctima de violencia de género?
+                        {t('mortgage.form.itpModal.violenceVictim')}
                       </label>
                       <label className='flex items-center gap-2'>
                         <input
@@ -590,7 +594,7 @@ const ITPCalculator: React.FC<ITPCalculatorProps> = ({
                           checked={form.victimaTerrorismo}
                           onChange={handleInput}
                         />
-                        ¿Es víctima de terrorismo?
+                        {t('mortgage.form.itpModal.terrorismVictim')}
                       </label>
                     </>
                   )}
@@ -603,8 +607,7 @@ const ITPCalculator: React.FC<ITPCalculatorProps> = ({
                         checked={form.zonaDespoblada}
                         onChange={handleInput}
                       />
-                      Vivienda en municipio con menos de 2.500 habitantes
-                      (Madrid)
+                      {t('mortgage.form.itpModal.depopulatedArea')}
                     </label>
                   )}
 
@@ -616,7 +619,7 @@ const ITPCalculator: React.FC<ITPCalculatorProps> = ({
                         checked={form.primeraVivienda}
                         onChange={handleInput}
                       />
-                      ¿Es su primera vivienda?
+                      {t('mortgage.form.itpModal.firstHome')}
                     </label>
                   )}
 
@@ -628,8 +631,7 @@ const ITPCalculator: React.FC<ITPCalculatorProps> = ({
                         checked={form.ventaAnterior}
                         onChange={handleInput}
                       />
-                      ¿Venderá su vivienda anterior en los próximos 2 años?
-                      (requisito para familia numerosa en Madrid)
+                      {t('mortgage.form.itpModal.previousSale')}
                     </label>
                   )}
                 </div>
@@ -643,7 +645,7 @@ const ITPCalculator: React.FC<ITPCalculatorProps> = ({
             type='submit'
             className='bg-blue-600 hover:bg-blue-700 text-white font-semibold px-6 py-2 rounded-lg shadow'
           >
-            {esObraNueva ? "Calcular IVA" : "Calcular ITP"}
+            {calculateButtonText}
           </button>
         </div>
       </form>
