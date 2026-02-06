@@ -24,12 +24,18 @@ const {
 const currentLang = getCurrentLang(Astro.url.pathname);
 const langAttribute = currentLang === 'en' ? 'en' : 'es';
 const ogLocale = currentLang === 'en' ? 'en_US' : 'es_ES';
+const isLocalEnv =
+  Astro.url.hostname === "localhost" || Astro.url.hostname === "127.0.0.1";
 ---
 <html lang={langAttribute}>
   <head>
-    <!-- Start cookieyes banner with error handling --> 
-    <script id="cookieyes" type="text/javascript" src="https://cdn-cookieyes.com/client_data/9f0e347f752a5c179f39585d/script.js" onerror="window.cookieYesBlocked = true;"></script> 
-    <!-- End cookieyes banner -->
+    {!isLocalEnv && (
+      <>
+        <!-- Start cookieyes banner with error handling -->
+        <script id="cookieyes" type="text/javascript" src="https://cdn-cookieyes.com/client_data/9f0e347f752a5c179f39585d/script.js" onerror="window.cookieYesBlocked = true;"></script>
+        <!-- End cookieyes banner -->
+      </>
+    )}
     
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
