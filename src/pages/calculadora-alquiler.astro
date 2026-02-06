@@ -11,10 +11,10 @@ import { t } from '../utils/i18n';
   keywords={t('seo.rental.keywords')}
 >
   <PageTracking client:load pagePath="/calculadora-alquiler" pageTitle={t('seo.rental.title')} />
-  <main class="w-full max-w-7xl mx-auto py-8">
-    <div class="w-full">
+  <main class="w-full max-w-7xl mx-auto py-8 ambient-section rounded-3xl">
+    <div class="ambient-content w-full">
       <!-- Header -->
-      <div class="text-center mb-6">
+      <div class="text-center mb-6 reveal-up">
         <span class="inline-flex rounded-full border border-blue-200 bg-blue-50 text-blue-700 px-4 py-1 text-xs font-semibold uppercase tracking-wider">
           {t('rental.title')}
         </span>
@@ -27,7 +27,9 @@ import { t } from '../utils/i18n';
       </div>
 
       <!-- Calculadora -->
-      <RentalCalculator client:load lang="es" />
+      <div class="reveal-up reveal-delay-1">
+        <RentalCalculator client:load lang="es" />
+      </div>
     </div>
   </main>
 </Layout> 

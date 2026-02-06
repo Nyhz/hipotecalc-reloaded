@@ -273,12 +273,12 @@ const MortgageCalculator: React.FC = () => {
   const requiereDespoblada = camposDinamicos.zonaDespoblada
 
   return (
-    <div className='calculator-shell flex flex-col md:flex-row gap-6 p-4 md:p-6 mt-8'>
+    <div className='calculator-shell flex flex-col xl:flex-row gap-6 p-4 md:p-6 mt-8'>
       <form
         className='flex-1 section-card p-5 md:p-6'
         autoComplete='off'
       >
-        <div className='grid grid-cols-1 lg:grid-cols-3 gap-6'>
+        <div className='grid grid-cols-1 lg:grid-cols-2 2xl:grid-cols-3 gap-6'>
           <fieldset className='section-card p-4'>
             <legend className='font-heading font-bold mb-3 text-slate-900 px-1'>
               {t('mortgage.form.propertyDetails')}
@@ -470,7 +470,7 @@ const MortgageCalculator: React.FC = () => {
               />
             </div>
           </fieldset>
-          <fieldset className='section-card p-4'>
+          <fieldset className='section-card p-4 lg:col-span-2 2xl:col-span-1'>
             <legend className='font-heading font-bold mb-3 text-slate-900 px-1'>
               {t('mortgage.form.financingAndConditions')}
             </legend>
@@ -624,7 +624,7 @@ const MortgageCalculator: React.FC = () => {
           itpDescripcion={itpDescripcion}
         />
       </form>
-      <aside className='w-full md:w-[23rem] panel-card p-5 md:p-6 flex flex-col gap-5'>
+      <aside className='w-full xl:w-[22rem] panel-card p-5 md:p-6 flex flex-col gap-5'>
         <h2 className='font-heading text-xl font-bold text-slate-900 mb-1'>
           {t('mortgage.form.monthlyPayment')}
         </h2>

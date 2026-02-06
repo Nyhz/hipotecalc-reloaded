@@ -17,7 +17,7 @@ const { tools, lang = 'es' } = Astro.props;
 ---
 <section class="w-full mb-16">
   <div class="max-w-7xl mx-auto py-12">
-    <div class="mb-8">
+    <div class="mb-8 reveal-up">
       <h2 class="font-heading text-3xl md:text-4xl font-extrabold text-slate-900">
         {lang === 'en' ? 'Financial Calculators' : 'Calculadoras Financieras'}
       </h2>
@@ -28,14 +28,15 @@ const { tools, lang = 'es' } = Astro.props;
       </p>
     </div>
     <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-      {tools.map(tool => (
+      {tools.map((tool, index) => (
         tool.active !== false && tool.href ? (
           <a 
             href={tool.href} 
-            class="surface-card p-8 flex flex-col items-start min-h-[250px] cursor-pointer group focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 hover:-translate-y-1 hover:shadow-xl transition-all duration-300"
+            class="surface-card reveal-up p-8 flex flex-col items-start min-h-[250px] cursor-pointer group focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 hover:-translate-y-1 hover:shadow-xl transition-all duration-300"
             aria-label={`${t('common.accessTool', lang)} ${tool.title}: ${tool.description}`}
             role="button"
             tabindex="0"
+            style={`animation-delay: ${90 + index * 80}ms;`}
           >
             <div class="mb-5 w-11 h-11 rounded-xl border border-blue-100 bg-blue-50 text-blue-700 flex items-center justify-center" aria-hidden="true">
               <Icon name={tool.icon} size={24} class="text-blue-700 group-hover:scale-110 transition-transform duration-200" />
@@ -53,9 +54,10 @@ const { tools, lang = 'es' } = Astro.props;
           </a>
         ) : (
           <div 
-            class="surface-card p-8 flex flex-col items-start min-h-[250px] opacity-60"
+            class="surface-card reveal-up p-8 flex flex-col items-start min-h-[250px] opacity-60"
             aria-label={`${tool.title}: ${t('common.comingSoon', lang)}`}
             role="region"
+            style={`animation-delay: ${90 + index * 80}ms;`}
           >
             <div class="mb-5 w-11 h-11 rounded-xl border border-slate-200 bg-slate-100 text-slate-500 flex items-center justify-center" aria-hidden="true">
               <Icon name={tool.icon} size={24} class="text-slate-500" />

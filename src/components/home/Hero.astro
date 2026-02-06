@@ -25,19 +25,19 @@ import { t } from '../../utils/i18n';
     <div class="grid lg:grid-cols-2 gap-12 items-center h-full">
       <!-- Left side - Text content with font stability -->
       <div class="text-center lg:text-left min-h-[420px] flex flex-col justify-center text-stable font-loading-stable">
-        <span class="inline-flex mx-auto lg:mx-0 mb-4 rounded-full border border-blue-200 bg-blue-50 text-blue-700 px-4 py-1 text-xs font-semibold uppercase tracking-wider">
+        <span class="inline-flex mx-auto lg:mx-0 mb-4 rounded-full border border-blue-200 bg-blue-50 text-blue-700 px-4 py-1 text-xs font-semibold uppercase tracking-wider reveal-up">
           {lang === 'en' ? 'Spanish Real Estate Finance' : 'Finanzas Inmobiliarias en España'}
         </span>
-        <h1 class="font-heading text-4xl md:text-5xl lg:text-6xl font-extrabold mb-6 text-slate-900 leading-tight font-display-swap">
+        <h1 class="font-heading text-4xl md:text-5xl lg:text-6xl font-extrabold mb-6 text-slate-900 leading-tight font-display-swap reveal-up reveal-delay-1">
           <span class="min-h-[3rem] md:min-h-[4rem] lg:min-h-[5rem] flex items-center justify-center lg:justify-start">{title}</span>
         </h1>
         
-        <p class="text-lg md:text-xl text-slate-600 max-w-xl mx-auto lg:mx-0 mb-8 leading-relaxed min-h-[4rem] flex items-center justify-center lg:justify-start font-display-swap">
+        <p class="text-lg md:text-xl text-slate-600 max-w-xl mx-auto lg:mx-0 mb-8 leading-relaxed min-h-[4rem] flex items-center justify-center lg:justify-start font-display-swap reveal-up reveal-delay-2">
           {description}
         </p>
         
         <!-- CTA Buttons with fixed dimensions -->
-        <div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start mb-8 min-h-[6rem]">
+        <div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start mb-8 min-h-[6rem] reveal-up reveal-delay-2">
           <a href={lang === 'en' ? '/en/mortgage-calculator' : '/calculadora-hipotecaria'} 
              class="btn btn-primary px-8 py-4 min-w-[220px] text-center will-change-auto h-[56px] font-display-swap">
             {t('home.hero.calculateMortgage', lang)}
@@ -49,7 +49,7 @@ import { t } from '../../utils/i18n';
         </div>
         
         <!-- Trust indicators with fixed layout -->
-        <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-3 text-blue-600 min-h-[60px]">
+        <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-3 text-blue-600 min-h-[60px] reveal-up reveal-delay-3">
           <div class="flex items-center gap-2 min-w-[120px] h-[40px] rounded-full border border-slate-200 bg-white/80 px-3">
             <svg class="w-5 h-5 text-green-500 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
               <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
@@ -112,7 +112,7 @@ import { t } from '../../utils/i18n';
           </div>
           
           <!-- Secondary floating card with absolute positioning within container -->
-          <div class="absolute bottom-0 right-4 bg-slate-900 rounded-xl p-4 shadow-lg transform -rotate-6 will-change-transform w-[80px] h-[80px] flex items-center justify-center">
+          <div class="absolute bottom-0 right-4 bg-slate-900 rounded-xl p-4 shadow-lg transform -rotate-6 will-change-transform w-[80px] h-[80px] flex items-center justify-center float-soft">
             <div class="text-center">
               <div class="text-lg font-bold text-white leading-tight font-display-swap">{t('home.hero.interestRate', lang)}</div>
               <div class="text-xs text-white/90 leading-tight font-display-swap">{t('home.hero.euriborPlus', lang)}</div>
