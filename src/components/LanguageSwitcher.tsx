@@ -16,7 +16,7 @@ export default function LanguageSwitcher() {
   return (
     <button
       onClick={toggleLanguage}
-      className="btn btn-secondary px-2.5 py-1.5 text-xs"
+      className="btn btn-secondary px-2.5 py-1.5 text-xs cursor-pointer"
       aria-label={`Switch to ${currentLang === 'es' ? 'English' : 'Español'}`}
     >
       <span className="text-[11px] font-bold tracking-wide">

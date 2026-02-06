@@ -345,7 +345,7 @@ const MortgageCalculator: React.FC = () => {
                     </span>
                     <button
                       type='button'
-                      aria-label={`${t('mortgage.form.openCalculator')} ${
+                      aria-label={`${t('common.openCalculator')} ${
                         calculations.esObraNueva ? t('mortgage.form.itpModal.vatTitle') : t('mortgage.form.itpModal.title')
                       }`}
                       className='text-blue-600 hover:underline hover:text-blue-800 focus:outline-none bg-transparent border-0 p-0 h-auto text-sm font-normal cursor-pointer'
