@@ -180,37 +180,33 @@ export default function Navbar() {
         </div>
       )}
     </nav>
-    <div
-      className={`fixed bottom-4 left-1/2 -translate-x-1/2 z-50 w-[calc(100%-1.5rem)] max-w-xl transition-all duration-300 ${
-        showFloatingNav
-          ? "translate-y-0 opacity-100"
-          : "translate-y-6 opacity-0 pointer-events-none"
-      }`}
-    >
-      <div className='surface-nav px-3 py-2'>
-        <div className='flex items-center justify-between gap-2'>
-          <div className='flex items-center gap-1.5'>
-            {tools
-              .filter((tool) => tool.active)
-              .slice(0, 2)
-              .map((tool) => (
-                <a
-                  key={`floating-${tool.href}`}
-                  href={tool.href}
-                  className={`px-3 py-2 rounded-full text-xs font-semibold transition ${
-                    isActivePath(tool.href)
-                      ? "bg-blue-600 text-white shadow-sm"
-                      : "text-slate-700 hover:bg-white/80 hover:text-blue-700"
-                  }`}
-                >
-                  {tool.label}
-                </a>
-              ))}
+    {showFloatingNav && (
+      <div className='fixed bottom-4 left-1/2 -translate-x-1/2 z-50 w-[calc(100%-1.5rem)] max-w-xl transition-all duration-300 translate-y-0 opacity-100'>
+        <div className='surface-nav px-3 py-2'>
+          <div className='flex items-center justify-between gap-2'>
+            <div className='flex items-center gap-1.5'>
+              {tools
+                .filter((tool) => tool.active)
+                .slice(0, 2)
+                .map((tool) => (
+                  <a
+                    key={`floating-${tool.href}`}
+                    href={tool.href}
+                    className={`px-3 py-2 rounded-full text-xs font-semibold transition ${
+                      isActivePath(tool.href)
+                        ? "bg-blue-600 text-white shadow-sm"
+                        : "text-slate-700 hover:bg-white/80 hover:text-blue-700"
+                    }`}
+                  >
+                    {tool.label}
+                  </a>
+                ))}
+            </div>
+            <ContactButton variant='mobile' />
           </div>
-          <ContactButton variant='mobile' />
         </div>
       </div>
-    </div>
+    )}
     </>
   )
 }
