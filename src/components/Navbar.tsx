@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react"
+import { useRef } from "react"
 import { getTools } from "../constants/tools"
 import ContactButton from "./ContactButton"
 import LanguageSwitcher from "./LanguageSwitcher"
@@ -8,12 +9,31 @@ export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [currentLang, setCurrentLang] = useState<Language>('es')
   const [currentPath, setCurrentPath] = useState("/")
+  const [showFloatingNav, setShowFloatingNav] = useState(false)
+  const navRef = useRef<HTMLElement | null>(null)
   const tools = getTools(currentLang)
 
   useEffect(() => {
     const path = window.location.pathname
     setCurrentLang(getCurrentLang(path))
     setCurrentPath(path)
+  }, [])
+
+  useEffect(() => {
+    if (!navRef.current) return
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setShowFloatingNav(!entry.isIntersecting)
+      },
+      { threshold: 0.05 }
+    )
+
+    observer.observe(navRef.current)
+
+    return () => {
+      observer.disconnect()
+    }
   }, [])
 
   const toggleMenu = () => {
@@ -24,7 +44,8 @@ export default function Navbar() {
   const isActivePath = (href: string) => currentPath === href
 
   return (
-    <nav className='w-full sticky top-0 z-50 pt-4'>
+    <>
+    <nav ref={navRef} className='w-full z-40 pt-4'>
       <div className='max-w-7xl mx-auto'>
         <div className='surface-nav px-4 h-16 md:h-[72px]'>
         {/* Desktop Layout */}
@@ -145,5 +166,37 @@ export default function Navbar() {
         </div>
       )}
     </nav>
+    <div
+      className={`fixed bottom-4 left-1/2 -translate-x-1/2 z-50 w-[calc(100%-1.5rem)] max-w-xl transition-all duration-300 ${
+        showFloatingNav
+          ? "translate-y-0 opacity-100"
+          : "translate-y-6 opacity-0 pointer-events-none"
+      }`}
+    >
+      <div className='surface-nav px-3 py-2'>
+        <div className='flex items-center justify-between gap-2'>
+          <div className='flex items-center gap-1.5'>
+            {tools
+              .filter((tool) => tool.active)
+              .slice(0, 2)
+              .map((tool) => (
+                <a
+                  key={`floating-${tool.href}`}
+                  href={tool.href}
+                  className={`px-3 py-2 rounded-full text-xs font-semibold transition ${
+                    isActivePath(tool.href)
+                      ? "bg-blue-600 text-white shadow-sm"
+                      : "text-slate-700 hover:bg-white/80 hover:text-blue-700"
+                  }`}
+                >
+                  {tool.label}
+                </a>
+              ))}
+          </div>
+          <ContactButton variant='mobile' />
+        </div>
+      </div>
+    </div>
+    </>
   )
 }
