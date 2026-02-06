@@ -16,7 +16,7 @@ export default function LanguageSwitcher() {
   return (
     <button
       onClick={toggleLanguage}
-      className="flex items-center gap-1 px-2.5 py-1.5 text-xs font-semibold text-slate-700 border border-slate-200 bg-white rounded-full hover:text-blue-700 hover:border-blue-200 hover:bg-blue-50 transition-colors"
+      className="btn btn-secondary px-2.5 py-1.5 text-xs"
       aria-label={`Switch to ${currentLang === 'es' ? 'English' : 'Español'}`}
     >
       <span className="text-[11px] font-bold tracking-wide">

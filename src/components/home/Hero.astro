@@ -39,11 +39,11 @@ import { t } from '../../utils/i18n';
         <!-- CTA Buttons with fixed dimensions -->
         <div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start mb-8 min-h-[6rem]">
           <a href={lang === 'en' ? '/en/mortgage-calculator' : '/calculadora-hipotecaria'} 
-             class="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-8 py-4 rounded-full transition-colors duration-300 shadow-lg hover:shadow-xl min-w-[220px] text-center will-change-auto h-[56px] flex items-center justify-center font-display-swap">
+             class="btn btn-primary px-8 py-4 min-w-[220px] text-center will-change-auto h-[56px] font-display-swap">
             {t('home.hero.calculateMortgage', lang)}
           </a>
           <a href={lang === 'en' ? '/en/rental-calculator' : '/calculadora-alquiler'} 
-             class="border-2 border-blue-300 text-blue-700 hover:bg-blue-50 font-semibold px-8 py-4 rounded-full transition-colors duration-300 min-w-[220px] text-center will-change-auto h-[56px] flex items-center justify-center font-display-swap">
+             class="btn btn-secondary px-8 py-4 min-w-[220px] text-center will-change-auto h-[56px] font-display-swap">
             {t('home.hero.calculateRental', lang)}
           </a>
         </div>
