@@ -22,17 +22,20 @@ export default function Navbar() {
   useEffect(() => {
     if (!navRef.current) return
 
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        setShowFloatingNav(!entry.isIntersecting)
-      },
-      { threshold: 0.05 }
-    )
+    const handleScroll = () => {
+      if (!navRef.current) return
 
-    observer.observe(navRef.current)
+      const { bottom } = navRef.current.getBoundingClientRect()
+      setShowFloatingNav(bottom < 0)
+    }
+
+    handleScroll()
+    window.addEventListener("scroll", handleScroll, { passive: true })
+    window.addEventListener("resize", handleScroll)
 
     return () => {
-      observer.disconnect()
+      window.removeEventListener("scroll", handleScroll)
+      window.removeEventListener("resize", handleScroll)
     }
   }, [])
 
