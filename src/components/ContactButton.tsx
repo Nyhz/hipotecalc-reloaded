@@ -1,5 +1,6 @@
 import { referalLink } from "../constants/referal"
 import { useGoogleAnalytics } from "../hooks/useGoogleAnalytics"
+import { useTranslations } from "../hooks/useTranslations"
 
 interface ContactButtonProps {
   variant?: "desktop" | "mobile"
@@ -11,6 +12,7 @@ export default function ContactButton({
   className = "",
 }: ContactButtonProps) {
   const { trackContactAttempt } = useGoogleAnalytics()
+  const { t } = useTranslations()
 
   const handleClick = () => {
     // Track contact attempt
@@ -25,8 +27,8 @@ export default function ContactButton({
   }
 
   const text = {
-    desktop: "Contacta con nuestro broker",
-    mobile: "Contactar",
+    desktop: t("common.contact"),
+    mobile: t("common.contactMobile"),
   }
 
   return (

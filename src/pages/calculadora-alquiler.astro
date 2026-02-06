@@ -2,25 +2,29 @@
 import Layout from '../layouts/Layout.astro';
 import RentalCalculator from '../components/calculadora-alquiler/RentalCalculator.tsx';
 import PageTracking from '../components/PageTracking.tsx';
+import { t } from '../utils/i18n';
 ---
 
-<Layout title="Calculadora de Alquiler - Análisis de Rentabilidad Inmobiliaria" description="Calcula la rentabilidad de tu inversión inmobiliaria. Analiza ROI, cash flow mensual, break even y más métricas clave.">
-  <PageTracking client:load pagePath="/calculadora-alquiler" pageTitle="Calculadora de Alquiler - Análisis de Rentabilidad" />
+<Layout 
+  title={t('seo.rental.title')} 
+  description={t('seo.rental.description')}
+  keywords={t('seo.rental.keywords')}
+>
+  <PageTracking client:load pagePath="/calculadora-alquiler" pageTitle={t('seo.rental.title')} />
   <main class="min-h-screen py-8">
     <div class="max-w-7xl mx-auto px-4">
       <!-- Header -->
       <div class="text-center mb-8">
         <h1 class="text-4xl font-bold text-blue-900 mb-4">
-          Calculadora de Alquiler
+          {t('rental.hero.title')}
         </h1>
         <p class="text-lg text-gray-600 max-w-3xl mx-auto">
-          Analiza la rentabilidad de tu inversión inmobiliaria. Calcula ROI, cash flow mensual, 
-          tiempo de recuperación y más métricas clave para tomar decisiones informadas.
+          {t('rental.hero.description')}
         </p>
       </div>
 
       <!-- Calculadora -->
-      <RentalCalculator client:load />
+      <RentalCalculator client:load lang="es" />
     </div>
   </main>
 </Layout> 

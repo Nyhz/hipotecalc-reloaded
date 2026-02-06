@@ -20,9 +20,7 @@ import MortgageSummaryCharts from "./MortgageSummaryCharts"
 import ContactButton from "../ContactButton"
 import SensitivityTable from "./SensitivityTable"
 import { useGoogleAnalytics } from "../../hooks/useGoogleAnalytics"
-
-const tiposVivienda = ["Obra nueva", "Segunda mano"]
-const tiposHipoteca = ["Fija", "Variable"] // TODO: Añadir MIXTA.
+import { useTranslations } from "../../hooks/useTranslations"
 
 const inputClass =
   "border border-blue-200 bg-white rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400 w-full"
@@ -44,6 +42,11 @@ const initialState = {
 
 const MortgageCalculator: React.FC = () => {
   const { trackCalculatorUsage } = useGoogleAnalytics()
+  const { t, currentLang } = useTranslations()
+  
+  const tiposVivienda = [t('mortgage.form.newConstruction'), t('mortgage.form.secondHand')]
+  const tiposHipoteca = [t('mortgage.form.fixed'), t('mortgage.form.variable')] // TODO: Añadir MIXTA.
+  
   const [showItpModal, setShowItpModal] = useState(false)
   const [form, setForm] = useState(initialState)
 
@@ -115,7 +118,7 @@ const MortgageCalculator: React.FC = () => {
       euriborActual = getEuriborActual()
       euriborHistorico = getEuriborHistorico(periodoAnalisisNum)
       tin = calcularInteresVariable(euriborActual, diferencialNum)
-      tablaEscenarios = crearTablaEscenarios(diferencialNum, periodoAnalisisNum)
+      tablaEscenarios = crearTablaEscenarios(diferencialNum, periodoAnalisisNum, currentLang)
     } else {
       // Para hipotecas fijas: TAE convertido a TIN
       tin = calcularTIN(taeNum)
@@ -138,13 +141,9 @@ const MortgageCalculator: React.FC = () => {
     let cuotaMinima = 0
     let cuotaMaxima = 0
     if (esHipotecaVariable) {
-      // Usar los valores de la tabla de escenarios
-      const escenarioMinimo = tablaEscenarios.find(
-        (e) => e.escenario === "Mínimo histórico"
-      )
-      const escenarioMaximo = tablaEscenarios.find(
-        (e) => e.escenario === "Máximo histórico"
-      )
+      // Usar los valores de la tabla de escenarios (el orden es siempre: mínimo, actual, máximo)
+      const escenarioMinimo = tablaEscenarios[0] // Primer elemento es siempre el mínimo histórico
+      const escenarioMaximo = tablaEscenarios[2] // Tercer elemento es siempre el máximo histórico
 
       if (escenarioMinimo && escenarioMaximo) {
         const paramsMinimo = { ...params, tin: escenarioMinimo.interesTotal }
@@ -282,33 +281,33 @@ const MortgageCalculator: React.FC = () => {
         <div className='grid grid-cols-1 lg:grid-cols-3 gap-6'>
           <fieldset>
             <legend className='font-bold mb-2 text-blue-900'>
-              Información de la vivienda
+              {t('mortgage.form.propertyDetails')}
             </legend>
             <div className='grid gap-4'>
               <Input
-                label='Precio de la vivienda (€)'
+                label={t('mortgage.form.propertyPrice')}
                 name='precio'
                 value={form.precio}
                 onChange={handleChange}
                 type='number'
                 min={0}
-                placeholder='Ej: 250000'
+                placeholder={t('mortgage.form.itpModal.examplePrice')}
                 className={inputClass}
                 showEuroSymbol={true}
               />
               <Input
-                label='Tasación de la vivienda (€)'
+                label={t('mortgage.form.propertyAppraisal')}
                 name='tasacion'
                 value={form.tasacion}
                 onChange={handleChange}
                 type='number'
                 min={0}
-                placeholder='Ej: 240000'
+                placeholder={t('mortgage.form.itpModal.exampleAppraisal')}
                 className={inputClass}
                 showEuroSymbol={true}
               />
               <Select
-                label='Comunidad autónoma'
+                label={t('mortgage.form.autonomousCommunity')}
                 name='comunidad'
                 value={form.comunidad}
                 onChange={handleChange}
@@ -319,7 +318,7 @@ const MortgageCalculator: React.FC = () => {
                 className={inputClass}
               />
               <Select
-                label='Tipo de vivienda'
+                label={t('mortgage.form.propertyType')}
                 name='tipoVivienda'
                 value={form.tipoVivienda}
                 onChange={handleChange}
@@ -330,7 +329,7 @@ const MortgageCalculator: React.FC = () => {
           </fieldset>
           <fieldset>
             <legend className='font-bold mb-2 text-blue-900'>
-              Impuestos y costes
+              {t('mortgage.form.taxesAndCosts')}
             </legend>
             <div className='grid gap-4'>
               <div className='relative'>
@@ -346,18 +345,18 @@ const MortgageCalculator: React.FC = () => {
                     </span>
                     <button
                       type='button'
-                      aria-label={`Abrir calculadora ${
-                        calculations.esObraNueva ? "IVA" : "ITP"
+                      aria-label={`${t('mortgage.form.openCalculator')} ${
+                        calculations.esObraNueva ? t('mortgage.form.itpModal.vatTitle') : t('mortgage.form.itpModal.title')
                       }`}
                       className='text-blue-600 hover:underline hover:text-blue-800 focus:outline-none bg-transparent border-0 p-0 h-auto text-sm font-normal cursor-pointer'
                       style={{ lineHeight: "1", height: "1.5em" }}
                       onClick={() => setShowItpModal(true)}
                     >
-                      Calcula tu {calculations.esObraNueva ? "IVA" : "ITP"}
+                      {t(calculations.esObraNueva ? 'mortgage.form.calculateIVA' : 'mortgage.form.calculateITP')}
                     </button>
                     {itpCalculado && (
                       <div className='text-xs text-green-700 bg-green-100 rounded px-2 ml-2 py-1 shadow'>
-                        {calculations.esObraNueva ? "IVA" : "ITP"} Calculado
+                        {t(calculations.esObraNueva ? 'mortgage.form.ivaCalculated' : 'mortgage.form.itpCalculated')}
                       </div>
                     )}
                   </label>
@@ -419,8 +418,8 @@ const MortgageCalculator: React.FC = () => {
                         type='button'
                         onClick={handleResetImpuesto}
                         className='absolute right-8 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-red-600 focus:outline-none bg-transparent border cursor-pointer rounded-full p-1'
-                        aria-label='Restablecer cálculo de impuesto'
-                        title='Restablecer cálculo de impuesto'
+                        aria-label={t('mortgage.form.resetTaxCalculation')}
+                        title={t('mortgage.form.resetTaxCalculation')}
                       >
                         <svg
                           className='w-4 h-4'
@@ -442,26 +441,25 @@ const MortgageCalculator: React.FC = () => {
                 {itpDescripcion && itpCalculado && (
                   <div className='text-green-800 bg-green-50 border border-green-200 rounded px-3 py-2 mt-2 text-sm text-center'>
                     <span className='font-semibold'>
-                      {calculations.esObraNueva ? "IVA" : "Bonificación"}{" "}
-                      aplicada:
+                      {t('mortgage.form.bonificationApplied')}
                     </span>{" "}
                     {itpDescripcion}
                   </div>
                 )}
               </div>
               <Input
-                label='Otros costes (€)'
+                label={t('mortgage.form.otherCosts')}
                 name='otrosCostes'
                 value={form.otrosCostes}
                 onChange={handleChange}
                 type='number'
                 min={0}
-                placeholder='Ej: 5000'
+                placeholder={`${t('mortgage.form.itpModal.examplePlaceholder')} 5000`}
                 className={inputClass}
                 showEuroSymbol={true}
               />
               <Input
-                label='Precio final (€)'
+                label={t('mortgage.form.finalPrice')}
                 name='precioFinal'
                 value={calculations.precioFinal}
                 onChange={() => {}}
@@ -474,22 +472,22 @@ const MortgageCalculator: React.FC = () => {
           </fieldset>
           <fieldset>
             <legend className='font-bold mb-2 text-blue-900'>
-              Financiación y condiciones
+              {t('mortgage.form.financingAndConditions')}
             </legend>
             <div className='grid gap-4'>
               <Input
-                label='Ahorro aportado (€)'
+                label={t('mortgage.form.savingsContributed')}
                 name='ahorro'
                 value={form.ahorro}
                 onChange={handleChange}
                 type='number'
                 min={0}
-                placeholder='Ej: 40000'
+                placeholder={`${t('mortgage.form.itpModal.examplePlaceholder')} 40000`}
                 className={inputClass}
                 showEuroSymbol={true}
               />
               <Input
-                label='Cantidad hipoteca (€)'
+                label={t('mortgage.form.mortgageAmount')}
                 name='cantidadHipoteca'
                 value={calculations.cantidadHipoteca}
                 onChange={() => {}}
@@ -499,7 +497,7 @@ const MortgageCalculator: React.FC = () => {
                 showEuroSymbol={true}
               />
               <Select
-                label='Tipo de hipoteca'
+                label={t('mortgage.form.mortgageType')}
                 name='tipoHipoteca'
                 value={form.tipoHipoteca}
                 onChange={handleChange}
@@ -508,19 +506,19 @@ const MortgageCalculator: React.FC = () => {
               />
               {!calculations.esHipotecaVariable && (
                 <Input
-                  label='TAE (%)'
+                  label={t('mortgage.form.annualRate')}
                   name='tae'
                   value={form.tae}
                   onChange={handleChange}
                   type='number'
                   min={0}
                   step={0.01}
-                  placeholder='Ej: 3.25'
+                  placeholder={`${t('mortgage.form.itpModal.examplePlaceholder')} 3.25`}
                   className={inputClass}
                 />
               )}
               <Input
-                label='TIN (%)'
+                label={t('mortgage.form.nominalRate')}
                 name='tin'
                 value={calculations.tin.toFixed(2)}
                 onChange={() => {}}
@@ -533,46 +531,46 @@ const MortgageCalculator: React.FC = () => {
               {calculations.esHipotecaVariable && (
                 <>
                   <Input
-                    label='Diferencial (%)'
+                    label={t('mortgage.form.differential')}
                     name='diferencial'
                     value={form.diferencial}
                     onChange={handleChange}
                     type='number'
                     min={0}
                     step={0.01}
-                    placeholder='Ej: 1.0'
+                    placeholder={`${t('mortgage.form.itpModal.examplePlaceholder')} 1.0`}
                     className={inputClass}
                   />
 
                   <Input
-                    label='Período de análisis histórico (años)'
+                    label={t('mortgage.form.analysisPeriod')}
                     name='periodoAnalisis'
                     value={form.periodoAnalisis}
                     onChange={handleChange}
                     type='number'
                     min={1}
                     max={25}
-                    placeholder='Ej: 10'
+                    placeholder={`${t('mortgage.form.itpModal.examplePlaceholder')} 10`}
                     className={inputClass}
                   />
 
                   {/* Tabla de escenarios */}
                   <div className='bg-gray-50 rounded-lg p-4'>
                     <h4 className='font-semibold text-sm text-gray-700 mb-3'>
-                      Escenarios de interés variable
+                      {t('mortgage.form.variableInterestScenarios')}
                     </h4>
                     <div className='overflow-x-auto'>
                       <table className='w-full text-xs'>
                         <thead>
                           <tr className='border-b border-gray-300'>
                             <th className='text-left py-2 px-2 font-medium text-gray-600'>
-                              Escenario
+                              {t('mortgage.form.scenario')}
                             </th>
                             <th className='text-right py-2 px-2 font-medium text-gray-600'>
-                              Euribor (%)
+                              {t('mortgage.form.euribor')}
                             </th>
                             <th className='text-right py-2 px-2 font-medium text-gray-600'>
-                              Interés total (%)
+                              {t('mortgage.form.totalInterest')}
                             </th>
                           </tr>
                         </thead>
@@ -603,14 +601,14 @@ const MortgageCalculator: React.FC = () => {
               )}
 
               <Input
-                label='Plazo (años)'
+                label={t('mortgage.form.loanTerm')}
                 name='plazo'
                 value={form.plazo}
                 onChange={handleChange}
                 type='number'
                 min={1}
                 max={40}
-                placeholder='Ej: 30'
+                placeholder={`${t('mortgage.form.itpModal.examplePlaceholder')} 30`}
                 className={inputClass}
               />
             </div>
@@ -628,21 +626,21 @@ const MortgageCalculator: React.FC = () => {
       </form>
       <aside className='w-full md:w-96 bg-white rounded-xl shadow-lg p-6 flex flex-col gap-6 border border-blue-100'>
         <h2 className='text-xl font-bold text-blue-900 mb-2'>
-          Tu cuota mensual
+          {t('mortgage.form.monthlyPayment')}
         </h2>
         <div className='flex flex-col items-center justify-center bg-blue-50 rounded-xl p-6 mb-4 shadow-inner'>
           <span className='text-3xl font-extrabold text-blue-800 mb-2'>
             {calculations.cuota} €
           </span>
           <div className='text-blue-900 font-semibold text-lg mb-3'>
-            Cuota mensual estimada
+            {t('mortgage.form.estimatedMonthlyPayment')}
           </div>
 
           {/* Escenarios para hipotecas variables integrados */}
           {calculations.esHipotecaVariable && (
             <div className='flex gap-6 text-sm'>
               <div className='text-center'>
-                <div className='text-gray-600 text-xs'>Mínimo histórico</div>
+                <div className='text-gray-600 text-xs'>{t('mortgage.form.minimumHistorical')}</div>
                 <div className='font-medium text-green-700'>
                   {new Intl.NumberFormat("es-ES").format(
                     calculations.cuotaMinima
@@ -651,7 +649,7 @@ const MortgageCalculator: React.FC = () => {
                 </div>
               </div>
               <div className='text-center'>
-                <div className='text-gray-600 text-xs'>Máximo histórico</div>
+                <div className='text-gray-600 text-xs'>{t('mortgage.form.maximumHistorical')}</div>
                 <div className='font-medium text-red-700'>
                   {new Intl.NumberFormat("es-ES").format(
                     calculations.cuotaMaxima
@@ -668,7 +666,7 @@ const MortgageCalculator: React.FC = () => {
           <div className='flex justify-between items-center py-2'>
             <div className='flex items-center gap-2'>
               <span className='text-blue-900 font-semibold'>
-                Importe hipoteca
+                {t('mortgage.form.mortgageAmount')}
               </span>
               <svg
                 className='w-4 h-4 text-blue-500'
@@ -692,7 +690,7 @@ const MortgageCalculator: React.FC = () => {
           <div className='flex justify-between items-center py-2'>
             <div className='flex items-center gap-2'>
               <span className='text-blue-900 font-semibold'>
-                Porcentaje de financiación
+                {t('mortgage.form.financingPercentage')}
               </span>
               <svg
                 className='w-4 h-4 text-blue-500'
@@ -732,7 +730,7 @@ const MortgageCalculator: React.FC = () => {
         <div className='space-y-2'>
           <div className='flex justify-between items-center py-2 border-b border-gray-200'>
             <span className='text-blue-900 font-semibold'>
-              % Hipoteca/Tasación
+              {t('mortgage.form.mortgageAppraisalPercentage')}
             </span>
             <span
               className={`font-semibold ${
@@ -743,7 +741,7 @@ const MortgageCalculator: React.FC = () => {
             </span>
           </div>
           <div className='flex justify-between items-center py-2'>
-            <span className='text-blue-900 font-semibold'>Interés total</span>
+            <span className='text-blue-900 font-semibold'>{t('mortgage.form.totalInterestLabel')}</span>
             <span className='text-blue-900 font-semibold'>
               {new Intl.NumberFormat("es-ES").format(calculations.interes)} €
             </span>

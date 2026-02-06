@@ -1,6 +1,7 @@
 import React, { useState, useMemo } from "react"
 import { COMUNIDADES } from "../../constants/comunidades"
 import { calcularITP, calcularIVA, calcularTIN, getEuriborActual, calcularInteresVariable } from "../../utils/calculadora-hipotecaria"
+import { useTranslations } from "../../hooks/useTranslations"
 
 interface SensitivityTableProps {
   form: {
@@ -32,6 +33,7 @@ const SensitivityTable: React.FC<SensitivityTableProps> = ({
   itpTipoAplicado = null, 
   itpDescripcion = "" 
 }) => {
+  const { t } = useTranslations()
   const [isExpanded, setIsExpanded] = useState(false)
   const [stepPrecio, setStepPrecio] = useState("10000")
   const [stepAhorro, setStepAhorro] = useState("5000")
@@ -157,10 +159,10 @@ const SensitivityTable: React.FC<SensitivityTableProps> = ({
           <div className="flex items-center justify-between">
             <div>
               <h3 className="text-lg font-semibold text-blue-900">
-                Tabla de Sensibilidades
+                {t('mortgage.form.sensitivityAnalysis')}
               </h3>
               <p className="text-sm text-blue-700 mt-1">
-                Ver cómo varía la cuota con diferentes precios y ahorros
+                {t('mortgage.form.sensitivityAnalysisDescription')}
               </p>
             </div>
             <svg
@@ -188,10 +190,10 @@ const SensitivityTable: React.FC<SensitivityTableProps> = ({
         <div className="flex items-center justify-between mb-4">
           <div>
             <h3 className="text-lg font-semibold text-blue-900">
-              Tabla de Sensibilidades
+              {t('mortgage.form.sensitivityAnalysis')}
             </h3>
             <p className="text-sm text-blue-700 mt-1">
-              Cuota mensual según precio de vivienda y ahorro aportado
+              {t('mortgage.form.sensitivityAnalysisDescription')}
             </p>
           </div>
           <button
@@ -218,28 +220,28 @@ const SensitivityTable: React.FC<SensitivityTableProps> = ({
         <div className="grid grid-cols-2 gap-4 mb-4">
           <div>
             <label className="block text-sm font-medium text-blue-900 mb-1">
-              Step precio (€)
+              {t('mortgage.form.priceStep')}
             </label>
             <input
               type="number"
               value={stepPrecio}
               onChange={(e) => setStepPrecio(e.target.value)}
               className="w-full px-3 py-2 border border-blue-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-              placeholder="Ej: 10000"
+              placeholder={`${t('mortgage.form.itpModal.examplePlaceholder')} 10000`}
               min="1000"
               step="1000"
             />
           </div>
           <div>
             <label className="block text-sm font-medium text-blue-900 mb-1">
-              Step ahorro (€)
+              {t('mortgage.form.savingsStep')}
             </label>
             <input
               type="number"
               value={stepAhorro}
               onChange={(e) => setStepAhorro(e.target.value)}
               className="w-full px-3 py-2 border border-blue-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-              placeholder="Ej: 5000"
+              placeholder={`${t('mortgage.form.itpModal.examplePlaceholder')} 5000`}
               min="1000"
               step="1000"
             />
@@ -251,7 +253,7 @@ const SensitivityTable: React.FC<SensitivityTableProps> = ({
             <thead>
               <tr className="border-b border-blue-300">
                 <th className="text-left py-2 px-2 font-medium text-blue-900">
-                  Ahorro / Precio
+                  {t('mortgage.form.savings')} / {t('mortgage.form.price')}
                 </th>
                 {sensitivityData.precios.map((precio, index) => (
                   <th key={index} className="text-right py-2 px-2 font-medium text-blue-900">
@@ -265,7 +267,7 @@ const SensitivityTable: React.FC<SensitivityTableProps> = ({
                       </span>
                     )}
                     <div className="text-xs text-gray-500 mt-1">
-                      {index === 2 ? "Actual" : index < 2 ? `-${((2 - index) * sensitivityData.stepPrecioNum).toLocaleString()}€` : `+${((index - 2) * sensitivityData.stepPrecioNum).toLocaleString()}€`}
+                      {index === 2 ? t('mortgage.form.current') : index < 2 ? `-${((2 - index) * sensitivityData.stepPrecioNum).toLocaleString()}€` : `+${((index - 2) * sensitivityData.stepPrecioNum).toLocaleString()}€`}
                     </div>
                   </th>
                 ))}
@@ -285,7 +287,7 @@ const SensitivityTable: React.FC<SensitivityTableProps> = ({
                       </span>
                     )}
                     <div className="text-xs text-gray-500">
-                      {rowIndex === 2 ? "Actual" : rowIndex < 2 ? `-${((2 - rowIndex) * sensitivityData.stepAhorroNum).toLocaleString()}€` : `+${((rowIndex - 2) * sensitivityData.stepAhorroNum).toLocaleString()}€`}
+                      {rowIndex === 2 ? t('mortgage.form.current') : rowIndex < 2 ? `-${((2 - rowIndex) * sensitivityData.stepAhorroNum).toLocaleString()}€` : `+${((rowIndex - 2) * sensitivityData.stepAhorroNum).toLocaleString()}€`}
                     </div>
                   </td>
                   {sensitivityData.matriz[rowIndex].map((cuota, colIndex) => (
@@ -306,9 +308,9 @@ const SensitivityTable: React.FC<SensitivityTableProps> = ({
         </div>
 
         <div className="mt-4 text-xs text-gray-600">
-          <p>• Valores en <span className="text-red-600">rojo</span>: Reducción según step configurado</p>
-          <p>• Valores en <span className="text-blue-700 font-bold">azul</span>: Valores actuales</p>
-          <p>• Valores en <span className="text-green-600">verde</span>: Incremento según step configurado</p>
+          <p>• {t('mortgage.form.redValues')}: {t('mortgage.form.reductionByStep')}</p>
+          <p>• {t('mortgage.form.blueValues')}: {t('mortgage.form.currentValues')}</p>
+          <p>• {t('mortgage.form.greenValues')}: {t('mortgage.form.increaseByStep')}</p>
         </div>
       </div>
     </div>

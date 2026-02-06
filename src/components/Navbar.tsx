@@ -1,9 +1,17 @@
-import { useState } from "react"
-import { tools } from "../constants/tools"
+import { useState, useEffect } from "react"
+import { getTools } from "../constants/tools"
 import ContactButton from "./ContactButton"
+import LanguageSwitcher from "./LanguageSwitcher"
+import { getCurrentLang, type Language } from '../utils/i18n'
 
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const [currentLang, setCurrentLang] = useState<Language>('es')
+  const tools = getTools(currentLang)
+
+  useEffect(() => {
+    setCurrentLang(getCurrentLang(window.location.pathname))
+  }, [])
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen)
@@ -42,8 +50,9 @@ export default function Navbar() {
             </ul>
           </div>
 
-          {/* Botón de contacto a la derecha */}
-          <div className='flex justify-end'>
+          {/* Botón de contacto y selector de idioma a la derecha */}
+          <div className='flex justify-end items-center gap-4'>
+            <LanguageSwitcher />
             <ContactButton variant='desktop' />
           </div>
         </div>
@@ -58,8 +67,11 @@ export default function Navbar() {
             Hipotecalc
           </a>
 
-          {/* Botón de contacto en el centro */}
-          <ContactButton variant='mobile' />
+          {/* Botón de contacto y selector de idioma en el centro */}
+          <div className='flex items-center gap-2'>
+            <LanguageSwitcher />
+            <ContactButton variant='mobile' />
+          </div>
 
           {/* Botón hamburguesa a la derecha */}
           <button

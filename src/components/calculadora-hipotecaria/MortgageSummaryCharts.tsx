@@ -1,5 +1,6 @@
 import React, { useEffect, useRef } from 'react'
 import * as echarts from 'echarts'
+import { useTranslations } from '../../hooks/useTranslations'
 
 interface MortgageSummaryChartsProps {
   precioInmueble: number
@@ -16,6 +17,7 @@ const MortgageSummaryCharts: React.FC<MortgageSummaryChartsProps> = ({
   cantidadHipoteca,
   interesTotal,
 }) => {
+  const { t } = useTranslations()
   const costChartRef = useRef<HTMLDivElement>(null)
   const mortgageChartRef = useRef<HTMLDivElement>(null)
 
@@ -49,7 +51,7 @@ const MortgageSummaryCharts: React.FC<MortgageSummaryChartsProps> = ({
       },
       series: [
         {
-          name: 'Precio del inmueble',
+          name: t('mortgage.form.charts.propertyPrice'),
           type: 'bar',
           stack: 'total',
           data: [precioInmueble],
@@ -57,7 +59,7 @@ const MortgageSummaryCharts: React.FC<MortgageSummaryChartsProps> = ({
           barWidth: '100%'
         },
         {
-          name: 'Impuestos y gastos',
+          name: t('mortgage.form.charts.taxesAndExpenses'),
           type: 'bar',
           stack: 'total',
           data: [impuestosGastos],
@@ -94,7 +96,7 @@ const MortgageSummaryCharts: React.FC<MortgageSummaryChartsProps> = ({
       },
       series: [
         {
-          name: 'Ahorro aportado',
+          name: t('mortgage.form.charts.savingsContributed'),
           type: 'bar',
           stack: 'total',
           data: [ahorroAportado],
@@ -102,14 +104,14 @@ const MortgageSummaryCharts: React.FC<MortgageSummaryChartsProps> = ({
           barWidth: '100%'
         },
         {
-          name: 'Hipoteca',
+          name: t('mortgage.form.charts.mortgage'),
           type: 'bar',
           stack: 'total',
           data: [cantidadHipoteca],
           itemStyle: { color: '#4682B4' }
         },
         {
-          name: 'Interés',
+          name: t('mortgage.form.charts.interest'),
           type: 'bar',
           stack: 'total',
           data: [interesTotal],
@@ -131,25 +133,25 @@ const MortgageSummaryCharts: React.FC<MortgageSummaryChartsProps> = ({
       {/* Gráfica 1: Coste total del inmueble */}
       <div className="bg-white rounded-lg p-3 border border-gray-200">
         <h3 className="text-base font-semibold text-gray-800 mb-2">
-          Coste total del inmueble
+          {t('mortgage.form.charts.totalPropertyCost')}
         </h3>
         <div className="space-y-2">
           <div ref={costChartRef} className="w-full h-8 bg-gray-100 rounded" />
           <div className="space-y-1">
             <div className="flex justify-between items-center">
-              <span className="text-sm text-gray-600">Precio del inmueble</span>
+              <span className="text-sm text-gray-600">{t('mortgage.form.charts.propertyPrice')}</span>
               <span className="font-semibold text-sm">
                 {new Intl.NumberFormat('es-ES').format(precioInmueble)} €
               </span>
             </div>
             <div className="flex justify-between items-center">
-              <span className="text-sm text-gray-600">Impuestos y gastos</span>
+              <span className="text-sm text-gray-600">{t('mortgage.form.charts.taxesAndExpenses')}</span>
               <span className="font-semibold text-sm">
                 {new Intl.NumberFormat('es-ES').format(impuestosGastos)} €
               </span>
             </div>
             <div className="flex justify-between items-center pt-1 border-t border-gray-200">
-              <span className="font-semibold text-gray-800">Total</span>
+              <span className="font-semibold text-gray-800">{t('mortgage.form.charts.total')}</span>
               <span className="font-bold">
                 {new Intl.NumberFormat('es-ES').format(precioInmueble + impuestosGastos)} €
               </span>
@@ -161,31 +163,31 @@ const MortgageSummaryCharts: React.FC<MortgageSummaryChartsProps> = ({
       {/* Gráfica 2: Coste total con hipoteca */}
       <div className="bg-white rounded-lg p-3 border border-gray-200">
         <h3 className="text-base font-semibold text-gray-800 mb-2">
-          Coste total con hipoteca
+          {t('mortgage.form.charts.totalCostWithMortgage')}
         </h3>
         <div className="space-y-2">
           <div ref={mortgageChartRef} className="w-full h-8 bg-gray-100 rounded" />
           <div className="space-y-1">
             <div className="flex justify-between items-center">
-              <span className="text-sm text-gray-600">Ahorro aportado</span>
+              <span className="text-sm text-gray-600">{t('mortgage.form.charts.savingsContributed')}</span>
               <span className="font-semibold text-sm">
                 {new Intl.NumberFormat('es-ES').format(ahorroAportado)} €
               </span>
             </div>
             <div className="flex justify-between items-center">
-              <span className="text-sm text-gray-600">Hipoteca</span>
+              <span className="text-sm text-gray-600">{t('mortgage.form.charts.mortgage')}</span>
               <span className="font-semibold text-sm">
                 {new Intl.NumberFormat('es-ES').format(cantidadHipoteca)} €
               </span>
             </div>
             <div className="flex justify-between items-center">
-              <span className="text-sm text-gray-600">Interés</span>
+              <span className="text-sm text-gray-600">{t('mortgage.form.charts.interest')}</span>
               <span className="font-semibold text-sm">
                 {new Intl.NumberFormat('es-ES').format(interesTotal)} €
               </span>
             </div>
             <div className="flex justify-between items-center pt-1 border-t border-gray-200">
-              <span className="font-semibold text-gray-800">Total</span>
+              <span className="font-semibold text-gray-800">{t('mortgage.form.charts.total')}</span>
               <span className="font-bold">
                 {new Intl.NumberFormat('es-ES').format(ahorroAportado + cantidadHipoteca + interesTotal)} €
               </span>

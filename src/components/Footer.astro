@@ -1,7 +1,13 @@
 ---
+import { t } from '../utils/i18n';
+
+export interface Props {
+  lang?: 'es' | 'en';
+}
+const { lang = 'es' } = Astro.props;
 ---
 <footer class="w-full bg-blue-900 text-blue-100 py-8 mt-16">
   <div class="max-w-6xl mx-auto px-4 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-    <div class="text-sm">© {new Date().getFullYear()} Hipotecalc. Todos los derechos reservados.</div>
+    <div class="text-sm">© {new Date().getFullYear()} Hipotecalc. {t('footer.copyright', lang)}</div>
   </div>
 </footer> 

@@ -3,6 +3,7 @@ import { ClientRouter } from "astro:transitions";
 import Navbar from '../components/Navbar.tsx';
 import Footer from '../components/Footer.astro';
 import '../style/globals.css';
+import { getCurrentLang } from '../utils/i18n';
 
 export interface Props {
   title?: string;
@@ -19,8 +20,12 @@ const {
   ogImage = "/og-image.svg",
   canonicalURL = 'https://hipotecalc.com'
 } = Astro.props;
+
+const currentLang = getCurrentLang(Astro.url.pathname);
+const langAttribute = currentLang === 'en' ? 'en' : 'es';
+const ogLocale = currentLang === 'en' ? 'en_US' : 'es_ES';
 ---
-<html lang="es">
+<html lang={langAttribute}>
   <head>
     <!-- Start cookieyes banner with error handling --> 
     <script id="cookieyes" type="text/javascript" src="https://cdn-cookieyes.com/client_data/9f0e347f752a5c179f39585d/script.js" onerror="window.cookieYesBlocked = true;"></script> 
@@ -47,7 +52,7 @@ const {
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:image" content={ogImage} />
-    <meta property="og:locale" content="es_ES" />
+    <meta property="og:locale" content={ogLocale} />
     <meta property="og:site_name" content="Hipotecalc" />
     
     <!-- Twitter -->
@@ -316,6 +321,6 @@ const {
     <main class="flex-1 flex flex-col items-center justify-start w-full">
       <slot />
     </main>
-    <Footer />
+    <Footer lang={langAttribute} />
   </body>
 </html>

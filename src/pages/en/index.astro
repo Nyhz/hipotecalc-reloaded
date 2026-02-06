@@ -1,0 +1,23 @@
+---
+import Herramientas from '../../components/home/Herramientas.astro';
+import { getTools } from '../../constants/tools';
+import Hero from '../../components/home/Hero.astro';
+import Layout from '../../layouts/Layout.astro';
+import EuriborChart from '../../components/home/EuriborChart';
+import PageTracking from '../../components/PageTracking.tsx';
+import { t } from '../../utils/i18n';
+---
+<Layout 
+  title={t('seo.home.title', 'en')}
+  description={t('seo.home.description', 'en')}
+  keywords={t('seo.home.keywords', 'en')}
+>
+  <PageTracking client:load pagePath="/en/" pageTitle={t('seo.home.title', 'en')} />
+  <Hero
+    title={t('home.hero.title', 'en')}
+    description={t('home.hero.description', 'en')}
+    lang="en"
+  />
+  <Herramientas tools={getTools('en')} lang="en" />
+  <EuriborChart client:only="react"/>
+</Layout>

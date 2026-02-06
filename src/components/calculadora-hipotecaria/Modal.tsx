@@ -1,4 +1,5 @@
 import React from "react"
+import { useTranslations } from "../../hooks/useTranslations"
 
 interface ModalProps {
   open: boolean
@@ -13,6 +14,7 @@ const Modal: React.FC<ModalProps> = ({
   children,
   maxWidth = "max-w-3xl",
 }) => {
+  const { t } = useTranslations()
   if (!open) return null
   return (
     <div className='fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm'>
@@ -23,7 +25,7 @@ const Modal: React.FC<ModalProps> = ({
         <button
           className='absolute top-3 right-3 text-gray-400 hover:text-blue-600 text-2xl font-bold z-10 cursor-pointer'
           onClick={onClose}
-          aria-label='Cerrar modal'
+          aria-label={t('common.closeModal') || 'Close modal'}
         >
           ×
         </button>

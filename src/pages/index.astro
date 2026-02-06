@@ -1,22 +1,24 @@
 ---
 import Herramientas from '../components/home/Herramientas.astro';
-import { tools } from '../constants/tools';
+import { getTools } from '../constants/tools';
 import Hero from '../components/home/Hero.astro';
 import Layout from '../layouts/Layout.astro';
 import EuriborChart from '../components/home/EuriborChart';
 import PageTracking from '../components/PageTracking.tsx';
+import { t } from '../utils/i18n';
 ---
 <Layout 
-  title="Calculadora Hipotecaria España - Herramientas Financieras Gratuitas"
-  description="Calculadora hipotecaria profesional para España. Calcula tu hipoteca, ITP, impuestos de vivienda y consulta la evolución del Euribor."
-  keywords="calculadora hipoteca españa, ITP, impuesto transmisiones patrimoniales, euribor, calculadora alquiler, herramientas financieras, comprar casa españa"
+  title={t('seo.home.title')}
+  description={t('seo.home.description')}
+  keywords={t('seo.home.keywords')}
 >
-  <PageTracking client:load pagePath="/" pageTitle="Calculadora Hipotecaria España - Home" />
+  <PageTracking client:load pagePath="/" pageTitle={t('seo.home.title')} />
   <Hero
-    title="Calculadora Hipotecaria"
-    description="Herramientas profesionales para calcular tu hipoteca, alquiler o ITP en España. Precisión, rapidez y confianza para tus decisiones financieras."
+    title={t('home.hero.title')}
+    description={t('home.hero.description')}
+    lang="es"
   />
-  <Herramientas tools={tools} />
+  <Herramientas tools={getTools('es')} lang="es" />
   <EuriborChart client:only="react"/>
 <!--   <PostsSection posts={mockPosts} title="Últimos Posts" description="Descubre las últimas novedades, consejos y guías sobre hipotecas, alquiler e impuestos en España." /> -->
 </Layout>
