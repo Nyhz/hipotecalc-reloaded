@@ -6,6 +6,7 @@ import Select from "./Select"
 import RentalKPIs from "./RentalKPIs"
 import RentalCharts from "./RentalCharts"
 import { useTranslations } from "../../hooks/useTranslations"
+import { formatNumberByLang } from "../../utils/number-format"
 
 const inputClass = "w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
 const inputReadOnlyClass = inputClass + " bg-gray-100"
@@ -31,15 +32,6 @@ interface RentalCalculatorProps {
 const RentalCalculator: React.FC<RentalCalculatorProps> = ({ lang = 'es' }) => {
   const { t } = useTranslations(lang)
   const [form, setForm] = useState(initialState)
-  
-  // Helper function to format numbers according to language (max 2 decimals for non-percentage values)
-  const formatNumber = (value: number): string => {
-    const locale = lang === 'en' ? 'en-US' : 'es-ES'
-    return new Intl.NumberFormat(locale, {
-      minimumFractionDigits: 0,
-      maximumFractionDigits: 2
-    }).format(value)
-  }
 
   // Cálculos memoizados que se recalculan automáticamente cuando cambian los inputs
   const calculations = useMemo(() => {
@@ -193,19 +185,19 @@ const RentalCalculator: React.FC<RentalCalculatorProps> = ({ lang = 'es' }) => {
             <div className="flex justify-between items-center">
               <span className="text-gray-600">ITP ({calculations.porcentajeITP}%):</span>
               <span className="font-semibold text-gray-900">
-                {formatNumber(calculations.itp)} €
+                {formatNumberByLang(calculations.itp, lang)} €
               </span>
             </div>
             <div className="flex justify-between items-center">
               <span className="text-gray-600">{t('mortgage.form.mortgageAmount')}:</span>
               <span className="font-semibold text-gray-900">
-                {formatNumber(calculations.cantidadHipoteca)} €
+                {formatNumberByLang(calculations.cantidadHipoteca, lang)} €
               </span>
             </div>
             <div className="flex justify-between items-center">
               <span className="text-gray-600">{t('mortgage.form.monthlyPaymentLabel')}:</span>
               <span className="font-semibold text-gray-900">
-                {formatNumber(calculations.cuotaMensual)} €
+                {formatNumberByLang(calculations.cuotaMensual, lang)} €
               </span>
             </div>
           </div>
@@ -257,13 +249,13 @@ const RentalCalculator: React.FC<RentalCalculatorProps> = ({ lang = 'es' }) => {
             <div className="flex justify-between items-center">
               <span className="text-gray-600">{t('rental.form.monthlyIncome')}:</span>
               <span className="font-semibold text-gray-900">
-                {formatNumber(calculations.ingresosMensuales)} €
+                {formatNumberByLang(calculations.ingresosMensuales, lang)} €
               </span>
             </div>
             <div className="flex justify-between items-center">
               <span className="text-gray-600">{t('rental.results.cashFlowLabel')}:</span>
               <span className={`font-semibold ${calculations.cashFlowMensual >= 0 ? 'text-green-600' : 'text-red-600'}`}>
-                {formatNumber(calculations.cashFlowMensual)} €
+                {formatNumberByLang(calculations.cashFlowMensual, lang)} €
               </span>
             </div>
           </div>

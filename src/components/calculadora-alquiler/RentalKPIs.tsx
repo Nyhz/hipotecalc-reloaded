@@ -1,5 +1,6 @@
 import React from "react"
 import { useTranslations } from "../../hooks/useTranslations"
+import { formatNumberByLang } from "../../utils/number-format"
 
 interface Calculations {
   roiAnual: number
@@ -15,15 +16,6 @@ interface RentalKPIsProps {
 
 const RentalKPIs: React.FC<RentalKPIsProps> = ({ calculations, lang = 'es' }) => {
   const { t } = useTranslations(lang)
-  
-  // Helper function to format numbers according to language (max 2 decimals for non-percentage values)
-  const formatNumber = (value: number): string => {
-    const locale = lang === 'en' ? 'en-US' : 'es-ES'
-    return new Intl.NumberFormat(locale, {
-      minimumFractionDigits: 0,
-      maximumFractionDigits: 2
-    }).format(value)
-  }
   
   const kpis = [
     {
@@ -49,7 +41,7 @@ const RentalKPIs: React.FC<RentalKPIsProps> = ({ calculations, lang = 'es' }) =>
     },
     {
       title: t('rental.results.monthlyCashFlow'),
-      value: `${formatNumber(calculations.cashFlowMensual)} €`,
+      value: `${formatNumberByLang(calculations.cashFlowMensual, lang)} €`,
       description: t('rental.results.cashFlowDescription'),
       color: calculations.cashFlowMensual >= 0 ? "bg-green-50 border-green-200" : "bg-red-50 border-red-200",
       textColor: calculations.cashFlowMensual >= 0 ? "text-green-900" : "text-red-900",

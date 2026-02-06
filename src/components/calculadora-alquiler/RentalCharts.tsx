@@ -1,5 +1,6 @@
 import React from "react"
 import { useTranslations } from "../../hooks/useTranslations"
+import { formatNumberByLang } from "../../utils/number-format"
 
 interface Calculations {
   ingresosMensuales: number
@@ -23,15 +24,6 @@ interface RentalChartsProps {
 const RentalCharts: React.FC<RentalChartsProps> = ({ calculations, form, lang = 'es' }) => {
   const { t } = useTranslations(lang)
   
-  // Helper function to format numbers according to language (max 2 decimals for non-percentage values)
-  const formatNumber = (value: number): string => {
-    const locale = lang === 'en' ? 'en-US' : 'es-ES'
-    return new Intl.NumberFormat(locale, {
-      minimumFractionDigits: 0,
-      maximumFractionDigits: 2
-    }).format(value)
-  }
-  
   return (
     <div className="bg-white rounded-xl shadow-lg p-6 border border-blue-100">
       <h3 className="text-lg font-bold text-blue-900 mb-4 text-center">
@@ -41,19 +33,19 @@ const RentalCharts: React.FC<RentalChartsProps> = ({ calculations, form, lang = 
         <div className="flex justify-between items-center p-3 bg-teal-50 rounded">
           <span className="font-medium text-teal-900">{t('rental.results.income')}</span>
           <span className="font-bold text-teal-900">
-            {formatNumber(calculations.ingresosMensuales)} €
+            {formatNumberByLang(calculations.ingresosMensuales, lang)} €
           </span>
         </div>
         <div className="flex justify-between items-center p-3 bg-pink-50 rounded">
           <span className="font-medium text-pink-900">{t('rental.results.mortgage')}</span>
           <span className="font-bold text-pink-900">
-            -{formatNumber(calculations.cuotaMensual)} €
+            -{formatNumberByLang(calculations.cuotaMensual, lang)} €
           </span>
         </div>
         <div className="flex justify-between items-center p-3 bg-pink-50 rounded">
           <span className="font-medium text-pink-900">{t('rental.results.expenses')}</span>
           <span className="font-bold text-pink-900">
-            -{formatNumber(calculations.gastosMensuales)} €
+            -{formatNumberByLang(calculations.gastosMensuales, lang)} €
           </span>
         </div>
         <div className={`flex justify-between items-center p-3 rounded ${
@@ -65,7 +57,7 @@ const RentalCharts: React.FC<RentalChartsProps> = ({ calculations, form, lang = 
           <span className={`font-bold ${
             calculations.cashFlowMensual >= 0 ? 'text-blue-900' : 'text-red-900'
           }`}>
-            {formatNumber(calculations.cashFlowMensual)} €
+            {formatNumberByLang(calculations.cashFlowMensual, lang)} €
           </span>
         </div>
       </div>
