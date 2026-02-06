@@ -1,14 +1,72 @@
 @import "tailwindcss";
 
-/* Optimized font configuration */
+:root {
+  --bg: #f3f6fb;
+  --bg-accent: #e9eff9;
+  --surface: #ffffff;
+  --surface-muted: #f8fbff;
+  --surface-elevated: #ffffffd6;
+  --text-primary: #0f172a;
+  --text-secondary: #334155;
+  --text-muted: #64748b;
+  --brand-500: #2563eb;
+  --brand-600: #1d4ed8;
+  --brand-700: #1e40af;
+  --success-500: #059669;
+  --warning-500: #d97706;
+  --danger-500: #dc2626;
+  --border-subtle: #dbe7ff;
+  --shadow-soft: 0 8px 24px rgba(15, 23, 42, 0.08);
+  --shadow-card: 0 20px 40px rgba(15, 23, 42, 0.1);
+  --radius-md: 10px;
+  --radius-lg: 14px;
+  --radius-xl: 20px;
+}
+
 body {
-  font-family: "Roboto", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+  font-family: "Inter", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+  color: var(--text-primary);
+  background:
+    radial-gradient(circle at 10% -10%, #dbeafe 0%, transparent 42%),
+    radial-gradient(circle at 85% 10%, #c7d2fe 0%, transparent 34%),
+    linear-gradient(180deg, var(--bg) 0%, #ffffff 45%);
+  font-feature-settings: "cv02", "cv03", "cv04", "cv11";
   font-display: swap;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: "Manrope", "Inter", "Segoe UI", sans-serif;
+  color: var(--text-primary);
+  letter-spacing: -0.02em;
 }
 
 /* Font display swap utility */
 .font-display-swap {
   font-display: swap;
+}
+
+.font-heading {
+  font-family: "Manrope", "Inter", "Segoe UI", sans-serif;
+}
+
+.surface-card {
+  background: var(--surface-elevated);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-soft);
+  backdrop-filter: blur(10px);
+}
+
+.surface-card-strong {
+  background: var(--surface);
+  border: 1px solid #d7e3fa;
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-card);
 }
 
 /* Size adjust for consistent layout */
@@ -50,31 +108,6 @@ html {
   font-synthesis: none;
   font-kerning: none;
   font-variant-ligatures: none;
-}
-
-/* Optimize animations to prevent layout shifts */
-.will-change-transform {
-  will-change: transform;
-}
-
-.will-change-auto {
-  will-change: auto;
-}
-
-/* Ensure transforms don't affect layout */
-.transform-contained {
-  transform-style: preserve-3d;
-  backface-visibility: hidden;
-}
-
-/* Animación shimmer para el botón de contacto */
-@keyframes shimmer {
-  0% {
-    transform: translateX(-100%);
-  }
-  100% {
-    transform: translateX(100%);
-  }
 }
 
 /* Ocultar las flechitas de los inputs numéricos */
