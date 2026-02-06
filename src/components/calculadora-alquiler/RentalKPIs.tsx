@@ -49,15 +49,15 @@ const RentalKPIs: React.FC<RentalKPIsProps> = ({ calculations, lang = 'es' }) =>
   ]
 
   return (
-    <div className="bg-white rounded-xl shadow-lg p-6 border border-blue-100">
-      <h2 className="text-xl font-bold text-blue-900 mb-6">
+    <div className="panel-card p-5 md:p-6">
+      <h2 className="font-heading text-xl font-bold text-slate-900 mb-6">
         {t('rental.results.profitabilityMetrics')}
       </h2>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
         {kpis.map((kpi, index) => (
           <div
             key={index}
-            className={`p-4 rounded-lg border ${kpi.color} ${kpi.textColor}`}
+            className={`kpi-card p-4 ${kpi.color} ${kpi.textColor}`}
           >
             <div className="text-2xl font-bold mb-1">{kpi.value}</div>
             <div className="text-sm font-semibold mb-1">{kpi.title}</div>

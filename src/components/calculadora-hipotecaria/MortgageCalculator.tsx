@@ -23,8 +23,8 @@ import { useGoogleAnalytics } from "../../hooks/useGoogleAnalytics"
 import { useTranslations } from "../../hooks/useTranslations"
 
 const inputClass =
-  "border border-blue-200 bg-white rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400 w-full"
-const inputReadOnlyClass = inputClass + " bg-gray-100"
+  "w-full border border-slate-200 bg-white rounded-xl px-3.5 py-2.5 text-slate-800 focus:outline-none focus:ring-2 focus:ring-blue-400/60 focus:border-blue-300 transition-all duration-200"
+const inputReadOnlyClass = inputClass + " bg-slate-100/80 text-slate-600"
 
 const initialState = {
   precio: "",
@@ -273,14 +273,14 @@ const MortgageCalculator: React.FC = () => {
   const requiereDespoblada = camposDinamicos.zonaDespoblada
 
   return (
-    <div className='w-full max-w-7xl flex flex-col md:flex-row gap-8 px-4 pt-10'>
+    <div className='calculator-shell flex flex-col md:flex-row gap-6 p-4 md:p-6 mt-8'>
       <form
-        className='flex-1 bg-white rounded-xl shadow p-6'
+        className='flex-1 section-card p-5 md:p-6'
         autoComplete='off'
       >
         <div className='grid grid-cols-1 lg:grid-cols-3 gap-6'>
-          <fieldset>
-            <legend className='font-bold mb-2 text-blue-900'>
+          <fieldset className='section-card p-4'>
+            <legend className='font-heading font-bold mb-3 text-slate-900 px-1'>
               {t('mortgage.form.propertyDetails')}
             </legend>
             <div className='grid gap-4'>
@@ -327,8 +327,8 @@ const MortgageCalculator: React.FC = () => {
               />
             </div>
           </fieldset>
-          <fieldset>
-            <legend className='font-bold mb-2 text-blue-900'>
+          <fieldset className='section-card p-4'>
+            <legend className='font-heading font-bold mb-3 text-slate-900 px-1'>
               {t('mortgage.form.taxesAndCosts')}
             </legend>
             <div className='grid gap-4'>
@@ -348,14 +348,14 @@ const MortgageCalculator: React.FC = () => {
                       aria-label={`${t('common.openCalculator')} ${
                         calculations.esObraNueva ? t('mortgage.form.itpModal.vatTitle') : t('mortgage.form.itpModal.title')
                       }`}
-                      className='text-blue-600 hover:underline hover:text-blue-800 focus:outline-none bg-transparent border-0 p-0 h-auto text-sm font-normal cursor-pointer'
+                      className='text-blue-700 hover:underline hover:text-blue-900 focus:outline-none bg-transparent border-0 p-0 h-auto text-sm font-medium cursor-pointer'
                       style={{ lineHeight: "1", height: "1.5em" }}
                       onClick={() => setShowItpModal(true)}
                     >
                       {t(calculations.esObraNueva ? 'mortgage.form.calculateIVA' : 'mortgage.form.calculateITP')}
                     </button>
                     {itpCalculado && (
-                      <div className='text-xs text-green-700 bg-green-100 rounded px-2 ml-2 py-1 shadow'>
+                      <div className='text-xs text-green-700 bg-green-100 rounded px-2 ml-2 py-1 shadow-sm'>
                         {t(calculations.esObraNueva ? 'mortgage.form.ivaCalculated' : 'mortgage.form.itpCalculated')}
                       </div>
                     )}
@@ -439,7 +439,7 @@ const MortgageCalculator: React.FC = () => {
                   </div>
                 </div>
                 {itpDescripcion && itpCalculado && (
-                  <div className='text-green-800 bg-green-50 border border-green-200 rounded px-3 py-2 mt-2 text-sm text-center'>
+                  <div className='text-green-800 bg-green-50 border border-green-200 rounded-lg px-3 py-2 mt-2 text-sm text-center'>
                     <span className='font-semibold'>
                       {t('mortgage.form.bonificationApplied')}
                     </span>{" "}
@@ -470,8 +470,8 @@ const MortgageCalculator: React.FC = () => {
               />
             </div>
           </fieldset>
-          <fieldset>
-            <legend className='font-bold mb-2 text-blue-900'>
+          <fieldset className='section-card p-4'>
+            <legend className='font-heading font-bold mb-3 text-slate-900 px-1'>
               {t('mortgage.form.financingAndConditions')}
             </legend>
             <div className='grid gap-4'>
@@ -555,7 +555,7 @@ const MortgageCalculator: React.FC = () => {
                   />
 
                   {/* Tabla de escenarios */}
-                  <div className='bg-gray-50 rounded-lg p-4'>
+                  <div className='metric-row p-4'>
                     <h4 className='font-semibold text-sm text-gray-700 mb-3'>
                       {t('mortgage.form.variableInterestScenarios')}
                     </h4>
@@ -624,11 +624,11 @@ const MortgageCalculator: React.FC = () => {
           itpDescripcion={itpDescripcion}
         />
       </form>
-      <aside className='w-full md:w-96 bg-white rounded-xl shadow-lg p-6 flex flex-col gap-6 border border-blue-100'>
-        <h2 className='text-xl font-bold text-blue-900 mb-2'>
+      <aside className='w-full md:w-[23rem] panel-card p-5 md:p-6 flex flex-col gap-5'>
+        <h2 className='font-heading text-xl font-bold text-slate-900 mb-1'>
           {t('mortgage.form.monthlyPayment')}
         </h2>
-        <div className='flex flex-col items-center justify-center bg-blue-50 rounded-xl p-6 mb-4 shadow-inner'>
+        <div className='flex flex-col items-center justify-center bg-blue-50/70 border border-blue-100 rounded-2xl p-6 mb-2 shadow-inner'>
           <span className='text-3xl font-extrabold text-blue-800 mb-2'>
             {calculations.cuota} €
           </span>
@@ -663,7 +663,7 @@ const MortgageCalculator: React.FC = () => {
 
         {/* Información de la hipoteca */}
         <div className='space-y-2'>
-          <div className='flex justify-between items-center py-2'>
+          <div className='flex justify-between items-center py-2 px-3 metric-row'>
             <div className='flex items-center gap-2'>
               <span className='text-blue-900 font-semibold'>
                 {t('mortgage.form.mortgageAmount')}
@@ -687,7 +687,7 @@ const MortgageCalculator: React.FC = () => {
               €
             </span>
           </div>
-          <div className='flex justify-between items-center py-2'>
+          <div className='flex justify-between items-center py-2 px-3 metric-row'>
             <div className='flex items-center gap-2'>
               <span className='text-blue-900 font-semibold'>
                 {t('mortgage.form.financingPercentage')}
@@ -711,7 +711,7 @@ const MortgageCalculator: React.FC = () => {
         </div>
 
         {/* Botón de contacto movido arriba */}
-        <div className='w-full flex items-center justify-center'>
+        <div className='w-full flex items-center justify-center py-1'>
           <ContactButton variant='desktop' />
         </div>
 
@@ -728,7 +728,7 @@ const MortgageCalculator: React.FC = () => {
 
         {/* Información adicional */}
         <div className='space-y-2'>
-          <div className='flex justify-between items-center py-2 border-b border-gray-200'>
+          <div className='flex justify-between items-center py-2 px-3 metric-row'>
             <span className='text-blue-900 font-semibold'>
               {t('mortgage.form.mortgageAppraisalPercentage')}
             </span>
@@ -740,7 +740,7 @@ const MortgageCalculator: React.FC = () => {
               {calculations.porcentajeHipotecaTasacion.toFixed(1)} %
             </span>
           </div>
-          <div className='flex justify-between items-center py-2'>
+          <div className='flex justify-between items-center py-2 px-3 metric-row'>
             <span className='text-blue-900 font-semibold'>{t('mortgage.form.totalInterestLabel')}</span>
             <span className='text-blue-900 font-semibold'>
               {new Intl.NumberFormat("es-ES").format(calculations.interes)} €

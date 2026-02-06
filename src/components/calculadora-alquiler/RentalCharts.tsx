@@ -25,31 +25,31 @@ const RentalCharts: React.FC<RentalChartsProps> = ({ calculations, form, lang = 
   const { t } = useTranslations(lang)
   
   return (
-    <div className="bg-white rounded-xl shadow-lg p-6 border border-blue-100">
-      <h3 className="text-lg font-bold text-blue-900 mb-4 text-center">
+    <div className="panel-card p-5 md:p-6">
+      <h3 className="font-heading text-lg font-bold text-slate-900 mb-4 text-center">
         {t('rental.results.monthlyCashFlowBreakdown')}
       </h3>
       <div className="space-y-3">
-        <div className="flex justify-between items-center p-3 bg-teal-50 rounded">
+        <div className="flex justify-between items-center p-3 metric-row bg-teal-50/80">
           <span className="font-medium text-teal-900">{t('rental.results.income')}</span>
           <span className="font-bold text-teal-900">
             {formatNumberByLang(calculations.ingresosMensuales, lang)} €
           </span>
         </div>
-        <div className="flex justify-between items-center p-3 bg-pink-50 rounded">
+        <div className="flex justify-between items-center p-3 metric-row bg-pink-50/80">
           <span className="font-medium text-pink-900">{t('rental.results.mortgage')}</span>
           <span className="font-bold text-pink-900">
             -{formatNumberByLang(calculations.cuotaMensual, lang)} €
           </span>
         </div>
-        <div className="flex justify-between items-center p-3 bg-pink-50 rounded">
+        <div className="flex justify-between items-center p-3 metric-row bg-pink-50/80">
           <span className="font-medium text-pink-900">{t('rental.results.expenses')}</span>
           <span className="font-bold text-pink-900">
             -{formatNumberByLang(calculations.gastosMensuales, lang)} €
           </span>
         </div>
-        <div className={`flex justify-between items-center p-3 rounded ${
-          calculations.cashFlowMensual >= 0 ? 'bg-blue-50' : 'bg-red-50'
+        <div className={`flex justify-between items-center p-3 metric-row ${
+          calculations.cashFlowMensual >= 0 ? 'bg-blue-50/80' : 'bg-red-50/80'
         }`}>
           <span className={`font-medium ${
             calculations.cashFlowMensual >= 0 ? 'text-blue-900' : 'text-red-900'
