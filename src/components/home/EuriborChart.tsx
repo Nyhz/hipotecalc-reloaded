@@ -79,17 +79,17 @@ const EuriborChart: React.FC = () => {
   }
 
   return (
-    <div className='w-full max-w-7xl mx-auto px-4 my-12'>
-      <div className='bg-white/80 rounded-xl shadow border border-blue-100'>
-        <div className='py-6'>
+    <div className='w-full max-w-7xl mx-auto my-12 reveal-up'>
+      <div className='surface-card p-4 md:p-6'>
+        <div className='py-2'>
           <ReactECharts option={option} style={{ height: 400, width: "100%" }} />
-          <div className='text-sm text-blue-700 mt-2 text-center'>
+          <div className='text-sm text-slate-600 mt-2 text-center'>
             {t('home.hero.source')}:{" "}
             <a
               href='https://www.euribor-rates.eu/en/euribor-rates-by-year/'
               target='_blank'
               rel='noopener noreferrer'
-              className='underline text-blue-600 cursor-pointer'
+              className='underline text-blue-700 cursor-pointer'
             >
               euribor-rates.eu
             </a>{" "}

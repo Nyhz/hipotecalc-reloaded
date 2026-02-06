@@ -1,14 +1,288 @@
 @import "tailwindcss";
 
-/* Optimized font configuration */
+:root {
+  --bg: #f3f6fb;
+  --bg-accent: #e9eff9;
+  --surface: #ffffff;
+  --surface-muted: #f8fbff;
+  --surface-elevated: #ffffffd6;
+  --text-primary: #0f172a;
+  --text-secondary: #334155;
+  --text-muted: #64748b;
+  --brand-500: #2563eb;
+  --brand-600: #1d4ed8;
+  --brand-700: #1e40af;
+  --success-500: #059669;
+  --warning-500: #d97706;
+  --danger-500: #dc2626;
+  --border-subtle: #dbe7ff;
+  --shadow-soft: 0 8px 24px rgba(15, 23, 42, 0.08);
+  --shadow-card: 0 20px 40px rgba(15, 23, 42, 0.1);
+  --radius-md: 10px;
+  --radius-lg: 14px;
+  --radius-xl: 20px;
+}
+
 body {
-  font-family: "Roboto", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+  font-family: "Inter", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+  color: var(--text-primary);
+  background:
+    radial-gradient(circle at 10% -10%, #dbeafe 0%, transparent 42%),
+    radial-gradient(circle at 85% 10%, #c7d2fe 0%, transparent 34%),
+    linear-gradient(180deg, var(--bg) 0%, #ffffff 45%);
+  font-feature-settings: "cv02", "cv03", "cv04", "cv11";
   font-display: swap;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: "Manrope", "Inter", "Segoe UI", sans-serif;
+  color: var(--text-primary);
+  letter-spacing: -0.02em;
 }
 
 /* Font display swap utility */
 .font-display-swap {
   font-display: swap;
+}
+
+.font-heading {
+  font-family: "Manrope", "Inter", "Segoe UI", sans-serif;
+}
+
+.surface-card {
+  background: var(--surface-elevated);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-soft);
+  backdrop-filter: blur(10px);
+}
+
+.surface-card-strong {
+  background: var(--surface);
+  border: 1px solid #d7e3fa;
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-card);
+}
+
+.surface-nav {
+  background: linear-gradient(
+    180deg,
+    rgba(237, 243, 254, 0.82) 0%,
+    rgba(248, 251, 255, 0.76) 100%
+  );
+  border: 1px solid rgba(148, 163, 184, 0.25);
+  border-radius: 16px;
+  box-shadow: 0 10px 24px rgba(15, 23, 42, 0.07);
+  backdrop-filter: blur(14px);
+}
+
+@keyframes soft-shine {
+  0% {
+    transform: translateX(-120%);
+    opacity: 0;
+  }
+  20% {
+    opacity: 0.4;
+  }
+  100% {
+    transform: translateX(140%);
+    opacity: 0;
+  }
+}
+
+.btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border-radius: 9999px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  transition:
+    transform 240ms cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 240ms cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 220ms ease,
+    background-color 220ms ease,
+    color 220ms ease;
+  overflow: hidden;
+}
+
+.btn::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  width: 44%;
+  background: linear-gradient(
+    100deg,
+    transparent 10%,
+    rgba(255, 255, 255, 0.35) 50%,
+    transparent 90%
+  );
+  animation: soft-shine 4s ease-in-out infinite;
+  pointer-events: none;
+}
+
+.btn:hover {
+  transform: translateY(-1px) scale(1.01);
+}
+
+.btn:active {
+  transform: translateY(0) scale(0.99);
+}
+
+.btn-primary {
+  background: linear-gradient(180deg, #2f6fff 0%, #1d4ed8 100%);
+  color: #ffffff;
+  border: 1px solid #1e4dd6;
+  box-shadow: 0 10px 20px rgba(37, 99, 235, 0.24);
+}
+
+.btn-primary:hover {
+  background: linear-gradient(180deg, #3a77ff 0%, #2554dd 100%);
+  box-shadow: 0 14px 26px rgba(37, 99, 235, 0.3);
+}
+
+.btn-secondary {
+  background: rgba(255, 255, 255, 0.72);
+  color: var(--brand-700);
+  border: 1px solid rgba(59, 130, 246, 0.3);
+  box-shadow: 0 8px 20px rgba(15, 23, 42, 0.07);
+}
+
+.btn-secondary:hover {
+  background: rgba(239, 246, 255, 0.94);
+  border-color: rgba(59, 130, 246, 0.5);
+  box-shadow: 0 12px 24px rgba(37, 99, 235, 0.15);
+}
+
+.calculator-shell {
+  width: 100%;
+  max-width: 1240px;
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  border-radius: 24px;
+  background: rgba(255, 255, 255, 0.48);
+  box-shadow: 0 24px 50px rgba(15, 23, 42, 0.08);
+  backdrop-filter: blur(6px);
+}
+
+.section-card {
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid #dbe7ff;
+  border-radius: 18px;
+  box-shadow: 0 10px 22px rgba(15, 23, 42, 0.06);
+}
+
+.panel-card {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.98) 0%, #f9fbff 100%);
+  border: 1px solid #dbe7ff;
+  border-radius: 18px;
+  box-shadow: 0 12px 26px rgba(15, 23, 42, 0.08);
+}
+
+.kpi-card {
+  border-radius: 14px;
+  border: 1px solid rgba(148, 163, 184, 0.24);
+  background: rgba(255, 255, 255, 0.85);
+  box-shadow: 0 8px 20px rgba(15, 23, 42, 0.06);
+}
+
+.metric-row {
+  border: 1px solid rgba(203, 213, 225, 0.5);
+  border-radius: 12px;
+  background: rgba(248, 250, 252, 0.8);
+}
+
+@keyframes reveal-up {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes gentle-float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
+}
+
+.reveal-up {
+  animation: reveal-up 560ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.reveal-delay-1 {
+  animation-delay: 80ms;
+}
+
+.reveal-delay-2 {
+  animation-delay: 160ms;
+}
+
+.reveal-delay-3 {
+  animation-delay: 240ms;
+}
+
+.float-soft {
+  animation: gentle-float 3.8s ease-in-out infinite;
+}
+
+.ambient-section {
+  position: relative;
+  overflow: hidden;
+}
+
+.ambient-section::before {
+  content: "";
+  position: absolute;
+  width: 380px;
+  height: 380px;
+  border-radius: 999px;
+  filter: blur(70px);
+  background: rgba(59, 130, 246, 0.14);
+  top: -90px;
+  right: -120px;
+  pointer-events: none;
+}
+
+.ambient-section::after {
+  content: "";
+  position: absolute;
+  width: 280px;
+  height: 280px;
+  border-radius: 999px;
+  filter: blur(70px);
+  background: rgba(16, 185, 129, 0.1);
+  bottom: -70px;
+  left: -80px;
+  pointer-events: none;
+}
+
+.ambient-content {
+  position: relative;
+  z-index: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .btn,
+  .btn::after,
+  .reveal-up,
+  .float-soft {
+    animation: none !important;
+    transition: none !important;
+  }
 }
 
 /* Size adjust for consistent layout */
@@ -50,31 +324,6 @@ html {
   font-synthesis: none;
   font-kerning: none;
   font-variant-ligatures: none;
-}
-
-/* Optimize animations to prevent layout shifts */
-.will-change-transform {
-  will-change: transform;
-}
-
-.will-change-auto {
-  will-change: auto;
-}
-
-/* Ensure transforms don't affect layout */
-.transform-contained {
-  transform-style: preserve-3d;
-  backface-visibility: hidden;
-}
-
-/* Animación shimmer para el botón de contacto */
-@keyframes shimmer {
-  0% {
-    transform: translateX(-100%);
-  }
-  100% {
-    transform: translateX(100%);
-  }
 }
 
 /* Ocultar las flechitas de los inputs numéricos */

@@ -19,11 +19,11 @@ export default function ContactButton({
     trackContactAttempt(`navbar_${variant}`)
   }
   const baseClasses =
-    "bg-blue-600 hover:bg-blue-700 text-white font-medium border border-blue-600 hover:border-blue-700 rounded-lg shadow-sm hover:shadow-md transition-all duration-200 cursor-pointer transform hover:-translate-y-0.5 flex items-center gap-2"
+    "btn btn-primary cursor-pointer"
 
   const variantClasses = {
-    desktop: "px-4 py-2 text-base",
-    mobile: "px-3 py-1.5 text-sm",
+    desktop: "px-4 py-2 text-sm",
+    mobile: "px-3 py-1.5 text-xs",
   }
 
   const text = {

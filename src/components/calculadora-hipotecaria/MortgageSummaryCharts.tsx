@@ -28,9 +28,9 @@ const MortgageSummaryCharts: React.FC<MortgageSummaryChartsProps> = ({
     const costChart = echarts.init(costChartRef.current)
     const costOption = {
       tooltip: {
-        trigger: 'axis',
+        trigger: 'item',
         formatter: function (params: any) {
-          return `${params[0].name}: ${new Intl.NumberFormat('es-ES').format(params[0].value)} €`
+          return `${params.seriesName}: ${new Intl.NumberFormat('es-ES').format(params.value)} €`
         }
       },
       grid: {
@@ -73,9 +73,9 @@ const MortgageSummaryCharts: React.FC<MortgageSummaryChartsProps> = ({
     const mortgageChart = echarts.init(mortgageChartRef.current)
     const mortgageOption = {
       tooltip: {
-        trigger: 'axis',
+        trigger: 'item',
         formatter: function (params: any) {
-          return `${params[0].name}: ${new Intl.NumberFormat('es-ES').format(params[0].value)} €`
+          return `${params.seriesName}: ${new Intl.NumberFormat('es-ES').format(params.value)} €`
         }
       },
       grid: {
@@ -131,26 +131,26 @@ const MortgageSummaryCharts: React.FC<MortgageSummaryChartsProps> = ({
   return (
     <div className="space-y-4">
       {/* Gráfica 1: Coste total del inmueble */}
-      <div className="bg-white rounded-lg p-3 border border-gray-200">
-        <h3 className="text-base font-semibold text-gray-800 mb-2">
+      <div className="panel-card p-3">
+        <h3 className="text-base font-semibold text-slate-800 mb-2">
           {t('mortgage.form.charts.totalPropertyCost')}
         </h3>
         <div className="space-y-2">
           <div ref={costChartRef} className="w-full h-8 bg-gray-100 rounded" />
-          <div className="space-y-1">
-            <div className="flex justify-between items-center">
+          <div className="space-y-1.5">
+            <div className="flex justify-between items-center metric-row px-3 py-2">
               <span className="text-sm text-gray-600">{t('mortgage.form.charts.propertyPrice')}</span>
               <span className="font-semibold text-sm">
                 {new Intl.NumberFormat('es-ES').format(precioInmueble)} €
               </span>
             </div>
-            <div className="flex justify-between items-center">
+            <div className="flex justify-between items-center metric-row px-3 py-2">
               <span className="text-sm text-gray-600">{t('mortgage.form.charts.taxesAndExpenses')}</span>
               <span className="font-semibold text-sm">
                 {new Intl.NumberFormat('es-ES').format(impuestosGastos)} €
               </span>
             </div>
-            <div className="flex justify-between items-center pt-1 border-t border-gray-200">
+            <div className="flex justify-between items-center metric-row px-3 py-2">
               <span className="font-semibold text-gray-800">{t('mortgage.form.charts.total')}</span>
               <span className="font-bold">
                 {new Intl.NumberFormat('es-ES').format(precioInmueble + impuestosGastos)} €
@@ -161,32 +161,32 @@ const MortgageSummaryCharts: React.FC<MortgageSummaryChartsProps> = ({
       </div>
 
       {/* Gráfica 2: Coste total con hipoteca */}
-      <div className="bg-white rounded-lg p-3 border border-gray-200">
-        <h3 className="text-base font-semibold text-gray-800 mb-2">
+      <div className="panel-card p-3">
+        <h3 className="text-base font-semibold text-slate-800 mb-2">
           {t('mortgage.form.charts.totalCostWithMortgage')}
         </h3>
         <div className="space-y-2">
           <div ref={mortgageChartRef} className="w-full h-8 bg-gray-100 rounded" />
-          <div className="space-y-1">
-            <div className="flex justify-between items-center">
+          <div className="space-y-1.5">
+            <div className="flex justify-between items-center metric-row px-3 py-2">
               <span className="text-sm text-gray-600">{t('mortgage.form.charts.savingsContributed')}</span>
               <span className="font-semibold text-sm">
                 {new Intl.NumberFormat('es-ES').format(ahorroAportado)} €
               </span>
             </div>
-            <div className="flex justify-between items-center">
+            <div className="flex justify-between items-center metric-row px-3 py-2">
               <span className="text-sm text-gray-600">{t('mortgage.form.charts.mortgage')}</span>
               <span className="font-semibold text-sm">
                 {new Intl.NumberFormat('es-ES').format(cantidadHipoteca)} €
               </span>
             </div>
-            <div className="flex justify-between items-center">
+            <div className="flex justify-between items-center metric-row px-3 py-2">
               <span className="text-sm text-gray-600">{t('mortgage.form.charts.interest')}</span>
               <span className="font-semibold text-sm">
                 {new Intl.NumberFormat('es-ES').format(interesTotal)} €
               </span>
             </div>
-            <div className="flex justify-between items-center pt-1 border-t border-gray-200">
+            <div className="flex justify-between items-center metric-row px-3 py-2">
               <span className="font-semibold text-gray-800">{t('mortgage.form.charts.total')}</span>
               <span className="font-bold">
                 {new Intl.NumberFormat('es-ES').format(ahorroAportado + cantidadHipoteca + interesTotal)} €

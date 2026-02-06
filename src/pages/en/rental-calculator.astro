@@ -11,20 +11,25 @@ import { t } from '../../utils/i18n';
   keywords={t('seo.rental.keywords', 'en')}
 >
   <PageTracking client:load pagePath="/en/rental-calculator" pageTitle={t('seo.rental.title', 'en')} />
-  <main class="min-h-screen py-8">
-    <div class="max-w-7xl mx-auto px-4">
+  <main class="w-full max-w-7xl mx-auto py-8 ambient-section rounded-3xl">
+    <div class="ambient-content w-full">
       <!-- Header -->
-      <div class="text-center mb-8">
-        <h1 class="text-4xl font-bold text-blue-900 mb-4">
+      <div class="text-center mb-6 reveal-up">
+        <span class="inline-flex rounded-full border border-blue-200 bg-blue-50 text-blue-700 px-4 py-1 text-xs font-semibold uppercase tracking-wider">
+          {t('rental.title', 'en')}
+        </span>
+        <h1 class="font-heading text-4xl font-bold text-slate-900 mt-4 mb-3">
           {t('rental.hero.title', 'en')}
         </h1>
-        <p class="text-lg text-gray-600 max-w-3xl mx-auto">
+        <p class="text-lg text-slate-600 max-w-3xl mx-auto">
           {t('rental.hero.description', 'en')}
         </p>
       </div>
 
       <!-- Calculadora -->
-      <RentalCalculatorComponent client:load lang="en" />
+      <div class="reveal-up reveal-delay-1">
+        <RentalCalculatorComponent client:load lang="en" />
+      </div>
     </div>
   </main>
 </Layout>

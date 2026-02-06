@@ -8,8 +8,8 @@ import RentalCharts from "./RentalCharts"
 import { useTranslations } from "../../hooks/useTranslations"
 import { formatNumberByLang } from "../../utils/number-format"
 
-const inputClass = "w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
-const inputReadOnlyClass = inputClass + " bg-gray-100"
+const inputClass = "w-full px-4 py-3 border border-slate-200 bg-white rounded-xl focus:ring-2 focus:ring-blue-500/60 focus:border-blue-300 transition-all duration-200"
+const inputReadOnlyClass = inputClass + " bg-slate-100/80"
 
 const initialState = {
   // Datos de la propiedad
@@ -120,10 +120,10 @@ const RentalCalculator: React.FC<RentalCalculatorProps> = ({ lang = 'es' }) => {
   }
 
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+    <div className="calculator-shell grid grid-cols-1 lg:grid-cols-2 gap-6 p-4 md:p-6 mt-6">
       {/* Datos de la Propiedad */}
-      <div className="bg-white rounded-xl shadow-lg p-6 border border-blue-100">
-        <h2 className="text-xl font-bold text-blue-900 mb-6">
+      <div className="section-card p-5 md:p-6">
+        <h2 className="font-heading text-xl font-bold text-slate-900 mb-6">
           {t('rental.form.propertyDetails')}
         </h2>
         <div className="space-y-4">
@@ -181,7 +181,7 @@ const RentalCalculator: React.FC<RentalCalculatorProps> = ({ lang = 'es' }) => {
           />
           
           {/* Información calculada */}
-          <div className="bg-gray-50 rounded-lg p-4 space-y-2">
+          <div className="metric-row p-4 space-y-2">
             <div className="flex justify-between items-center">
               <span className="text-gray-600">ITP ({calculations.porcentajeITP}%):</span>
               <span className="font-semibold text-gray-900">
@@ -205,8 +205,8 @@ const RentalCalculator: React.FC<RentalCalculatorProps> = ({ lang = 'es' }) => {
       </div>
 
       {/* Detalles del Alquiler */}
-      <div className="bg-white rounded-xl shadow-lg p-6 border border-blue-100">
-        <h2 className="text-xl font-bold text-blue-900 mb-6">
+      <div className="section-card p-5 md:p-6">
+        <h2 className="font-heading text-xl font-bold text-slate-900 mb-6">
           {t('rental.form.rentalDetails')}
         </h2>
         <div className="space-y-4">
@@ -245,7 +245,7 @@ const RentalCalculator: React.FC<RentalCalculatorProps> = ({ lang = 'es' }) => {
           />
           
           {/* Información calculada */}
-          <div className="bg-gray-50 rounded-lg p-4 space-y-2">
+          <div className="metric-row p-4 space-y-2">
             <div className="flex justify-between items-center">
               <span className="text-gray-600">{t('rental.form.monthlyIncome')}:</span>
               <span className="font-semibold text-gray-900">
