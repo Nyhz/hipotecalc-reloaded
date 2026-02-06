@@ -663,13 +663,13 @@ const MortgageCalculator: React.FC = () => {
 
         {/* Información de la hipoteca */}
         <div className='space-y-2'>
-          <div className='flex justify-between items-center py-2 px-3 metric-row'>
-            <div className='flex items-center gap-2'>
-              <span className='text-blue-900 font-semibold'>
+          <div className='flex justify-between items-start py-2 px-3 metric-row gap-3'>
+            <div className='flex items-start gap-2 min-w-0'>
+              <span className='text-blue-900 font-semibold leading-tight'>
                 {t('mortgage.form.mortgageAmount')}
               </span>
               <svg
-                className='w-4 h-4 text-blue-500'
+                className='w-4 h-4 text-blue-500 shrink-0 mt-0.5'
                 fill='currentColor'
                 viewBox='0 0 20 20'
               >
@@ -680,20 +680,19 @@ const MortgageCalculator: React.FC = () => {
                 />
               </svg>
             </div>
-            <span className='text-blue-900 font-semibold'>
+            <span className='text-blue-900 font-semibold whitespace-nowrap text-right'>
               {new Intl.NumberFormat("es-ES").format(
                 calculations.cantidadHipoteca
-              )}{" "}
-              €
+              )} €
             </span>
           </div>
-          <div className='flex justify-between items-center py-2 px-3 metric-row'>
-            <div className='flex items-center gap-2'>
-              <span className='text-blue-900 font-semibold'>
+          <div className='flex justify-between items-start py-2 px-3 metric-row gap-3'>
+            <div className='flex items-start gap-2 min-w-0'>
+              <span className='text-blue-900 font-semibold leading-tight'>
                 {t('mortgage.form.financingPercentage')}
               </span>
               <svg
-                className='w-4 h-4 text-blue-500'
+                className='w-4 h-4 text-blue-500 shrink-0 mt-0.5'
                 fill='currentColor'
                 viewBox='0 0 20 20'
               >
@@ -704,7 +703,7 @@ const MortgageCalculator: React.FC = () => {
                 />
               </svg>
             </div>
-            <span className='text-blue-900 font-semibold'>
+            <span className='text-blue-900 font-semibold whitespace-nowrap text-right'>
               {calculations.porcentaje} %
             </span>
           </div>

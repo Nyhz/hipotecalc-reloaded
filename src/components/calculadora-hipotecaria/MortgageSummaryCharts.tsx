@@ -28,9 +28,9 @@ const MortgageSummaryCharts: React.FC<MortgageSummaryChartsProps> = ({
     const costChart = echarts.init(costChartRef.current)
     const costOption = {
       tooltip: {
-        trigger: 'axis',
+        trigger: 'item',
         formatter: function (params: any) {
-          return `${params[0].name}: ${new Intl.NumberFormat('es-ES').format(params[0].value)} €`
+          return `${params.seriesName}: ${new Intl.NumberFormat('es-ES').format(params.value)} €`
         }
       },
       grid: {
@@ -73,9 +73,9 @@ const MortgageSummaryCharts: React.FC<MortgageSummaryChartsProps> = ({
     const mortgageChart = echarts.init(mortgageChartRef.current)
     const mortgageOption = {
       tooltip: {
-        trigger: 'axis',
+        trigger: 'item',
         formatter: function (params: any) {
-          return `${params[0].name}: ${new Intl.NumberFormat('es-ES').format(params[0].value)} €`
+          return `${params.seriesName}: ${new Intl.NumberFormat('es-ES').format(params.value)} €`
         }
       },
       grid: {
