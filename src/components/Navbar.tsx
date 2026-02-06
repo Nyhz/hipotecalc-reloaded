@@ -14,9 +14,20 @@ export default function Navbar() {
   const tools = getTools(currentLang)
 
   useEffect(() => {
-    const path = window.location.pathname
-    setCurrentLang(getCurrentLang(path))
-    setCurrentPath(path)
+    const syncRouteState = () => {
+      const path = window.location.pathname
+      setCurrentLang(getCurrentLang(path))
+      setCurrentPath(path)
+    }
+
+    syncRouteState()
+    window.addEventListener("astro:page-load", syncRouteState as EventListener)
+    window.addEventListener("popstate", syncRouteState)
+
+    return () => {
+      window.removeEventListener("astro:page-load", syncRouteState as EventListener)
+      window.removeEventListener("popstate", syncRouteState)
+    }
   }, [])
 
   useEffect(() => {
