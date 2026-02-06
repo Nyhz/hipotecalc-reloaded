@@ -108,6 +108,7 @@
       "increaseByStep": "Increase according to configured step",
       "downPaymentAmountLabel": "Down Payment Amount",
       "monthlyPaymentLabel": "Monthly Payment",
+      "totalInterestLabel": "Total interest",
       "charts": {
         "totalPropertyCost": "Total property cost",
         "propertyPrice": "Property price",
