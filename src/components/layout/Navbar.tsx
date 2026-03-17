@@ -11,7 +11,7 @@ export default function Navbar() {
 
   return (
     <nav className='w-full bg-white shadow-sm sticky top-0 z-50'>
-      <div className='max-w-7xl mx-auto px-4 h-16'>
+      <div className='max-w-[1920px] mx-auto px-4 h-16'>
         {/* Desktop Layout */}
         <div className='hidden md:grid md:grid-cols-3 md:items-center h-full'>
           {/* Logo a la izquierda */}
@@ -97,7 +97,7 @@ export default function Navbar() {
       {/* Mobile Dropdown Menu */}
       {isMenuOpen && (
         <div className='md:hidden bg-white border-t border-gray-200 shadow-sm'>
-          <div className='max-w-7xl mx-auto px-4 py-2'>
+          <div className='max-w-[1920px] mx-auto px-4 py-2'>
             <ul className='space-y-2'>
               {tools
                 .filter((tool) => tool.active)
