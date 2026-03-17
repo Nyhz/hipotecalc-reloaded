@@ -2,34 +2,78 @@
 import Layout from '../layouts/Layout.astro';
 import RentalCalculator from '../components/calculadora-alquiler/RentalCalculator.tsx';
 import PageTracking from '../components/PageTracking.tsx';
+import Breadcrumbs from '../components/seo/Breadcrumbs.astro';
+import FAQSection from '../components/seo/FAQSection.astro';
 import { t } from '../utils/i18n';
 ---
 
-<Layout 
-  title={t('seo.rental.title')} 
+<Layout
+  title={t('seo.rental.title')}
   description={t('seo.rental.description')}
   keywords={t('seo.rental.keywords')}
 >
   <PageTracking client:load pagePath="/calculadora-alquiler" pageTitle={t('seo.rental.title')} />
+
+  <Breadcrumbs items={[
+    { name: 'Inicio', href: '/' },
+    { name: 'Calculadora de Alquiler', href: '/calculadora-alquiler' }
+  ]} />
+
   <main class="w-full max-w-7xl mx-auto py-8 ambient-section rounded-3xl">
     <div class="ambient-content w-full">
-      <!-- Header -->
       <div class="text-center mb-6 reveal-up">
         <span class="inline-flex rounded-full border border-blue-200 bg-blue-50 text-blue-700 px-4 py-1 text-xs font-semibold uppercase tracking-wider">
           {t('rental.title')}
         </span>
-        <h1 class="font-heading text-4xl font-bold text-slate-900 mt-4 mb-3">
+        <h1 class="font-heading text-3xl md:text-4xl lg:text-5xl font-extrabold text-slate-900 mt-4 mb-3">
           {t('rental.hero.title')}
         </h1>
         <p class="text-lg text-slate-600 max-w-3xl mx-auto">
           {t('rental.hero.description')}
         </p>
       </div>
-
-      <!-- Calculadora -->
       <div class="reveal-up reveal-delay-1">
         <RentalCalculator client:load lang="es" />
       </div>
     </div>
   </main>
-</Layout> 
+
+  <section class="w-full max-w-4xl mx-auto py-12 px-4">
+    <h2 class="font-heading text-2xl md:text-3xl font-bold text-slate-900 mb-6">
+      ¿Cómo calcular la rentabilidad de un alquiler?
+    </h2>
+    <div class="text-slate-600 space-y-4 leading-relaxed">
+      <p>
+        Nuestra <strong>calculadora de alquiler</strong> te permite analizar la rentabilidad de una inversión inmobiliaria en España.
+        Introduce el precio de compra, los costes asociados, el alquiler mensual esperado y los gastos recurrentes
+        para obtener métricas clave como el <strong>ROI anual</strong>, el <strong>cash flow mensual</strong> y el <strong>tiempo de recuperación</strong> de tu inversión.
+      </p>
+      <p>
+        La herramienta tiene en cuenta la financiación hipotecaria, impuestos de la propiedad, seguros, mantenimiento
+        y gestión para darte una visión realista de la <strong>rentabilidad neta</strong> de tu inversión.
+      </p>
+    </div>
+  </section>
+
+  <FAQSection
+    title="Preguntas Frecuentes sobre Inversión en Alquiler"
+    items={[
+      {
+        question: "¿Qué rentabilidad se considera buena para un alquiler en España?",
+        answer: "Una rentabilidad bruta del 5-7% se considera buena en España. La rentabilidad neta (descontando gastos, impuestos y vacantes) suele estar entre el 3-5%. En grandes ciudades como Madrid o Barcelona la rentabilidad suele ser menor pero con mayor seguridad, mientras que en ciudades medianas puede ser más alta."
+      },
+      {
+        question: "¿Qué es el cash flow en una inversión inmobiliaria?",
+        answer: "El cash flow es la diferencia entre los ingresos por alquiler y todos los gastos asociados (hipoteca, impuestos, seguros, mantenimiento, gestión). Un cash flow positivo significa que el alquiler cubre todos los gastos y genera beneficio mensual."
+      },
+      {
+        question: "¿Qué gastos debo tener en cuenta al comprar para alquilar?",
+        answer: "Debes considerar: la cuota hipotecaria, el IBI y otros impuestos locales, el seguro del hogar, el mantenimiento y reparaciones (se estima un 1-2% del valor anual), la gestión de la propiedad si delegas, los periodos de vacante sin inquilino, y la declaración de la renta por los ingresos del alquiler."
+      },
+      {
+        question: "¿Cuánto tarda en recuperarse la inversión de un piso de alquiler?",
+        answer: "El tiempo de recuperación depende del precio de compra, la entrada aportada y la rentabilidad neta. En España, con una rentabilidad media del 4-5% neto, recuperar la entrada puede tardar entre 8 y 15 años. Nuestra calculadora te muestra el break-even exacto según tus datos."
+      }
+    ]}
+  />
+</Layout>

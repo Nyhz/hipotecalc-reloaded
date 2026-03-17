@@ -7,7 +7,7 @@ import EuriborChart from '../../components/home/EuriborChart';
 import PageTracking from '../../components/PageTracking.tsx';
 import { t } from '../../utils/i18n';
 ---
-<Layout 
+<Layout
   title={t('seo.home.title', 'en')}
   description={t('seo.home.description', 'en')}
   keywords={t('seo.home.keywords', 'en')}
@@ -19,5 +19,27 @@ import { t } from '../../utils/i18n';
     lang="en"
   />
   <Herramientas tools={getTools('en')} lang="en" />
-  <EuriborChart client:only="react"/>
+  <EuriborChart client:only="react" />
+
+  <section class="w-full max-w-4xl mx-auto py-12 px-4">
+    <h2 class="font-heading text-2xl md:text-3xl font-bold text-slate-900 mb-6">
+      Your Trusted Mortgage Calculator for Spain
+    </h2>
+    <div class="text-slate-600 space-y-4 leading-relaxed">
+      <p>
+        <strong>Hipotecalc</strong> is your free tool for calculating mortgages in Spain.
+        Our <strong>mortgage calculator</strong> lets you simulate your monthly mortgage payment,
+        compare fixed vs variable mortgages, and calculate property purchase taxes by autonomous community.
+      </p>
+      <p>
+        Calculate the <strong>ITP (Property Transfer Tax)</strong> with applicable regional discounts,
+        track the historical evolution of <strong>Euribor</strong> rates,
+        and analyze <strong>rental investment profitability</strong> with professional metrics like ROI, cash flow, and payback period.
+      </p>
+      <p>
+        All our tools are <strong>100% free</strong>, require no registration,
+        and are specifically designed for the Spanish real estate market with up-to-date data.
+      </p>
+    </div>
+  </section>
 </Layout>

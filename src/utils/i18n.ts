@@ -36,20 +36,22 @@ export function getAlternateLang(currentLang: Language): Language {
 }
 
 export function getAlternatePath(pathname: string): string {
-  const currentLang = getCurrentLang(pathname)
-  const alternateLang = getAlternateLang(currentLang)
-  
+  // Normalize: remove trailing slash (except for root paths)
+  const normalized = pathname === '/' || pathname === '/en/'
+    ? pathname
+    : pathname.replace(/\/$/, '')
+
+  const currentLang = getCurrentLang(normalized)
+
   if (currentLang === 'es') {
-    // Convert Spanish path to English path
-    if (pathname === '/') return '/en/'
-    if (pathname === '/calculadora-hipotecaria') return '/en/mortgage-calculator'
-    if (pathname === '/calculadora-alquiler') return '/en/rental-calculator'
+    if (normalized === '/') return '/en/'
+    if (normalized === '/calculadora-hipotecaria') return '/en/mortgage-calculator'
+    if (normalized === '/calculadora-alquiler') return '/en/rental-calculator'
   } else {
-    // Convert English path to Spanish path
-    if (pathname === '/en/') return '/'
-    if (pathname === '/en/mortgage-calculator') return '/calculadora-hipotecaria'
-    if (pathname === '/en/rental-calculator') return '/calculadora-alquiler'
+    if (normalized === '/en/') return '/'
+    if (normalized === '/en/mortgage-calculator') return '/calculadora-hipotecaria'
+    if (normalized === '/en/rental-calculator') return '/calculadora-alquiler'
   }
-  
+
   return pathname
 }

@@ -2,26 +2,86 @@
 import Layout from '../layouts/Layout.astro';
 import MortgageCalculator from '../components/calculadora-hipotecaria/MortgageCalculator'
 import PageTracking from '../components/PageTracking.tsx';
+import Breadcrumbs from '../components/seo/Breadcrumbs.astro';
+import FAQSection from '../components/seo/FAQSection.astro';
 import { t } from '../utils/i18n';
 ---
 
-<Layout 
+<Layout
   title={t('seo.mortgage.title')}
   description={t('seo.mortgage.description')}
   keywords={t('seo.mortgage.keywords')}
 >
   <PageTracking client:load pagePath="/calculadora-hipotecaria" pageTitle={t('seo.mortgage.title')} />
+
+  <Breadcrumbs items={[
+    { name: 'Inicio', href: '/' },
+    { name: 'Calculadora Hipotecaria', href: '/calculadora-hipotecaria' }
+  ]} />
+
   <main class="w-full max-w-7xl mx-auto py-8 ambient-section rounded-3xl">
     <div class="ambient-content text-center mb-6 reveal-up">
       <span class="inline-flex rounded-full border border-blue-200 bg-blue-50 text-blue-700 px-4 py-1 text-xs font-semibold uppercase tracking-wider">
         {t('mortgage.title')}
       </span>
-      <p class="mt-3 text-slate-600 max-w-3xl mx-auto">
+      <h1 class="font-heading text-3xl md:text-4xl lg:text-5xl font-extrabold text-slate-900 mt-4 mb-3">
+        Calculadora Hipotecaria España 2025
+      </h1>
+      <p class="mt-3 text-slate-600 max-w-3xl mx-auto text-lg">
         {t('mortgage.description')}
       </p>
     </div>
     <div class="ambient-content reveal-up reveal-delay-1">
-      <MortgageCalculator client:only="react" />
+      <MortgageCalculator client:load />
     </div>
   </main>
+
+  <section class="w-full max-w-4xl mx-auto py-12 px-4">
+    <h2 class="font-heading text-2xl md:text-3xl font-bold text-slate-900 mb-6">
+      ¿Cómo usar nuestra calculadora hipotecaria?
+    </h2>
+    <div class="text-slate-600 space-y-4 leading-relaxed">
+      <p>
+        Nuestra <strong>calculadora hipotecaria</strong> te permite simular las condiciones de tu hipoteca en España de forma gratuita y precisa.
+        Introduce el precio de la vivienda, el ahorro que aportas como entrada, el tipo de interés y el plazo,
+        y obtendrás al instante tu <strong>cuota mensual</strong>, el <strong>coste total de la hipoteca</strong> y un desglose completo de intereses.
+      </p>
+      <p>
+        Además, puedes calcular el <strong>ITP (Impuesto de Transmisiones Patrimoniales)</strong> según tu comunidad autónoma,
+        con las bonificaciones aplicables para jóvenes menores de 35 años, familias numerosas o personas con discapacidad.
+        Para viviendas de obra nueva, la calculadora aplica automáticamente el <strong>IVA</strong> correspondiente.
+      </p>
+      <p>
+        Compara entre <strong>hipoteca fija y variable</strong> para ver cómo afecta el Euribor a tu cuota mensual.
+        El análisis de sensibilidad te muestra cómo variaría tu cuota con diferentes precios de vivienda y niveles de ahorro,
+        ayudándote a tomar la mejor decisión financiera.
+      </p>
+    </div>
+  </section>
+
+  <FAQSection
+    title="Preguntas Frecuentes sobre Hipotecas"
+    items={[
+      {
+        question: "¿Cómo se calcula la cuota mensual de una hipoteca?",
+        answer: "La cuota mensual se calcula usando la fórmula de amortización francesa, que tiene en cuenta el capital prestado, el tipo de interés anual (TAE o TIN) y el plazo en años. Nuestra calculadora hipotecaria aplica esta fórmula automáticamente y te muestra el desglose de capital e intereses."
+      },
+      {
+        question: "¿Qué es el ITP y cuánto se paga al comprar una vivienda de segunda mano?",
+        answer: "El Impuesto de Transmisiones Patrimoniales (ITP) es el impuesto que se paga al comprar una vivienda de segunda mano en España. El porcentaje varía entre el 4% y el 10% según la comunidad autónoma, con bonificaciones para jóvenes, familias numerosas y otros supuestos."
+      },
+      {
+        question: "¿Es mejor una hipoteca fija o variable en 2025?",
+        answer: "Depende de tu perfil de riesgo y la evolución del Euribor. Una hipoteca fija te da estabilidad en la cuota, mientras que una variable puede ser más barata inicialmente pero fluctúa con el Euribor. Usa nuestra calculadora para comparar ambos escenarios con datos actualizados."
+      },
+      {
+        question: "¿Cuánto dinero necesito ahorrado para comprar una casa en España?",
+        answer: "Normalmente necesitas al menos un 20% del precio de la vivienda como entrada (los bancos suelen financiar hasta el 80% del valor de tasación), más un 10-12% adicional para cubrir impuestos (ITP o IVA), notaría, registro y gestoría. En total, aproximadamente un 30-32% del precio."
+      },
+      {
+        question: "¿Qué es el Euribor y cómo afecta a mi hipoteca?",
+        answer: "El Euribor (Euro Interbank Offered Rate) es el tipo de interés al que los bancos europeos se prestan dinero entre sí. Si tienes una hipoteca variable, tu cuota se recalcula periódicamente sumando un diferencial al Euribor vigente. Puedes consultar la evolución histórica del Euribor en nuestra página principal."
+      }
+    ]}
+  />
 </Layout>

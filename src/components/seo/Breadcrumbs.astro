@@ -1,0 +1,36 @@
+---
+export interface BreadcrumbItem {
+  name: string;
+  href: string;
+}
+export interface Props {
+  items: BreadcrumbItem[];
+}
+const { items } = Astro.props;
+const siteBase = 'https://hipotecalc.com';
+const jsonLd = JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": items.map((item, i) => ({
+    "@type": "ListItem",
+    "position": i + 1,
+    "name": item.name,
+    "item": `${siteBase}${item.href}`
+  }))
+});
+---
+<nav aria-label="Breadcrumb" class="w-full max-w-7xl mx-auto py-3">
+  <ol class="flex items-center gap-2 text-sm text-slate-500">
+    {items.map((item, i) => (
+      <li class="flex items-center gap-2">
+        {i > 0 && <span aria-hidden="true">/</span>}
+        {i === items.length - 1 ? (
+          <span class="text-slate-800 font-medium" aria-current="page">{item.name}</span>
+        ) : (
+          <a href={item.href} class="hover:text-blue-600 transition-colors">{item.name}</a>
+        )}
+      </li>
+    ))}
+  </ol>
+</nav>
+<script type="application/ld+json" set:html={jsonLd} />

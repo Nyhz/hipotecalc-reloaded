@@ -1,35 +1,79 @@
 ---
 import Layout from '../../layouts/Layout.astro';
-import RentalCalculatorComponent from '../../components/calculadora-alquiler/RentalCalculator.tsx';
+import RentalCalculator from '../../components/calculadora-alquiler/RentalCalculator.tsx';
 import PageTracking from '../../components/PageTracking.tsx';
+import Breadcrumbs from '../../components/seo/Breadcrumbs.astro';
+import FAQSection from '../../components/seo/FAQSection.astro';
 import { t } from '../../utils/i18n';
 ---
 
-<Layout 
-  title={t('seo.rental.title', 'en')} 
+<Layout
+  title={t('seo.rental.title', 'en')}
   description={t('seo.rental.description', 'en')}
   keywords={t('seo.rental.keywords', 'en')}
 >
   <PageTracking client:load pagePath="/en/rental-calculator" pageTitle={t('seo.rental.title', 'en')} />
+
+  <Breadcrumbs items={[
+    { name: 'Home', href: '/en/' },
+    { name: 'Rental Calculator', href: '/en/rental-calculator' }
+  ]} />
+
   <main class="w-full max-w-7xl mx-auto py-8 ambient-section rounded-3xl">
     <div class="ambient-content w-full">
-      <!-- Header -->
       <div class="text-center mb-6 reveal-up">
         <span class="inline-flex rounded-full border border-blue-200 bg-blue-50 text-blue-700 px-4 py-1 text-xs font-semibold uppercase tracking-wider">
           {t('rental.title', 'en')}
         </span>
-        <h1 class="font-heading text-4xl font-bold text-slate-900 mt-4 mb-3">
+        <h1 class="font-heading text-3xl md:text-4xl lg:text-5xl font-extrabold text-slate-900 mt-4 mb-3">
           {t('rental.hero.title', 'en')}
         </h1>
         <p class="text-lg text-slate-600 max-w-3xl mx-auto">
           {t('rental.hero.description', 'en')}
         </p>
       </div>
-
-      <!-- Calculadora -->
       <div class="reveal-up reveal-delay-1">
-        <RentalCalculatorComponent client:load lang="en" />
+        <RentalCalculator client:load lang="en" />
       </div>
     </div>
   </main>
+
+  <section class="w-full max-w-4xl mx-auto py-12 px-4">
+    <h2 class="font-heading text-2xl md:text-3xl font-bold text-slate-900 mb-6">
+      How to Calculate Rental Investment Profitability
+    </h2>
+    <div class="text-slate-600 space-y-4 leading-relaxed">
+      <p>
+        Our <strong>rental calculator</strong> helps you analyze the profitability of a real estate investment in Spain.
+        Enter the purchase price, associated costs, expected monthly rent, and recurring expenses
+        to get key metrics like <strong>annual ROI</strong>, <strong>monthly cash flow</strong>, and <strong>payback period</strong>.
+      </p>
+      <p>
+        The tool accounts for mortgage financing, property taxes, insurance, maintenance,
+        and management to give you a realistic view of the <strong>net profitability</strong> of your investment.
+      </p>
+    </div>
+  </section>
+
+  <FAQSection
+    title="Frequently Asked Questions About Rental Investment"
+    items={[
+      {
+        question: "What is a good rental yield in Spain?",
+        answer: "A gross rental yield of 5-7% is considered good in Spain. Net yield (after expenses, taxes, and vacancies) is typically 3-5%. In major cities like Madrid or Barcelona, yields tend to be lower but with greater security, while medium-sized cities may offer higher returns."
+      },
+      {
+        question: "What is cash flow in a real estate investment?",
+        answer: "Cash flow is the difference between rental income and all associated expenses (mortgage, taxes, insurance, maintenance, management). A positive cash flow means the rent covers all expenses and generates monthly profit."
+      },
+      {
+        question: "What expenses should I consider when buying to rent?",
+        answer: "Consider: mortgage payments, IBI and other local taxes, home insurance, maintenance and repairs (estimated at 1-2% of value annually), property management if delegated, vacancy periods without tenants, and income tax on rental earnings."
+      },
+      {
+        question: "How long does it take to recover a rental property investment?",
+        answer: "Recovery time depends on the purchase price, down payment, and net yield. In Spain, with an average 4-5% net yield, recovering the down payment can take 8 to 15 years. Our calculator shows you the exact break-even based on your data."
+      }
+    ]}
+  />
 </Layout>
