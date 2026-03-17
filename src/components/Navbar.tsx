@@ -60,7 +60,7 @@ export default function Navbar() {
   return (
     <>
     <nav ref={navRef} className='w-full z-40 pt-4'>
-      <div className='max-w-7xl mx-auto'>
+      <div className='max-w-[1920px] mx-auto'>
         <div className='surface-nav px-4 h-16 md:h-[72px]'>
         {/* Desktop Layout */}
         <div className='hidden md:grid md:grid-cols-3 md:items-center h-full'>
@@ -155,7 +155,7 @@ export default function Navbar() {
 
       {/* Mobile Dropdown Menu */}
       {isMenuOpen && (
-        <div className='md:hidden mt-2 max-w-7xl mx-auto'>
+        <div className='md:hidden mt-2 max-w-[1920px] mx-auto'>
           <div className='surface-nav p-3'>
             <ul className='space-y-1'>
               {tools

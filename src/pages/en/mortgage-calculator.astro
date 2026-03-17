@@ -19,13 +19,13 @@ import { t } from '../../utils/i18n';
     { name: 'Mortgage Calculator', href: '/en/mortgage-calculator' }
   ]} />
 
-  <main class="w-full max-w-7xl mx-auto py-8 ambient-section rounded-3xl">
+  <main class="w-full max-w-[1920px] mx-auto py-8 ambient-section rounded-3xl">
     <div class="ambient-content text-center mb-6 reveal-up">
       <span class="inline-flex rounded-full border border-blue-200 bg-blue-50 text-blue-700 px-4 py-1 text-xs font-semibold uppercase tracking-wider">
         {t('mortgage.title', 'en')}
       </span>
       <h1 class="font-heading text-3xl md:text-4xl lg:text-5xl font-extrabold text-slate-900 mt-4 mb-3">
-        Mortgage Calculator Spain 2025
+        Mortgage Calculator Spain {new Date().getFullYear()}
       </h1>
       <p class="mt-3 text-slate-600 max-w-3xl mx-auto text-lg">
         {t('mortgage.description', 'en')}
@@ -70,7 +70,7 @@ import { t } from '../../utils/i18n';
         answer: "ITP (Impuesto de Transmisiones Patrimoniales) is the property transfer tax paid when buying a resale property in Spain. The rate varies between 4% and 10% depending on the autonomous community, with reductions available for young buyers, large families, and other qualifying situations."
       },
       {
-        question: "Is a fixed or variable mortgage better in 2025?",
+        question: `Is a fixed or variable mortgage better in ${new Date().getFullYear()}?`,
         answer: "It depends on your risk profile and Euribor outlook. A fixed mortgage gives you payment stability, while a variable mortgage may be cheaper initially but fluctuates with Euribor. Use our calculator to compare both scenarios with up-to-date data."
       },
       {

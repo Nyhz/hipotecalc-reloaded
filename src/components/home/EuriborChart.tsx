@@ -79,7 +79,7 @@ const EuriborChart: React.FC = () => {
   }
 
   return (
-    <div className='w-full max-w-7xl mx-auto my-12 reveal-up'>
+    <div className='w-full max-w-[1920px] mx-auto my-12 reveal-up'>
       <div className='surface-card p-4 md:p-6'>
         <div className='py-2'>
           <ReactECharts option={option} style={{ height: 400, width: "100%" }} />
