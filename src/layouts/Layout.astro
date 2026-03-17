@@ -3,7 +3,7 @@ import { ClientRouter } from "astro:transitions";
 import Navbar from '../components/Navbar.tsx';
 import Footer from '../components/Footer.astro';
 import '../style/globals.css';
-import { getCurrentLang } from '../utils/i18n';
+import { getCurrentLang, getAlternatePath } from '../utils/i18n';
 
 export interface Props {
   title?: string;
@@ -13,12 +13,14 @@ export interface Props {
   canonicalURL?: string;
 }
 
-const { 
+const SITE_BASE = 'https://hipotecalc.com';
+
+const {
   title = "Calculadora Hipotecaria - España | Herramientas Financieras",
   description = "Calculadora hipotecaria, de alquiler e ITP para España. Herramientas financieras precisas y profesionales para calcular tu hipoteca, impuestos y más.",
   keywords = "calculadora hipoteca, calculadora alquiler, calculadora ITP, finanzas, España, euribor, impuestos, vivienda",
-  ogImage = "/og-image.svg",
-  canonicalURL = 'https://hipotecalc.com'
+  ogImage = `${SITE_BASE}/hipotecalc-og.webp`,
+  canonicalURL = `${SITE_BASE}${Astro.url.pathname}`
 } = Astro.props;
 
 const currentLang = getCurrentLang(Astro.url.pathname);
@@ -26,6 +28,34 @@ const langAttribute = currentLang === 'en' ? 'en' : 'es';
 const ogLocale = currentLang === 'en' ? 'en_US' : 'es_ES';
 const isLocalEnv =
   Astro.url.hostname === "localhost" || Astro.url.hostname === "127.0.0.1";
+
+const alternatePath = getAlternatePath(Astro.url.pathname);
+const esPath = currentLang === 'es' ? Astro.url.pathname : alternatePath;
+const enPath = currentLang === 'en' ? Astro.url.pathname : alternatePath;
+const hrefLangEs = `${SITE_BASE}${esPath}`;
+const hrefLangEn = `${SITE_BASE}${enPath}`;
+const hrefLangDefault = hrefLangEs;
+
+const structuredData = JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": title,
+  "description": description,
+  "url": canonicalURL,
+  "applicationCategory": "FinanceApplication",
+  "operatingSystem": "Web Browser",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "EUR"
+  },
+  "creator": {
+    "@type": "Organization",
+    "name": "Hipotecalc"
+  },
+  "inLanguage": langAttribute,
+  "keywords": keywords
+});
 ---
 <html lang={langAttribute}>
   <head>
@@ -51,7 +81,12 @@ const isLocalEnv =
     <meta name="keywords" content={keywords} />
     <meta name="author" content="Hipotecalc" />
     <link rel="canonical" href={canonicalURL} />
-    
+
+    <!-- Hreflang tags for language alternates -->
+    <link rel="alternate" hreflang="es" href={hrefLangEs} />
+    <link rel="alternate" hreflang="en" href={hrefLangEn} />
+    <link rel="alternate" hreflang="x-default" href={hrefLangDefault} />
+
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website" />
     <meta property="og:url" content={canonicalURL} />
@@ -77,31 +112,15 @@ const isLocalEnv =
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     
-    <!-- Optimized font loading with swap for better performance -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet" />
+    <!-- Optimized non-render-blocking font loading -->
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Manrope:wght@600;700;800&display=swap" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Manrope:wght@600;700;800&display=swap" media="print" onload="this.media='all'" />
+    <noscript>
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Manrope:wght@600;700;800&display=swap" />
+    </noscript>
     
     <!-- Structured Data -->
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "WebApplication",
-      "name": "Calculadora Hipotecaria España",
-      "description": "Calculadora hipotecaria profesional para España con cálculo de ITP, impuestos y análisis del Euribor",
-      "url": "https://hipotecalc.com",
-      "applicationCategory": "FinanceApplication",
-      "operatingSystem": "Web Browser",
-      "offers": {
-        "@type": "Offer",
-        "price": "0",
-        "priceCurrency": "EUR"
-      },
-      "creator": {
-        "@type": "Organization",
-        "name": "Hipotecalc"
-      },
-      "keywords": "calculadora hipoteca, ITP, impuestos, vivienda, España, euribor"
-    }
-    </script>
+    <script type="application/ld+json" set:html={structuredData} />
 
     <!-- Google Analytics - Managed by CookieYes -->
     <script is:inline>
@@ -242,8 +261,8 @@ const isLocalEnv =
         // Check immediately
         handleConsentChange();
         
-        // Then poll every 500ms for changes
-        setInterval(handleConsentChange, 500);
+        // Then poll every 2000ms for changes
+        setInterval(handleConsentChange, 2000);
       }
       
       // Start monitoring when DOM is ready
@@ -252,48 +271,6 @@ const isLocalEnv =
       } else {
         startCookieMonitoring();
       }
-    </script>
-    
-    <!-- Debug script for CookieYes + GA integration (silent mode) -->
-    <script is:inline>
-      // Silent debug function for development use
-      window.debugGA = function() {
-        var consent = null;
-        var cookies = document.cookie.split(';');
-        
-        for (var i = 0; i < cookies.length; i++) {
-          var cookie = cookies[i].trim();
-          if (cookie.startsWith('cookieyes-consent=')) {
-            var consentCookie = cookie.substring('cookieyes-consent='.length);
-            var consentData = {};
-            var parts = consentCookie.split(',');
-            
-            for (var j = 0; j < parts.length; j++) {
-              var keyValue = parts[j].split(':');
-              if (keyValue.length === 2) {
-                consentData[keyValue[0]] = keyValue[1];
-              }
-            }
-            consent = consentData;
-            break;
-          }
-        }
-        
-        return {
-          blocked: !!window.cookieYesBlocked,
-          consent: consent,
-          analytics: consent && consent.analytics === 'yes',
-          gaLoaded: !!window.gaScriptLoaded,
-          cookies: document.cookie.split(';').filter(c => c.trim().startsWith('_ga')).length
-        };
-      };
-      
-      // Silent test function
-      window.testConsentChange = function() {
-        if (typeof window.handleConsentChange === 'function') {
-          window.handleConsentChange();
-        }
-      };
     </script>
     
     <!-- Font loading optimization to prevent layout shifts -->

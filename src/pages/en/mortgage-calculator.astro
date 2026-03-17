@@ -1,27 +1,86 @@
 ---
 import Layout from '../../layouts/Layout.astro';
-import MortgageCalculatorComponent from '../../components/calculadora-hipotecaria/MortgageCalculator'
+import MortgageCalculator from '../../components/calculadora-hipotecaria/MortgageCalculator'
 import PageTracking from '../../components/PageTracking.tsx';
+import Breadcrumbs from '../../components/seo/Breadcrumbs.astro';
+import FAQSection from '../../components/seo/FAQSection.astro';
 import { t } from '../../utils/i18n';
 ---
 
-<Layout 
+<Layout
   title={t('seo.mortgage.title', 'en')}
   description={t('seo.mortgage.description', 'en')}
   keywords={t('seo.mortgage.keywords', 'en')}
 >
   <PageTracking client:load pagePath="/en/mortgage-calculator" pageTitle={t('seo.mortgage.title', 'en')} />
+
+  <Breadcrumbs items={[
+    { name: 'Home', href: '/en/' },
+    { name: 'Mortgage Calculator', href: '/en/mortgage-calculator' }
+  ]} />
+
   <main class="w-full max-w-7xl mx-auto py-8 ambient-section rounded-3xl">
     <div class="ambient-content text-center mb-6 reveal-up">
       <span class="inline-flex rounded-full border border-blue-200 bg-blue-50 text-blue-700 px-4 py-1 text-xs font-semibold uppercase tracking-wider">
         {t('mortgage.title', 'en')}
       </span>
-      <p class="mt-3 text-slate-600 max-w-3xl mx-auto">
+      <h1 class="font-heading text-3xl md:text-4xl lg:text-5xl font-extrabold text-slate-900 mt-4 mb-3">
+        Mortgage Calculator Spain 2025
+      </h1>
+      <p class="mt-3 text-slate-600 max-w-3xl mx-auto text-lg">
         {t('mortgage.description', 'en')}
       </p>
     </div>
     <div class="ambient-content reveal-up reveal-delay-1">
-      <MortgageCalculatorComponent client:only="react" />
+      <MortgageCalculator client:load />
     </div>
   </main>
+
+  <section class="w-full max-w-4xl mx-auto py-12 px-4">
+    <h2 class="font-heading text-2xl md:text-3xl font-bold text-slate-900 mb-6">
+      How to Use Our Mortgage Calculator
+    </h2>
+    <div class="text-slate-600 space-y-4 leading-relaxed">
+      <p>
+        Our <strong>mortgage calculator</strong> lets you simulate your mortgage conditions in Spain for free.
+        Enter the property price, your down payment, interest rate, and loan term to instantly see your
+        <strong>monthly payment</strong>, <strong>total mortgage cost</strong>, and a complete interest breakdown.
+      </p>
+      <p>
+        You can also calculate the <strong>ITP (Property Transfer Tax)</strong> by autonomous community,
+        including applicable discounts for buyers under 35, large families, or people with disabilities.
+        For new construction properties, the calculator automatically applies the corresponding <strong>VAT</strong>.
+      </p>
+      <p>
+        Compare <strong>fixed vs variable mortgages</strong> to see how Euribor affects your monthly payment.
+        The sensitivity analysis shows how your payment would change with different property prices and savings levels.
+      </p>
+    </div>
+  </section>
+
+  <FAQSection
+    title="Frequently Asked Questions About Mortgages in Spain"
+    items={[
+      {
+        question: "How is the monthly mortgage payment calculated?",
+        answer: "The monthly payment is calculated using the French amortization formula, which considers the loan amount, annual interest rate (APR or nominal), and term in years. Our mortgage calculator applies this formula automatically and shows you the breakdown of principal and interest."
+      },
+      {
+        question: "What is ITP and how much do I pay when buying a resale property?",
+        answer: "ITP (Impuesto de Transmisiones Patrimoniales) is the property transfer tax paid when buying a resale property in Spain. The rate varies between 4% and 10% depending on the autonomous community, with reductions available for young buyers, large families, and other qualifying situations."
+      },
+      {
+        question: "Is a fixed or variable mortgage better in 2025?",
+        answer: "It depends on your risk profile and Euribor outlook. A fixed mortgage gives you payment stability, while a variable mortgage may be cheaper initially but fluctuates with Euribor. Use our calculator to compare both scenarios with up-to-date data."
+      },
+      {
+        question: "How much savings do I need to buy a house in Spain?",
+        answer: "Typically you need at least 20% of the property price as a down payment (banks usually finance up to 80% of the appraised value), plus an additional 10-12% to cover taxes (ITP or VAT), notary, registry, and agency fees. In total, approximately 30-32% of the price."
+      },
+      {
+        question: "What is Euribor and how does it affect my mortgage?",
+        answer: "Euribor (Euro Interbank Offered Rate) is the interest rate at which European banks lend money to each other. If you have a variable mortgage, your payment is periodically recalculated by adding a spread to the current Euribor rate. You can check the historical Euribor evolution on our homepage."
+      }
+    ]}
+  />
 </Layout>
