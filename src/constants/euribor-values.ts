@@ -24,4 +24,5 @@ export const euriborData = [
   { year: 2022, value: 3.02 },
   { year: 2023, value: 3.67 },
   { year: 2024, value: 2.44 },
+  { year: 2025, value: 1.94 },
 ]
