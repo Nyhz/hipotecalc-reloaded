@@ -278,7 +278,7 @@ const MortgageCalculator: React.FC = () => {
         className='flex-1 pl-card p-5 md:p-6'
         autoComplete='off'
       >
-        <div className='grid grid-cols-1 lg:grid-cols-2 2xl:grid-cols-3 gap-6'>
+        <div className='grid grid-cols-1 lg:grid-cols-2 gap-6'>
           <fieldset className='rounded-xl border border-line bg-paper/50 p-4'>
             <legend className='font-data text-[11px] uppercase tracking-widest text-ink-soft px-1 mb-3'>
               {t('mortgage.form.propertyDetails')}
@@ -470,7 +470,7 @@ const MortgageCalculator: React.FC = () => {
               />
             </div>
           </fieldset>
-          <fieldset className='rounded-xl border border-line bg-paper/50 p-4 lg:col-span-2 2xl:col-span-1'>
+          <fieldset className='rounded-xl border border-line bg-paper/50 p-4 lg:col-span-2'>
             <legend className='font-data text-[11px] uppercase tracking-widest text-ink-soft px-1 mb-3'>
               {t('mortgage.form.financingAndConditions')}
             </legend>
