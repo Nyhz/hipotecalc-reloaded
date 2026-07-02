@@ -233,7 +233,7 @@ const RentalCalculator: React.FC<RentalCalculatorProps> = ({ lang = 'es' }) => {
         {/* Recibo sticky */}
         <aside className="w-full xl:w-[22rem] receipt p-6 flex flex-col gap-4 xl:sticky xl:top-24">
           <div className="receipt-head">
-            <span>{t('rental.results.profitabilityMetrics')}</span>
+            <span>{t('rental.results.receiptTitle')}</span>
             <span className="text-brand-blue">■</span>
           </div>
           <div className="receipt-row">
@@ -243,6 +243,10 @@ const RentalCalculator: React.FC<RentalCalculatorProps> = ({ lang = 'es' }) => {
           <div className="receipt-row">
             <span>ITP ({calculations.porcentajeITP}%)</span>
             <b>{formatNumberByLang(calculations.itp, lang)} €</b>
+          </div>
+          <div className="receipt-row">
+            <span>{t('mortgage.form.mortgageAmount')}</span>
+            <b>{formatNumberByLang(calculations.cantidadHipoteca, lang)} €</b>
           </div>
           <div className="receipt-row">
             <span>{t('mortgage.form.monthlyPaymentLabel')}</span>
