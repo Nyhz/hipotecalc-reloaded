@@ -72,12 +72,9 @@ const Input: React.FC<InputProps> = ({
 
   return (
     <div>
-      <label
-        className='flex text-sm font-medium mb-1 items-center gap-1'
-        htmlFor={name}
-      >
+      <label className='label-pl' htmlFor={name}>
         {label}
-        {labelIcon && <span>{labelIcon}</span>}
+        {labelIcon && <span className='ml-1'>{labelIcon}</span>}
       </label>
       <div className={showEuroSymbol ? "relative" : ""}>
         <input
@@ -92,7 +89,7 @@ const Input: React.FC<InputProps> = ({
           step={step}
           placeholder={placeholder}
           readOnly={readOnly}
-          className={`${className} ${showEuroSymbol ? "pr-8" : ""}`}
+          className={`input-pl ${showEuroSymbol ? "pr-8" : ""} ${className ?? ""}`.trim()}
           style={{
             WebkitAppearance: "none",
             MozAppearance: "textfield",

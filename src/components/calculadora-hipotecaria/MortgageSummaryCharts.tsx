@@ -131,7 +131,7 @@ const MortgageSummaryCharts: React.FC<MortgageSummaryChartsProps> = ({
   return (
     <div className="space-y-4">
       {/* Gráfica 1: Coste total del inmueble */}
-      <div className="panel-card p-3">
+      <div className="pl-card p-3">
         <h3 className="text-base font-semibold text-slate-800 mb-2">
           {t('mortgage.form.charts.totalPropertyCost')}
         </h3>
@@ -152,7 +152,7 @@ const MortgageSummaryCharts: React.FC<MortgageSummaryChartsProps> = ({
             </div>
             <div className="flex justify-between items-center metric-row px-3 py-2">
               <span className="font-semibold text-gray-800">{t('mortgage.form.charts.total')}</span>
-              <span className="font-bold">
+              <span className="font-data font-bold">
                 {new Intl.NumberFormat('es-ES').format(precioInmueble + impuestosGastos)} €
               </span>
             </div>
@@ -161,7 +161,7 @@ const MortgageSummaryCharts: React.FC<MortgageSummaryChartsProps> = ({
       </div>
 
       {/* Gráfica 2: Coste total con hipoteca */}
-      <div className="panel-card p-3">
+      <div className="pl-card p-3">
         <h3 className="text-base font-semibold text-slate-800 mb-2">
           {t('mortgage.form.charts.totalCostWithMortgage')}
         </h3>
@@ -188,7 +188,7 @@ const MortgageSummaryCharts: React.FC<MortgageSummaryChartsProps> = ({
             </div>
             <div className="flex justify-between items-center metric-row px-3 py-2">
               <span className="font-semibold text-gray-800">{t('mortgage.form.charts.total')}</span>
-              <span className="font-bold">
+              <span className="font-data font-bold">
                 {new Intl.NumberFormat('es-ES').format(ahorroAportado + cantidadHipoteca + interesTotal)} €
               </span>
             </div>

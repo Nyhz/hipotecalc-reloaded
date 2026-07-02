@@ -232,7 +232,7 @@ const ITPCalculator: React.FC<ITPCalculatorProps> = ({
 
   return (
     <Modal open={open} onClose={onClose}>
-      <h2 className='text-xl font-bold text-blue-900 mb-4'>
+      <h2 className='font-heading font-semibold text-ink text-xl mb-4'>
         {titleText}
       </h2>
       {error && <div className='mb-2 text-red-600 text-sm'>{error}</div>}

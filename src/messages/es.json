@@ -243,7 +243,8 @@
       "totalPaymentLabel": "Pago total",
       "loanAmountLabel": "Importe del préstamo",
       "downPaymentAmountLabel": "Importe de la entrada",
-      "loanToValueLabel": "Porcentaje financiado"
+      "loanToValueLabel": "Porcentaje financiado",
+      "improveCta": "Mejorar esta cuota"
     }
   },
   "rental": {

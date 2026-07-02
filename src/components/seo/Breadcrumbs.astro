@@ -20,14 +20,14 @@ const jsonLd = JSON.stringify({
 });
 ---
 <nav aria-label="Breadcrumb" class="w-full max-w-[1920px] mx-auto py-3">
-  <ol class="flex items-center gap-2 text-sm text-slate-500">
+  <ol class="flex items-center gap-2 font-data text-[11px] uppercase tracking-wide text-ink-soft">
     {items.map((item, i) => (
       <li class="flex items-center gap-2">
         {i > 0 && <span aria-hidden="true">/</span>}
         {i === items.length - 1 ? (
-          <span class="text-slate-800 font-medium" aria-current="page">{item.name}</span>
+          <span class="text-ink" aria-current="page">{item.name}</span>
         ) : (
-          <a href={item.href} class="hover:text-blue-600 transition-colors">{item.name}</a>
+          <a href={item.href} class="hover:text-ink transition-colors">{item.name}</a>
         )}
       </li>
     ))}

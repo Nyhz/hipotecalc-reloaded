@@ -32,7 +32,7 @@ const Select: React.FC<SelectProps> = ({
   
   return (
   <div>
-    <label className='block text-sm font-medium mb-1' htmlFor={name}>
+    <label className='label-pl' htmlFor={name}>
       {label}
     </label>
     <select
@@ -40,7 +40,7 @@ const Select: React.FC<SelectProps> = ({
       name={name}
       value={value}
       onChange={onChange}
-      className={(className ? className + " " : "") + "py-2 h-10"}
+      className={`input-pl cursor-pointer ${className ?? ""}`.trim()}
       disabled={readOnly}
     >
       <option value=''>{defaultPlaceholder}</option>

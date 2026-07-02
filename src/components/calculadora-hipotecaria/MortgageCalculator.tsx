@@ -19,12 +19,12 @@ import ITPCalculator from "./ITPCalculator"
 import MortgageSummaryCharts from "./MortgageSummaryCharts"
 import ContactButton from "../ContactButton"
 import SensitivityTable from "./SensitivityTable"
+import AnimatedNumber from "../ui/AnimatedNumber"
 import { useGoogleAnalytics } from "../../hooks/useGoogleAnalytics"
 import { useTranslations } from "../../hooks/useTranslations"
 
-const inputClass =
-  "w-full border border-slate-200 bg-white rounded-xl px-3.5 py-2.5 text-slate-800 focus:outline-none focus:ring-2 focus:ring-blue-400/60 focus:border-blue-300 transition-all duration-200"
-const inputReadOnlyClass = inputClass + " bg-slate-100/80 text-slate-600"
+const inputClass = "input-pl"
+const inputReadOnlyClass = inputClass + " cursor-not-allowed"
 
 const initialState = {
   precio: "",
@@ -273,14 +273,14 @@ const MortgageCalculator: React.FC = () => {
   const requiereDespoblada = camposDinamicos.zonaDespoblada
 
   return (
-    <div className='calculator-shell flex flex-col xl:flex-row gap-6 p-4 md:p-6 mt-8'>
+    <div className='flex flex-col xl:flex-row gap-6 mt-4 items-start'>
       <form
-        className='flex-1 section-card p-5 md:p-6'
+        className='flex-1 pl-card p-5 md:p-6'
         autoComplete='off'
       >
         <div className='grid grid-cols-1 lg:grid-cols-2 2xl:grid-cols-3 gap-6'>
-          <fieldset className='section-card p-4'>
-            <legend className='font-heading font-bold mb-3 text-slate-900 px-1'>
+          <fieldset className='rounded-xl border border-line bg-paper/50 p-4'>
+            <legend className='font-data text-[11px] uppercase tracking-widest text-ink-soft px-1 mb-3'>
               {t('mortgage.form.propertyDetails')}
             </legend>
             <div className='grid gap-4'>
@@ -327,8 +327,8 @@ const MortgageCalculator: React.FC = () => {
               />
             </div>
           </fieldset>
-          <fieldset className='section-card p-4'>
-            <legend className='font-heading font-bold mb-3 text-slate-900 px-1'>
+          <fieldset className='rounded-xl border border-line bg-paper/50 p-4'>
+            <legend className='font-data text-[11px] uppercase tracking-widest text-ink-soft px-1 mb-3'>
               {t('mortgage.form.taxesAndCosts')}
             </legend>
             <div className='grid gap-4'>
@@ -470,8 +470,8 @@ const MortgageCalculator: React.FC = () => {
               />
             </div>
           </fieldset>
-          <fieldset className='section-card p-4 lg:col-span-2 2xl:col-span-1'>
-            <legend className='font-heading font-bold mb-3 text-slate-900 px-1'>
+          <fieldset className='rounded-xl border border-line bg-paper/50 p-4 lg:col-span-2 2xl:col-span-1'>
+            <legend className='font-data text-[11px] uppercase tracking-widest text-ink-soft px-1 mb-3'>
               {t('mortgage.form.financingAndConditions')}
             </legend>
             <div className='grid gap-4'>
@@ -555,7 +555,7 @@ const MortgageCalculator: React.FC = () => {
                   />
 
                   {/* Tabla de escenarios */}
-                  <div className='metric-row p-4'>
+                  <div className='rounded-xl border border-line bg-paper/60 p-4'>
                     <h4 className='font-semibold text-sm text-gray-700 mb-3'>
                       {t('mortgage.form.variableInterestScenarios')}
                     </h4>
@@ -624,94 +624,49 @@ const MortgageCalculator: React.FC = () => {
           itpDescripcion={itpDescripcion}
         />
       </form>
-      <aside className='w-full xl:w-[22rem] panel-card p-5 md:p-6 flex flex-col gap-5'>
-        <h2 className='font-heading text-xl font-bold text-slate-900 mb-1'>
-          {t('mortgage.form.monthlyPayment')}
-        </h2>
-        <div className='flex flex-col items-center justify-center bg-blue-50/70 border border-blue-100 rounded-2xl p-6 mb-2 shadow-inner'>
-          <span className='text-3xl font-extrabold text-blue-800 mb-2'>
-            {calculations.cuota} €
-          </span>
-          <div className='text-blue-900 font-semibold text-lg mb-3'>
-            {t('mortgage.form.estimatedMonthlyPayment')}
-          </div>
-
-          {/* Escenarios para hipotecas variables integrados */}
-          {calculations.esHipotecaVariable && (
-            <div className='flex gap-6 text-sm'>
-              <div className='text-center'>
-                <div className='text-gray-600 text-xs'>{t('mortgage.form.minimumHistorical')}</div>
-                <div className='font-medium text-green-700'>
-                  {new Intl.NumberFormat("es-ES").format(
-                    calculations.cuotaMinima
-                  )}{" "}
-                  €
-                </div>
-              </div>
-              <div className='text-center'>
-                <div className='text-gray-600 text-xs'>{t('mortgage.form.maximumHistorical')}</div>
-                <div className='font-medium text-red-700'>
-                  {new Intl.NumberFormat("es-ES").format(
-                    calculations.cuotaMaxima
-                  )}{" "}
-                  €
-                </div>
-              </div>
-            </div>
-          )}
+      <aside className='w-full xl:w-[22rem] receipt p-6 flex flex-col gap-4 xl:sticky xl:top-24'>
+        <div className='receipt-head'>
+          <span>{t('mortgage.form.monthlyPayment')}</span>
+          <span className='text-brand-blue'>■</span>
         </div>
+
+        <div className='receipt-total'>
+          <span className='receipt-label'>{t('mortgage.form.estimatedMonthlyPayment')}</span>
+          <AnimatedNumber value={calculations.cuota} suffix=' €' decimals={2} className='receipt-num' />
+        </div>
+
+        <ContactButton variant='receipt' labelKey='mortgage.results.improveCta' />
+
+        {/* Escenarios para hipotecas variables integrados */}
+        {calculations.esHipotecaVariable && (
+          <div className='flex flex-col'>
+            <div className='receipt-row'>
+              <span>{t('mortgage.form.minimumHistorical')}</span>
+              <b style={{ color: "var(--color-positive)" }}>
+                {new Intl.NumberFormat("es-ES").format(calculations.cuotaMinima)} €
+              </b>
+            </div>
+            <div className='receipt-row'>
+              <span>{t('mortgage.form.maximumHistorical')}</span>
+              <b style={{ color: "var(--color-negative)" }}>
+                {new Intl.NumberFormat("es-ES").format(calculations.cuotaMaxima)} €
+              </b>
+            </div>
+          </div>
+        )}
 
         {/* Información de la hipoteca */}
-        <div className='space-y-2'>
-          <div className='flex justify-between items-start py-2 px-3 metric-row gap-3'>
-            <div className='flex items-start gap-2 min-w-0'>
-              <span className='text-blue-900 font-semibold leading-tight'>
-                {t('mortgage.form.mortgageAmount')}
-              </span>
-              <svg
-                className='w-4 h-4 text-blue-500 shrink-0 mt-0.5'
-                fill='currentColor'
-                viewBox='0 0 20 20'
-              >
-                <path
-                  fillRule='evenodd'
-                  d='M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-8-3a1 1 0 00-.867.5 1 1 0 11-1.731-1A3 3 0 0113 8a3.001 3.001 0 01-2 2.83V11a1 1 0 11-2 0v-1a1 1 0 011-1 1 1 0 100-2zm0 8a1 1 0 100-2 1 1 0 000 2z'
-                  clipRule='evenodd'
-                />
-              </svg>
-            </div>
-            <span className='text-blue-900 font-semibold whitespace-nowrap text-right'>
-              {new Intl.NumberFormat("es-ES").format(
-                calculations.cantidadHipoteca
-              )} €
-            </span>
+        <div className='flex flex-col'>
+          <div className='receipt-row'>
+            <span>{t('mortgage.form.mortgageAmount')}</span>
+            <b>
+              {new Intl.NumberFormat("es-ES").format(calculations.cantidadHipoteca)} €
+            </b>
           </div>
-          <div className='flex justify-between items-start py-2 px-3 metric-row gap-3'>
-            <div className='flex items-start gap-2 min-w-0'>
-              <span className='text-blue-900 font-semibold leading-tight'>
-                {t('mortgage.form.financingPercentage')}
-              </span>
-              <svg
-                className='w-4 h-4 text-blue-500 shrink-0 mt-0.5'
-                fill='currentColor'
-                viewBox='0 0 20 20'
-              >
-                <path
-                  fillRule='evenodd'
-                  d='M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-8-3a1 1 0 00-.867.5 1 1 0 11-1.731-1A3 3 0 0113 8a3.001 3.001 0 01-2 2.83V11a1 1 0 11-2 0v-1a1 1 0 011-1 1 1 0 100-2zm0 8a1 1 0 100-2 1 1 0 000 2z'
-                  clipRule='evenodd'
-                />
-              </svg>
-            </div>
-            <span className='text-blue-900 font-semibold whitespace-nowrap text-right'>
-              {calculations.porcentaje} %
-            </span>
+          <div className='receipt-row'>
+            <span>{t('mortgage.form.financingPercentage')}</span>
+            <b>{calculations.porcentaje} %</b>
           </div>
-        </div>
-
-        {/* Botón de contacto movido arriba */}
-        <div className='w-full flex items-center justify-center py-1'>
-          <ContactButton variant='desktop' />
         </div>
 
         {/* Gráficas */}
@@ -726,24 +681,16 @@ const MortgageCalculator: React.FC = () => {
         />
 
         {/* Información adicional */}
-        <div className='space-y-2'>
-          <div className='flex justify-between items-center py-2 px-3 metric-row'>
-            <span className='text-blue-900 font-semibold'>
-              {t('mortgage.form.mortgageAppraisalPercentage')}
-            </span>
-            <span
-              className={`font-semibold ${
-                calculations.esPorcentajeAlto ? "text-red-600" : "text-blue-900"
-              }`}
-            >
+        <div className='flex flex-col'>
+          <div className='receipt-row'>
+            <span>{t('mortgage.form.mortgageAppraisalPercentage')}</span>
+            <b style={calculations.esPorcentajeAlto ? { color: "var(--color-negative)" } : undefined}>
               {calculations.porcentajeHipotecaTasacion.toFixed(1)} %
-            </span>
+            </b>
           </div>
-          <div className='flex justify-between items-center py-2 px-3 metric-row'>
-            <span className='text-blue-900 font-semibold'>{t('mortgage.form.totalInterestLabel')}</span>
-            <span className='text-blue-900 font-semibold'>
-              {new Intl.NumberFormat("es-ES").format(calculations.interes)} €
-            </span>
+          <div className='receipt-row'>
+            <span>{t('mortgage.form.totalInterestLabel')}</span>
+            <b>{new Intl.NumberFormat("es-ES").format(calculations.interes)} €</b>
           </div>
         </div>
       </aside>

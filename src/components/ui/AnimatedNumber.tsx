@@ -16,8 +16,13 @@ export default function AnimatedNumber({
   className = "",
 }: AnimatedNumberProps) {
   const [display, setDisplay] = useState(value)
+  const [locale, setLocale] = useState<"es-ES" | "en-US">("es-ES")
   const prev = useRef(value)
   const raf = useRef(0)
+
+  useEffect(() => {
+    setLocale(document.documentElement.lang === "en" ? "en-US" : "es-ES")
+  }, [])
 
   useEffect(() => {
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches
@@ -38,8 +43,6 @@ export default function AnimatedNumber({
     raf.current = requestAnimationFrame(tick)
     return () => cancelAnimationFrame(raf.current)
   }, [value, duration])
-
-  const locale = typeof document !== 'undefined' ? (document.documentElement.lang === 'en' ? 'en-US' : 'es-ES') : 'es-ES'
 
   return (
     <span className={className}>

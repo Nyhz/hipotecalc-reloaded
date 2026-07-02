@@ -19,7 +19,7 @@ const Modal: React.FC<ModalProps> = ({
   return (
     <div className='fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm'>
       <div
-        className={`bg-white rounded-xl shadow-lg w-full ${maxWidth} p-0 relative max-h-[80vh] flex flex-col`}
+        className={`pl-card shadow-2xl w-full ${maxWidth} p-0 relative max-h-[80vh] flex flex-col`}
         style={{ maxHeight: "80vh" }}
       >
         <button

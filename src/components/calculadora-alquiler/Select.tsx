@@ -29,7 +29,7 @@ const Select: React.FC<SelectProps> = ({
   const defaultPlaceholder = placeholder || t('mortgage.form.itpModal.selectOption')
   return (
     <div className="space-y-2">
-      <label htmlFor={name} className="block text-sm font-medium text-gray-700">
+      <label htmlFor={name} className="label-pl">
         {label}
       </label>
       <select
@@ -37,7 +37,7 @@ const Select: React.FC<SelectProps> = ({
         name={name}
         value={value}
         onChange={onChange}
-        className={className}
+        className={`input-pl cursor-pointer ${className ?? ""}`.trim()}
       >
         <option value="">{defaultPlaceholder}</option>
         {options.map((option) => (

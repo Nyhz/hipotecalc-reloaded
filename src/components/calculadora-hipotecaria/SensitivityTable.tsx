@@ -154,7 +154,7 @@ const SensitivityTable: React.FC<SensitivityTableProps> = ({
       <div className="mt-6">
         <button
           onClick={() => setIsExpanded(true)}
-          className="w-full bg-blue-50 hover:bg-blue-100 border border-blue-200 rounded-lg p-4 text-left transition-colors duration-200"
+          className="w-full pl-card pl-card-hover p-4 text-left"
         >
           <div className="flex items-center justify-between">
             <div>
@@ -186,7 +186,7 @@ const SensitivityTable: React.FC<SensitivityTableProps> = ({
 
   return (
     <div className="mt-6">
-      <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
+      <div className="pl-card p-4">
         <div className="flex items-center justify-between mb-4">
           <div>
             <h3 className="text-lg font-semibold text-blue-900">
@@ -258,7 +258,7 @@ const SensitivityTable: React.FC<SensitivityTableProps> = ({
                 {sensitivityData.precios.map((precio, index) => (
                   <th key={index} className="text-right py-2 px-2 font-medium text-blue-900">
                     {index === 2 ? (
-                      <span className="text-blue-700 font-bold">
+                      <span className="font-data text-blue-700 font-bold">
                         {new Intl.NumberFormat("es-ES").format(precio)} €
                       </span>
                     ) : (
@@ -278,7 +278,7 @@ const SensitivityTable: React.FC<SensitivityTableProps> = ({
                 <tr key={rowIndex} className="border-b border-blue-200">
                   <td className="py-2 px-2 font-medium text-blue-900">
                     {rowIndex === 2 ? (
-                      <span className="text-blue-700 font-bold">
+                      <span className="font-data text-blue-700 font-bold">
                         {new Intl.NumberFormat("es-ES").format(ahorro)} €
                       </span>
                     ) : (
@@ -293,8 +293,8 @@ const SensitivityTable: React.FC<SensitivityTableProps> = ({
                   {sensitivityData.matriz[rowIndex].map((cuota, colIndex) => (
                     <td key={colIndex} className="text-right py-2 px-2">
                       <span className={`font-medium ${
-                        rowIndex === 2 && colIndex === 2 
-                          ? "text-blue-700 font-bold" 
+                        rowIndex === 2 && colIndex === 2
+                          ? "font-data text-blue-700 font-bold"
                           : "text-gray-700"
                       }`}>
                         {new Intl.NumberFormat("es-ES").format(cuota)} €

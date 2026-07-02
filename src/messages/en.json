@@ -242,7 +242,8 @@
       "totalPaymentLabel": "Total payment",
       "loanAmountLabel": "Loan amount",
       "downPaymentAmountLabel": "Down payment amount",
-      "loanToValueLabel": "Financed percentage"
+      "loanToValueLabel": "Financed percentage",
+      "improveCta": "Improve this payment"
     }
   },
   "rental": {
