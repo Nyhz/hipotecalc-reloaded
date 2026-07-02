@@ -39,9 +39,11 @@ export default function AnimatedNumber({
     return () => cancelAnimationFrame(raf.current)
   }, [value, duration])
 
+  const locale = typeof document !== 'undefined' ? (document.documentElement.lang === 'en' ? 'en-US' : 'es-ES') : 'es-ES'
+
   return (
     <span className={className}>
-      {display.toLocaleString("es-ES", {
+      {display.toLocaleString(locale, {
         minimumFractionDigits: decimals,
         maximumFractionDigits: decimals,
       })}

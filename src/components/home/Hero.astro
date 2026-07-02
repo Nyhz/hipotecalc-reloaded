@@ -44,13 +44,14 @@ const rentHref = lang === 'en' ? '/en/rental-calculator' : '/calculadora-alquile
 <script>
   function runCountUps() {
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const locale = document.documentElement.lang === 'en' ? 'en-US' : 'es-ES';
     document.querySelectorAll<HTMLElement>('[data-countup]').forEach((el) => {
       if (el.dataset.done) return;
       const target = Number(el.dataset.countup);
       const suffix = el.dataset.suffix ?? '';
       const decimals = Number(el.dataset.decimals ?? 0);
       const render = (v: number) => {
-        el.textContent = v.toLocaleString('es-ES', { minimumFractionDigits: decimals, maximumFractionDigits: decimals }) + suffix;
+        el.textContent = v.toLocaleString(locale, { minimumFractionDigits: decimals, maximumFractionDigits: decimals }) + suffix;
       };
       if (reduced) { el.dataset.done = '1'; render(target); return; }
       const io = new IntersectionObserver((entries) => {
