@@ -1,0 +1,15 @@
+---
+import { t } from '../../utils/i18n';
+import ContactButton from '../ContactButton';
+export interface Props { lang?: 'es' | 'en'; }
+const { lang = 'es' } = Astro.props;
+---
+<section class="w-full data-room px-8 py-9 md:px-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-6 my-4 reveal-up">
+  <div>
+    <h2 class="font-heading text-[26px] md:text-[27px] font-semibold tracking-[-0.5px] text-paper">
+      {t('home.broker.title', lang)} <em class="not-italic text-lime">{t('home.broker.titleEm', lang)}</em>
+    </h2>
+    <p class="text-sm text-paper/60 max-w-[52ch] mt-2">{t('home.broker.description', lang)}</p>
+  </div>
+  <ContactButton client:visible variant="desktop" className="shrink-0 !px-7 !py-4 !text-[15px]" />
+</section>

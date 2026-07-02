@@ -171,6 +171,7 @@ h1, h2, h3, h4, h5, h6 {
 .data-room { background: var(--color-ink); color: var(--color-paper); border-radius: 18px; }
 .data-room .eyebrow { color: rgba(250, 249, 244, 0.55); }
 .data-room .eyebrow::before { background: var(--color-lime); }
+.data-room h1, .data-room h2, .data-room h3, .data-room h4, .data-room h5, .data-room h6 { color: var(--color-paper); }
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation: none !important; transition: none !important; }

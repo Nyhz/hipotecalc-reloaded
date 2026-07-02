@@ -11,24 +11,15 @@ const EuriborChart: React.FC = () => {
 
   const option = {
     backgroundColor: "rgba(255,255,255,0)",
-    title: {
-      text: t('home.hero.euriborEvolution'),
-      left: "center",
-      textStyle: {
-        color: "#1e3a8a",
-        fontWeight: "bold",
-        fontSize: 20,
-      },
-    },
     toolbox: {
       show: false,
     },
     tooltip: {
       trigger: "axis",
-      backgroundColor: "#fff",
-      borderColor: "#3b82f6",
+      backgroundColor: "#171B26",
+      borderColor: "rgba(217,242,79,.4)",
       borderWidth: 1,
-      textStyle: { color: "#1e3a8a" },
+      textStyle: { color: "#FAF9F4", fontFamily: "IBM Plex Mono" },
       formatter: (params: any[]) => {
         const p = params[0]
         return `<b>${p.axisValue}</b>: ${p.data} %`
@@ -44,14 +35,14 @@ const EuriborChart: React.FC = () => {
     xAxis: {
       type: "category",
       data: years,
-      axisLine: { lineStyle: { color: "#3b82f6" } },
-      axisLabel: { color: "#1e3a8a", fontWeight: 600 },
+      axisLine: { lineStyle: { color: "rgba(250,249,244,.25)" } },
+      axisLabel: { color: "rgba(250,249,244,.6)", fontFamily: "IBM Plex Mono", fontSize: 11 },
     },
     yAxis: {
       type: "value",
-      axisLine: { lineStyle: { color: "#3b82f6" } },
-      axisLabel: { color: "#1e3a8a", fontWeight: 600, formatter: "{value} %" },
-      splitLine: { lineStyle: { color: "#e0e7ef" } },
+      axisLine: { lineStyle: { color: "rgba(250,249,244,.25)" } },
+      axisLabel: { color: "rgba(250,249,244,.6)", fontFamily: "IBM Plex Mono", fontSize: 11, formatter: "{value} %" },
+      splitLine: { lineStyle: { color: "rgba(250,249,244,.08)" } },
     },
     series: [
       {
@@ -61,43 +52,45 @@ const EuriborChart: React.FC = () => {
         symbol: "circle",
         symbolSize: 7,
         lineStyle: {
-          color: "#2563eb",
-          width: 3,
+          color: "#D9F24F",
+          width: 2.5,
         },
         itemStyle: {
-          color: "#2563eb",
-          borderColor: "#fff",
+          color: "#D9F24F",
+          borderColor: "#171B26",
           borderWidth: 2,
-          shadowColor: "#2563eb",
-          shadowBlur: 6,
+          shadowColor: "rgba(217,242,79,.6)",
+          shadowBlur: 8,
         },
         areaStyle: {
-          color: "rgba(59,130,246,0.08)",
+          color: "rgba(217,242,79,.12)",
         },
+        animationDuration: 2200,
+        animationEasing: "cubicOut",
       },
     ],
   }
 
   return (
-    <div className='w-full max-w-[1920px] mx-auto my-12 reveal-up'>
-      <div className='surface-card p-4 md:p-6'>
-        <div className='py-2'>
-          <ReactECharts option={option} style={{ height: 400, width: "100%" }} />
-          <div className='text-sm text-slate-600 mt-2 text-center'>
-            {t('home.hero.source')}:{" "}
-            <a
-              href='https://www.euribor-rates.eu/en/euribor-rates-by-year/'
-              target='_blank'
-              rel='noopener noreferrer'
-              className='underline text-blue-700 cursor-pointer'
-            >
-              euribor-rates.eu
-            </a>{" "}
-            {t('home.hero.approximateAnnual')}
-          </div>
+    <section className="w-full my-14 reveal-up">
+      <div className="data-room p-6 md:p-10">
+        <span className="eyebrow">{t('home.dataRoom.eyebrow')}</span>
+        <h2 className="font-heading text-3xl md:text-[34px] font-semibold tracking-[-1px] text-paper mt-3">
+          {t('home.dataRoom.title')} <em className="not-italic text-lime">{t('home.dataRoom.titleEm')}</em>
+        </h2>
+        <p className="font-data text-xs text-paper/50 mt-1 mb-6">
+          {t('home.dataRoom.meta').replace('{year}', String(new Date().getFullYear()))}
+        </p>
+        <ReactECharts option={option} style={{ height: 380, width: "100%" }} />
+        <div className="font-data text-[11px] text-paper/50 mt-3 text-center">
+          {t('home.hero.source')}:{" "}
+          <a href="https://www.euribor-rates.eu/en/euribor-rates-by-year/" target="_blank" rel="noopener noreferrer" className="underline text-lime/80">
+            euribor-rates.eu
+          </a>{" "}
+          {t('home.hero.approximateAnnual')}
         </div>
       </div>
-    </div>
+    </section>
   )
 }
 

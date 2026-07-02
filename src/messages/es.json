@@ -57,6 +57,17 @@
     "posts": {
       "title": "Últimos Posts",
       "description": "Descubre las últimas novedades, consejos y guías sobre hipotecas, alquiler e impuestos en España."
+    },
+    "broker": {
+      "title": "Tus números están bien.",
+      "titleEm": "Un broker los mejora.",
+      "description": "Compara tu simulación con ofertas reales de banca. Gratis, sin compromiso y con respuesta en 24 horas."
+    },
+    "dataRoom": {
+      "eyebrow": "Sala de datos",
+      "title": "El euríbor,",
+      "titleEm": "a la baja",
+      "meta": "Serie 2000—{year} · Fuente: euribor-rates.eu · Aprox. anual"
     }
   },
   "mortgage": {

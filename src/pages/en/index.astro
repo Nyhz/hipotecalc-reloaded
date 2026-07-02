@@ -5,6 +5,7 @@ import Hero from '../../components/home/Hero.astro';
 import StatsStrip from '../../components/home/StatsStrip.astro';
 import Layout from '../../layouts/Layout.astro';
 import EuriborChart from '../../components/home/EuriborChart';
+import BrokerBand from '../../components/home/BrokerBand.astro';
 import PageTracking from '../../components/PageTracking.tsx';
 import { t } from '../../utils/i18n';
 ---
@@ -18,12 +19,14 @@ import { t } from '../../utils/i18n';
   <StatsStrip lang="en" />
   <Herramientas tools={getTools('en')} lang="en" />
   <EuriborChart client:only="react" />
+  <BrokerBand lang="en" />
 
-  <section class="w-full max-w-4xl mx-auto py-12 px-4">
-    <h2 class="font-heading text-2xl md:text-3xl font-bold text-slate-900 mb-6">
+  <section class="w-full max-w-4xl mx-auto py-14">
+    <span class="eyebrow">About Hipotecalc</span>
+    <h2 class="font-heading text-2xl md:text-3xl font-semibold text-ink mt-3 mb-6">
       Your Trusted Mortgage Calculator for Spain
     </h2>
-    <div class="text-slate-600 space-y-4 leading-relaxed">
+    <div class="text-ink-soft space-y-4 leading-relaxed md:columns-2 md:gap-10 [&>p]:break-inside-avoid">
       <p>
         <strong>Hipotecalc</strong> is your free tool for calculating mortgages in Spain.
         Our <strong>mortgage calculator</strong> lets you simulate your monthly mortgage payment,

@@ -57,6 +57,17 @@
     "posts": {
       "title": "Latest Posts",
       "description": "Discover the latest news, tips and guides about mortgages, rental and taxes in Spain."
+    },
+    "broker": {
+      "title": "Your numbers are good.",
+      "titleEm": "A broker makes them better.",
+      "description": "Compare your simulation with real bank offers. Free, no strings attached, reply within 24 hours."
+    },
+    "dataRoom": {
+      "eyebrow": "Data room",
+      "title": "Euribor,",
+      "titleEm": "heading down",
+      "meta": "Series 2000—{year} · Source: euribor-rates.eu · Yearly approx."
     }
   },
   "mortgage": {
