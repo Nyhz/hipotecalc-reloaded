@@ -25,7 +25,7 @@ Rediseño visual completo de la web (landing + 2 calculadoras, ES y EN): nueva l
 |---|---|---|
 | `--paper` | `#FAF9F4` | fondo global, con retícula milimetrada sutil (`rgba(23,27,38,.035)`, celda 44px) |
 | `--card` | `#FFFFFF` | tarjetas |
-| `--ink` | `#171B26` | texto, botón primario, ticker, banda broker, footer |
+| `--ink` | `#171B26` | texto, botón primario, banda broker, footer |
 | `--ink-soft` | `#4A5061` | texto secundario |
 | `--line` | `rgba(23,27,38,.12)` | bordes |
 | `--lime` | `#D9F24F` (hover `#CBEA33`) | SOLO CTA broker + subrayador del titular + acentos en fondos oscuros |
@@ -38,7 +38,7 @@ Rediseño visual completo de la web (landing + 2 calculadoras, ES y EN): nueva l
 
 - **Fraunces** (600/700, opsz auto): titulares h1–h3, logo `hipotecalc.` (punto azul), cifras grandes de resultados. Sustituye a Manrope.
 - **Inter** (400–700): cuerpo, formularios, botones. Se mantiene.
-- **IBM Plex Mono** (400–600): eyebrows, etiquetas de datos, ticker, cabeceras del recibo, microcopys tipo «EN VIVO». Numerales tabulares en toda cifra.
+- **IBM Plex Mono** (400–600): eyebrows, etiquetas de datos, cabeceras del recibo, microcopys tipo «EN VIVO». Numerales tabulares en toda cifra.
 
 ### Iconografía
 
@@ -48,7 +48,6 @@ Lucide (ya instalado) en trazo 1.5px, dentro de chips cuadrados 44px con borde `
 
 - **Count-up** de cifras al entrar en viewport (easing cubic-out, ~1.4s; `IntersectionObserver`).
 - **Subrayador lima** del titular del hero: `scaleX(0→1)` a los 500ms.
-- **Ticker** superior en scroll infinito (~32s/vuelta, CSS puro).
 - **Hover tarjetas**: `translateY(-4px)` + sombra; flecha circular gira 45° y se rellena de lima.
 - **Gráfica Euribor**: trazo que se dibuja al entrar en viewport.
 - **Punto verde pulsante** en el CTA broker.
@@ -60,9 +59,9 @@ Lucide (ya instalado) en trazo 1.5px, dentro de chips cuadrados 44px con borde `
 
 Barra fija arriba sobre papel translúcido con blur, borde inferior `--line`, **con padding lateral** dentro del contenedor de 1280px. Logo Fraunces a la izquierda; centro: enlaces píldora (activo = fondo tinta, texto blanco); derecha: selector idioma discreto + **CTA broker lima** con punto pulsante. Móvil: logo + CTA broker compacto + hamburguesa; desplegable con las herramientas. Desaparece la mini-nav flotante inferior actual (el CTA del panel sticky cumple su función).
 
-### Ticker de datos (home y calculadoras)
+### Ticker de datos — DESCARTADO
 
-Franja tinta bajo la nav: `EURÍBOR HOY 1,94% ▼ · ITP MADRID 6% · ITP CATALUÑA 10% · …` en Plex Mono 11px, valores en lima. Datos de `euribor-values.ts` y `comunidades.ts` (estáticos en build).
+Se valoró una franja tipo ticker bursátil bajo la nav y se descartó (2026-07-02): urgencia fingida sobre datos mensuales/estáticos, redundante con la franja de stats y el chip del recibo, mezcla categorías inconexas (índice + impuestos + media comercial) y compite en atención con el CTA lima. Cada dato vive en su contexto: Euríbor en stats y sala de datos; ITP en el desglose del recibo.
 
 ### Home
 
@@ -88,7 +87,7 @@ Franja tinta bajo la nav: `EURÍBOR HOY 1,94% ▼ · ITP MADRID 6% · ITP CATALU
 
 ### Copy e i18n
 
-Nuevos microcopys en `es.json`/`en.json`: titular hero, eyebrows, ticker, línea de confianza, banda broker, cabeceras del recibo, CTA «Mejorar esta cuota». Tono: directo, primera persona del usuario, sin jerga bancaria. EN con equivalentes naturales, no literales.
+Nuevos microcopys en `es.json`/`en.json`: titular hero, eyebrows, línea de confianza, banda broker, cabeceras del recibo, CTA «Mejorar esta cuota». Tono: directo, primera persona del usuario, sin jerga bancaria. EN con equivalentes naturales, no literales.
 
 ## Qué NO cambia
 
@@ -98,7 +97,6 @@ Rutas y páginas, lógica de cálculo (`utils/`), datos (`constants/`), SEO (tit
 
 - **Fuentes nuevas (3 familias)**: cargar solo pesos usados, `preload` + `display=swap` como ahora; Fraunces con ejes limitados.
 - **CLS del count-up**: cifras con `font-variant-numeric: tabular-nums` y ancho reservado.
-- **Ticker en móvil**: franja única con scroll; si molesta, ocultable bajo `sm:`.
 - **echarts restilizado**: solo opciones de tema (colores/grid/tooltip), sin tocar series ni datos.
 
 ## Verificación
