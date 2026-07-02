@@ -11,7 +11,7 @@
 ## Global Constraints
 
 - Ancho de contenido: `max-w-7xl` (1280px) centrado; **nunca** `max-w-[1920px]` (eliminarlo allá donde aparezca).
-- El color lima `#D9F24F` es EXCLUSIVO del CTA de broker + subrayador del titular hero + acentos sobre fondos tinta. Nunca en otros botones/fondos.
+- El color lima `#D9F24F` es EXCLUSIVO del CTA de broker + subrayador del titular hero + acentos sobre fondos tinta + micro-acento de hover en la flecha de las tarjetas de herramientas (presente en el mockup aprobado). Nunca en otros botones/fondos estáticos.
 - Máx. **2 CTAs de broker por página**: navbar + (home: banda de cierre | calculadoras: botón del recibo sticky).
 - Tipos: Fraunces (titulares/cifras grandes), Inter (cuerpo), IBM Plex Mono (eyebrows/etiquetas/datos). Manrope desaparece.
 - Toda cifra usa `font-variant-numeric: tabular-nums`.
