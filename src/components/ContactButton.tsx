@@ -6,15 +6,17 @@ interface ContactButtonProps {
   variant?: "desktop" | "mobile" | "receipt"
   labelKey?: string
   className?: string
+  lang?: "es" | "en"
 }
 
 export default function ContactButton({
   variant = "desktop",
   labelKey,
   className = "",
+  lang,
 }: ContactButtonProps) {
   const { trackContactAttempt } = useGoogleAnalytics()
-  const { t } = useTranslations()
+  const { t } = useTranslations(lang)
 
   const variantClasses = {
     desktop: "px-5 py-2.5 text-sm",
