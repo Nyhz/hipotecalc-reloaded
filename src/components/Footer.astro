@@ -9,48 +9,44 @@ const { lang = 'es' } = Astro.props;
 const tools = getTools(lang);
 const homeHref = lang === 'en' ? '/en/' : '/';
 ---
-<footer class="w-full mt-16 pb-6">
-  <div class="max-w-[1920px] mx-auto">
-    <div class="surface-card-strong px-6 py-8 md:px-8 md:py-10">
-      <div class="flex flex-col gap-8 md:flex-row md:items-start md:justify-between">
-        <div class="max-w-md">
-          <a href={homeHref} class="font-heading text-2xl font-extrabold text-slate-900 tracking-tight">
-            Hipotecalc
-          </a>
-          <p class="mt-3 text-sm leading-relaxed text-slate-600">
-            {lang === 'en'
-              ? 'Professional mortgage and rental analysis tools tailored for Spain.'
-              : 'Herramientas profesionales para analizar hipotecas, alquileres e impuestos en España.'}
-          </p>
+<footer class="w-full mt-16 bg-ink text-paper">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 py-12">
+    <div class="flex flex-col gap-10 md:flex-row md:items-start md:justify-between">
+      <div class="max-w-md">
+        <a href={homeHref} class="font-heading text-2xl font-bold tracking-tight text-paper">
+          hipotecalc<span class="text-lime">.</span>
+        </a>
+        <p class="mt-3 text-sm leading-relaxed text-paper/60">
+          {lang === 'en'
+            ? 'Professional mortgage and rental analysis tools tailored for Spain.'
+            : 'Herramientas profesionales para analizar hipotecas, alquileres e impuestos en España.'}
+        </p>
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-10">
+        <div>
+          <h3 class="font-data text-xs font-semibold uppercase tracking-widest text-paper/50">
+            {lang === 'en' ? 'Tools' : 'Herramientas'}
+          </h3>
+          <ul class="mt-3 space-y-2">
+            {tools.filter((tool) => tool.active).map((tool) => (
+              <li>
+                <a href={tool.href} class="text-sm font-medium text-paper/80 hover:text-lime transition-colors">
+                  {tool.label}
+                </a>
+              </li>
+            ))}
+          </ul>
         </div>
-
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-8">
-          <div>
-            <h3 class="font-heading text-sm font-bold uppercase tracking-wide text-slate-900">
-              {lang === 'en' ? 'Tools' : 'Herramientas'}
-            </h3>
-            <ul class="mt-3 space-y-2">
-              {tools.filter((tool) => tool.active).map((tool) => (
-                <li>
-                  <a href={tool.href} class="text-sm font-medium text-slate-600 hover:text-blue-700 transition-colors">
-                    {tool.label}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          <div>
-            <h3 class="font-heading text-sm font-bold uppercase tracking-wide text-slate-900">
-              {lang === 'en' ? 'Language' : 'Idioma'}
-            </h3>
-            <p class="mt-3 text-sm text-slate-600">
-              {lang === 'en' ? 'Viewing in English' : 'Viendo en Español'}
-            </p>
-            <p class="mt-4 text-xs text-slate-500">
-              © {new Date().getFullYear()} Hipotecalc. {t('footer.copyright', lang)}
-            </p>
-          </div>
+        <div>
+          <h3 class="font-data text-xs font-semibold uppercase tracking-widest text-paper/50">
+            {lang === 'en' ? 'Language' : 'Idioma'}
+          </h3>
+          <p class="mt-3 text-sm text-paper/80">
+            {lang === 'en' ? 'Viewing in English' : 'Viendo en Español'}
+          </p>
+          <p class="mt-4 font-data text-xs text-paper/40">
+            © {new Date().getFullYear()} Hipotecalc. {t('footer.copyright', lang)}
+          </p>
         </div>
       </div>
     </div>
