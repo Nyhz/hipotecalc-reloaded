@@ -9,9 +9,23 @@
     "description": "Herramientas profesionales para calcular tu hipoteca, alquiler o ITP en España. Precisión, rapidez y confianza para tus decisiones financieras.",
     "hero": {
       "title": "Calculadora Hipotecaria",
-      "description": "Herramientas profesionales para calcular tu hipoteca, alquiler o ITP en España. Precisión, rapidez y confianza para tus decisiones financieras.",
+      "headlinePre": "Los números de tu casa, ",
+      "headlineHl": "por fin claros",
+      "description": "Cuota, impuestos por comunidad y rentabilidad del alquiler. Sin registros ni letra pequeña: escribes cuatro datos y ves toda la operación al instante.",
       "calculateMortgage": "Calcular Hipoteca",
       "calculateRental": "Calcular Alquiler",
+      "trustFree": "100% gratuito",
+      "trustNoSignup": "Sin registro",
+      "trustData": "Datos {year}",
+      "receiptTitle": "Tu simulación",
+      "receiptLive": "■ En vivo",
+      "receiptPrice": "Precio vivienda",
+      "receiptDown": "Entrada (20%)",
+      "receiptItp": "ITP (Madrid, 6%)",
+      "receiptTerm": "Plazo",
+      "receiptTermValue": "25 años",
+      "receiptTotal": "Cuota / mes",
+      "receiptChip": "EURÍBOR + 1% → 2,94%",
       "calculatorTitle": "Calculadora Hipoteca",
       "propertyPrice": "Precio vivienda:",
       "downPayment": "Entrada:",
@@ -22,6 +36,13 @@
       "euriborEvolution": "Evolución del Euribor (2000-2024)",
       "source": "Fuente",
       "approximateAnnual": "(aprox. anual, 12 meses)"
+    },
+    "stats": {
+      "euriborLabel": "Euríbor · 2025",
+      "ccaaLabel": "CCAA con ITP propio",
+      "freeLabel": "Gratis · sin registro",
+      "timeLabel": "Por simulación",
+      "timeValue": "2 min"
     },
     "tools": {
       "mortgageCalculator": {

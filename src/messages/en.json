@@ -9,9 +9,23 @@
     "description": "Professional tools to calculate your mortgage, rental or ITP in Spain. Precision, speed and confidence for your financial decisions.",
     "hero": {
       "title": "Mortgage Calculator",
-      "description": "Professional tools to calculate your mortgage, rental or ITP in Spain. Precision, speed and confidence for your financial decisions.",
+      "headlinePre": "Your home's numbers, ",
+      "headlineHl": "finally clear",
+      "description": "Payment, taxes by region and rental profitability. No sign-ups, no fine print: enter four figures and see the whole picture instantly.",
       "calculateMortgage": "Calculate Mortgage",
       "calculateRental": "Calculate Rental",
+      "trustFree": "100% free",
+      "trustNoSignup": "No sign-up",
+      "trustData": "{year} data",
+      "receiptTitle": "Your simulation",
+      "receiptLive": "■ Live",
+      "receiptPrice": "Property price",
+      "receiptDown": "Down payment (20%)",
+      "receiptItp": "ITP (Madrid, 6%)",
+      "receiptTerm": "Term",
+      "receiptTermValue": "25 years",
+      "receiptTotal": "Payment / month",
+      "receiptChip": "EURIBOR + 1% → 2.94%",
       "calculatorTitle": "Mortgage Calculator",
       "propertyPrice": "Property price:",
       "downPayment": "Down payment:",
@@ -22,6 +36,13 @@
       "euriborEvolution": "Euribor Evolution (2000-2024)",
       "source": "Source",
       "approximateAnnual": "(approx. annual, 12 months)"
+    },
+    "stats": {
+      "euriborLabel": "Euribor · 2025",
+      "ccaaLabel": "Regions with own ITP",
+      "freeLabel": "Free · no sign-up",
+      "timeLabel": "Per simulation",
+      "timeValue": "2 min"
     },
     "tools": {
       "mortgageCalculator": {

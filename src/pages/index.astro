@@ -2,6 +2,7 @@
 import Herramientas from '../components/home/Herramientas.astro';
 import { getTools } from '../constants/tools';
 import Hero from '../components/home/Hero.astro';
+import StatsStrip from '../components/home/StatsStrip.astro';
 import Layout from '../layouts/Layout.astro';
 import EuriborChart from '../components/home/EuriborChart';
 import PageTracking from '../components/PageTracking.tsx';
@@ -13,11 +14,8 @@ import { t } from '../utils/i18n';
   keywords={t('seo.home.keywords')}
 >
   <PageTracking client:load pagePath="/" pageTitle={t('seo.home.title')} />
-  <Hero
-    title={t('home.hero.title')}
-    description={t('home.hero.description')}
-    lang="es"
-  />
+  <Hero lang="es" />
+  <StatsStrip lang="es" />
   <Herramientas tools={getTools('es')} lang="es" />
   <EuriborChart client:only="react" />
 
