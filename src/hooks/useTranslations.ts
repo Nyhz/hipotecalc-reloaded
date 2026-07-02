@@ -6,7 +6,9 @@ export function useTranslations(forcedLang?: 'es' | 'en') {
   const [currentLang, setCurrentLang] = useState<'es' | 'en'>(forcedLang || 'es')
 
   useEffect(() => {
-    if (!forcedLang && typeof window !== 'undefined') {
+    if (forcedLang) {
+      setCurrentLang(forcedLang)
+    } else if (typeof window !== 'undefined') {
       setCurrentLang(getCurrentLang(window.location.pathname))
     }
   }, [forcedLang])

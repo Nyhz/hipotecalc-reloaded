@@ -273,31 +273,7 @@ const structuredData = JSON.stringify({
       }
     </script>
     
-    <!-- Font loading optimization to prevent layout shifts -->
-    <script>
-      // Add font-display: swap fallback for older browsers
-      if (document.fonts && document.fonts.ready) {
-        document.fonts.ready.then(function() {
-          document.documentElement.classList.add('fonts-loaded');
-        });
-      }
-      
-      // Preemptively set font style to prevent FOIT
-      const style = document.createElement('style');
-      style.textContent = `
-        .font-loading-stable {
-          font-synthesis: none;
-          font-kerning: auto;
-          text-rendering: optimizeLegibility;
-        }
-        .fonts-loaded .font-loading-stable {
-          font-synthesis: weight style;
-        }
-      `;
-      document.head.appendChild(style);
-    </script>
-    
-    <ClientRouter />  
+    <ClientRouter />
   </head>
   <body class="min-h-screen flex flex-col">
     <Navbar client:load />

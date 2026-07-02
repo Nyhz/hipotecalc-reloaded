@@ -30,6 +30,7 @@ export default function ContactButton({
     <a
       href={referalLink}
       target="_blank"
+      rel="noopener noreferrer"
       className={`cta-broker ${variantClasses[variant]} ${className}`}
       onClick={() => trackContactAttempt(`navbar_${variant}`)}
     >

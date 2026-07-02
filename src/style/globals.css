@@ -16,20 +16,22 @@
   --font-data: "IBM Plex Mono", ui-monospace, monospace;
 }
 
-body {
-  font-family: var(--font-sans);
-  color: var(--color-ink);
-  background-color: var(--color-paper);
-  background-image:
-    linear-gradient(rgba(23, 27, 38, 0.035) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(23, 27, 38, 0.035) 1px, transparent 1px);
-  background-size: 44px 44px;
-}
+@layer base {
+  body {
+    font-family: var(--font-sans);
+    color: var(--color-ink);
+    background-color: var(--color-paper);
+    background-image:
+      linear-gradient(rgba(23, 27, 38, 0.035) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(23, 27, 38, 0.035) 1px, transparent 1px);
+    background-size: 44px 44px;
+  }
 
-h1, h2, h3, h4, h5, h6 {
-  font-family: var(--font-heading);
-  color: var(--color-ink);
-  letter-spacing: -0.02em;
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-heading);
+    color: var(--color-ink);
+    letter-spacing: -0.02em;
+  }
 }
 
 .font-heading { font-family: var(--font-heading); }
@@ -143,18 +145,21 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 /* ── Inputs ── */
-.input-pl {
-  width: 100%;
-  background: #fff;
-  border: 1px solid rgba(23, 27, 38, 0.2);
-  border-radius: 10px;
-  padding: 11px 13px;
-  font-size: 14px;
-  color: var(--color-ink);
-  font-variant-numeric: tabular-nums;
-  transition: border-color 0.15s, box-shadow 0.15s;
+/* En @layer components para que las utilities (pr-8, pl-8...) puedan pisar el padding */
+@layer components {
+  .input-pl {
+    width: 100%;
+    background: #fff;
+    border: 1px solid rgba(23, 27, 38, 0.2);
+    border-radius: 10px;
+    padding: 11px 13px;
+    font-size: 14px;
+    color: var(--color-ink);
+    font-variant-numeric: tabular-nums;
+    transition: border-color 0.15s, box-shadow 0.15s;
+  }
+  .input-pl:focus { outline: none; border-color: var(--color-brand-blue); box-shadow: 0 0 0 3px rgba(42, 76, 240, 0.15); }
 }
-.input-pl:focus { outline: none; border-color: var(--color-brand-blue); box-shadow: 0 0 0 3px rgba(42, 76, 240, 0.15); }
 .label-pl { display: block; font-size: 12.5px; font-weight: 600; color: var(--color-ink); margin-bottom: 5px; }
 
 /* ── Animación de entrada (se conserva del sitio anterior) ── */
@@ -171,7 +176,6 @@ h1, h2, h3, h4, h5, h6 {
 .data-room { background: var(--color-ink); color: var(--color-paper); border-radius: 18px; }
 .data-room .eyebrow { color: rgba(250, 249, 244, 0.55); }
 .data-room .eyebrow::before { background: var(--color-lime); }
-.data-room h1, .data-room h2, .data-room h3, .data-room h4, .data-room h5, .data-room h6 { color: var(--color-paper); }
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation: none !important; transition: none !important; }
@@ -179,6 +183,8 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 /* Ocultar flechitas de inputs numéricos */
-input[type="number"]::-webkit-outer-spin-button,
-input[type="number"]::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
-input[type="number"] { -moz-appearance: textfield; appearance: textfield; }
+@layer base {
+  input[type="number"]::-webkit-outer-spin-button,
+  input[type="number"]::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+  input[type="number"] { -moz-appearance: textfield; appearance: textfield; }
+}

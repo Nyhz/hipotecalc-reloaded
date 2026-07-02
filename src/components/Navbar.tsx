@@ -62,7 +62,7 @@ export default function Navbar() {
           </ul>
           <div className="flex justify-end items-center gap-3">
             <LanguageSwitcher />
-            <ContactButton variant="desktop" />
+            <ContactButton variant="desktop" lang={currentLang} />
           </div>
         </div>
 
@@ -73,7 +73,7 @@ export default function Navbar() {
           </a>
           <div className="flex items-center gap-2">
             <LanguageSwitcher />
-            <ContactButton variant="mobile" />
+            <ContactButton variant="mobile" lang={currentLang} />
             <button onClick={toggleMenu} className="p-2 text-ink" aria-label="Toggle menu">
               <svg
                 className="w-6 h-6"

@@ -57,12 +57,12 @@ const { tools, lang = 'es' } = Astro.props;
             role="region"
             style={`animation-delay: ${90 + index * 80}ms;`}
           >
-            <div class="icon-chip mb-4" aria-hidden="true">
-              <Icon name={tool.icon} size={24} class="text-ink" />
+            <div class="icon-chip mb-4 bg-paper-2 text-ink-soft" aria-hidden="true">
+              <Icon name={tool.icon} size={24} class="text-ink-soft" />
             </div>
             <span class="font-heading text-[23px] font-semibold text-ink mb-2">{tool.title}</span>
             <p class="text-sm text-ink-soft leading-relaxed mb-4">{tool.description}</p>
-            <span class="text-slate-500 font-semibold flex items-center gap-1 cursor-not-allowed" aria-label={t('common.toolComingSoon', lang)}>
+            <span class="text-ink-soft font-semibold flex items-center gap-1 cursor-not-allowed" aria-label={t('common.toolComingSoon', lang)}>
               {t('common.comingSoon', lang)}
             </span>
           </div>

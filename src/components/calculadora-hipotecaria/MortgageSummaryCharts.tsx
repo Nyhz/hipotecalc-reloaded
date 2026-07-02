@@ -138,19 +138,19 @@ const MortgageSummaryCharts: React.FC<MortgageSummaryChartsProps> = ({
         <div className="space-y-2">
           <div ref={costChartRef} className="w-full h-8 bg-gray-100 rounded" />
           <div className="space-y-1.5">
-            <div className="flex justify-between items-center metric-row px-3 py-2">
+            <div className="flex justify-between items-center rounded-xl border border-line bg-paper/60 px-3 py-2">
               <span className="text-sm text-gray-600">{t('mortgage.form.charts.propertyPrice')}</span>
               <span className="font-semibold text-sm">
                 {new Intl.NumberFormat('es-ES').format(precioInmueble)} €
               </span>
             </div>
-            <div className="flex justify-between items-center metric-row px-3 py-2">
+            <div className="flex justify-between items-center rounded-xl border border-line bg-paper/60 px-3 py-2">
               <span className="text-sm text-gray-600">{t('mortgage.form.charts.taxesAndExpenses')}</span>
               <span className="font-semibold text-sm">
                 {new Intl.NumberFormat('es-ES').format(impuestosGastos)} €
               </span>
             </div>
-            <div className="flex justify-between items-center metric-row px-3 py-2">
+            <div className="flex justify-between items-center rounded-xl border border-line bg-paper/60 px-3 py-2">
               <span className="font-semibold text-gray-800">{t('mortgage.form.charts.total')}</span>
               <span className="font-data font-bold">
                 {new Intl.NumberFormat('es-ES').format(precioInmueble + impuestosGastos)} €
@@ -168,25 +168,25 @@ const MortgageSummaryCharts: React.FC<MortgageSummaryChartsProps> = ({
         <div className="space-y-2">
           <div ref={mortgageChartRef} className="w-full h-8 bg-gray-100 rounded" />
           <div className="space-y-1.5">
-            <div className="flex justify-between items-center metric-row px-3 py-2">
+            <div className="flex justify-between items-center rounded-xl border border-line bg-paper/60 px-3 py-2">
               <span className="text-sm text-gray-600">{t('mortgage.form.charts.savingsContributed')}</span>
               <span className="font-semibold text-sm">
                 {new Intl.NumberFormat('es-ES').format(ahorroAportado)} €
               </span>
             </div>
-            <div className="flex justify-between items-center metric-row px-3 py-2">
+            <div className="flex justify-between items-center rounded-xl border border-line bg-paper/60 px-3 py-2">
               <span className="text-sm text-gray-600">{t('mortgage.form.charts.mortgage')}</span>
               <span className="font-semibold text-sm">
                 {new Intl.NumberFormat('es-ES').format(cantidadHipoteca)} €
               </span>
             </div>
-            <div className="flex justify-between items-center metric-row px-3 py-2">
+            <div className="flex justify-between items-center rounded-xl border border-line bg-paper/60 px-3 py-2">
               <span className="text-sm text-gray-600">{t('mortgage.form.charts.interest')}</span>
               <span className="font-semibold text-sm">
                 {new Intl.NumberFormat('es-ES').format(interesTotal)} €
               </span>
             </div>
-            <div className="flex justify-between items-center metric-row px-3 py-2">
+            <div className="flex justify-between items-center rounded-xl border border-line bg-paper/60 px-3 py-2">
               <span className="font-semibold text-gray-800">{t('mortgage.form.charts.total')}</span>
               <span className="font-data font-bold">
                 {new Intl.NumberFormat('es-ES').format(ahorroAportado + cantidadHipoteca + interesTotal)} €

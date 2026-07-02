@@ -23,8 +23,8 @@ import AnimatedNumber from "../ui/AnimatedNumber"
 import { useGoogleAnalytics } from "../../hooks/useGoogleAnalytics"
 import { useTranslations } from "../../hooks/useTranslations"
 
-const inputClass = "input-pl"
-const inputReadOnlyClass = inputClass + " cursor-not-allowed"
+const inputClass = ""
+const inputReadOnlyClass = "cursor-not-allowed"
 
 const initialState = {
   precio: "",
@@ -56,7 +56,7 @@ const MortgageCalculator: React.FC = () => {
 
   // Handler para recibir el resultado del ITPCalculator
   const handleItpResult = (
-    valor: number,
+    _valor: number,
     tipoAplicado?: number,
     descripcion?: string
   ) => {
@@ -71,7 +71,6 @@ const MortgageCalculator: React.FC = () => {
     const otrosCostesNum = Number(form.otrosCostes) || 0
     const ahorroNum = Number(form.ahorro) || 0
     const taeNum = Number(form.tae) || 0
-    const plazoNum = Number(form.plazo) || 0
     const diferencialNum = Number(form.diferencial) || 0
     const periodoAnalisisNum = Number(form.periodoAnalisis) || 10
 
@@ -255,23 +254,6 @@ const MortgageCalculator: React.FC = () => {
     setForm((prev) => ({ ...prev, tipoVivienda }))
   }
 
-  // Determinar si la comunidad seleccionada requiere campos especiales
-  const comunidadSeleccionada = COMUNIDADES.find(
-    (c) => c.nombre === form.comunidad
-  )
-  const camposDinamicos = {
-    ingresos: comunidadSeleccionada?.camposDinamicos?.ingresos ?? false,
-    situacionFamiliar:
-      comunidadSeleccionada?.camposDinamicos?.situacionFamiliar ?? false,
-    discapacidad: comunidadSeleccionada?.camposDinamicos?.discapacidad ?? false,
-    victimas: comunidadSeleccionada?.camposDinamicos?.victimas ?? false,
-    zonaDespoblada:
-      comunidadSeleccionada?.camposDinamicos?.zonaDespoblada ?? false,
-  }
-  const requiereViolencia = camposDinamicos.victimas
-  const requiereTerrorismo = camposDinamicos.victimas
-  const requiereDespoblada = camposDinamicos.zonaDespoblada
-
   return (
     <div className='flex flex-col xl:flex-row gap-6 mt-4 items-start'>
       <form
@@ -401,7 +383,7 @@ const MortgageCalculator: React.FC = () => {
                         }
                       }}
                       readOnly
-                      className={`${inputReadOnlyClass} ${
+                      className={`input-pl ${inputReadOnlyClass} ${
                         itpCalculado ? "pr-16" : "pr-8"
                       }`}
                       style={{

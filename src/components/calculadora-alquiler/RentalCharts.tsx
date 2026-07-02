@@ -11,17 +11,12 @@ interface Calculations {
   cashOnCashReturn: number
 }
 
-interface Form {
-  interes: string
-}
-
 interface RentalChartsProps {
   calculations: Calculations
-  form: Form
   lang?: 'es' | 'en'
 }
 
-const RentalCharts: React.FC<RentalChartsProps> = ({ calculations, form, lang = 'es' }) => {
+const RentalCharts: React.FC<RentalChartsProps> = ({ calculations, lang = 'es' }) => {
   const { t } = useTranslations(lang)
   
   return (

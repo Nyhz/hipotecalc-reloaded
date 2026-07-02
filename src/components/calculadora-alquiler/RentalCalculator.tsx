@@ -10,8 +10,7 @@ import AnimatedNumber from "../ui/AnimatedNumber"
 import { useTranslations } from "../../hooks/useTranslations"
 import { formatNumberByLang } from "../../utils/number-format"
 
-const inputClass = "input-pl"
-const inputReadOnlyClass = inputClass + " cursor-not-allowed"
+const inputClass = ""
 
 const initialState = {
   // Datos de la propiedad
@@ -270,7 +269,7 @@ const RentalCalculator: React.FC<RentalCalculatorProps> = ({ lang = 'es' }) => {
         <RentalKPIs calculations={calculations} lang={lang} />
       </div>
       <div className="mt-6">
-        <RentalCharts calculations={calculations} form={form} lang={lang} />
+        <RentalCharts calculations={calculations} lang={lang} />
       </div>
     </>
   )
