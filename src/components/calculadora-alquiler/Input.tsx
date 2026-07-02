@@ -30,13 +30,13 @@ const Input: React.FC<InputProps> = ({
   showEuroSymbol = false,
 }) => {
   return (
-    <div className="space-y-2">
-      <label htmlFor={name} className="block text-sm font-medium text-gray-700">
+    <div>
+      <label htmlFor={name} className="label-pl">
         {label}
       </label>
       <div className="relative">
         {showEuroSymbol && (
-          <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500">
+          <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500 pointer-events-none">
             €
           </span>
         )}
@@ -51,7 +51,8 @@ const Input: React.FC<InputProps> = ({
           step={step}
           placeholder={placeholder}
           readOnly={readOnly}
-          className={`${className} ${showEuroSymbol ? "pl-8" : ""}`}
+          className={`input-pl ${showEuroSymbol ? "pl-8" : ""} ${className ?? ""}`.trim()}
+          style={showEuroSymbol ? { paddingLeft: "2rem" } : undefined}
         />
       </div>
     </div>

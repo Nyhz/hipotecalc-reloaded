@@ -22,46 +22,39 @@ const RentalKPIs: React.FC<RentalKPIsProps> = ({ calculations, lang = 'es' }) =>
       title: t('rental.results.annualRoi'),
       value: `${calculations.roiAnual.toFixed(2)}%`,
       description: t('rental.results.roiDescription'),
-      color: "bg-blue-50 border-blue-200",
-      textColor: "text-blue-900",
+      tone: calculations.roiAnual >= 0 ? "text-positive" : "text-negative",
     },
     {
       title: t('rental.results.cashOnCashReturn'),
       value: `${calculations.cashOnCashReturn.toFixed(2)}%`,
       description: t('rental.results.cashOnCashDescription'),
-      color: "bg-green-50 border-green-200",
-      textColor: "text-green-900",
+      tone: calculations.cashOnCashReturn >= 0 ? "text-positive" : "text-negative",
     },
     {
       title: t('rental.results.monthsToBreakEven'),
       value: calculations.mesesBreakEven > 0 ? `${calculations.mesesBreakEven.toFixed(1)}` : "∞",
       description: t('rental.results.breakEvenDescription'),
-      color: "bg-orange-50 border-orange-200",
-      textColor: "text-orange-900",
+      tone: "text-ink",
     },
     {
       title: t('rental.results.monthlyCashFlow'),
       value: `${formatNumberByLang(calculations.cashFlowMensual, lang)} €`,
       description: t('rental.results.cashFlowDescription'),
-      color: calculations.cashFlowMensual >= 0 ? "bg-green-50 border-green-200" : "bg-red-50 border-red-200",
-      textColor: calculations.cashFlowMensual >= 0 ? "text-green-900" : "text-red-900",
+      tone: calculations.cashFlowMensual >= 0 ? "text-positive" : "text-negative",
     },
   ]
 
   return (
-    <div className="panel-card p-5 md:p-6">
-      <h2 className="font-heading text-xl font-bold text-slate-900 mb-6">
+    <div className="pl-card p-5 md:p-6">
+      <h2 className="font-heading text-xl font-bold text-ink mb-6">
         {t('rental.results.profitabilityMetrics')}
       </h2>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
         {kpis.map((kpi, index) => (
-          <div
-            key={index}
-            className={`kpi-card p-4 ${kpi.color} ${kpi.textColor}`}
-          >
-            <div className="text-2xl font-bold mb-1">{kpi.value}</div>
-            <div className="text-sm font-semibold mb-1">{kpi.title}</div>
-            <div className="text-xs opacity-75">{kpi.description}</div>
+          <div key={index} className="pl-card p-4">
+            <div className={`font-heading text-2xl font-bold mb-1 ${kpi.tone}`}>{kpi.value}</div>
+            <div className="font-data text-[10.5px] uppercase tracking-widest text-ink-soft mb-1">{kpi.title}</div>
+            <div className="text-xs text-ink-soft">{kpi.description}</div>
           </div>
         ))}
       </div>

@@ -19,30 +19,25 @@ import { t } from '../../utils/i18n';
     { name: 'Rental Calculator', href: '/en/rental-calculator' }
   ]} />
 
-  <main class="w-full max-w-[1920px] mx-auto py-8 ambient-section rounded-3xl">
-    <div class="ambient-content w-full">
-      <div class="text-center mb-6 reveal-up">
-        <span class="inline-flex rounded-full border border-blue-200 bg-blue-50 text-blue-700 px-4 py-1 text-xs font-semibold uppercase tracking-wider">
-          {t('rental.title', 'en')}
-        </span>
-        <h1 class="font-heading text-3xl md:text-4xl lg:text-5xl font-extrabold text-slate-900 mt-4 mb-3">
-          {t('rental.hero.title', 'en')}
-        </h1>
-        <p class="text-lg text-slate-600 max-w-3xl mx-auto">
-          {t('rental.hero.description', 'en')}
-        </p>
-      </div>
-      <div class="reveal-up reveal-delay-1">
-        <RentalCalculator client:load lang="en" />
-      </div>
+  <div class="w-full py-8">
+    <div class="text-center mb-8 reveal-up">
+      <span class="eyebrow">{t('rental.title', 'en')}</span>
+      <h1 class="font-heading text-3xl md:text-4xl lg:text-[44px] font-semibold tracking-[-1px] text-ink mt-4 mb-3">
+        {t('rental.hero.title', 'en')}
+      </h1>
+      <p class="text-ink-soft max-w-3xl mx-auto text-base md:text-lg">{t('rental.hero.description', 'en')}</p>
     </div>
-  </main>
+    <div class="reveal-up reveal-delay-1">
+      <RentalCalculator client:load lang="en" />
+    </div>
+  </div>
 
-  <section class="w-full max-w-4xl mx-auto py-12 px-4">
-    <h2 class="font-heading text-2xl md:text-3xl font-bold text-slate-900 mb-6">
+  <section class="w-full max-w-4xl mx-auto py-14">
+    <span class="eyebrow">Quick guide</span>
+    <h2 class="font-heading text-2xl md:text-3xl font-semibold text-ink mt-3 mb-6">
       How to Calculate Rental Investment Profitability
     </h2>
-    <div class="text-slate-600 space-y-4 leading-relaxed">
+    <div class="text-ink-soft space-y-4 leading-relaxed md:columns-2 md:gap-10 [&>p]:break-inside-avoid">
       <p>
         Our <strong>rental calculator</strong> helps you analyze the profitability of a real estate investment in Spain.
         Enter the purchase price, associated costs, expected monthly rent, and recurring expenses

@@ -5,11 +5,13 @@ import Input from "./Input"
 import Select from "./Select"
 import RentalKPIs from "./RentalKPIs"
 import RentalCharts from "./RentalCharts"
+import ContactButton from "../ContactButton"
+import AnimatedNumber from "../ui/AnimatedNumber"
 import { useTranslations } from "../../hooks/useTranslations"
 import { formatNumberByLang } from "../../utils/number-format"
 
-const inputClass = "w-full px-4 py-3 border border-slate-200 bg-white rounded-xl focus:ring-2 focus:ring-blue-500/60 focus:border-blue-300 transition-all duration-200"
-const inputReadOnlyClass = inputClass + " bg-slate-100/80"
+const inputClass = "input-pl"
+const inputReadOnlyClass = inputClass + " cursor-not-allowed"
 
 const initialState = {
   // Datos de la propiedad
@@ -120,158 +122,153 @@ const RentalCalculator: React.FC<RentalCalculatorProps> = ({ lang = 'es' }) => {
   }
 
   return (
-    <div className="calculator-shell grid grid-cols-1 lg:grid-cols-2 gap-6 p-4 md:p-6 mt-6">
-      {/* Datos de la Propiedad */}
-      <div className="section-card p-5 md:p-6">
-        <h2 className="font-heading text-xl font-bold text-slate-900 mb-6">
-          {t('rental.form.propertyDetails')}
-        </h2>
-        <div className="space-y-4">
-          <Input
-            label={t('rental.form.propertyPrice')}
-            name="precio"
-            value={form.precio}
-            onChange={handleChange}
-            type="number"
-            min={0}
-            placeholder={`${t('mortgage.form.itpModal.examplePlaceholder')} 200000`}
-            className={inputClass}
-            showEuroSymbol={true}
-          />
-          <Input
-            label={t('mortgage.form.downPaymentAmountLabel')}
-            name="entrada"
-            value={form.entrada}
-            onChange={handleChange}
-            type="number"
-            min={0}
-            placeholder={`${t('mortgage.form.itpModal.examplePlaceholder')} 40000`}
-            className={inputClass}
-            showEuroSymbol={true}
-          />
-          <Input
-            label={t('rental.form.interestRate')}
-            name="interes"
-            value={form.interes}
-            onChange={handleChange}
-            type="number"
-            min={0}
-            step={0.01}
-            placeholder={`${t('mortgage.form.itpModal.examplePlaceholder')} 2.5`}
-            className={inputClass}
-          />
-          <Select
-            label={t('mortgage.form.autonomousCommunity')}
-            name="comunidad"
-            value={form.comunidad}
-            onChange={handleChange}
-            options={COMUNIDADES.map((c) => ({ value: c.nombre, label: c.nombre }))}
-            className={inputClass}
-          />
-          <Input
-            label={t('rental.form.loanTerm')}
-            name="plazo"
-            value={form.plazo}
-            onChange={handleChange}
-            type="number"
-            min={1}
-            max={40}
-            placeholder={`${t('mortgage.form.itpModal.examplePlaceholder')} 30`}
-            className={inputClass}
-          />
-          
-          {/* Información calculada */}
-          <div className="metric-row p-4 space-y-2">
-            <div className="flex justify-between items-center">
-              <span className="text-gray-600">ITP ({calculations.porcentajeITP}%):</span>
-              <span className="font-semibold text-gray-900">
-                {formatNumberByLang(calculations.itp, lang)} €
-              </span>
+    <>
+      <div className="flex flex-col xl:flex-row gap-6 mt-4 items-start">
+        {/* Formulario: 2 tarjetas en columna, ocupa el ancho restante */}
+        <div className="flex-1 grid grid-cols-1 lg:grid-cols-2 gap-6 w-full">
+          {/* Datos de la Propiedad */}
+          <div className="pl-card p-5 md:p-6">
+            <h2 className="font-heading text-xl font-bold text-ink mb-6">
+              {t('rental.form.propertyDetails')}
+            </h2>
+            <div className="space-y-4">
+              <Input
+                label={t('rental.form.propertyPrice')}
+                name="precio"
+                value={form.precio}
+                onChange={handleChange}
+                type="number"
+                min={0}
+                placeholder={`${t('mortgage.form.itpModal.examplePlaceholder')} 200000`}
+                className={inputClass}
+                showEuroSymbol={true}
+              />
+              <Input
+                label={t('mortgage.form.downPaymentAmountLabel')}
+                name="entrada"
+                value={form.entrada}
+                onChange={handleChange}
+                type="number"
+                min={0}
+                placeholder={`${t('mortgage.form.itpModal.examplePlaceholder')} 40000`}
+                className={inputClass}
+                showEuroSymbol={true}
+              />
+              <Input
+                label={t('rental.form.interestRate')}
+                name="interes"
+                value={form.interes}
+                onChange={handleChange}
+                type="number"
+                min={0}
+                step={0.01}
+                placeholder={`${t('mortgage.form.itpModal.examplePlaceholder')} 2.5`}
+                className={inputClass}
+              />
+              <Select
+                label={t('mortgage.form.autonomousCommunity')}
+                name="comunidad"
+                value={form.comunidad}
+                onChange={handleChange}
+                options={COMUNIDADES.map((c) => ({ value: c.nombre, label: c.nombre }))}
+                className={inputClass}
+              />
+              <Input
+                label={t('rental.form.loanTerm')}
+                name="plazo"
+                value={form.plazo}
+                onChange={handleChange}
+                type="number"
+                min={1}
+                max={40}
+                placeholder={`${t('mortgage.form.itpModal.examplePlaceholder')} 30`}
+                className={inputClass}
+              />
             </div>
-            <div className="flex justify-between items-center">
-              <span className="text-gray-600">{t('mortgage.form.mortgageAmount')}:</span>
-              <span className="font-semibold text-gray-900">
-                {formatNumberByLang(calculations.cantidadHipoteca, lang)} €
-              </span>
-            </div>
-            <div className="flex justify-between items-center">
-              <span className="text-gray-600">{t('mortgage.form.monthlyPaymentLabel')}:</span>
-              <span className="font-semibold text-gray-900">
-                {formatNumberByLang(calculations.cuotaMensual, lang)} €
-              </span>
+          </div>
+
+          {/* Detalles del Alquiler */}
+          <div className="pl-card p-5 md:p-6">
+            <h2 className="font-heading text-xl font-bold text-ink mb-6">
+              {t('rental.form.rentalDetails')}
+            </h2>
+            <div className="space-y-4">
+              <Input
+                label={t('rental.form.monthlyRentLabel')}
+                name="alquilerMensual"
+                value={form.alquilerMensual}
+                onChange={handleChange}
+                type="number"
+                min={0}
+                placeholder={`${t('mortgage.form.itpModal.examplePlaceholder')} 1000`}
+                className={inputClass}
+                showEuroSymbol={true}
+              />
+              <Input
+                label={t('rental.form.occupancyRate')}
+                name="ocupacion"
+                value={form.ocupacion}
+                onChange={handleChange}
+                type="number"
+                min={0}
+                max={100}
+                placeholder={`${t('mortgage.form.itpModal.examplePlaceholder')} 100`}
+                className={inputClass}
+              />
+              <Input
+                label={t('rental.form.monthlyExpensesLabel')}
+                name="gastosMensuales"
+                value={form.gastosMensuales}
+                onChange={handleChange}
+                type="number"
+                min={0}
+                placeholder={`${t('mortgage.form.itpModal.examplePlaceholder')} 50`}
+                className={inputClass}
+                showEuroSymbol={true}
+              />
             </div>
           </div>
         </div>
-      </div>
 
-      {/* Detalles del Alquiler */}
-      <div className="section-card p-5 md:p-6">
-        <h2 className="font-heading text-xl font-bold text-slate-900 mb-6">
-          {t('rental.form.rentalDetails')}
-        </h2>
-        <div className="space-y-4">
-          <Input
-            label={t('rental.form.monthlyRentLabel')}
-            name="alquilerMensual"
-            value={form.alquilerMensual}
-            onChange={handleChange}
-            type="number"
-            min={0}
-            placeholder={`${t('mortgage.form.itpModal.examplePlaceholder')} 1000`}
-            className={inputClass}
-            showEuroSymbol={true}
-          />
-          <Input
-            label={t('rental.form.occupancyRate')}
-            name="ocupacion"
-            value={form.ocupacion}
-            onChange={handleChange}
-            type="number"
-            min={0}
-            max={100}
-            placeholder={`${t('mortgage.form.itpModal.examplePlaceholder')} 100`}
-            className={inputClass}
-          />
-          <Input
-            label={t('rental.form.monthlyExpensesLabel')}
-            name="gastosMensuales"
-            value={form.gastosMensuales}
-            onChange={handleChange}
-            type="number"
-            min={0}
-            placeholder={`${t('mortgage.form.itpModal.examplePlaceholder')} 50`}
-            className={inputClass}
-            showEuroSymbol={true}
-          />
-          
-          {/* Información calculada */}
-          <div className="metric-row p-4 space-y-2">
-            <div className="flex justify-between items-center">
-              <span className="text-gray-600">{t('rental.form.monthlyIncome')}:</span>
-              <span className="font-semibold text-gray-900">
-                {formatNumberByLang(calculations.ingresosMensuales, lang)} €
-              </span>
-            </div>
-            <div className="flex justify-between items-center">
-              <span className="text-gray-600">{t('rental.results.cashFlowLabel')}:</span>
-              <span className={`font-semibold ${calculations.cashFlowMensual >= 0 ? 'text-green-600' : 'text-red-600'}`}>
-                {formatNumberByLang(calculations.cashFlowMensual, lang)} €
-              </span>
-            </div>
+        {/* Recibo sticky */}
+        <aside className="w-full xl:w-[22rem] receipt p-6 flex flex-col gap-4 xl:sticky xl:top-24">
+          <div className="receipt-head">
+            <span>{t('rental.results.profitabilityMetrics')}</span>
+            <span className="text-brand-blue">■</span>
           </div>
-        </div>
+          <div className="receipt-row">
+            <span>{t('rental.form.monthlyIncome')}</span>
+            <b>{formatNumberByLang(calculations.ingresosMensuales, lang)} €</b>
+          </div>
+          <div className="receipt-row">
+            <span>ITP ({calculations.porcentajeITP}%)</span>
+            <b>{formatNumberByLang(calculations.itp, lang)} €</b>
+          </div>
+          <div className="receipt-row">
+            <span>{t('mortgage.form.monthlyPaymentLabel')}</span>
+            <b>{formatNumberByLang(calculations.cuotaMensual, lang)} €</b>
+          </div>
+          <div className="receipt-total">
+            <span className="receipt-label">{t('rental.results.cashFlowLabel')}</span>
+            <AnimatedNumber
+              value={calculations.cashFlowMensual}
+              suffix=" €"
+              decimals={2}
+              className={`receipt-num ${calculations.cashFlowMensual >= 0 ? '!text-positive' : '!text-negative'}`}
+            />
+          </div>
+          <ContactButton variant="receipt" labelKey="rental.results.improveCta" lang={lang} />
+        </aside>
       </div>
 
-      {/* KPIs */}
-      <div className="lg:col-span-2">
+      {/* KPIs y gráficas a lo ancho, debajo */}
+      <div className="mt-6">
         <RentalKPIs calculations={calculations} lang={lang} />
       </div>
-
-      {/* Gráficas */}
-      <div className="lg:col-span-2">
+      <div className="mt-6">
         <RentalCharts calculations={calculations} form={form} lang={lang} />
       </div>
-    </div>
+    </>
   )
 }
 

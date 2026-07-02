@@ -305,7 +305,8 @@
       "income": "Ingresos",
       "mortgage": "Hipoteca",
       "expenses": "Gastos",
-      "cashFlow": "Cash Flow"
+      "cashFlow": "Cash Flow",
+      "improveCta": "Mejorar esta inversión"
     }
   },
   "common": {
