@@ -260,7 +260,7 @@ const RentalCalculator: React.FC<RentalCalculatorProps> = ({ lang = 'es' }) => {
               className={`receipt-num ${calculations.cashFlowMensual >= 0 ? '!text-positive' : '!text-negative'}`}
             />
           </div>
-          <ContactButton variant="receipt" labelKey="rental.results.improveCta" lang={lang} />
+          <ContactButton variant="receipt" labelKey="rental.results.improveCta" lang={lang} source="rental_receipt" />
         </aside>
       </div>
 

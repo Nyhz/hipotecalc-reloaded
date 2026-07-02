@@ -9,8 +9,12 @@ const values = euriborData.map((d) => d.value)
 const EuriborChart: React.FC = () => {
   const { t } = useTranslations()
 
+  const reduced =
+    typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches
+
   const option = {
     backgroundColor: "rgba(255,255,255,0)",
+    animation: !reduced,
     toolbox: {
       show: false,
     },

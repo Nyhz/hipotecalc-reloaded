@@ -24,9 +24,13 @@ const MortgageSummaryCharts: React.FC<MortgageSummaryChartsProps> = ({
   useEffect(() => {
     if (!costChartRef.current || !mortgageChartRef.current) return
 
+    const reduced =
+      typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches
+
     // Gráfica 1: Desglose del coste total del inmueble
     const costChart = echarts.init(costChartRef.current)
     const costOption = {
+      animation: !reduced,
       tooltip: {
         trigger: 'item',
         formatter: function (params: any) {
@@ -72,6 +76,7 @@ const MortgageSummaryCharts: React.FC<MortgageSummaryChartsProps> = ({
     // Gráfica 2: Desglose del coste total con hipoteca
     const mortgageChart = echarts.init(mortgageChartRef.current)
     const mortgageOption = {
+      animation: !reduced,
       tooltip: {
         trigger: 'item',
         formatter: function (params: any) {

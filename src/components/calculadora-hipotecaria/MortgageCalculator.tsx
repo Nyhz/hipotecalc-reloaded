@@ -24,7 +24,7 @@ import { useGoogleAnalytics } from "../../hooks/useGoogleAnalytics"
 import { useTranslations } from "../../hooks/useTranslations"
 
 const inputClass = ""
-const inputReadOnlyClass = "cursor-not-allowed"
+const inputReadOnlyClass = "cursor-not-allowed bg-paper-2 text-ink-soft"
 
 const initialState = {
   precio: "",
@@ -617,7 +617,7 @@ const MortgageCalculator: React.FC = () => {
           <AnimatedNumber value={calculations.cuota} suffix=' €' decimals={2} className='receipt-num' />
         </div>
 
-        <ContactButton variant='receipt' labelKey='mortgage.results.improveCta' />
+        <ContactButton variant='receipt' labelKey='mortgage.results.improveCta' source='mortgage_receipt' />
 
         {/* Escenarios para hipotecas variables integrados */}
         {calculations.esHipotecaVariable && (

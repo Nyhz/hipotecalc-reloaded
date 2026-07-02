@@ -7,6 +7,7 @@ interface ContactButtonProps {
   labelKey?: string
   className?: string
   lang?: "es" | "en"
+  source?: string
 }
 
 export default function ContactButton({
@@ -14,6 +15,7 @@ export default function ContactButton({
   labelKey,
   className = "",
   lang,
+  source,
 }: ContactButtonProps) {
   const { trackContactAttempt } = useGoogleAnalytics()
   const { t } = useTranslations(lang)
@@ -32,7 +34,7 @@ export default function ContactButton({
       target="_blank"
       rel="noopener noreferrer"
       className={`cta-broker ${variantClasses[variant]} ${className}`}
-      onClick={() => trackContactAttempt(`navbar_${variant}`)}
+      onClick={() => trackContactAttempt(source ?? `navbar_${variant}`)}
     >
       <span className="cta-dot"></span>
       {t(key)}

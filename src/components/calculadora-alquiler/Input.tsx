@@ -52,7 +52,6 @@ const Input: React.FC<InputProps> = ({
           placeholder={placeholder}
           readOnly={readOnly}
           className={`input-pl ${showEuroSymbol ? "pl-8" : ""} ${className ?? ""}`.trim()}
-          style={showEuroSymbol ? { paddingLeft: "2rem" } : undefined}
         />
       </div>
     </div>

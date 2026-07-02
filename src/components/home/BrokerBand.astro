@@ -11,5 +11,5 @@ const { lang = 'es' } = Astro.props;
     </h2>
     <p class="text-sm text-paper/60 max-w-[52ch] mt-2">{t('home.broker.description', lang)}</p>
   </div>
-  <ContactButton client:visible lang={lang} variant="desktop" className="shrink-0 !px-7 !py-4 !text-[15px]" />
+  <ContactButton client:visible lang={lang} variant="desktop" className="shrink-0 !px-7 !py-4 !text-[15px]" source="home_broker_band" />
 </section>

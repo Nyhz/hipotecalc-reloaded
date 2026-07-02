@@ -74,7 +74,13 @@ export default function Navbar() {
           <div className="flex items-center gap-2">
             <LanguageSwitcher />
             <ContactButton variant="mobile" lang={currentLang} />
-            <button onClick={toggleMenu} className="p-2 text-ink" aria-label="Toggle menu">
+            <button
+              onClick={toggleMenu}
+              className="p-2 text-ink"
+              aria-label="Toggle menu"
+              aria-expanded={isMenuOpen}
+              aria-controls="mobile-nav-menu"
+            >
               <svg
                 className="w-6 h-6"
                 fill="none"
@@ -104,7 +110,7 @@ export default function Navbar() {
       </div>
 
       {isMenuOpen && (
-        <div className="md:hidden border-t border-line bg-paper">
+        <div id="mobile-nav-menu" className="md:hidden border-t border-line bg-paper">
           <ul className="max-w-7xl mx-auto px-4 py-2 space-y-1">
             {tools.filter((tool) => tool.active).map((tool) => (
               <li key={tool.href}>
