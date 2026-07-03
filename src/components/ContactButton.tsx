@@ -21,8 +21,8 @@ export default function ContactButton({
   const { t } = useTranslations(lang)
 
   const variantClasses = {
-    desktop: "px-5 py-2.5 text-sm",
-    mobile: "px-3 py-2 text-xs",
+    desktop: "px-5 py-2.5 text-sm whitespace-nowrap",
+    mobile: "px-3 py-2 text-xs whitespace-nowrap",
     receipt: "w-full px-5 py-3.5 text-sm",
   }
 

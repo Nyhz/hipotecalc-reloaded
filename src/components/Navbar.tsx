@@ -38,7 +38,7 @@ export default function Navbar() {
     <nav className="w-full sticky top-0 z-50 border-b border-line bg-paper/90 backdrop-blur-md">
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
         {/* Desktop */}
-        <div className="hidden md:grid md:grid-cols-3 md:items-center h-16">
+        <div className="hidden lg:grid lg:grid-cols-[auto_1fr_auto] lg:items-center lg:gap-6 h-16">
           <div className="flex justify-start">
             <a href={homeHref} className="font-heading text-[22px] font-bold text-ink tracking-tight">
               hipotecalc<span className="text-brand-blue">.</span>
@@ -49,7 +49,7 @@ export default function Navbar() {
               <li key={tool.href}>
                 <a
                   href={tool.href}
-                  className={`px-4 py-2 rounded-full text-[13.5px] font-medium transition ${
+                  className={`px-4 py-2 rounded-full text-[13.5px] font-medium whitespace-nowrap transition ${
                     isActivePath(tool.href)
                       ? "bg-ink text-white"
                       : "text-ink-soft hover:bg-ink/5 hover:text-ink"
@@ -67,7 +67,7 @@ export default function Navbar() {
         </div>
 
         {/* Mobile */}
-        <div className="md:hidden flex items-center justify-between h-14 gap-2">
+        <div className="lg:hidden flex items-center justify-between h-14 gap-2">
           <a href={homeHref} className="font-heading text-lg font-bold text-ink tracking-tight">
             hipotecalc<span className="text-brand-blue">.</span>
           </a>
@@ -110,7 +110,7 @@ export default function Navbar() {
       </div>
 
       {isMenuOpen && (
-        <div id="mobile-nav-menu" className="md:hidden border-t border-line bg-paper">
+        <div id="mobile-nav-menu" className="lg:hidden border-t border-line bg-paper">
           <ul className="max-w-7xl mx-auto px-4 py-2 space-y-1">
             {tools.filter((tool) => tool.active).map((tool) => (
               <li key={tool.href}>
