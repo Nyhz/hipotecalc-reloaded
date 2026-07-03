@@ -24,12 +24,12 @@
       "receiptTerm": "Term",
       "receiptTermValue": "25 years",
       "receiptTotal": "Payment / month",
-      "receiptChip": "EURIBOR + 1% → 2.94%",
+      "receiptChip": "EURIBOR + 1% → {rate}%",
       "source": "Source",
-      "approximateAnnual": "(approx. annual, 12 months)"
+      "approximateAnnual": "(monthly and yearly averages, 12 months)"
     },
     "stats": {
-      "euriborLabel": "Euribor · 2025",
+      "euriborLabel": "Euribor · {period}",
       "ccaaLabel": "Regions with own ITP",
       "freeLabel": "Free · no sign-up",
       "timeLabel": "Per simulation",
@@ -57,8 +57,8 @@
     "dataRoom": {
       "eyebrow": "Data room",
       "title": "Euribor,",
-      "titleEm": "heading down",
-      "meta": "Series 2000—{year} · Source: euribor-rates.eu · Yearly approx."
+      "titleEm": "year by year",
+      "meta": "Series 2000—{year} · Source: ECB · Yearly average"
     }
   },
   "mortgage": {

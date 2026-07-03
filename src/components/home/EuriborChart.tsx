@@ -88,8 +88,8 @@ const EuriborChart: React.FC = () => {
         <ReactECharts option={option} style={{ height: 380, width: "100%" }} />
         <div className="font-data text-[11px] text-paper/50 mt-3 text-center">
           {t('home.hero.source')}:{" "}
-          <a href="https://www.euribor-rates.eu/en/euribor-rates-by-year/" target="_blank" rel="noopener noreferrer" className="underline text-lime/80">
-            euribor-rates.eu
+          <a href="https://data.ecb.europa.eu/data/datasets/FM/FM.M.U2.EUR.RT.MM.EURIBOR1YD_.HSTA" target="_blank" rel="noopener noreferrer" className="underline text-lime/80">
+            BCE · data.ecb.europa.eu
           </a>{" "}
           {t('home.hero.approximateAnnual')}
         </div>

@@ -24,12 +24,12 @@
       "receiptTerm": "Plazo",
       "receiptTermValue": "25 años",
       "receiptTotal": "Cuota / mes",
-      "receiptChip": "EURÍBOR + 1% → 2,94%",
+      "receiptChip": "EURÍBOR + 1% → {rate}%",
       "source": "Fuente",
-      "approximateAnnual": "(aprox. anual, 12 meses)"
+      "approximateAnnual": "(medias mensuales y anuales, 12 meses)"
     },
     "stats": {
-      "euriborLabel": "Euríbor · 2025",
+      "euriborLabel": "Euríbor · {period}",
       "ccaaLabel": "CCAA con ITP propio",
       "freeLabel": "Gratis · sin registro",
       "timeLabel": "Por simulación",
@@ -57,8 +57,8 @@
     "dataRoom": {
       "eyebrow": "Sala de datos",
       "title": "El euríbor,",
-      "titleEm": "a la baja",
-      "meta": "Serie 2000—{year} · Fuente: euribor-rates.eu · Aprox. anual"
+      "titleEm": "año a año",
+      "meta": "Serie 2000—{year} · Fuente: BCE · Media anual"
     }
   },
   "mortgage": {

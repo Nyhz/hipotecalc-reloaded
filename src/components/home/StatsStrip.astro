@@ -1,16 +1,17 @@
 ---
 import { t } from '../../utils/i18n';
-import { euriborData } from '../../constants/euribor-values';
+import { currentEuribor } from '../../constants/euribor-values';
 export interface Props { lang?: 'es' | 'en'; }
 const { lang = 'es' } = Astro.props;
-const euribor = euriborData[euriborData.length - 1].value;
+const euribor = currentEuribor.value;
+const euriborPeriod = lang === 'en' ? currentEuribor.labelEn : currentEuribor.labelEs;
 ---
 <section class="w-full pl-card grid grid-cols-2 md:grid-cols-4 overflow-hidden mb-14 reveal-up">
   <div class="px-6 py-5 border-r border-line max-md:border-b">
     <div class="font-heading text-2xl font-bold text-brand-blue">
       <span data-countup={euribor} data-decimals="2" data-suffix="%">0%</span>
     </div>
-    <div class="font-data text-[10.5px] uppercase tracking-widest text-ink-soft mt-1">{t('home.stats.euriborLabel', lang)}</div>
+    <div class="font-data text-[10.5px] uppercase tracking-widest text-ink-soft mt-1">{t('home.stats.euriborLabel', lang).replace('{period}', euriborPeriod)}</div>
   </div>
   <div class="px-6 py-5 md:border-r border-line max-md:border-b">
     <div class="font-heading text-2xl font-bold text-ink"><span data-countup="17">0</span></div>

@@ -8,7 +8,7 @@ export { calcularITP, calcularIVA }
 export { calcularITPAvanzado } from "./calculadora-itp"
 
 // Import Euribor data
-import { euriborData } from "../constants/euribor-values"
+import { euriborData, currentEuribor } from "../constants/euribor-values"
 
 // Import i18n for translations
 import { t, type Language } from "./i18n"
@@ -96,9 +96,8 @@ export function calcularTIN(tae: number): number {
 
 // Funciones para hipotecas variables
 export const getEuriborActual = (): number => {
-  // Obtener el valor más reciente del Euribor
-  const sortedData = [...euriborData].sort((a, b) => b.year - a.year)
-  return sortedData[0].value
+  // Última media mensual publicada por el BCE
+  return currentEuribor.value
 }
 
 export const getEuriborHistorico = (periodoAnos: number): { min: number; max: number } => {

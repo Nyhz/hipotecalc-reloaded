@@ -2,8 +2,10 @@
 export interface Props { lang?: 'es' | 'en'; }
 const { lang = 'es' } = Astro.props;
 import { t } from '../../utils/i18n';
+import { currentEuribor } from '../../constants/euribor-values';
 const calcHref = lang === 'en' ? '/en/mortgage-calculator' : '/calculadora-hipotecaria';
 const rentHref = lang === 'en' ? '/en/rental-calculator' : '/calculadora-alquiler';
+const variableRate = (currentEuribor.value + 1).toLocaleString(lang === 'en' ? 'en-US' : 'es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 ---
 <section class="w-full grid lg:grid-cols-[1.12fr_.88fr] gap-12 items-center pt-14 pb-12 lg:pt-20 lg:pb-16">
   <div class="text-center lg:text-left">
@@ -27,7 +29,7 @@ const rentHref = lang === 'en' ? '/en/rental-calculator' : '/calculadora-alquile
 
   <div class="hidden lg:block relative reveal-up reveal-delay-2">
     <div class="receipt relative p-6">
-      <span class="receipt-chip">{t('home.hero.receiptChip', lang)}</span>
+      <span class="receipt-chip">{t('home.hero.receiptChip', lang).replace('{rate}', variableRate)}</span>
       <div class="receipt-head"><span>{t('home.hero.receiptTitle', lang)}</span><span class="text-brand-blue">{t('home.hero.receiptLive', lang)}</span></div>
       <div class="receipt-row"><span>{t('home.hero.receiptPrice', lang)}</span><b>300.000 €</b></div>
       <div class="receipt-row"><span>{t('home.hero.receiptDown', lang)}</span><b>60.000 €</b></div>
