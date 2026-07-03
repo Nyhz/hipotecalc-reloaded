@@ -255,7 +255,7 @@ const RentalCalculator: React.FC<RentalCalculatorProps> = ({ lang = 'es' }) => {
             <span className="receipt-label">{t('rental.results.cashFlowLabel')}</span>
             <AnimatedNumber
               value={calculations.cashFlowMensual}
-              suffix=" €"
+              suffix={"\u00A0€"}
               decimals={2}
               className={`receipt-num ${calculations.cashFlowMensual >= 0 ? '!text-positive' : '!text-negative'}`}
             />

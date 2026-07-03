@@ -132,10 +132,11 @@
 .receipt-total {
   border-top: 1px dashed rgba(23, 27, 38, 0.3);
   margin-top: 10px; padding-top: 14px;
-  display: flex; justify-content: space-between; align-items: baseline;
+  display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline;
+  column-gap: 12px; row-gap: 2px;
 }
 .receipt-total .receipt-label { font-family: var(--font-data); font-size: 11.5px; letter-spacing: 0.08em; color: var(--color-ink-soft); text-transform: uppercase; }
-.receipt-total .receipt-num { font-family: var(--font-heading); font-size: 36px; font-weight: 700; color: var(--color-brand-blue); font-variant-numeric: tabular-nums; line-height: 1.1; }
+.receipt-total .receipt-num { font-family: var(--font-heading); font-size: 36px; font-weight: 700; color: var(--color-brand-blue); font-variant-numeric: tabular-nums; line-height: 1.1; white-space: nowrap; margin-left: auto; }
 .receipt-chip {
   position: absolute; top: -14px; right: 18px;
   background: var(--color-ink); color: var(--color-lime);

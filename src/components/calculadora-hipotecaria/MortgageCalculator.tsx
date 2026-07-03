@@ -614,7 +614,7 @@ const MortgageCalculator: React.FC = () => {
 
         <div className='receipt-total'>
           <span className='receipt-label'>{t('mortgage.form.estimatedMonthlyPayment')}</span>
-          <AnimatedNumber value={calculations.cuota} suffix=' €' decimals={2} className='receipt-num' />
+          <AnimatedNumber value={calculations.cuota} suffix={'\u00A0€'} decimals={2} className='receipt-num' />
         </div>
 
         <ContactButton variant='receipt' labelKey='mortgage.results.improveCta' source='mortgage_receipt' />
