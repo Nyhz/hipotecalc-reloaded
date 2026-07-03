@@ -24,7 +24,6 @@ interface ITPCalculatorProps {
   initialVictimaTerrorismo?: boolean
   initialZonaDespoblada?: boolean
   initialVpo?: boolean
-  onPrecioChange?: (precio: string) => void
   onComunidadChange?: (comunidad: string) => void
   onTipoViviendaChange?: (tipoVivienda: string) => void
 }
@@ -70,7 +69,6 @@ const ITPCalculator: React.FC<ITPCalculatorProps> = ({
   initialVictimaTerrorismo,
   initialZonaDespoblada,
   initialVpo,
-  onPrecioChange,
   onComunidadChange,
   onTipoViviendaChange,
 }) => {
@@ -96,7 +94,10 @@ const ITPCalculator: React.FC<ITPCalculatorProps> = ({
   })
   const [error, setError] = useState("")
 
-  // Si cambian los valores iniciales al abrir el modal, actualiza el formulario
+  // Precargar el formulario con los valores del formulario principal SOLO al
+  // abrir el modal. Con más dependencias, cada campo sincronizado hacia el
+  // padre (comunidad, tipo de vivienda) rebotaba como prop y reseteaba lo ya
+  // escrito en el modal — p. ej. pisaba el VMA con el precio de compraventa.
   React.useEffect(() => {
     if (open) {
       setForm((prev) => ({
@@ -120,22 +121,8 @@ const ITPCalculator: React.FC<ITPCalculatorProps> = ({
         vpo: initialVpo || false,
       }))
     }
-  }, [
-    open,
-    comunidadSeleccionada,
-    initialPrecio,
-    initialTipoVivienda,
-    initialEdad,
-    initialSituacion,
-    initialDiscapacidad,
-    initialPorcentajeDiscapacidad,
-    initialPrimeraVivienda,
-    initialNumHijos,
-    initialVictimaViolencia,
-    initialVictimaTerrorismo,
-    initialZonaDespoblada,
-    initialVpo,
-  ])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [open])
 
   const comunidad = COMUNIDADES.find((c) => c.nombre === form.comunidad)
   const esObraNueva = form.tipoVivienda === "Obra nueva"
@@ -163,10 +150,9 @@ const ITPCalculator: React.FC<ITPCalculatorProps> = ({
     } else {
       setForm((prev) => ({ ...prev, [name]: value }))
 
-      // Sincronizar cambios con el formulario principal
-      if (name === "precio" && onPrecioChange) {
-        onPrecioChange(value)
-      } else if (name === "comunidad" && onComunidadChange) {
+      // Sincronizar cambios con el formulario principal (el precio no se
+      // sincroniza: puede ser el VMA, independiente del precio de compra)
+      if (name === "comunidad" && onComunidadChange) {
         onComunidadChange(value)
       } else if (name === "tipoVivienda" && onTipoViviendaChange) {
         onTipoViviendaChange(value)

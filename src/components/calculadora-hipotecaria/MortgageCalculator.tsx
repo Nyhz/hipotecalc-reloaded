@@ -51,15 +51,17 @@ const MortgageCalculator: React.FC = () => {
   const [form, setForm] = useState(initialState)
 
   const [itpCalculado, setItpCalculado] = useState(false)
+  const [itpValorModal, setItpValorModal] = useState<number | null>(null)
   const [itpTipoAplicado, setItpTipoAplicado] = useState<number | null>(null)
   const [itpDescripcion, setItpDescripcion] = useState<string>("")
 
   // Handler para recibir el resultado del ITPCalculator
   const handleItpResult = (
-    _valor: number,
+    valor: number,
     tipoAplicado?: number,
     descripcion?: string
   ) => {
+    setItpValorModal(valor)
     setItpTipoAplicado(tipoAplicado ?? null)
     setItpDescripcion(descripcion || "")
     setItpCalculado(true)
@@ -82,11 +84,13 @@ const MortgageCalculator: React.FC = () => {
     let impuesto: number
     let descripcionImpuesto: string
 
-    if (itpCalculado && itpTipoAplicado !== null) {
-      // Usar el valor calculado del modal
-      impuesto = Number(form.precio) * (itpTipoAplicado / 100)
+    if (itpCalculado && itpValorModal !== null) {
+      // Usar el importe calculado en el modal tal cual: puede venir del VMA
+      // (País Vasco), de tramos progresivos o de bonificaciones, así que no
+      // puede re-derivarse como porcentaje del precio principal.
+      impuesto = itpValorModal
       descripcionImpuesto =
-        itpDescripcion || `${esObraNueva ? "IVA" : "ITP"} ${itpTipoAplicado}%`
+        itpDescripcion || `${esObraNueva ? "IVA" : "ITP"} ${itpTipoAplicado ?? ""}%`
     } else {
       // Cálculo automático por defecto
       if (esObraNueva) {
@@ -179,7 +183,7 @@ const MortgageCalculator: React.FC = () => {
       cuotaMinima,
       cuotaMaxima,
     }
-  }, [form, itpCalculado, itpTipoAplicado, itpDescripcion]) // Incluir las dependencias del modal
+  }, [form, itpCalculado, itpValorModal, itpTipoAplicado, itpDescripcion]) // Incluir las dependencias del modal
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
@@ -210,12 +214,16 @@ const MortgageCalculator: React.FC = () => {
       }
     }
 
-    // Si cambia el tipo de vivienda, limpiar el cálculo del modal
-    if (name === "tipoVivienda") {
+    // Si cambia el tipo de vivienda, el precio o la comunidad, limpiar el
+    // cálculo del modal: su importe es fijo y quedaría desactualizado.
+    if (["tipoVivienda", "precio", "comunidad"].includes(name)) {
       setItpCalculado(false)
+      setItpValorModal(null)
       setItpTipoAplicado(null)
       setItpDescripcion("")
-      trackCalculatorUsage("mortgage", `property_type_changed_${value}`)
+      if (name === "tipoVivienda") {
+        trackCalculatorUsage("mortgage", `property_type_changed_${value}`)
+      }
     }
 
     setForm((prev) => ({ ...prev, [name]: value }))
@@ -232,20 +240,20 @@ const MortgageCalculator: React.FC = () => {
   const handleImpuestoManual = (e: React.ChangeEvent<HTMLInputElement>) => {
     setForm((prev) => ({ ...prev, impuesto: e.target.value }))
     setItpCalculado(false)
+    setItpValorModal(null)
   }
 
   // Función para restablecer el campo de impuesto
   const handleResetImpuesto = () => {
     setItpCalculado(false)
+    setItpValorModal(null)
     setItpTipoAplicado(null)
     setItpDescripcion("")
   }
 
-  // Funciones para sincronizar cambios del modal con el formulario principal
-  const handleModalPrecioChange = (precio: string) => {
-    setForm((prev) => ({ ...prev, precio }))
-  }
-
+  // Funciones para sincronizar cambios del modal con el formulario principal.
+  // El precio NO se sincroniza: en el modal puede introducirse el VMA (País
+  // Vasco), que es independiente del precio de compraventa.
   const handleModalComunidadChange = (comunidad: string) => {
     setForm((prev) => ({ ...prev, comunidad }))
   }
@@ -694,7 +702,6 @@ const MortgageCalculator: React.FC = () => {
         initialVictimaTerrorismo={false}
         initialZonaDespoblada={false}
         initialVpo={false}
-        onPrecioChange={handleModalPrecioChange}
         onComunidadChange={handleModalComunidadChange}
         onTipoViviendaChange={handleModalTipoViviendaChange}
       />
