@@ -1,122 +1,46 @@
-# Calculadora Hipotecaria España
+<div align="center">
 
-A professional mortgage calculator for Spain with ITP calculation, taxes, and Euribor analysis built with Astro.
+# hipotecalc.
 
-## 🚀 Features
+**Los números de tu casa, por fin claros.**
 
-- Mortgage calculator with Spanish parameters
-- ITP (Property Transfer Tax) calculator
-- Rental calculator
-- Euribor rate tracking and charts
-- Responsive design optimized for mobile and desktop
-- SEO optimized with structured data
-- Performance optimized with service worker
-- PWA ready
+Calculadoras financieras para España: hipoteca, ITP por comunidad autónoma
+y rentabilidad del alquiler. Gratis, sin registro y con datos oficiales al día.
 
-## 🛠️ Tech Stack
+[hipotecalc.com](https://www.hipotecalc.com) · [English](https://www.hipotecalc.com/en/)
 
-- **Framework**: Astro 5
-- **UI**: React 19 + Tailwind CSS 4
-- **Charts**: ECharts
-- **Icons**: Iconify
-- **Deployment**: Vercel
-- **Analytics**: Google Analytics 4
+</div>
 
-## 📦 Installation
+---
+
+## Qué hace
+
+- **Calculadora hipotecaria** — cuota mensual, coste total, desglose de intereses y análisis de sensibilidad. Hipoteca fija o variable con el euríbor real.
+- **Calculadora de ITP avanzada** — los tipos de las 17 comunidades más Ceuta y Melilla, con tramos progresivos, tipos reducidos y bonificaciones: jóvenes, familia numerosa, discapacidad, zonas despobladas o el VMA del País Vasco.
+- **Calculadora de alquiler** — ROI anual, cash flow mensual y tiempo de recuperación de la inversión.
+- **Euríbor siempre al día** — una GitHub Action mensual descarga la serie oficial del BCE, regenera los datos y despliega sola. Cero mantenimiento.
+
+## Stack
+
+Astro 5 · React 19 · Tailwind CSS 4 · ECharts · Vercel
+
+Sitio 100% estático: las calculadoras son islas React que hidratan sobre HTML
+pre-renderizado. Bilingüe ES/EN, SEO con datos estructurados (FAQPage,
+WebApplication) y og:image por idioma.
+
+## Desarrollo
 
 ```bash
 npm install
+npm run dev      # localhost:4321
+npm run build    # producción en ./dist
 ```
 
-## 🏃‍♂️ Development
+Push a `develop` → deploy automático en Vercel.
 
-```bash
-npm run dev
-```
+## Datos
 
-## 🏗️ Build
-
-```bash
-npm run build
-```
-
-## 🚀 Deployment on Vercel
-
-This project is optimized for Vercel deployment:
-
-1. **Push to GitHub**: Make sure your code is pushed to a GitHub repository
-
-2. **Connect to Vercel**:
-
-   - Go to [vercel.com](https://vercel.com)
-   - Import your GitHub repository
-   - Vercel will automatically detect it's an Astro project
-
-3. **Environment Variables** (if needed):
-
-   - No environment variables required for basic deployment
-   - Google Analytics is configured via the GA_MEASUREMENT_ID in the code
-
-4. **Custom Domain** (optional):
-   - In Vercel dashboard, go to your project settings
-   - Add your custom domain
-   - Update the `site` field in `astro.config.mjs` to match your domain
-
-## ⚡ Performance Features
-
-- **Static Site Generation**: Pre-rendered pages for optimal performance
-- **Code Splitting**: Automatic chunking for faster loading
-- **Image Optimization**: Optimized images and assets
-- **Compression**: Gzip/Brotli compression enabled
-- **Caching**: Optimized cache headers for static assets
-- **Service Worker**: Performance-focused SW for asset caching
-
-## � PWA Features
-
-- Offline functionality
-- App-like experience on mobile devices
-- Installable on devices
-- Optimized manifest.json
-
-## 🔧 Configuration
-
-The app is pre-configured with:
-
-- **Vercel adapter**: For seamless deployment
-- **Sitemap generation**: Automatic XML sitemap
-- **Compression**: CSS, HTML, and JS minification
-- **Analytics**: Google Analytics 4 integration
-- **Security headers**: CSRF, XSS protection
-
-## 🚀 Project Structure
-
-Inside of your Astro project, you'll see the following folders and files:
-
-```text
-/
-├── public/
-│   └── favicon.svg
-├── src
-│   ├── assets
-│   │   └── astro.svg
-│   ├── components
-│   │   └── Welcome.astro
-│   ├── layouts
-│   │   └── Layout.astro
-│   └── pages
-│       └── index.astro
-└── package.json
-```
-
-## 🧞 Commands
-
-All commands are run from the root of the project, from a terminal:
-
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
+| Dato | Fuente | Actualización |
+| --- | --- | --- |
+| Euríbor 12M | [BCE Data Portal](https://data.ecb.europa.eu/data/datasets/FM/FM.M.U2.EUR.RT.MM.EURIBOR1YD_.HSTA) | Automática — Action mensual ([workflow](.github/workflows/update-euribor.yml)) |
+| Tipos ITP / IVA | Normativa autonómica y foral | Manual — `src/constants/comunidades.ts` |
