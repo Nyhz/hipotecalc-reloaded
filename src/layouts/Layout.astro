@@ -19,13 +19,17 @@ const {
   title = "Calculadora Hipotecaria - España | Herramientas Financieras",
   description = "Calculadora hipotecaria, de alquiler e ITP para España. Herramientas financieras precisas y profesionales para calcular tu hipoteca, impuestos y más.",
   keywords = "calculadora hipoteca, calculadora alquiler, calculadora ITP, finanzas, España, euribor, impuestos, vivienda",
-  ogImage = `${SITE_BASE}/hipotecalc-og.webp`,
+  ogImage,
   canonicalURL = `${SITE_BASE}${Astro.url.pathname}`
 } = Astro.props;
 
 const currentLang = getCurrentLang(Astro.url.pathname);
 const langAttribute = currentLang === 'en' ? 'en' : 'es';
 const ogLocale = currentLang === 'en' ? 'en_US' : 'es_ES';
+const ogImageURL = ogImage ?? `${SITE_BASE}/${currentLang === 'en' ? 'hipotecalc-og-en.jpg' : 'hipotecalc-og.jpg'}`;
+const ogImageAlt = currentLang === 'en'
+  ? 'Hipotecalc — free mortgage and rental calculators for Spain'
+  : 'Hipotecalc — calculadoras gratuitas de hipoteca y alquiler para España';
 const isLocalEnv =
   Astro.url.hostname === "localhost" || Astro.url.hostname === "127.0.0.1";
 
@@ -92,16 +96,21 @@ const structuredData = JSON.stringify({
     <meta property="og:url" content={canonicalURL} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
-    <meta property="og:image" content={ogImage} />
+    <meta property="og:image" content={ogImageURL} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:type" content="image/jpeg" />
+    <meta property="og:image:alt" content={ogImageAlt} />
     <meta property="og:locale" content={ogLocale} />
     <meta property="og:site_name" content="Hipotecalc" />
-    
+
     <!-- Twitter -->
-    <meta property="twitter:card" content="summary_large_image" />
-    <meta property="twitter:url" content={canonicalURL} />
-    <meta property="twitter:title" content={title} />
-    <meta property="twitter:description" content={description} />
-    <meta property="twitter:image" content={ogImage} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:url" content={canonicalURL} />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImageURL} />
+    <meta name="twitter:image:alt" content={ogImageAlt} />
     
     <!-- Additional SEO -->
     <meta name="robots" content="index, follow" />
