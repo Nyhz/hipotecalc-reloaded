@@ -50,7 +50,10 @@ export default defineConfig({
 
     compress({
       CSS: true,
-      HTML: true,
+      // html-minifier-terser colapsa espacios dentro del HTML de las islas
+      // React y provoca errores de hidratación (#418); Astro ya minifica el
+      // HTML de forma segura con compressHTML.
+      HTML: false,
       Image: false,
       JavaScript: true,
       SVG: true,
