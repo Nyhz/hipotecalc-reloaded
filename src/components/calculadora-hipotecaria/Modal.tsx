@@ -23,7 +23,7 @@ const Modal: React.FC<ModalProps> = ({
         style={{ maxHeight: "80vh" }}
       >
         <button
-          className='absolute top-3 right-3 text-gray-400 hover:text-blue-600 text-2xl font-bold z-10 cursor-pointer'
+          className='absolute top-3 right-3 text-ink-soft hover:text-ink text-2xl font-bold z-10 cursor-pointer transition-colors'
           onClick={onClose}
           aria-label={t('common.closeModal') || 'Close modal'}
         >

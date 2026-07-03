@@ -39,6 +39,7 @@ const initialForm = {
   discapacidad: false,
   porcentajeDiscapacidad: "",
   primeraVivienda: false,
+  tipoReducido: false,
   numHijos: "",
   victimaViolencia: false,
   victimaTerrorismo: false,
@@ -111,6 +112,7 @@ const ITPCalculator: React.FC<ITPCalculatorProps> = ({
             ? String(initialPorcentajeDiscapacidad)
             : "",
         primeraVivienda: initialPrimeraVivienda || false,
+        tipoReducido: false,
         numHijos: initialNumHijos !== undefined ? String(initialNumHijos) : "",
         victimaViolencia: initialVictimaViolencia || false,
         victimaTerrorismo: initialVictimaTerrorismo || false,
@@ -212,6 +214,7 @@ const ITPCalculator: React.FC<ITPCalculatorProps> = ({
         victimaTerrorismo: form.victimaTerrorismo,
         zonaDespoblada: form.zonaDespoblada,
         primeraVivienda: form.primeraVivienda,
+        tipoReducido: form.tipoReducido,
         vpo: form.vpo,
         ingresos: Number(form.ingresos) || 0,
         hipoteca: Number(form.hipoteca) || 0,
@@ -235,7 +238,7 @@ const ITPCalculator: React.FC<ITPCalculatorProps> = ({
       <h2 className='font-heading font-semibold text-ink text-xl mb-4'>
         {titleText}
       </h2>
-      {error && <div className='mb-2 text-red-600 text-sm'>{error}</div>}
+      {error && <div className='mb-2 text-negative text-sm'>{error}</div>}
       <form
         className='space-y-6'
         onSubmit={(e) => {
@@ -243,13 +246,13 @@ const ITPCalculator: React.FC<ITPCalculatorProps> = ({
           handleSubmit()
         }}
       >
-        <fieldset className='border border-blue-100 rounded-lg p-4'>
-          <legend className='font-semibold text-blue-900 mb-2'>
+        <fieldset className='rounded-xl border border-line bg-paper/50 p-4'>
+          <legend className='font-data text-[11px] uppercase tracking-widest text-ink-soft px-1 mb-2'>
             {t('mortgage.form.itpModal.propertyInformation')}
           </legend>
           <div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
             <div>
-              <label className='block text-sm font-medium text-blue-900 mb-1'>
+              <label className='label-pl'>
                 {t('mortgage.form.itpModal.propertyPrice')}
               </label>
               <input
@@ -286,7 +289,7 @@ const ITPCalculator: React.FC<ITPCalculatorProps> = ({
                     e.preventDefault()
                   }
                 }}
-                className='w-full border border-blue-200 rounded px-3 py-2 h-10 pr-8'
+                className='input-pl pr-8'
                 min={0}
                 placeholder={t('mortgage.form.itpModal.examplePrice')}
                 style={{
@@ -295,16 +298,21 @@ const ITPCalculator: React.FC<ITPCalculatorProps> = ({
                   appearance: "textfield",
                 }}
               />
+              {form.comunidad === "País Vasco" && !esObraNueva && (
+                <p className='text-xs text-ink-soft mt-1'>
+                  {t('mortgage.form.itpModal.vmaInfo')}
+                </p>
+              )}
             </div>
             <div>
-              <label className='block text-sm font-medium text-blue-900 mb-1'>
+              <label className='label-pl'>
                 {t('mortgage.form.itpModal.propertyType')}
               </label>
               <select
                 name='tipoVivienda'
                 value={form.tipoVivienda}
                 onChange={handleInput}
-                className='w-full border border-blue-200 rounded px-3 py-2 h-10'
+                className='input-pl'
               >
                 <option value=''>{t('mortgage.form.itpModal.select')}</option>
                 <option value='Obra nueva'>{t('mortgage.form.newConstruction')}</option>
@@ -313,14 +321,14 @@ const ITPCalculator: React.FC<ITPCalculatorProps> = ({
             </div>
             {!esObraNueva && (
               <div className='md:col-span-2'>
-                <label className='block text-sm font-medium text-blue-900 mb-1'>
+                <label className='label-pl'>
                   {t('mortgage.form.itpModal.autonomousCommunity')}
                 </label>
                 <select
                   name='comunidad'
                   value={form.comunidad}
                   onChange={handleInput}
-                  className='w-full border border-blue-200 rounded px-3 py-2 h-10'
+                  className='input-pl'
                 >
                   <option value=''>{t('mortgage.form.itpModal.select')}</option>
                   {COMUNIDADES.map((c) => (
@@ -331,9 +339,27 @@ const ITPCalculator: React.FC<ITPCalculatorProps> = ({
                 </select>
               </div>
             )}
+            {camposDinamicos.tipoReducido && !esObraNueva && (
+              <div className='md:col-span-2'>
+                <label className='flex items-center gap-2 text-sm text-ink'>
+                  <input
+                    type='checkbox'
+                    name='tipoReducido'
+                    checked={form.tipoReducido}
+                    onChange={handleInput}
+                  />
+                  {t('mortgage.form.itpModal.reducedRateQuestion')}
+                </label>
+                {form.tipoReducido && (
+                  <p className='text-xs text-ink-soft mt-1'>
+                    {t('mortgage.form.itpModal.reducedRateInfo')}
+                  </p>
+                )}
+              </div>
+            )}
             {camposDinamicos.vpo && (
               <div className='md:col-span-2'>
-                <label className='flex items-center gap-2'>
+                <label className='flex items-center gap-2 text-sm text-ink'>
                   <input
                     type='checkbox'
                     name='vpo'
@@ -343,7 +369,7 @@ const ITPCalculator: React.FC<ITPCalculatorProps> = ({
                   {t('mortgage.form.itpModal.vpoQuestion')}
                 </label>
                 {form.vpo && (
-                  <p className='text-sm text-blue-600 mt-1'>
+                  <p className='text-xs text-ink-soft mt-1'>
                     {t('mortgage.form.itpModal.vpoInfo')}
                   </p>
                 )}
@@ -353,14 +379,14 @@ const ITPCalculator: React.FC<ITPCalculatorProps> = ({
         </fieldset>
 
         {!esObraNueva && (
-          <fieldset className='border border-blue-100 rounded-lg p-4'>
-            <legend className='font-semibold text-blue-900 mb-2'>
+          <fieldset className='rounded-xl border border-line bg-paper/50 p-4'>
+            <legend className='font-data text-[11px] uppercase tracking-widest text-ink-soft px-1 mb-2'>
               {t('mortgage.form.itpModal.buyerInformation')}
             </legend>
             <div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
               {camposDinamicos.edad && (
                 <div>
-                  <label className='block text-sm font-medium text-blue-900 mb-1'>
+                  <label className='label-pl'>
                     {t('mortgage.form.itpModal.ageLabel')}
                   </label>
                   <input
@@ -368,7 +394,7 @@ const ITPCalculator: React.FC<ITPCalculatorProps> = ({
                     name='edad'
                     value={form.edad}
                     onChange={handleInput}
-                    className='w-full border border-blue-200 rounded px-3 py-2 h-10'
+                    className='input-pl'
                     min={0}
                     placeholder={t('mortgage.form.itpModal.exampleAge')}
                   />
@@ -377,7 +403,7 @@ const ITPCalculator: React.FC<ITPCalculatorProps> = ({
 
               {camposDinamicos.ingresos && (
                 <div>
-                  <label className='block text-sm font-medium text-blue-900 mb-1'>
+                  <label className='label-pl'>
                     {t('mortgage.form.itpModal.incomeLabel')}
                   </label>
                   <input
@@ -414,7 +440,7 @@ const ITPCalculator: React.FC<ITPCalculatorProps> = ({
                         e.preventDefault()
                       }
                     }}
-                    className='w-full border border-blue-200 rounded px-3 py-2 h-10 pr-8'
+                    className='input-pl pr-8'
                     min={0}
                     placeholder={t('mortgage.form.itpModal.exampleIncome')}
                     style={{
@@ -428,14 +454,14 @@ const ITPCalculator: React.FC<ITPCalculatorProps> = ({
 
               {camposDinamicos.familiaNumerosa && (
                 <div className='md:col-span-2'>
-                  <label className='block text-sm font-medium text-blue-900 mb-1'>
+                  <label className='label-pl'>
                     {t('mortgage.form.itpModal.familySituation')}
                   </label>
                   <select
                     name='situacion'
                     value={form.situacion}
                     onChange={handleInput}
-                    className='w-full border border-blue-200 rounded px-3 py-2 h-10'
+                    className='input-pl'
                   >
                     <option value=''>{t('mortgage.form.itpModal.select')}</option>
                     <option value='individual'>{t('mortgage.form.itpModal.individual')}</option>
@@ -459,7 +485,7 @@ const ITPCalculator: React.FC<ITPCalculatorProps> = ({
                 "familia-monoparental",
               ].includes(form.situacion) && (
                 <div className='md:col-span-2'>
-                  <label className='block text-sm font-medium text-blue-900 mb-1'>
+                  <label className='label-pl'>
                     {t('mortgage.form.itpModal.numberOfChildren')}
                   </label>
                   <input
@@ -467,7 +493,7 @@ const ITPCalculator: React.FC<ITPCalculatorProps> = ({
                     name='numHijos'
                     value={form.numHijos}
                     onChange={handleInput}
-                    className='w-full border border-blue-200 rounded px-3 py-2 h-10'
+                    className='input-pl'
                     min={0}
                     placeholder={t('mortgage.form.itpModal.exampleChildren')}
                   />
@@ -477,7 +503,7 @@ const ITPCalculator: React.FC<ITPCalculatorProps> = ({
               {/* Campos adicionales específicos por comunidad */}
               {camposDinamicos.hipoteca && (
                 <div>
-                  <label className='block text-sm font-medium text-blue-900 mb-1'>
+                  <label className='label-pl'>
                     {t('mortgage.form.itpModal.mortgageAmount')}
                   </label>
                   <input
@@ -485,7 +511,7 @@ const ITPCalculator: React.FC<ITPCalculatorProps> = ({
                     name='hipoteca'
                     value={form.hipoteca}
                     onChange={handleInput}
-                    className='w-full border border-blue-200 rounded px-3 py-2 h-10'
+                    className='input-pl'
                     min={0}
                     placeholder={t('mortgage.form.itpModal.exampleMortgage')}
                   />
@@ -494,7 +520,7 @@ const ITPCalculator: React.FC<ITPCalculatorProps> = ({
 
               {camposDinamicos.tasacion && (
                 <div>
-                  <label className='block text-sm font-medium text-blue-900 mb-1'>
+                  <label className='label-pl'>
                     {t('mortgage.form.itpModal.appraisal')}
                   </label>
                   <input
@@ -502,7 +528,7 @@ const ITPCalculator: React.FC<ITPCalculatorProps> = ({
                     name='tasacion'
                     value={form.tasacion}
                     onChange={handleInput}
-                    className='w-full border border-blue-200 rounded px-3 py-2 h-10'
+                    className='input-pl'
                     min={0}
                     placeholder={t('mortgage.form.itpModal.exampleAppraisal')}
                   />
@@ -511,7 +537,7 @@ const ITPCalculator: React.FC<ITPCalculatorProps> = ({
 
               {camposDinamicos.patrimonio && (
                 <div>
-                  <label className='block text-sm font-medium text-blue-900 mb-1'>
+                  <label className='label-pl'>
                     {t('mortgage.form.itpModal.patrimony')}
                   </label>
                   <input
@@ -519,7 +545,7 @@ const ITPCalculator: React.FC<ITPCalculatorProps> = ({
                     name='patrimonio'
                     value={form.patrimonio}
                     onChange={handleInput}
-                    className='w-full border border-blue-200 rounded px-3 py-2 h-10'
+                    className='input-pl'
                     min={0}
                     placeholder={t('mortgage.form.itpModal.examplePatrimony')}
                   />
@@ -528,7 +554,7 @@ const ITPCalculator: React.FC<ITPCalculatorProps> = ({
 
               {camposDinamicos.residencia && (
                 <div>
-                  <label className='block text-sm font-medium text-blue-900 mb-1'>
+                  <label className='label-pl'>
                     {t('mortgage.form.itpModal.residence')}
                   </label>
                   <input
@@ -536,7 +562,7 @@ const ITPCalculator: React.FC<ITPCalculatorProps> = ({
                     name='residencia'
                     value={form.residencia}
                     onChange={handleInput}
-                    className='w-full border border-blue-200 rounded px-3 py-2 h-10'
+                    className='input-pl'
                     min={0}
                     placeholder={t('mortgage.form.itpModal.exampleResidence')}
                   />
@@ -549,10 +575,10 @@ const ITPCalculator: React.FC<ITPCalculatorProps> = ({
                 camposDinamicos.zonaDespoblada ||
                 camposDinamicos.primeraVivienda ||
                 camposDinamicos.ventaAnterior) && (
-                <div className='md:col-span-2 flex flex-col gap-2 bg-blue-50/60 border border-blue-100 rounded-lg p-4 mt-2'>
+                <div className='md:col-span-2 flex flex-col gap-2.5 rounded-lg border border-line bg-paper p-4 mt-2'>
                   {camposDinamicos.discapacidad && (
                     <>
-                      <label className='flex items-center gap-2'>
+                      <label className='flex items-center gap-2 text-sm text-ink'>
                         <input
                           type='checkbox'
                           name='discapacidad'
@@ -567,7 +593,7 @@ const ITPCalculator: React.FC<ITPCalculatorProps> = ({
                           name='porcentajeDiscapacidad'
                           value={form.porcentajeDiscapacidad}
                           onChange={handleInput}
-                          className='w-full border border-blue-200 rounded px-3 py-2 h-10 mt-1'
+                          className='input-pl mt-1'
                           min={0}
                           max={100}
                           placeholder={t('mortgage.form.itpModal.disabilityPercentage')}
@@ -578,7 +604,7 @@ const ITPCalculator: React.FC<ITPCalculatorProps> = ({
 
                   {camposDinamicos.victimas && (
                     <>
-                      <label className='flex items-center gap-2'>
+                      <label className='flex items-center gap-2 text-sm text-ink'>
                         <input
                           type='checkbox'
                           name='victimaViolencia'
@@ -587,7 +613,7 @@ const ITPCalculator: React.FC<ITPCalculatorProps> = ({
                         />
                         {t('mortgage.form.itpModal.violenceVictim')}
                       </label>
-                      <label className='flex items-center gap-2'>
+                      <label className='flex items-center gap-2 text-sm text-ink'>
                         <input
                           type='checkbox'
                           name='victimaTerrorismo'
@@ -600,7 +626,7 @@ const ITPCalculator: React.FC<ITPCalculatorProps> = ({
                   )}
 
                   {camposDinamicos.zonaDespoblada && (
-                    <label className='flex items-center gap-2'>
+                    <label className='flex items-center gap-2 text-sm text-ink'>
                       <input
                         type='checkbox'
                         name='zonaDespoblada'
@@ -612,7 +638,7 @@ const ITPCalculator: React.FC<ITPCalculatorProps> = ({
                   )}
 
                   {camposDinamicos.primeraVivienda && (
-                    <label className='flex items-center gap-2'>
+                    <label className='flex items-center gap-2 text-sm text-ink'>
                       <input
                         type='checkbox'
                         name='primeraVivienda'
@@ -624,7 +650,7 @@ const ITPCalculator: React.FC<ITPCalculatorProps> = ({
                   )}
 
                   {camposDinamicos.ventaAnterior && (
-                    <label className='flex items-center gap-2'>
+                    <label className='flex items-center gap-2 text-sm text-ink'>
                       <input
                         type='checkbox'
                         name='ventaAnterior'
@@ -643,7 +669,7 @@ const ITPCalculator: React.FC<ITPCalculatorProps> = ({
         <div className='flex justify-end'>
           <button
             type='submit'
-            className='bg-blue-600 hover:bg-blue-700 text-white font-semibold px-6 py-2 rounded-lg shadow'
+            className='btn-ink px-6 py-2.5 text-sm'
           >
             {calculateButtonText}
           </button>

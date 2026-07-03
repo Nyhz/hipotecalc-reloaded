@@ -15,6 +15,7 @@ interface ITPParams {
   victimaTerrorismo: boolean
   zonaDespoblada: boolean
   primeraVivienda: boolean
+  tipoReducido?: boolean
   // Campos adicionales para casos específicos
   ingresos?: number
   hipoteca?: number
@@ -175,6 +176,12 @@ export function calcularITPAvanzado(params: ITPParams): ITPResult {
   // Verificar tipos reducidos especiales
   if (comunidad.specialRates) {
     const { specialRates } = comunidad
+
+    // Tipo reducido autonómico (p. ej. País Vasco: vivienda habitual <= 120 m2)
+    if (params.tipoReducido && specialRates.reducedRate !== undefined) {
+      tipoAplicado = specialRates.reducedRate
+      descripcion = t('mortgage.form.itpModal.descriptions.reducedRate', lang).replace('{rate}', String(specialRates.reducedRate))
+    }
 
     // Jóvenes
     if (params.edad <= 35 && specialRates.youngBuyer !== undefined) {

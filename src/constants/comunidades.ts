@@ -5,6 +5,7 @@ interface ITPBracket {
 }
 
 interface SpecialRates {
+  reducedRate?: number
   youngBuyer?: number
   largeFamily?: number
   disability?: number
@@ -16,6 +17,7 @@ interface SpecialRates {
 }
 
 interface CamposDinamicos {
+  tipoReducido?: boolean
   ingresos?: boolean
   situacionFamiliar?: boolean
   discapacidad?: boolean
@@ -400,16 +402,19 @@ export const COMUNIDADES: Comunidad[] = [
     }
   },
   {
+    // El ITP foral se liquida sobre el Valor Mínimo Atribuible (VMA), no
+    // sobre el precio de compraventa. Tipo general de vivienda: 4%.
+    // Tipo reducido 2,5%: vivienda habitual con superficie <= 120 m2.
     nombre: "País Vasco",
-    ITP: 7.0,
+    ITP: 4.0,
     specialRates: {
-      firstHome: 4.0,
+      reducedRate: 2.5,
       largeFamily: 2.5,
       monoparental: 2.5,
       disability: 2.5
     },
     camposDinamicos: {
-      primeraVivienda: true,
+      tipoReducido: true,
       familiaNumerosa: true,
       monoparental: true,
       discapacidad: true

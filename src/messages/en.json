@@ -146,7 +146,7 @@
         "title": "Advanced ITP Calculator",
         "vatTitle": "VAT Calculator",
         "propertyInformation": "Property Information",
-        "propertyPrice": "Property price (€)",
+        "propertyPrice": "Property price or VMA (€)",
         "propertyType": "Property type",
         "autonomousCommunity": "Autonomous community",
         "personalInformation": "Personal Information",
@@ -162,6 +162,9 @@
         "terrorismVictim": "Are you a victim of terrorism?",
         "depopulatedArea": "Property in municipality with less than 2,500 inhabitants (Madrid)",
         "vpo": "VPO",
+        "vmaInfo": "In the Basque Country, ITP is calculated on the property's Minimum Attributable Value (VMA), not on the purchase price.",
+        "reducedRateQuestion": "Apply the reduced 2.5% rate (Basque Country)",
+        "reducedRateInfo": "For a primary residence with a built area of 120 m² or less, per the requirements of Álava, Bizkaia and Gipuzkoa.",
         "vpoQuestion": "Is it social housing (VPO)?",
         "vpoInfo": "Reduced 4% VAT will be applied instead of 10%",
         "financialInformation": "Financial Information",
@@ -201,6 +204,7 @@
           "invalidPrice": "Invalid price",
           "unspecifiedCommunity": "ITP {rate}% (unspecified community)",
           "generalRate": "ITP {rate}%",
+          "reducedRate": "Reduced ITP rate {rate}% (primary residence ≤ 120 m²)",
           "madridYoungExemption": "ITP 0% - Total exemption for young people <35 years in municipalities <2,500 inhabitants",
           "madridLargeFamilyReduced": "ITP 4% - Reduced rate for large family (habitual residence)",
           "madridLargeFamilyGeneral": "ITP 6% - General rate (large family without meeting previous sale requirement)",
@@ -298,8 +302,8 @@
       "expenses": "Expenses",
       "receiptTitle": "Your investment",
       "improveCta": "Improve this investment"
-      }
-    },
+    }
+  },
   "common": {
     "language": "Language",
     "spanish": "Español",
