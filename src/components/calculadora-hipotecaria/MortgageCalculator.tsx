@@ -26,6 +26,7 @@ import { useTranslations } from "../../hooks/useTranslations"
 const inputClass = ""
 const inputReadOnlyClass = "cursor-not-allowed bg-paper-2 text-ink-soft"
 
+// Redeploy
 const initialState = {
   precio: "",
   tasacion: "",
