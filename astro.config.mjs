@@ -58,7 +58,10 @@ export default defineConfig({
     sitemap(),
 
     compress({
-      CSS: true,
+      // csso descarta los bloques `@media (width >= ...)` (sintaxis de rango
+      // de Tailwind 4): la web perdía TODAS las variantes responsive en
+      // producción. Vite ya minifica el CSS, este paso era redundante.
+      CSS: false,
       // html-minifier-terser colapsa espacios dentro del HTML de las islas
       // React y provoca errores de hidratación (#418); Astro ya minifica el
       // HTML de forma segura con compressHTML.
