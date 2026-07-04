@@ -1,0 +1,40 @@
+---
+import Layout from './Layout.astro';
+import Breadcrumbs from '../components/seo/Breadcrumbs.astro';
+import PageTracking from '../components/PageTracking.tsx';
+
+export interface Props {
+  title: string;
+  description: string;
+  /** Título visible (h1) de la página */
+  heading: string;
+  /** Ruta canónica de la página, p. ej. /aviso-legal */
+  path: string;
+  lang?: 'es' | 'en';
+  /** Mes y año de la última revisión del texto, p. ej. "julio de 2026" */
+  lastUpdated: string;
+}
+
+const { title, description, heading, path, lang = 'es', lastUpdated } = Astro.props;
+const homeHref = lang === 'en' ? '/en' : '/';
+const homeLabel = lang === 'en' ? 'Home' : 'Inicio';
+const updatedLabel = lang === 'en' ? 'Last updated' : 'Última actualización';
+---
+<Layout title={title} description={description} pageType="legal">
+  <PageTracking client:load pagePath={path} pageTitle={title} />
+
+  <Breadcrumbs items={[
+    { name: homeLabel, href: homeHref },
+    { name: heading, href: path }
+  ]} />
+
+  <article class="w-full max-w-3xl mx-auto py-10">
+    <h1 class="font-heading text-3xl md:text-4xl font-semibold tracking-[-1px] text-ink mb-2">
+      {heading}
+    </h1>
+    <p class="font-data text-xs text-ink-soft mb-10">{updatedLabel}: {lastUpdated}</p>
+    <div class="text-ink-soft leading-relaxed space-y-4 [&>h2]:font-heading [&>h2]:text-xl [&>h2]:font-semibold [&>h2]:text-ink [&>h2]:mt-8 [&>h2]:mb-2 [&>ul]:list-disc [&>ul]:pl-6 [&>ul]:space-y-1 [&_a]:underline [&_a]:text-brand-blue">
+      <slot />
+    </div>
+  </article>
+</Layout>

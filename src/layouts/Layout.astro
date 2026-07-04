@@ -11,6 +11,8 @@ export interface Props {
   keywords?: string;
   ogImage?: string;
   canonicalURL?: string;
+  /** 'legal' emite schema WebPage en lugar de WebApplication */
+  pageType?: 'calculator' | 'legal';
 }
 
 const SITE_BASE = 'https://www.hipotecalc.com';
@@ -24,7 +26,8 @@ const {
   description = "Calculadora hipotecaria, de alquiler e ITP para España. Herramientas financieras precisas y profesionales para calcular tu hipoteca, impuestos y más.",
   keywords = "calculadora hipoteca, calculadora alquiler, calculadora ITP, finanzas, España, euribor, impuestos, vivienda",
   ogImage,
-  canonicalURL = `${SITE_BASE}${normalizedPath}`
+  canonicalURL = `${SITE_BASE}${normalizedPath}`,
+  pageType = 'calculator'
 } = Astro.props;
 
 const currentLang = getCurrentLang(normalizedPath);
@@ -68,7 +71,7 @@ const webSiteSchema = isHome ? JSON.stringify({
   "publisher": { "@id": `${SITE_BASE}/#organization` }
 }) : null;
 
-const webAppSchema = !isHome ? JSON.stringify({
+const webAppSchema = !isHome && pageType === 'calculator' ? JSON.stringify({
   "@context": "https://schema.org",
   "@type": "WebApplication",
   "name": title,
@@ -84,6 +87,16 @@ const webAppSchema = !isHome ? JSON.stringify({
   "creator": { "@id": `${SITE_BASE}/#organization` },
   "inLanguage": langAttribute,
   "keywords": keywords
+}) : null;
+
+const webPageSchema = pageType === 'legal' ? JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "name": title,
+  "description": description,
+  "url": canonicalURL,
+  "inLanguage": langAttribute,
+  "publisher": { "@id": `${SITE_BASE}/#organization` }
 }) : null;
 ---
 <html lang={langAttribute}>
@@ -157,6 +170,7 @@ const webAppSchema = !isHome ? JSON.stringify({
     <script type="application/ld+json" set:html={organizationSchema} />
     {webSiteSchema && <script type="application/ld+json" set:html={webSiteSchema} />}
     {webAppSchema && <script type="application/ld+json" set:html={webAppSchema} />}
+    {webPageSchema && <script type="application/ld+json" set:html={webPageSchema} />}
 
     <!-- Google Analytics - Managed by CookieYes -->
     <script is:inline>

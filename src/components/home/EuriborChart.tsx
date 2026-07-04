@@ -95,6 +95,14 @@ const EuriborChart: React.FC = () => {
           <a href="https://data.ecb.europa.eu/data/datasets/FM/FM.M.U2.EUR.RT.MM.EURIBOR1YD_.HSTA" target="_blank" rel="noopener noreferrer" className="underline text-lime/80">
             BCE · data.ecb.europa.eu
           </a>{" "}
+          ·{" "}
+          <a href="https://www.emmi-benchmarks.eu/" target="_blank" rel="noopener noreferrer" className="underline text-lime/80">
+            EMMI
+          </a>{" "}
+          ·{" "}
+          <a href="https://www.bde.es/" target="_blank" rel="noopener noreferrer" className="underline text-lime/80">
+            Banco de España
+          </a>{" "}
           {t('home.hero.approximateAnnual')}
         </div>
       </div>

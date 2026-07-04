@@ -51,10 +51,18 @@ export function getAlternatePath(pathname: string): string {
     if (normalized === '/') return '/en'
     if (normalized === '/calculadora-hipotecaria') return '/en/mortgage-calculator'
     if (normalized === '/calculadora-alquiler') return '/en/rental-calculator'
+    if (normalized === '/aviso-legal') return '/en/legal-notice'
+    if (normalized === '/politica-de-privacidad') return '/en/privacy-policy'
+    if (normalized === '/politica-de-cookies') return '/en/cookie-policy'
+    if (normalized === '/disclaimer-financiero') return '/en/financial-disclaimer'
   } else {
     if (normalized === '/en') return '/'
     if (normalized === '/en/mortgage-calculator') return '/calculadora-hipotecaria'
     if (normalized === '/en/rental-calculator') return '/calculadora-alquiler'
+    if (normalized === '/en/legal-notice') return '/aviso-legal'
+    if (normalized === '/en/privacy-policy') return '/politica-de-privacidad'
+    if (normalized === '/en/cookie-policy') return '/politica-de-cookies'
+    if (normalized === '/en/financial-disclaimer') return '/disclaimer-financiero'
   }
 
   return pathname
