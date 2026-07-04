@@ -1,6 +1,7 @@
 import React, { Suspense, lazy } from "react"
 import { euriborData } from "../../constants/euribor-values"
 import { useTranslations } from "../../hooks/useTranslations"
+import ChartErrorBoundary from "../ui/ChartErrorBoundary"
 
 // Carga diferida: echarts (~1 MB) no debe competir con el primer render de la home
 const ReactECharts = lazy(() => import("echarts-for-react"))
@@ -87,9 +88,11 @@ const EuriborChart: React.FC = () => {
         <p className="font-data text-xs text-paper/50 mt-1 mb-6">
           {t('home.dataRoom.meta').replace('{year}', String(new Date().getFullYear()))}
         </p>
-        <Suspense fallback={<div style={{ height: 380, width: "100%" }} />}>
-          <ReactECharts option={option} style={{ height: 380, width: "100%" }} />
-        </Suspense>
+        <ChartErrorBoundary fallback={<div style={{ height: 380, width: "100%" }} />}>
+          <Suspense fallback={<div style={{ height: 380, width: "100%" }} />}>
+            <ReactECharts option={option} style={{ height: 380, width: "100%" }} />
+          </Suspense>
+        </ChartErrorBoundary>
         <div className="font-data text-[11px] text-paper/50 mt-3 text-center">
           {t('home.hero.source')}:{" "}
           <a href="https://data.ecb.europa.eu/data/datasets/FM/FM.M.U2.EUR.RT.MM.EURIBOR1YD_.HSTA" target="_blank" rel="noopener noreferrer" className="underline text-lime/80">

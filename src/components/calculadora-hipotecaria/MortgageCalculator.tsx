@@ -19,6 +19,7 @@ import ITPCalculator from "./ITPCalculator"
 import ContactButton from "../ContactButton"
 import SensitivityTable from "./SensitivityTable"
 import AnimatedNumber from "../ui/AnimatedNumber"
+import ChartErrorBoundary from "../ui/ChartErrorBoundary"
 import { useGoogleAnalytics } from "../../hooks/useGoogleAnalytics"
 import { useTranslations } from "../../hooks/useTranslations"
 import { formatNumberByLang } from "../../utils/number-format"
@@ -685,17 +686,19 @@ const MortgageCalculator: React.FC<MortgageCalculatorProps> = ({ lang = 'es' }) 
         </div>
 
         {/* Gráficas */}
-        <Suspense fallback={null}>
-          <MortgageSummaryCharts
-            precioInmueble={Number(form.precio) || 0}
-            impuestosGastos={
-              calculations.impuesto + (Number(form.otrosCostes) || 0)
-            }
-            ahorroAportado={Number(form.ahorro) || 0}
-            cantidadHipoteca={calculations.cantidadHipoteca}
-            interesTotal={calculations.interes}
-          />
-        </Suspense>
+        <ChartErrorBoundary>
+          <Suspense fallback={null}>
+            <MortgageSummaryCharts
+              precioInmueble={Number(form.precio) || 0}
+              impuestosGastos={
+                calculations.impuesto + (Number(form.otrosCostes) || 0)
+              }
+              ahorroAportado={Number(form.ahorro) || 0}
+              cantidadHipoteca={calculations.cantidadHipoteca}
+              interesTotal={calculations.interes}
+            />
+          </Suspense>
+        </ChartErrorBoundary>
 
         {/* Información adicional */}
         <div className='flex flex-col'>
