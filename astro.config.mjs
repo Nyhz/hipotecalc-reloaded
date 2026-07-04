@@ -33,10 +33,12 @@ export default defineConfig({
       },
       rollupOptions: {
         output: {
-          manualChunks: {
-            "vendor-react": ["react", "react-dom"],
-            "vendor-echarts": ["echarts", "echarts-for-react"],
-            "vendor-icons": ["@iconify/react"],
+          // Rolldown (Vite en Astro 7) solo acepta manualChunks como función
+          manualChunks(id) {
+            if (!id.includes("node_modules")) return
+            if (id.includes("echarts")) return "vendor-echarts"
+            if (id.includes("@iconify")) return "vendor-icons"
+            if (id.includes("react-dom") || id.includes("/react/")) return "vendor-react"
           },
         },
       },
