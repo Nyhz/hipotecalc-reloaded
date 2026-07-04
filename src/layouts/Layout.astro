@@ -3,7 +3,7 @@ import { ClientRouter } from "astro:transitions";
 import Navbar from '../components/Navbar.tsx';
 import Footer from '../components/Footer.astro';
 import '../style/globals.css';
-import { getCurrentLang, getAlternatePath } from '../utils/i18n';
+import { getCurrentLang, getAlternatePath, normalizePath } from '../utils/i18n';
 
 export interface Props {
   title?: string;
@@ -13,17 +13,21 @@ export interface Props {
   canonicalURL?: string;
 }
 
-const SITE_BASE = 'https://hipotecalc.com';
+const SITE_BASE = 'https://www.hipotecalc.com';
+
+// Forma canónica: www y sin barra final (salvo la raíz), igual que sirve
+// Vercel en producción. Canonical, og:url y hreflang deben usarla siempre.
+const normalizedPath = normalizePath(Astro.url.pathname);
 
 const {
   title = "Calculadora Hipotecaria - España | Herramientas Financieras",
   description = "Calculadora hipotecaria, de alquiler e ITP para España. Herramientas financieras precisas y profesionales para calcular tu hipoteca, impuestos y más.",
   keywords = "calculadora hipoteca, calculadora alquiler, calculadora ITP, finanzas, España, euribor, impuestos, vivienda",
   ogImage,
-  canonicalURL = `${SITE_BASE}${Astro.url.pathname}`
+  canonicalURL = `${SITE_BASE}${normalizedPath}`
 } = Astro.props;
 
-const currentLang = getCurrentLang(Astro.url.pathname);
+const currentLang = getCurrentLang(normalizedPath);
 const langAttribute = currentLang === 'en' ? 'en' : 'es';
 const ogLocale = currentLang === 'en' ? 'en_US' : 'es_ES';
 const ogImageURL = ogImage ?? `${SITE_BASE}/${currentLang === 'en' ? 'hipotecalc-og-en.jpg' : 'hipotecalc-og.jpg'}`;
@@ -33,14 +37,38 @@ const ogImageAlt = currentLang === 'en'
 const isLocalEnv =
   Astro.url.hostname === "localhost" || Astro.url.hostname === "127.0.0.1";
 
-const alternatePath = getAlternatePath(Astro.url.pathname);
-const esPath = currentLang === 'es' ? Astro.url.pathname : alternatePath;
-const enPath = currentLang === 'en' ? Astro.url.pathname : alternatePath;
+const alternatePath = getAlternatePath(normalizedPath);
+const esPath = currentLang === 'es' ? normalizedPath : alternatePath;
+const enPath = currentLang === 'en' ? normalizedPath : alternatePath;
 const hrefLangEs = `${SITE_BASE}${esPath}`;
 const hrefLangEn = `${SITE_BASE}${enPath}`;
 const hrefLangDefault = hrefLangEs;
 
-const structuredData = JSON.stringify({
+// Datos estructurados: Organization en todas las páginas; WebSite solo en
+// las portadas; WebApplication solo en las calculadoras (no en la home).
+const isHome = normalizedPath === '/' || normalizedPath === '/en';
+
+const organizationSchema = JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "@id": `${SITE_BASE}/#organization`,
+  "name": "Hipotecalc",
+  "url": `${SITE_BASE}/`,
+  "logo": `${SITE_BASE}/hipotecalc-og.jpg`
+});
+
+const webSiteSchema = isHome ? JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "@id": `${SITE_BASE}/#website`,
+  "name": "Hipotecalc",
+  "url": `${SITE_BASE}/`,
+  "description": description,
+  "inLanguage": langAttribute,
+  "publisher": { "@id": `${SITE_BASE}/#organization` }
+}) : null;
+
+const webAppSchema = !isHome ? JSON.stringify({
   "@context": "https://schema.org",
   "@type": "WebApplication",
   "name": title,
@@ -53,13 +81,10 @@ const structuredData = JSON.stringify({
     "price": "0",
     "priceCurrency": "EUR"
   },
-  "creator": {
-    "@type": "Organization",
-    "name": "Hipotecalc"
-  },
+  "creator": { "@id": `${SITE_BASE}/#organization` },
   "inLanguage": langAttribute,
   "keywords": keywords
-});
+}) : null;
 ---
 <html lang={langAttribute}>
   <head>
@@ -129,7 +154,9 @@ const structuredData = JSON.stringify({
     </noscript>
     
     <!-- Structured Data -->
-    <script type="application/ld+json" set:html={structuredData} />
+    <script type="application/ld+json" set:html={organizationSchema} />
+    {webSiteSchema && <script type="application/ld+json" set:html={webSiteSchema} />}
+    {webAppSchema && <script type="application/ld+json" set:html={webAppSchema} />}
 
     <!-- Google Analytics - Managed by CookieYes -->
     <script is:inline>

@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from "react"
+import React, { useState, useMemo, Suspense, lazy } from "react"
 import { COMUNIDADES } from "../../constants/comunidades"
 import {
   cuotaMensual,
@@ -16,7 +16,6 @@ import {
 import Input from "./Input"
 import Select from "./Select"
 import ITPCalculator from "./ITPCalculator"
-import MortgageSummaryCharts from "./MortgageSummaryCharts"
 import ContactButton from "../ContactButton"
 import SensitivityTable from "./SensitivityTable"
 import AnimatedNumber from "../ui/AnimatedNumber"
@@ -26,6 +25,9 @@ import { formatNumberByLang } from "../../utils/number-format"
 
 const inputClass = ""
 const inputReadOnlyClass = "cursor-not-allowed bg-paper-2 text-ink-soft"
+
+// Carga diferida: echarts pesa ~1 MB y no debe bloquear el primer render
+const MortgageSummaryCharts = lazy(() => import("./MortgageSummaryCharts"))
 
 // Redeploy
 const initialState = {
@@ -683,15 +685,17 @@ const MortgageCalculator: React.FC<MortgageCalculatorProps> = ({ lang = 'es' }) 
         </div>
 
         {/* Gráficas */}
-        <MortgageSummaryCharts
-          precioInmueble={Number(form.precio) || 0}
-          impuestosGastos={
-            calculations.impuesto + (Number(form.otrosCostes) || 0)
-          }
-          ahorroAportado={Number(form.ahorro) || 0}
-          cantidadHipoteca={calculations.cantidadHipoteca}
-          interesTotal={calculations.interes}
-        />
+        <Suspense fallback={null}>
+          <MortgageSummaryCharts
+            precioInmueble={Number(form.precio) || 0}
+            impuestosGastos={
+              calculations.impuesto + (Number(form.otrosCostes) || 0)
+            }
+            ahorroAportado={Number(form.ahorro) || 0}
+            cantidadHipoteca={calculations.cantidadHipoteca}
+            interesTotal={calculations.interes}
+          />
+        </Suspense>
 
         {/* Información adicional */}
         <div className='flex flex-col'>

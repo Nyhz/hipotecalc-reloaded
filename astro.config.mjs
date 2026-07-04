@@ -12,7 +12,14 @@ import react from "@astrojs/react"
 
 // https://astro.build/config
 export default defineConfig({
-  site: "https://hipotecalc.com", // Replace with your actual domain
+  // www + sin barra final: debe coincidir EXACTAMENTE con cómo sirve Vercel
+  // (hipotecalc.com redirige a www; /pagina/ redirige a /pagina), para que
+  // canonical, sitemap y hreflang no apunten a URLs que redirigen.
+  site: "https://www.hipotecalc.com",
+  trailingSlash: "never",
+  build: {
+    format: "file",
+  },
   output: "static",
   adapter: vercel({
     webAnalytics: {

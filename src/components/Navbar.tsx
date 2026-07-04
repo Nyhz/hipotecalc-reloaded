@@ -31,7 +31,7 @@ export default function Navbar() {
     setIsMenuOpen(!isMenuOpen)
   }
 
-  const homeHref = currentLang === "en" ? "/en/" : "/"
+  const homeHref = currentLang === "en" ? "/en" : "/"
   const isActivePath = (href: string) => currentPath === href
 
   return (

@@ -1,7 +1,9 @@
-import React from "react"
-import ReactECharts from "echarts-for-react"
+import React, { Suspense, lazy } from "react"
 import { euriborData } from "../../constants/euribor-values"
 import { useTranslations } from "../../hooks/useTranslations"
+
+// Carga diferida: echarts (~1 MB) no debe competir con el primer render de la home
+const ReactECharts = lazy(() => import("echarts-for-react"))
 
 const years = euriborData.map((d) => d.year)
 const values = euriborData.map((d) => d.value)
@@ -85,7 +87,9 @@ const EuriborChart: React.FC = () => {
         <p className="font-data text-xs text-paper/50 mt-1 mb-6">
           {t('home.dataRoom.meta').replace('{year}', String(new Date().getFullYear()))}
         </p>
-        <ReactECharts option={option} style={{ height: 380, width: "100%" }} />
+        <Suspense fallback={<div style={{ height: 380, width: "100%" }} />}>
+          <ReactECharts option={option} style={{ height: 380, width: "100%" }} />
+        </Suspense>
         <div className="font-data text-[11px] text-paper/50 mt-3 text-center">
           {t('home.hero.source')}:{" "}
           <a href="https://data.ecb.europa.eu/data/datasets/FM/FM.M.U2.EUR.RT.MM.EURIBOR1YD_.HSTA" target="_blank" rel="noopener noreferrer" className="underline text-lime/80">

@@ -2,7 +2,7 @@ User-agent: *
 Allow: /
 
 # Sitemap
-Sitemap: https://hipotecalc.com/sitemap-index.xml
+Sitemap: https://www.hipotecalc.com/sitemap-index.xml
 
 # Block access to admin or private areas (if any in the future)
 # Disallow: /admin/

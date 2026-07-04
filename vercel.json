@@ -4,6 +4,19 @@
       "NODE_VERSION": "18"
     }
   },
+  "redirects": [
+    {
+      "source": "/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "hipotecalc.com"
+        }
+      ],
+      "destination": "https://www.hipotecalc.com/:path*",
+      "permanent": true
+    }
+  ],
   "headers": [
     {
       "source": "/(.*)",

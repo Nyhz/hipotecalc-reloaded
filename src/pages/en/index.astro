@@ -14,7 +14,7 @@ import { t } from '../../utils/i18n';
   description={t('seo.home.description', 'en')}
   keywords={t('seo.home.keywords', 'en')}
 >
-  <PageTracking client:load pagePath="/en/" pageTitle={t('seo.home.title', 'en')} />
+  <PageTracking client:load pagePath="/en" pageTitle={t('seo.home.title', 'en')} />
   <Hero lang="en" />
   <StatsStrip lang="en" />
   <Herramientas tools={getTools('en')} lang="en" />
