@@ -5,7 +5,8 @@ import { formatNumberByLang } from "../../utils/number-format"
 interface Calculations {
   roiAnual: number
   cashOnCashReturn: number
-  mesesBreakEven: number
+  // null = el cash flow no es positivo y la entrada nunca se recupera
+  mesesBreakEven: number | null
   cashFlowMensual: number
 }
 
@@ -32,7 +33,7 @@ const RentalKPIs: React.FC<RentalKPIsProps> = ({ calculations, lang = 'es' }) =>
     },
     {
       title: t('rental.results.monthsToBreakEven'),
-      value: calculations.mesesBreakEven > 0 ? `${calculations.mesesBreakEven.toFixed(1)}` : "∞",
+      value: calculations.mesesBreakEven !== null ? `${calculations.mesesBreakEven.toFixed(1)}` : "∞",
       description: t('rental.results.breakEvenDescription'),
       tone: "text-ink",
     },

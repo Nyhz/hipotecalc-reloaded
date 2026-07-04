@@ -215,6 +215,7 @@
           "madridYoungRural": "ITP 0% (jóvenes en municipios <2.500 hab, Madrid)",
           "youngBuyer": "ITP {rate}% (jóvenes ≤35 años)",
           "largeFamily": "ITP {rate}% (familia numerosa)",
+          "monoparental": "ITP {rate}% (familia monoparental)",
           "disability": "ITP {rate}% (discapacidad ≥65%)",
           "genderViolence": "ITP {rate}% (víctima violencia de género)",
           "galiciaRural": "ITP 0% (zona rural despoblada, Galicia)",

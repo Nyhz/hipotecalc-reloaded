@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useEffect, useRef } from "react"
 import { useTranslations } from "../../hooks/useTranslations"
 
 interface ModalProps {
@@ -15,11 +15,43 @@ const Modal: React.FC<ModalProps> = ({
   maxWidth = "max-w-3xl",
 }) => {
   const { t } = useTranslations()
+  const dialogRef = useRef<HTMLDivElement>(null)
+
+  // Bloquear el scroll de la página y cerrar con Escape mientras esté abierto
+  useEffect(() => {
+    if (!open) return
+
+    const previousOverflow = document.body.style.overflow
+    document.body.style.overflow = "hidden"
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") onClose()
+    }
+    document.addEventListener("keydown", handleKeyDown)
+
+    // Llevar el foco al diálogo para que Tab no opere el formulario de fondo
+    dialogRef.current?.focus()
+
+    return () => {
+      document.body.style.overflow = previousOverflow
+      document.removeEventListener("keydown", handleKeyDown)
+    }
+  }, [open, onClose])
+
   if (!open) return null
   return (
-    <div className='fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm'>
+    <div
+      className='fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm'
+      onMouseDown={(e) => {
+        if (e.target === e.currentTarget) onClose()
+      }}
+    >
       <div
-        className={`pl-card shadow-2xl w-full ${maxWidth} p-0 relative max-h-[80vh] flex flex-col`}
+        ref={dialogRef}
+        role='dialog'
+        aria-modal='true'
+        tabIndex={-1}
+        className={`pl-card shadow-2xl w-full ${maxWidth} p-0 relative max-h-[80vh] flex flex-col focus:outline-none`}
         style={{ maxHeight: "80vh" }}
       >
         <button

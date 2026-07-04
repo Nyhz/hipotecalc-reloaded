@@ -26,6 +26,7 @@ interface ITPCalculatorProps {
   initialVpo?: boolean
   onComunidadChange?: (comunidad: string) => void
   onTipoViviendaChange?: (tipoVivienda: string) => void
+  lang?: 'es' | 'en'
 }
 
 const initialForm = {
@@ -71,8 +72,9 @@ const ITPCalculator: React.FC<ITPCalculatorProps> = ({
   initialVpo,
   onComunidadChange,
   onTipoViviendaChange,
+  lang = 'es',
 }) => {
-  const { t, currentLang } = useTranslations()
+  const { t, currentLang } = useTranslations(lang)
   const [form, setForm] = useState({
     ...initialForm,
     comunidad: comunidadSeleccionada || "",

@@ -49,16 +49,18 @@ const RentalCalculator: React.FC<RentalCalculatorProps> = ({ lang = 'es' }) => {
     const porcentajeITP = comunidadSeleccionada?.ITP || 6
     const itp = calcularITP(precioNum, porcentajeITP)
 
-    // Cálculo de la hipoteca
-    const cantidadHipoteca = precioNum + itp - entradaNum
+    // Cálculo de la hipoteca (sin permitir importes negativos si la entrada
+    // supera el coste total, igual que en la calculadora hipotecaria)
+    const cantidadHipoteca = Math.max(0, precioNum + itp - entradaNum)
     const interesMensual = interesNum / 12 / 100
     const numeroCuotas = plazoNum * 12
 
-    // Cuota mensual de la hipoteca
+    // Cuota mensual de la hipoteca (numeroCuotas > 0: un plazo vacío o 0
+    // dividiría por cero y propagaría Infinity a todos los KPIs)
     let cuotaMensual = 0
-    if (cantidadHipoteca > 0) {
+    if (cantidadHipoteca > 0 && numeroCuotas > 0) {
       if (interesMensual > 0) {
-        cuotaMensual = (cantidadHipoteca * interesMensual * Math.pow(1 + interesMensual, numeroCuotas)) / 
+        cuotaMensual = (cantidadHipoteca * interesMensual * Math.pow(1 + interesMensual, numeroCuotas)) /
           (Math.pow(1 + interesMensual, numeroCuotas) - 1)
       } else {
         // Si el interés es 0, la cuota es simplemente el monto dividido por el número de cuotas
@@ -72,14 +74,20 @@ const RentalCalculator: React.FC<RentalCalculatorProps> = ({ lang = 'es' }) => {
     // Cash flow mensual
     const cashFlowMensual = ingresosMensuales - cuotaMensual - gastosMensualesNum
 
-    // ROI Anual (basado en el precio total de la propiedad)
-    const roiAnual = precioNum > 0 ? (cashFlowMensual * 12 / precioNum) * 100 : 0
+    // Rentabilidad neta anual: (ingresos - gastos) sobre el coste total de
+    // adquisición, sin descontar la cuota hipotecaria — la financiación no
+    // cambia la rentabilidad del inmueble (su efecto se ve en el cash-on-cash)
+    const costeAdquisicion = precioNum + itp
+    const roiAnual = costeAdquisicion > 0
+      ? ((ingresosMensuales - gastosMensualesNum) * 12 / costeAdquisicion) * 100
+      : 0
 
     // Cash on Cash Return (basado en la entrada)
     const cashOnCashReturn = entradaNum > 0 ? (cashFlowMensual * 12 / entradaNum) * 100 : 0
 
-    // Meses para break even (cuando el cash flow acumulado iguala la entrada)
-    const mesesBreakEven = cashFlowMensual > 0 ? entradaNum / cashFlowMensual : 0
+    // Meses para break even (cuando el cash flow acumulado iguala la entrada);
+    // null = nunca se recupera; 0 = inmediato (sin entrada y cash flow positivo)
+    const mesesBreakEven = cashFlowMensual > 0 ? entradaNum / cashFlowMensual : null
 
     // Interés total de la hipoteca
     const interesTotal = (cuotaMensual * numeroCuotas) - cantidadHipoteca
@@ -114,6 +122,10 @@ const RentalCalculator: React.FC<RentalCalculatorProps> = ({ lang = 'es' }) => {
       const numValue = Number(value)
       if (numValue < 0) {
         return // No actualizar si el valor es negativo
+      }
+      // La ocupación es un porcentaje: no aceptar valores por encima de 100
+      if (name === "ocupacion" && numValue > 100) {
+        return
       }
     }
 

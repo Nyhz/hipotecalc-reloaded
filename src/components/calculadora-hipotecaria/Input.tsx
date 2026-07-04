@@ -35,25 +35,20 @@ const Input: React.FC<InputProps> = ({
     if (type === "number") {
       const inputValue = e.target.value
 
-      // Prevenir entrada de guión al principio
+      // Sanear valores negativos (p. ej. "-5" pegado con el menú contextual)
+      // reenviando el MISMO evento con el valor mutado: e.target sigue siendo
+      // el elemento real, así el input controlado no se desincroniza del
+      // estado (una copia via spread perdería target.name/value)
       if (inputValue.startsWith("-")) {
         e.target.value = inputValue.replace("-", "")
+        onChange(e)
         return
       }
 
-      // Si se detecta un número negativo, resetear a 0
       const numValue = Number(inputValue)
       if (!isNaN(numValue) && numValue < 0) {
         e.target.value = "0"
-        // Crear nuevo evento con el valor corregido
-        const correctedEvent = {
-          ...e,
-          target: {
-            ...e.target,
-            value: "0",
-          },
-        }
-        onChange(correctedEvent as React.ChangeEvent<HTMLInputElement>)
+        onChange(e)
         return
       }
     }

@@ -75,7 +75,8 @@ function calcularITPMadrid(params: ITPParams): ITPResult {
   // Por ahora asumimos persona física
 
   // Paso 3: Comprobación de bonificación joven 100% (<35 años en municipio <2.500 hab)
-  if (edad <= 35 && zonaDespoblada && primeraVivienda && precio <= 250000) {
+  // edad > 0: una edad en blanco (coaccionada a 0) no debe activar beneficios de joven
+  if (edad > 0 && edad <= 35 && zonaDespoblada && primeraVivienda && precio <= 250000) {
     return {
       itp: 0,
       tipoAplicado: 0,
@@ -85,8 +86,8 @@ function calcularITPMadrid(params: ITPParams): ITPResult {
 
   // Paso 4: Comprobación de tipo reducido 4% por familia numerosa
   if (situacion.includes("familia-numerosa") && primeraVivienda) {
-    // Verificar requisito de venta de vivienda anterior
-    if (ventaAnterior !== undefined) {
+    // El 4% exige haber vendido la vivienda anterior (declaración expresa)
+    if (ventaAnterior === true) {
       return {
         itp: calcularITP(precio, 4),
         tipoAplicado: 4,
@@ -173,35 +174,41 @@ export function calcularITPAvanzado(params: ITPParams): ITPResult {
   let tipoAplicado = comunidad.ITP
   let descripcion = t('mortgage.form.itpModal.descriptions.generalRate', lang).replace('{rate}', String(comunidad.ITP))
 
-  // Verificar tipos reducidos especiales
+  // Una edad en blanco llega coaccionada a 0 y no debe activar tipos de joven
+  const edadValida = params.edad > 0
+
+  // Recopilar todos los tipos reducidos aplicables y quedarse con el más
+  // beneficioso (antes se sobreescribían en orden fijo, pudiendo sustituir
+  // un tipo mejor por otro peor)
+  let tipoReducidoAplicado = false
   if (comunidad.specialRates) {
     const { specialRates } = comunidad
+    const candidatos: { tipo: number; descripcion: string }[] = []
 
     // Tipo reducido autonómico (p. ej. País Vasco: vivienda habitual <= 120 m2)
     if (params.tipoReducido && specialRates.reducedRate !== undefined) {
-      tipoAplicado = specialRates.reducedRate
-      descripcion = t('mortgage.form.itpModal.descriptions.reducedRate', lang).replace('{rate}', String(specialRates.reducedRate))
+      candidatos.push({
+        tipo: specialRates.reducedRate,
+        descripcion: t('mortgage.form.itpModal.descriptions.reducedRate', lang).replace('{rate}', String(specialRates.reducedRate)),
+      })
     }
 
     // Jóvenes
-    if (params.edad <= 35 && specialRates.youngBuyer !== undefined) {
-      if (
-        nombreComunidad === "Castilla y León" &&
-        params.zonaDespoblada &&
-        precio <= 150000
-      ) {
-        tipoAplicado = 0.01 // Tipo "cero" para jóvenes en medio rural
-        descripcion = t('mortgage.form.itpModal.descriptions.castillaLeonYoungRural', lang)
-      } else if (
-        nombreComunidad === "Madrid" &&
-        params.zonaDespoblada &&
-        precio <= 250000
-      ) {
-        tipoAplicado = 0 // 100% bonificación
-        descripcion = t('mortgage.form.itpModal.descriptions.madridYoungRural', lang)
+    if (edadValida && params.edad <= 35 && specialRates.youngBuyer !== undefined) {
+      if (nombreComunidad === "Castilla y León") {
+        // El tipo 0,01% de CyL es exclusivo del medio rural con precio <= 150.000€;
+        // los jóvenes en zona urbana tributan al tipo general
+        if (params.zonaDespoblada && precio <= 150000) {
+          candidatos.push({
+            tipo: 0.01,
+            descripcion: t('mortgage.form.itpModal.descriptions.castillaLeonYoungRural', lang),
+          })
+        }
       } else {
-        tipoAplicado = specialRates.youngBuyer
-        descripcion = t('mortgage.form.itpModal.descriptions.youngBuyer', lang).replace('{rate}', String(specialRates.youngBuyer))
+        candidatos.push({
+          tipo: specialRates.youngBuyer,
+          descripcion: t('mortgage.form.itpModal.descriptions.youngBuyer', lang).replace('{rate}', String(specialRates.youngBuyer)),
+        })
       }
     }
 
@@ -210,8 +217,21 @@ export function calcularITPAvanzado(params: ITPParams): ITPResult {
       params.situacion.includes("familia-numerosa") &&
       specialRates.largeFamily !== undefined
     ) {
-      tipoAplicado = specialRates.largeFamily
-      descripcion = t('mortgage.form.itpModal.descriptions.largeFamily', lang).replace('{rate}', String(specialRates.largeFamily))
+      candidatos.push({
+        tipo: specialRates.largeFamily,
+        descripcion: t('mortgage.form.itpModal.descriptions.largeFamily', lang).replace('{rate}', String(specialRates.largeFamily)),
+      })
+    }
+
+    // Familias monoparentales
+    if (
+      params.situacion === "familia-monoparental" &&
+      specialRates.monoparental !== undefined
+    ) {
+      candidatos.push({
+        tipo: specialRates.monoparental,
+        descripcion: t('mortgage.form.itpModal.descriptions.monoparental', lang).replace('{rate}', String(specialRates.monoparental)),
+      })
     }
 
     // Personas con discapacidad
@@ -220,55 +240,92 @@ export function calcularITPAvanzado(params: ITPParams): ITPResult {
       params.porcentajeDiscapacidad >= 65 &&
       specialRates.disability !== undefined
     ) {
-      tipoAplicado = specialRates.disability
-      descripcion = t('mortgage.form.itpModal.descriptions.disability', lang).replace('{rate}', String(specialRates.disability))
+      candidatos.push({
+        tipo: specialRates.disability,
+        descripcion: t('mortgage.form.itpModal.descriptions.disability', lang).replace('{rate}', String(specialRates.disability)),
+      })
     }
 
     // Víctimas de violencia de género
     if (params.victimaViolencia && specialRates.genderViolence !== undefined) {
-      tipoAplicado = specialRates.genderViolence
-      descripcion = t('mortgage.form.itpModal.descriptions.genderViolence', lang).replace('{rate}', String(specialRates.genderViolence))
+      candidatos.push({
+        tipo: specialRates.genderViolence,
+        descripcion: t('mortgage.form.itpModal.descriptions.genderViolence', lang).replace('{rate}', String(specialRates.genderViolence)),
+      })
     }
 
     // Zonas despobladas
     if (params.zonaDespoblada && specialRates.ruralDepopulation !== undefined) {
       if (nombreComunidad === "Galicia") {
-        tipoAplicado = 0 // Exento en zonas rurales de Galicia
-        descripcion = t('mortgage.form.itpModal.descriptions.galiciaRural', lang)
+        candidatos.push({
+          tipo: 0, // Exento en zonas rurales de Galicia
+          descripcion: t('mortgage.form.itpModal.descriptions.galiciaRural', lang),
+        })
       } else {
-        tipoAplicado = specialRates.ruralDepopulation
-        descripcion = t('mortgage.form.itpModal.descriptions.ruralDepopulation', lang).replace('{rate}', String(specialRates.ruralDepopulation))
+        candidatos.push({
+          tipo: specialRates.ruralDepopulation,
+          descripcion: t('mortgage.form.itpModal.descriptions.ruralDepopulation', lang).replace('{rate}', String(specialRates.ruralDepopulation)),
+        })
       }
     }
 
     // Primera vivienda
     if (params.primeraVivienda && specialRates.firstHome !== undefined) {
-      tipoAplicado = specialRates.firstHome
-      descripcion = t('mortgage.form.itpModal.descriptions.firstHome', lang).replace('{rate}', String(specialRates.firstHome))
+      candidatos.push({
+        tipo: specialRates.firstHome,
+        descripcion: t('mortgage.form.itpModal.descriptions.firstHome', lang).replace('{rate}', String(specialRates.firstHome)),
+      })
     }
 
     // VPO
     if (params.vpo && specialRates.vpo !== undefined) {
-      tipoAplicado = specialRates.vpo
-      descripcion = t('mortgage.form.itpModal.descriptions.vpo', lang).replace('{rate}', String(specialRates.vpo))
+      candidatos.push({
+        tipo: specialRates.vpo,
+        descripcion: t('mortgage.form.itpModal.descriptions.vpo', lang).replace('{rate}', String(specialRates.vpo)),
+      })
+    }
+
+    if (candidatos.length > 0) {
+      const mejor = candidatos.reduce((a, b) => (b.tipo < a.tipo ? b : a))
+      if (mejor.tipo < tipoAplicado) {
+        tipoAplicado = mejor.tipo
+        descripcion = mejor.descripcion
+        tipoReducidoAplicado = true
+      }
     }
   }
 
   // Calcular ITP final
   let itpFinal: number
 
-  // Si hay brackets (escala progresiva), calcular por tramos
-  if (comunidad.itpBrackets && comunidad.itpBrackets.length > 0) {
+  if (tipoReducidoAplicado) {
+    // Los tipos reducidos son tipos fijos: no se combinan con la escala progresiva
+    itpFinal = calcularITP(precio, tipoAplicado)
+  } else if (comunidad.itpBrackets && comunidad.itpBrackets.length > 0) {
+    // Escala progresiva por tramos; exponer el tipo efectivo para que la
+    // etiqueta mostrada coincida con el importe calculado
     itpFinal = calcularITPPorTramos(precio, comunidad.itpBrackets)
+    tipoAplicado = Math.round((itpFinal / precio) * 10000) / 100
+    descripcion = t('mortgage.form.itpModal.descriptions.generalRate', lang).replace('{rate}', String(tipoAplicado))
   } else {
     itpFinal = calcularITP(precio, tipoAplicado)
   }
 
-  // Aplicar bonificaciones adicionales si existen
+  // Bonificaciones adicionales: solo si el comprador cumple alguna de las
+  // condiciones (Aragón: <35 años, discapacidad >=65% o víctima de violencia
+  // de género; antes se aplicaba a todos los compradores)
   if (comunidad.bonificaciones && comunidad.bonificaciones.porcentaje) {
-    const bonificacion = itpFinal * (comunidad.bonificaciones.porcentaje / 100)
-    itpFinal -= bonificacion
-    descripcion += ' ' + t('mortgage.form.itpModal.descriptions.additionalDiscount', lang).replace('{percentage}', String(comunidad.bonificaciones.porcentaje))
+    const cumpleCondiciones =
+      !comunidad.bonificaciones.condiciones ||
+      nombreComunidad !== "Aragón" ||
+      (edadValida && params.edad < 35) ||
+      (params.discapacidad && params.porcentajeDiscapacidad >= 65) ||
+      params.victimaViolencia
+    if (cumpleCondiciones) {
+      const bonificacion = itpFinal * (comunidad.bonificaciones.porcentaje / 100)
+      itpFinal -= bonificacion
+      descripcion += ' ' + t('mortgage.form.itpModal.descriptions.additionalDiscount', lang).replace('{percentage}', String(comunidad.bonificaciones.porcentaje))
+    }
   }
 
   return {

@@ -22,6 +22,7 @@ import SensitivityTable from "./SensitivityTable"
 import AnimatedNumber from "../ui/AnimatedNumber"
 import { useGoogleAnalytics } from "../../hooks/useGoogleAnalytics"
 import { useTranslations } from "../../hooks/useTranslations"
+import { formatNumberByLang } from "../../utils/number-format"
 
 const inputClass = ""
 const inputReadOnlyClass = "cursor-not-allowed bg-paper-2 text-ink-soft"
@@ -41,12 +42,24 @@ const initialState = {
   periodoAnalisis: "10",
 }
 
-const MortgageCalculator: React.FC = () => {
+interface MortgageCalculatorProps {
+  lang?: 'es' | 'en'
+}
+
+const MortgageCalculator: React.FC<MortgageCalculatorProps> = ({ lang = 'es' }) => {
   const { trackCalculatorUsage } = useGoogleAnalytics()
-  const { t, currentLang } = useTranslations()
-  
-  const tiposVivienda = [t('mortgage.form.newConstruction'), t('mortgage.form.secondHand')]
-  const tiposHipoteca = [t('mortgage.form.fixed'), t('mortgage.form.variable')] // TODO: Añadir MIXTA.
+  const { t, currentLang } = useTranslations(lang)
+
+  // Valores internos estables (independientes del idioma) con etiqueta
+  // traducida: la lógica de cálculo compara contra estos literales
+  const tiposVivienda = [
+    { value: "Obra nueva", label: t('mortgage.form.newConstruction') },
+    { value: "Segunda mano", label: t('mortgage.form.secondHand') },
+  ]
+  const tiposHipoteca = [
+    { value: "Fija", label: t('mortgage.form.fixed') },
+    { value: "Variable", label: t('mortgage.form.variable') },
+  ] // TODO: Añadir MIXTA.
   
   const [showItpModal, setShowItpModal] = useState(false)
   const [form, setForm] = useState(initialState)
@@ -184,7 +197,7 @@ const MortgageCalculator: React.FC = () => {
       cuotaMinima,
       cuotaMaxima,
     }
-  }, [form, itpCalculado, itpValorModal, itpTipoAplicado, itpDescripcion]) // Incluir las dependencias del modal
+  }, [form, itpCalculado, itpValorModal, itpTipoAplicado, itpDescripcion, currentLang]) // Incluir las dependencias del modal
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
@@ -255,11 +268,19 @@ const MortgageCalculator: React.FC = () => {
   // Funciones para sincronizar cambios del modal con el formulario principal.
   // El precio NO se sincroniza: en el modal puede introducirse el VMA (País
   // Vasco), que es independiente del precio de compraventa.
+  // Si el valor sincronizado cambia, el resultado previo del modal queda
+  // desactualizado y hay que descartarlo (igual que hace handleChange).
   const handleModalComunidadChange = (comunidad: string) => {
+    if (comunidad !== form.comunidad) {
+      handleResetImpuesto()
+    }
     setForm((prev) => ({ ...prev, comunidad }))
   }
 
   const handleModalTipoViviendaChange = (tipoVivienda: string) => {
+    if (tipoVivienda !== form.tipoVivienda) {
+      handleResetImpuesto()
+    }
     setForm((prev) => ({ ...prev, tipoVivienda }))
   }
 
@@ -313,7 +334,7 @@ const MortgageCalculator: React.FC = () => {
                 name='tipoVivienda'
                 value={form.tipoVivienda}
                 onChange={handleChange}
-                options={tiposVivienda.map((t) => ({ value: t, label: t }))}
+                options={tiposVivienda}
                 className={inputClass}
               />
             </div>
@@ -492,7 +513,7 @@ const MortgageCalculator: React.FC = () => {
                 name='tipoHipoteca'
                 value={form.tipoHipoteca}
                 onChange={handleChange}
-                options={tiposHipoteca.map((t) => ({ value: t, label: t }))}
+                options={tiposHipoteca}
                 className={inputClass}
               />
               {!calculations.esHipotecaVariable && (
@@ -613,6 +634,7 @@ const MortgageCalculator: React.FC = () => {
           itpCalculado={itpCalculado}
           itpTipoAplicado={itpTipoAplicado}
           itpDescripcion={itpDescripcion}
+          lang={currentLang}
         />
       </form>
       <aside className='w-full xl:w-[22rem] receipt p-6 flex flex-col gap-4 xl:sticky xl:top-24'>
@@ -634,13 +656,13 @@ const MortgageCalculator: React.FC = () => {
             <div className='receipt-row'>
               <span>{t('mortgage.form.minimumHistorical')}</span>
               <b style={{ color: "var(--color-positive)" }}>
-                {new Intl.NumberFormat("es-ES").format(calculations.cuotaMinima)} €
+                {formatNumberByLang(calculations.cuotaMinima, currentLang)} €
               </b>
             </div>
             <div className='receipt-row'>
               <span>{t('mortgage.form.maximumHistorical')}</span>
               <b style={{ color: "var(--color-negative)" }}>
-                {new Intl.NumberFormat("es-ES").format(calculations.cuotaMaxima)} €
+                {formatNumberByLang(calculations.cuotaMaxima, currentLang)} €
               </b>
             </div>
           </div>
@@ -651,7 +673,7 @@ const MortgageCalculator: React.FC = () => {
           <div className='receipt-row'>
             <span>{t('mortgage.form.mortgageAmount')}</span>
             <b>
-              {new Intl.NumberFormat("es-ES").format(calculations.cantidadHipoteca)} €
+              {formatNumberByLang(calculations.cantidadHipoteca, currentLang)} €
             </b>
           </div>
           <div className='receipt-row'>
@@ -681,7 +703,7 @@ const MortgageCalculator: React.FC = () => {
           </div>
           <div className='receipt-row'>
             <span>{t('mortgage.form.totalInterestLabel')}</span>
-            <b>{new Intl.NumberFormat("es-ES").format(calculations.interes)} €</b>
+            <b>{formatNumberByLang(calculations.interes, currentLang)} €</b>
           </div>
         </div>
       </aside>
@@ -705,6 +727,7 @@ const MortgageCalculator: React.FC = () => {
         initialVpo={false}
         onComunidadChange={handleModalComunidadChange}
         onTipoViviendaChange={handleModalTipoViviendaChange}
+        lang={currentLang}
       />
     </div>
   )

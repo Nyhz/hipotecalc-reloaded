@@ -31,10 +31,12 @@ interface MortgageParams {
 export function cuotaMensual(params: MortgageParams): number {
   const { cantidadHipoteca, tin, plazo } = params
 
-  if (!cantidadHipoteca || !tin || !plazo) return 0
+  // Guardas numéricas: plazo "0" es truthy y dividiría por cero, y tin 0 es
+  // un tipo válido que debe llegar a la rama de interés cero
+  const numPagos = Number(plazo) * 12
+  if (!cantidadHipoteca || numPagos <= 0 || !Number.isFinite(tin)) return 0
 
   const tinMensual = tin / 100 / 12
-  const numPagos = Number(plazo) * 12
 
   if (tinMensual === 0) {
     return cantidadHipoteca / numPagos
@@ -62,10 +64,10 @@ export function porcentajeFinanciado(params: MortgageParams): number {
 export function interesTotal(params: MortgageParams): number {
   const { cantidadHipoteca, tin, plazo } = params
 
-  if (!cantidadHipoteca || !tin || !plazo) return 0
+  const numPagos = Number(plazo) * 12
+  if (!cantidadHipoteca || numPagos <= 0 || !Number.isFinite(tin)) return 0
 
   const cuota = cuotaMensual(params)
-  const numPagos = Number(plazo) * 12
   const totalPagado = cuota * numPagos
   const interes = totalPagado - cantidadHipoteca
 
@@ -75,10 +77,10 @@ export function interesTotal(params: MortgageParams): number {
 export function importeTotal(params: MortgageParams): number {
   const { cantidadHipoteca, tin, plazo } = params
 
-  if (!cantidadHipoteca || !tin || !plazo) return 0
+  const numPagos = Number(plazo) * 12
+  if (!cantidadHipoteca || numPagos <= 0 || !Number.isFinite(tin)) return 0
 
   const cuota = cuotaMensual(params)
-  const numPagos = Number(plazo) * 12
   const total = cuota * numPagos
 
   return Math.round(total * 100) / 100
@@ -102,8 +104,9 @@ export const getEuriborActual = (): number => {
 
 export const getEuriborHistorico = (periodoAnos: number): { min: number; max: number } => {
   const currentYear = new Date().getFullYear()
-  const startYear = currentYear - periodoAnos
-  
+  // +1: un periodo de N años debe abarcar N años naturales incluyendo el actual
+  const startYear = currentYear - periodoAnos + 1
+
   const datosPeriodo = euriborData.filter(d => d.year >= startYear && d.year <= currentYear)
   
   if (datosPeriodo.length === 0) {
@@ -128,12 +131,16 @@ export const crearTablaEscenarios = (
 ) => {
   const euriborActual = getEuriborActual()
   const euriborHistorico = getEuriborHistorico(periodoAnalisis)
-  
+  // El histórico usa medias anuales y el actual es la última media mensual:
+  // el rango mostrado debe contener siempre el valor actual
+  const euriborMin = Math.min(euriborHistorico.min, euriborActual)
+  const euriborMax = Math.max(euriborHistorico.max, euriborActual)
+
   return [
     {
       escenario: t('mortgage.form.scenarios.historicalMinimum', lang),
-      euribor: euriborHistorico.min,
-      interesTotal: calcularInteresVariable(euriborHistorico.min, diferencial)
+      euribor: euriborMin,
+      interesTotal: calcularInteresVariable(euriborMin, diferencial)
     },
     {
       escenario: t('mortgage.form.scenarios.current', lang),
@@ -142,8 +149,8 @@ export const crearTablaEscenarios = (
     },
     {
       escenario: t('mortgage.form.scenarios.historicalMaximum', lang),
-      euribor: euriborHistorico.max,
-      interesTotal: calcularInteresVariable(euriborHistorico.max, diferencial)
+      euribor: euriborMax,
+      interesTotal: calcularInteresVariable(euriborMax, diferencial)
     }
   ]
 }

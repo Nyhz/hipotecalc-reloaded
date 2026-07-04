@@ -25,7 +25,8 @@ export function t(key: string, lang: Language = 'es'): string {
 }
 
 export function getCurrentLang(pathname: string): Language {
-  if (pathname.startsWith('/en/')) {
+  // La home inglesa se sirve como '/en' (sin barra final) en producción
+  if (pathname === '/en' || pathname.startsWith('/en/')) {
     return 'en'
   }
   return 'es'
@@ -35,20 +36,23 @@ export function getAlternateLang(currentLang: Language): Language {
   return currentLang === 'es' ? 'en' : 'es'
 }
 
-export function getAlternatePath(pathname: string): string {
-  // Normalize: remove trailing slash (except for root paths)
-  const normalized = pathname === '/' || pathname === '/en/'
-    ? pathname
-    : pathname.replace(/\/$/, '')
+// Normaliza a la forma canónica sin barra final (salvo la raíz), que es como
+// sirve las URLs producción (vercel.json trailingSlash: false)
+export function normalizePath(pathname: string): string {
+  if (pathname === '/') return pathname
+  return pathname.replace(/\/+$/, '')
+}
 
+export function getAlternatePath(pathname: string): string {
+  const normalized = normalizePath(pathname)
   const currentLang = getCurrentLang(normalized)
 
   if (currentLang === 'es') {
-    if (normalized === '/') return '/en/'
+    if (normalized === '/') return '/en'
     if (normalized === '/calculadora-hipotecaria') return '/en/mortgage-calculator'
     if (normalized === '/calculadora-alquiler') return '/en/rental-calculator'
   } else {
-    if (normalized === '/en/') return '/'
+    if (normalized === '/en') return '/'
     if (normalized === '/en/mortgage-calculator') return '/calculadora-hipotecaria'
     if (normalized === '/en/rental-calculator') return '/calculadora-alquiler'
   }

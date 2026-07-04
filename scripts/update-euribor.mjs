@@ -37,17 +37,23 @@ const annual = await fetchSeries(SERIES_ANNUAL, START_YEAR)
 if (annual.length < 20) throw new Error(`Serie anual sospechosamente corta (${annual.length} filas)`)
 
 const lastAnnualYear = Math.max(...annual.map((r) => Number(r.period)))
-const monthly = await fetchSeries(SERIES_MONTHLY, `${lastAnnualYear + 1}-01`)
+// Pedir la serie mensual desde el último año completo, no desde el siguiente:
+// en enero (Y+1)-01 aún no tiene observaciones (el BCE publica dic y la media
+// anual de Y a la vez) y la petición devolvería un 200 vacío.
+const monthly = await fetchSeries(SERIES_MONTHLY, `${lastAnnualYear}-01`)
 if (monthly.length === 0) throw new Error("Serie mensual vacía tras el último año completo")
 
 const points = annual
   .map((r) => ({ year: Number(r.period), value: round2(r.value) }))
   .sort((a, b) => a.year - b.year)
 
-// Año en curso: media parcial de los meses ya publicados.
+// Año en curso: media parcial de los meses ya publicados. Los años que ya
+// tienen media anual oficial se omiten (la serie mensual empieza en
+// lastAnnualYear solo para poder derivar el euríbor actual en enero).
 const byYear = new Map()
 for (const row of monthly) {
   const year = Number(row.period.slice(0, 4))
+  if (year <= lastAnnualYear) continue
   if (!byYear.has(year)) byYear.set(year, [])
   byYear.get(year).push(row.value)
 }

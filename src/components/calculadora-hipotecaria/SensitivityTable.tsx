@@ -2,6 +2,7 @@ import React, { useState, useMemo } from "react"
 import { COMUNIDADES } from "../../constants/comunidades"
 import { calcularITP, calcularIVA, calcularTIN, getEuriborActual, calcularInteresVariable } from "../../utils/calculadora-hipotecaria"
 import { useTranslations } from "../../hooks/useTranslations"
+import { formatNumberByLang } from "../../utils/number-format"
 
 interface SensitivityTableProps {
   form: {
@@ -24,16 +25,18 @@ interface SensitivityTableProps {
   itpCalculado?: boolean
   itpTipoAplicado?: number | null
   itpDescripcion?: string
+  lang?: 'es' | 'en'
 }
 
-const SensitivityTable: React.FC<SensitivityTableProps> = ({ 
-  form, 
-  calculations, 
-  itpCalculado = false, 
-  itpTipoAplicado = null, 
-  itpDescripcion = "" 
+const SensitivityTable: React.FC<SensitivityTableProps> = ({
+  form,
+  calculations,
+  itpCalculado = false,
+  itpTipoAplicado = null,
+  itpDescripcion = "",
+  lang = 'es'
 }) => {
-  const { t } = useTranslations()
+  const { t, currentLang } = useTranslations(lang)
   const [isExpanded, setIsExpanded] = useState(false)
   const [stepPrecio, setStepPrecio] = useState("10000")
   const [stepAhorro, setStepAhorro] = useState("5000")
@@ -51,31 +54,36 @@ const SensitivityTable: React.FC<SensitivityTableProps> = ({
     const stepPrecioNum = Number(stepPrecio) || 10000
     const stepAhorroNum = Number(stepAhorro) || 5000
 
-    // Generar rangos de precios (±2 steps en incrementos configurables)
+    // Generar rangos de precios (±2 steps en incrementos configurables),
+    // descartando valores negativos o cero que producirían cuotas de 0 €
     const precios = [
       precioActual - (stepPrecioNum * 2),  // -2 steps
       precioActual - stepPrecioNum,        // -1 step
       precioActual,                         // Actual
       precioActual + stepPrecioNum,        // +1 step
       precioActual + (stepPrecioNum * 2),  // +2 steps
-    ]
+    ].filter((p, i, arr) => p > 0 && arr.indexOf(p) === i)
 
-    // Generar rangos de ahorro (±2 steps en incrementos configurables)
+    // Generar rangos de ahorro (±2 steps), sin ahorros negativos
     const ahorros = [
       ahorroActual - (stepAhorroNum * 2),  // -2 steps
       ahorroActual - stepAhorroNum,        // -1 step
       ahorroActual,                         // Actual
       ahorroActual + stepAhorroNum,        // +1 step
       ahorroActual + (stepAhorroNum * 2),  // +2 steps
-    ]
+    ].filter((a, i, arr) => a >= 0 && arr.indexOf(a) === i)
 
     // Función para calcular impuestos (igual que en la calculadora principal)
     const calcularImpuesto = (precio: number) => {
       let impuesto: number
-      
-      if (itpCalculado && itpTipoAplicado !== null) {
-        // Usar el valor calculado del modal
-        impuesto = precio * (itpTipoAplicado / 100)
+
+      if (itpCalculado) {
+        // Escalar proporcionalmente el importe calculado en el modal: conserva
+        // el tipo efectivo (tramos, bonificaciones, VMA) y garantiza que la
+        // celda central coincida exactamente con la cuota del recibo
+        impuesto = precioActual > 0
+          ? calculations.impuesto * (precio / precioActual)
+          : calculations.impuesto
       } else {
         // Cálculo automático por defecto
         if (esObraNueva) {
@@ -257,17 +265,19 @@ const SensitivityTable: React.FC<SensitivityTableProps> = ({
                 </th>
                 {sensitivityData.precios.map((precio, index) => (
                   <th key={index} className="text-right py-2 px-2 font-medium text-blue-900">
-                    {index === 2 ? (
+                    {precio === sensitivityData.precioActual ? (
                       <span className="font-data text-blue-700 font-bold">
-                        {new Intl.NumberFormat("es-ES").format(precio)} €
+                        {formatNumberByLang(precio, currentLang)} €
                       </span>
                     ) : (
-                      <span className={index < 2 ? "text-red-600" : "text-green-600"}>
-                        {new Intl.NumberFormat("es-ES").format(precio)} €
+                      <span className={precio < sensitivityData.precioActual ? "text-red-600" : "text-green-600"}>
+                        {formatNumberByLang(precio, currentLang)} €
                       </span>
                     )}
                     <div className="text-xs text-gray-500 mt-1">
-                      {index === 2 ? t('mortgage.form.current') : index < 2 ? `-${((2 - index) * sensitivityData.stepPrecioNum).toLocaleString()}€` : `+${((index - 2) * sensitivityData.stepPrecioNum).toLocaleString()}€`}
+                      {precio === sensitivityData.precioActual
+                        ? t('mortgage.form.current')
+                        : `${precio < sensitivityData.precioActual ? '-' : '+'}${formatNumberByLang(Math.abs(precio - sensitivityData.precioActual), currentLang)}€`}
                     </div>
                   </th>
                 ))}
@@ -277,27 +287,30 @@ const SensitivityTable: React.FC<SensitivityTableProps> = ({
               {sensitivityData.ahorros.map((ahorro, rowIndex) => (
                 <tr key={rowIndex} className="border-b border-blue-200">
                   <td className="py-2 px-2 font-medium text-blue-900">
-                    {rowIndex === 2 ? (
+                    {ahorro === sensitivityData.ahorroActual ? (
                       <span className="font-data text-blue-700 font-bold">
-                        {new Intl.NumberFormat("es-ES").format(ahorro)} €
+                        {formatNumberByLang(ahorro, currentLang)} €
                       </span>
                     ) : (
-                      <span className={rowIndex < 2 ? "text-red-600" : "text-green-600"}>
-                        {new Intl.NumberFormat("es-ES").format(ahorro)} €
+                      <span className={ahorro < sensitivityData.ahorroActual ? "text-red-600" : "text-green-600"}>
+                        {formatNumberByLang(ahorro, currentLang)} €
                       </span>
                     )}
                     <div className="text-xs text-gray-500">
-                      {rowIndex === 2 ? t('mortgage.form.current') : rowIndex < 2 ? `-${((2 - rowIndex) * sensitivityData.stepAhorroNum).toLocaleString()}€` : `+${((rowIndex - 2) * sensitivityData.stepAhorroNum).toLocaleString()}€`}
+                      {ahorro === sensitivityData.ahorroActual
+                        ? t('mortgage.form.current')
+                        : `${ahorro < sensitivityData.ahorroActual ? '-' : '+'}${formatNumberByLang(Math.abs(ahorro - sensitivityData.ahorroActual), currentLang)}€`}
                     </div>
                   </td>
                   {sensitivityData.matriz[rowIndex].map((cuota, colIndex) => (
                     <td key={colIndex} className="text-right py-2 px-2">
                       <span className={`font-medium ${
-                        rowIndex === 2 && colIndex === 2
+                        ahorro === sensitivityData.ahorroActual &&
+                        sensitivityData.precios[colIndex] === sensitivityData.precioActual
                           ? "font-data text-blue-700 font-bold"
                           : "text-gray-700"
                       }`}>
-                        {new Intl.NumberFormat("es-ES").format(cuota)} €
+                        {formatNumberByLang(cuota, currentLang)} €
                       </span>
                     </td>
                   ))}
