@@ -8,9 +8,11 @@ node_modules
 .DS_Store
 Thumbs.db
 
-# Documentation
+# Documentation (nunca excluir el contenido del blog: son .md que Astro
+# necesita en el build de Vercel para generar las páginas)
 *.md
 !README.md
+!src/content/**/*.md
 
 # Environment files
 .env*
