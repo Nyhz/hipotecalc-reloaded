@@ -9,6 +9,12 @@ import vercel from "@astrojs/vercel"
 import icon from "astro-icon"
 
 import react from "@astrojs/react"
+import keystatic from "@keystatic/astro"
+
+// El panel de Keystatic (/keystatic) solo existe en desarrollo: el sitio de
+// producción es 100% estático y los artículos se publican desde los .md del
+// repo. Así evitamos necesitar SSR y la incompatibilidad peer con Astro 7.
+const isDev = process.env.NODE_ENV !== "production"
 
 // https://astro.build/config
 export default defineConfig({
@@ -56,6 +62,7 @@ export default defineConfig({
     icon(),
     react(),
     sitemap(),
+    ...(isDev ? [keystatic()] : []),
 
     compress({
       // csso descarta los bloques `@media (width >= ...)` (sintaxis de rango

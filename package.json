@@ -21,6 +21,8 @@
     "@astrojs/vercel": "^11.0.2",
     "@iconify-json/lucide": "^1.2.57",
     "@iconify/react": "^6.0.0",
+    "@keystatic/astro": "^5.1.0",
+    "@keystatic/core": "^0.5.50",
     "@tailwindcss/vite": "^4.1.11",
     "@types/react": "^19.1.8",
     "@types/react-dom": "^19.1.6",

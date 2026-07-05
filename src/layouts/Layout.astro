@@ -41,11 +41,14 @@ const isLocalEnv =
   Astro.url.hostname === "localhost" || Astro.url.hostname === "127.0.0.1";
 
 const alternatePath = getAlternatePath(normalizedPath);
+// Páginas sin versión en el otro idioma (blog, comparativa): getAlternatePath
+// devuelve la misma ruta y no debe emitirse un hreflang alterno falso
+const hasAlternate = alternatePath !== normalizedPath;
 const esPath = currentLang === 'es' ? normalizedPath : alternatePath;
 const enPath = currentLang === 'en' ? normalizedPath : alternatePath;
-const hrefLangEs = `${SITE_BASE}${esPath}`;
-const hrefLangEn = `${SITE_BASE}${enPath}`;
-const hrefLangDefault = hrefLangEs;
+const hrefLangEs = currentLang === 'es' || hasAlternate ? `${SITE_BASE}${esPath}` : null;
+const hrefLangEn = currentLang === 'en' || hasAlternate ? `${SITE_BASE}${enPath}` : null;
+const hrefLangDefault = hrefLangEs ?? `${SITE_BASE}${normalizedPath}`;
 
 // Datos estructurados: Organization en todas las páginas; WebSite solo en
 // las portadas; WebApplication solo en las calculadoras (no en la home).
@@ -125,8 +128,8 @@ const webPageSchema = pageType === 'legal' ? JSON.stringify({
     <link rel="canonical" href={canonicalURL} />
 
     <!-- Hreflang tags for language alternates -->
-    <link rel="alternate" hreflang="es" href={hrefLangEs} />
-    <link rel="alternate" hreflang="en" href={hrefLangEn} />
+    {hrefLangEs && <link rel="alternate" hreflang="es" href={hrefLangEs} />}
+    {hrefLangEn && <link rel="alternate" hreflang="en" href={hrefLangEn} />}
     <link rel="alternate" hreflang="x-default" href={hrefLangDefault} />
 
     <!-- Open Graph / Facebook -->

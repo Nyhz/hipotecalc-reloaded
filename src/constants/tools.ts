@@ -21,6 +21,26 @@ export const getTools = (lang: 'es' | 'en' = 'es') => {
         nav: true,
         active: true,
       },
+      {
+        icon: "lucide:table",
+        title: "Comparativa de Hipotecas",
+        label: "Comparativa",
+        description:
+          "Las ofertas hipotecarias de bancos, cajas y cooperativas de España: TIN, TAE, vinculaciones y comisiones, frente a frente.",
+        href: "/comparativa-hipotecas",
+        nav: true,
+        active: true,
+      },
+      {
+        icon: "lucide:newspaper",
+        title: "Blog",
+        label: "Blog",
+        description: "Guías y análisis sobre hipotecas, euríbor y vivienda en España.",
+        href: "/blog",
+        nav: true,
+        active: true,
+        card: false,
+      },
     ],
     en: [
       {

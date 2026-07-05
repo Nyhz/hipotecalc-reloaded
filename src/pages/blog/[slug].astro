@@ -1,0 +1,82 @@
+---
+import { getCollection, render } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+import Breadcrumbs from '../../components/seo/Breadcrumbs.astro';
+import PageTracking from '../../components/PageTracking.tsx';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog');
+  return posts.map((post) => ({
+    params: { slug: post.id },
+    props: { post },
+  }));
+}
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+
+const formatDate = (d: Date) =>
+  d.toLocaleDateString('es-ES', { day: 'numeric', month: 'long', year: 'numeric' });
+
+const SITE_BASE = 'https://www.hipotecalc.com';
+const canonical = `${SITE_BASE}/blog/${post.id}`;
+
+const articleSchema = JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": post.data.title,
+  "description": post.data.description,
+  "url": canonical,
+  "datePublished": post.data.pubDate.toISOString(),
+  ...(post.data.updatedDate ? { "dateModified": post.data.updatedDate.toISOString() } : {}),
+  "inLanguage": "es",
+  "publisher": { "@id": `${SITE_BASE}/#organization` },
+  "mainEntityOfPage": canonical,
+});
+---
+<Layout
+  title={`${post.data.title} | Blog Hipotecalc`}
+  description={post.data.description}
+  pageType="legal"
+>
+  <PageTracking client:load pagePath={`/blog/${post.id}`} pageTitle={post.data.title} />
+  <script type="application/ld+json" set:html={articleSchema} />
+
+  <Breadcrumbs items={[
+    { name: 'Inicio', href: '/' },
+    { name: 'Blog', href: '/blog' },
+    { name: post.data.title, href: `/blog/${post.id}` }
+  ]} />
+
+  <article class="w-full max-w-3xl mx-auto py-10">
+    <header class="mb-10">
+      <p class="font-data text-[11px] uppercase tracking-widest text-ink-soft mb-3">
+        {formatDate(post.data.pubDate)}
+        {post.data.updatedDate && ` · Actualizado: ${formatDate(post.data.updatedDate)}`}
+      </p>
+      <h1 class="font-heading text-3xl md:text-4xl font-semibold tracking-[-1px] text-ink mb-4">
+        {post.data.title}
+      </h1>
+      <p class="text-ink-soft text-lg leading-relaxed">{post.data.description}</p>
+    </header>
+
+    <div class="text-ink-soft leading-relaxed space-y-4
+      [&>h2]:font-heading [&>h2]:text-2xl [&>h2]:font-semibold [&>h2]:text-ink [&>h2]:mt-10 [&>h2]:mb-3
+      [&>h3]:font-heading [&>h3]:text-xl [&>h3]:font-semibold [&>h3]:text-ink [&>h3]:mt-8 [&>h3]:mb-2
+      [&>ul]:list-disc [&>ul]:pl-6 [&>ul]:space-y-1
+      [&>ol]:list-decimal [&>ol]:pl-6 [&>ol]:space-y-1
+      [&_a]:underline [&_a]:text-brand-blue
+      [&>blockquote]:border-l-4 [&>blockquote]:border-lime [&>blockquote]:pl-4 [&>blockquote]:italic
+      [&_strong]:text-ink">
+      <Content />
+    </div>
+
+    <footer class="mt-12 pt-6 border-t border-line">
+      <p class="text-xs text-ink-soft">
+        Este artículo es contenido informativo y educativo, no asesoramiento financiero.
+        Consulta el <a href="/disclaimer-financiero" class="underline text-brand-blue">disclaimer financiero</a>.
+      </p>
+      <a href="/blog" class="inline-block mt-4 text-sm font-medium text-brand-blue">← Volver al blog</a>
+    </footer>
+  </article>
+</Layout>

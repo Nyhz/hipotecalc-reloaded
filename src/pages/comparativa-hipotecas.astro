@@ -1,0 +1,84 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Breadcrumbs from '../components/seo/Breadcrumbs.astro';
+import FAQSection from '../components/seo/FAQSection.astro';
+import PageTracking from '../components/PageTracking.tsx';
+import BankComparisonTable from '../components/comparativa/BankComparisonTable.tsx';
+import { OFERTAS_HIPOTECAS, FECHA_DATOS, EURIBOR_REFERENCIA } from '../constants/hipotecas-bancos';
+
+const numBancos = new Set(OFERTAS_HIPOTECAS.map(o => o.banco)).size;
+const title = `Comparativa de Hipotecas ${new Date().getFullYear()}: ${numBancos} bancos frente a frente | Hipotecalc`;
+const description = `Compara las hipotecas fijas, variables y mixtas de ${numBancos} bancos y cajas de España: TIN, TAE, plazo, financiación, vinculaciones y comisiones, con fuentes oficiales.`;
+---
+<Layout
+  title={title}
+  description={description}
+  keywords="comparativa hipotecas, mejores hipotecas 2026, hipoteca fija, hipoteca variable, hipoteca mixta, TIN, TAE, bancos España"
+  pageType="legal"
+>
+  <PageTracking client:load pagePath="/comparativa-hipotecas" pageTitle={title} />
+
+  <Breadcrumbs items={[
+    { name: 'Inicio', href: '/' },
+    { name: 'Comparativa de Hipotecas', href: '/comparativa-hipotecas' }
+  ]} />
+
+  <div class="w-full py-8">
+    <div class="text-center mb-8 reveal-up">
+      <span class="eyebrow">Comparativa de hipotecas · España {new Date().getFullYear()}</span>
+      <h1 class="font-heading text-3xl md:text-4xl lg:text-[44px] font-semibold tracking-[-1px] text-ink mt-4 mb-3">
+        {numBancos} bancos, todas sus hipotecas
+      </h1>
+      <p class="text-ink-soft max-w-3xl mx-auto text-base md:text-lg">
+        Las ofertas hipotecarias publicadas por bancos, cajas y cooperativas españolas: fija, variable y mixta,
+        con TIN, TAE, plazos, financiación máxima, vinculaciones y comisiones. Pulsa en cualquier fila para ver el detalle.
+      </p>
+      <p class="font-data text-xs text-ink-soft mt-3">
+        Datos: {FECHA_DATOS} · Euríbor de referencia {EURIBOR_REFERENCIA}
+      </p>
+    </div>
+
+    <div class="reveal-up reveal-delay-1">
+      <BankComparisonTable client:load />
+    </div>
+
+    <div class="max-w-3xl mx-auto mt-10 text-sm text-ink-soft space-y-3">
+      <p>
+        <strong class="text-ink">Cómo leer la tabla:</strong> los tipos se muestran como
+        <em> bonificado / sin bonificar</em>. El tipo bonificado exige contratar productos vinculados
+        (nómina, seguros, tarjetas…) cuyo coste debes valorar; la TAE es la medida más comparable
+        porque incorpora comisiones y vinculaciones. «FIPRE / Web oficial» indica datos publicados
+        por la entidad; «Comparador» son cifras orientativas de portales especializados.
+      </p>
+      <p>
+        Todas las cifras son orientativas y cambian con frecuencia. Antes de contratar, solicita la
+        FIPRE/FEIN personalizada a cada entidad y consulta nuestro
+        <a href="/disclaimer-financiero" class="underline text-brand-blue">disclaimer financiero</a>.
+        Puedes simular la cuota de cualquiera de estas ofertas con la
+        <a href="/calculadora-hipotecaria" class="underline text-brand-blue">calculadora hipotecaria</a>.
+      </p>
+    </div>
+  </div>
+
+  <FAQSection
+    title="Preguntas frecuentes sobre la comparativa"
+    items={[
+      {
+        question: "¿Qué diferencia hay entre TIN y TAE?",
+        answer: "El TIN es el tipo de interés nominal que aplica el banco. La TAE incorpora además las comisiones y el efecto de la frecuencia de pagos, por lo que es la cifra correcta para comparar ofertas entre entidades. Ojo: la TAE oficial no siempre incluye el coste real de los seguros vinculados."
+      },
+      {
+        question: "¿Qué significa tipo bonificado y sin bonificar?",
+        answer: "El tipo bonificado es el que consigues si contratas los productos vinculados que pide el banco (nómina, seguros de vida y hogar, tarjetas, planes de pensiones…). Sin esas vinculaciones se aplica el tipo sin bonificar, normalmente entre 0,5 y 1,3 puntos más alto. Valora siempre el coste anual de las vinculaciones frente al ahorro en cuota."
+      },
+      {
+        question: "¿De dónde salen estos datos?",
+        answer: "De las webs oficiales y documentos FIPRE de cada entidad cuando están publicados, y de comparadores especializados (HelpMyCash, Rankia, Idealista, entre otros) cuando la entidad no publica sus tipos online. La columna de fuente indica la fiabilidad de cada dato, y la fecha de elaboración figura en la cabecera."
+      },
+      {
+        question: "¿Puedo negociar estas condiciones con el banco?",
+        answer: "Sí. Las cifras publicadas son el punto de partida: tu perfil (ingresos, estabilidad, ahorro aportado) y las contraofertas de otras entidades pueden mejorar el tipo, las comisiones o las vinculaciones. Llevar una FEIN de la competencia a la negociación suele funcionar."
+      }
+    ]}
+  />
+</Layout>

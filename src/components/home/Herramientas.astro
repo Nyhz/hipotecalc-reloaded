@@ -8,6 +8,8 @@ export interface Tool {
   description: string;
   href?: string;
   active?: boolean;
+  /** false = solo aparece en la navegación, no como tarjeta en la home */
+  card?: boolean;
 }
 export interface Props {
   tools: Tool[];
@@ -28,7 +30,7 @@ const { tools, lang = 'es' } = Astro.props;
       </p>
     </div>
     <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-      {tools.map((tool, index) => (
+      {tools.filter((tool) => tool.card !== false).map((tool, index) => (
         tool.active !== false && tool.href ? (
           <a
             href={tool.href}
