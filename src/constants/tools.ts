@@ -32,6 +32,17 @@ export const getTools = (lang: 'es' | 'en' = 'es') => {
         active: true,
       },
       {
+        icon: "lucide:book-open",
+        title: "Guías",
+        label: "Guías",
+        description:
+          "El ITP en cada comunidad autónoma, tipos de hipoteca y fiscalidad de la vivienda, con datos verificados.",
+        href: "/guias",
+        nav: true,
+        active: true,
+        card: false,
+      },
+      {
         icon: "lucide:newspaper",
         title: "Blog",
         label: "Blog",

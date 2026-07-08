@@ -1,0 +1,96 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+import Breadcrumbs from '../../components/seo/Breadcrumbs.astro';
+import PageTracking from '../../components/PageTracking.tsx';
+
+const guiasItp = await getCollection('itp');
+const posts = (await getCollection('blog')).sort(
+  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
+);
+
+const title = 'Guías de hipotecas e impuestos de vivienda en España | Hipotecalc';
+const description =
+  'Guías prácticas para comprar vivienda en España: el ITP en cada comunidad autónoma, tipos de hipoteca, euríbor y fiscalidad, con datos verificados.';
+---
+<Layout title={title} description={description} pageType="legal">
+  <PageTracking client:load pagePath="/guias" pageTitle={title} />
+
+  <Breadcrumbs items={[
+    { name: 'Inicio', href: '/' },
+    { name: 'Guías', href: '/guias' }
+  ]} />
+
+  <div class="w-full max-w-5xl mx-auto py-10">
+    <header class="text-center mb-12">
+      <span class="eyebrow">Guías</span>
+      <h1 class="font-heading text-3xl md:text-4xl lg:text-[44px] font-semibold tracking-[-1px] text-ink mt-4 mb-4">
+        Guías para comprar con la cabeza fría
+      </h1>
+      <p class="text-ink-soft max-w-3xl mx-auto text-base md:text-lg">
+        Impuestos, tipos de hipoteca y mercado, explicados con datos verificados y
+        conectados con nuestras calculadoras.
+      </p>
+    </header>
+
+    <section class="mb-14">
+      <div class="flex items-baseline justify-between mb-6">
+        <h2 class="font-heading text-2xl font-semibold text-ink">El ITP por comunidades</h2>
+        <a href="/itp" class="text-sm font-medium text-brand-blue">Ver el cuadro completo →</a>
+      </div>
+      <p class="text-ink-soft mb-6 max-w-3xl">
+        Cuánto ITP se paga al comprar vivienda usada en cada comunidad autónoma en 2026,
+        con los tipos vigentes, todas las reducciones y bonificaciones, su cita legal y la
+        calculadora precargada para tu comunidad. {guiasItp.length} guías verificadas con
+        fuentes oficiales.
+      </p>
+      <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
+        {guiasItp
+          .sort((a, b) => a.data.comunidad.localeCompare(b.data.comunidad, 'es'))
+          .map((guia) => (
+            <a
+              href={`/itp/${guia.id}`}
+              class="pl-card pl-card-hover p-4 flex flex-col gap-1"
+            >
+              <span class="font-medium text-ink text-sm">
+                {guia.id === 'ceuta-melilla' ? 'Ceuta y Melilla' : guia.data.comunidad}
+              </span>
+              <span class="font-data text-xs text-ink-soft">ITP: {guia.data.tipoGeneral}</span>
+            </a>
+          ))}
+      </div>
+    </section>
+
+    <section class="mb-14">
+      <div class="flex items-baseline justify-between mb-6">
+        <h2 class="font-heading text-2xl font-semibold text-ink">Del blog</h2>
+        <a href="/blog" class="text-sm font-medium text-brand-blue">Todos los artículos →</a>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        {posts.slice(0, 4).map((post) => (
+          <a href={`/blog/${post.id}`} class="pl-card pl-card-hover p-6 flex flex-col gap-2">
+            <span class="font-data text-[11px] uppercase tracking-widest text-ink-soft">
+              {post.data.pubDate.toLocaleDateString('es-ES', { month: 'long', year: 'numeric' })}
+            </span>
+            <span class="font-heading text-lg font-semibold text-ink leading-snug">{post.data.title}</span>
+            <span class="text-sm text-ink-soft leading-relaxed">{post.data.description}</span>
+          </a>
+        ))}
+      </div>
+    </section>
+
+    <section class="pl-card p-6 md:p-8 text-center">
+      <h2 class="font-heading text-xl md:text-2xl font-semibold text-ink mb-2">
+        ¿Ya tienes los números de tu compra?
+      </h2>
+      <p class="text-ink-soft mb-5 max-w-2xl mx-auto">
+        Pasa de la teoría a tu caso: simula la cuota, el ITP y el coste total con nuestras
+        calculadoras gratuitas, o compara las ofertas actuales de los bancos.
+      </p>
+      <div class="flex flex-wrap justify-center gap-3">
+        <a href="/calculadora-hipotecaria" class="btn-ink px-6 py-3 text-sm">Calcular hipoteca →</a>
+        <a href="/comparativa-hipotecas" class="btn-outline px-6 py-3 text-sm">Comparar bancos</a>
+      </div>
+    </section>
+  </div>
+</Layout>

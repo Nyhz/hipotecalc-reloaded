@@ -281,18 +281,16 @@ export const COMUNIDADES: Comunidad[] = [
     }
   },
   {
+    // Tipo general 9 % desde el 1-6-2026 (Ley 5/2025, art. 33). Si el valor
+    // supera 1.000.000 €, el tipo legal es un 11 % ÚNICO sobre todo el valor
+    // (no un tramo progresivo), que este modelo no representa.
     nombre: "Comunidad Valenciana",
-    ITP: 10.0,
-    itpBrackets: [
-      { min: 0, max: 400000, rate: 10.0 },
-      { min: 400000, max: 600000, rate: 11.0 },
-      { min: 600000, max: null, rate: 12.0 }
-    ],
+    ITP: 9.0,
     specialRates: {
-      youngBuyer: 7.0,
-      largeFamily: 7.0,
-      disability: 7.0,
-      genderViolence: 7.0
+      youngBuyer: 8.0, // 6 % si el valor ≤180.000 € (con límite de renta)
+      largeFamily: 4.0, // 3 % si el valor ≤180.000 €
+      disability: 4.0, // 3 % si el valor ≤180.000 €
+      genderViolence: 4.0 // 3 % si el valor ≤180.000 €
     },
     camposDinamicos: {
       edad: true,
@@ -376,8 +374,9 @@ export const COMUNIDADES: Comunidad[] = [
     }
   },
   {
+    // 7,75 % general desde 2025 (verificado julio 2026, Ministerio de Hacienda)
     nombre: "Murcia",
-    ITP: 8.0,
+    ITP: 7.75,
     specialRates: {
       vpo: 4.0,
       largeFamily: 3.0,

@@ -33,14 +33,29 @@ const articleSchema = JSON.stringify({
   "publisher": { "@id": `${SITE_BASE}/#organization` },
   "mainEntityOfPage": canonical,
 });
+
+// FAQ del frontmatter: solo alimenta el rich snippet; las preguntas ya están
+// redactadas dentro del propio artículo
+const faqSchema = post.data.faq?.length
+  ? JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": post.data.faq.map((item) => ({
+        "@type": "Question",
+        "name": item.question,
+        "acceptedAnswer": { "@type": "Answer", "text": item.answer },
+      })),
+    })
+  : null;
 ---
 <Layout
-  title={`${post.data.title} | Blog Hipotecalc`}
+  title={post.data.seoTitle ?? `${post.data.title} | Blog Hipotecalc`}
   description={post.data.description}
   pageType="legal"
 >
   <PageTracking client:load pagePath={`/blog/${post.id}`} pageTitle={post.data.title} />
   <script type="application/ld+json" set:html={articleSchema} />
+  {faqSchema && <script type="application/ld+json" set:html={faqSchema} />}
 
   <Breadcrumbs items={[
     { name: 'Inicio', href: '/' },

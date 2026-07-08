@@ -1,0 +1,116 @@
+---
+import { getCollection, render } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+import Breadcrumbs from '../../components/seo/Breadcrumbs.astro';
+import PageTracking from '../../components/PageTracking.tsx';
+import MortgageCalculator from '../../components/calculadora-hipotecaria/MortgageCalculator';
+
+export async function getStaticPaths() {
+  const guias = await getCollection('itp');
+  return guias.map((guia) => ({
+    params: { slug: guia.id },
+    props: { guia },
+  }));
+}
+
+const { guia } = Astro.props;
+const { Content } = await render(guia);
+
+const formatDate = (d: Date) =>
+  d.toLocaleDateString('es-ES', { day: 'numeric', month: 'long', year: 'numeric' });
+
+const SITE_BASE = 'https://www.hipotecalc.com';
+const canonical = `${SITE_BASE}/itp/${guia.id}`;
+
+const articleSchema = JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": guia.data.title,
+  "description": guia.data.description,
+  "url": canonical,
+  "dateModified": guia.data.updatedDate.toISOString(),
+  "inLanguage": "es",
+  "publisher": { "@id": `${SITE_BASE}/#organization` },
+  "mainEntityOfPage": canonical,
+});
+
+// Nombre corto para encabezados de sección
+const nombreCorto = guia.id === 'ceuta-melilla' ? 'Ceuta y Melilla' : guia.data.comunidad;
+---
+<Layout
+  title={`${guia.data.title} | Hipotecalc`}
+  description={guia.data.description}
+  pageType="legal"
+>
+  <PageTracking client:load pagePath={`/itp/${guia.id}`} pageTitle={guia.data.title} />
+  <script type="application/ld+json" set:html={articleSchema} />
+
+  <Breadcrumbs items={[
+    { name: 'Inicio', href: '/' },
+    { name: 'Guías', href: '/guias' },
+    { name: 'ITP por comunidades', href: '/itp' },
+    { name: nombreCorto, href: `/itp/${guia.id}` }
+  ]} />
+
+  <article class="w-full max-w-3xl mx-auto py-10">
+    <header class="mb-8">
+      <span class="eyebrow">Guía del ITP · {nombreCorto}</span>
+      <h1 class="font-heading text-3xl md:text-4xl font-semibold tracking-[-1px] text-ink mt-4 mb-3">
+        {guia.data.title}
+      </h1>
+      <p class="font-data text-xs text-ink-soft">
+        Actualizado: {formatDate(guia.data.updatedDate)} · Normativa verificada con fuentes oficiales
+      </p>
+    </header>
+
+    <div class="pl-card p-5 mb-10 border-l-4 border-lime">
+      <div class="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-2 mb-2">
+        <span class="font-data text-[11px] uppercase tracking-widest text-ink-soft">Tipo general 2026</span>
+        <span class="font-heading text-2xl font-bold text-ink">{guia.data.tipoGeneral}</span>
+      </div>
+      <p class="text-sm text-ink-soft leading-relaxed">
+        <strong class="text-ink">Reducciones y bonificaciones:</strong> {guia.data.resumen}.
+      </p>
+      <a href="#calculadora" class="inline-block mt-3 text-sm font-medium text-brand-blue underline">
+        Calcula tu ITP y tu hipoteca en {nombreCorto} ↓
+      </a>
+    </div>
+
+    <div class="text-ink-soft leading-relaxed space-y-4
+      [&>h2]:font-heading [&>h2]:text-2xl [&>h2]:font-semibold [&>h2]:text-ink [&>h2]:mt-10 [&>h2]:mb-3
+      [&>h3]:font-heading [&>h3]:text-xl [&>h3]:font-semibold [&>h3]:text-ink [&>h3]:mt-8 [&>h3]:mb-2
+      [&>ul]:list-disc [&>ul]:pl-6 [&>ul]:space-y-1
+      [&>ol]:list-decimal [&>ol]:pl-6 [&>ol]:space-y-1
+      [&_a]:underline [&_a]:text-brand-blue [&_a]:break-words
+      [&_table]:w-full [&_table]:text-sm [&_table]:my-4 [&_th]:text-left [&_th]:py-2 [&_th]:px-2 [&_th]:border-b [&_th]:border-line [&_td]:py-2 [&_td]:px-2 [&_td]:border-b [&_td]:border-line
+      [&>blockquote]:border-l-4 [&>blockquote]:border-lime [&>blockquote]:pl-4 [&>blockquote]:italic
+      [&_strong]:text-ink">
+      <Content />
+    </div>
+  </article>
+
+  <section id="calculadora" class="w-full py-14">
+    <div class="text-center mb-8">
+      <span class="eyebrow">Calculadora precargada</span>
+      <h2 class="font-heading text-2xl md:text-3xl font-semibold text-ink mt-3 mb-3">
+        Calcula tu hipoteca y tu ITP en {nombreCorto}
+      </h2>
+      <p class="text-ink-soft max-w-2xl mx-auto">
+        La calculadora ya tiene seleccionada la comunidad: introduce el precio de la vivienda
+        y tu ahorro, y usa «Calcula tu ITP» para aplicar las bonificaciones de tu caso.
+      </p>
+    </div>
+    <MortgageCalculator client:visible lang="es" initialComunidad={guia.data.comunidad} />
+  </section>
+
+  <footer class="w-full max-w-3xl mx-auto pb-10">
+    <div class="pt-6 border-t border-line">
+      <p class="text-xs text-ink-soft">
+        Esta guía es contenido informativo, no asesoramiento fiscal. Normativa verificada a
+        {formatDate(guia.data.updatedDate)} con las fuentes oficiales enlazadas; los tipos pueden
+        cambiar. Consulta el <a href="/disclaimer-financiero" class="underline text-brand-blue">disclaimer financiero</a>.
+      </p>
+      <a href="/itp" class="inline-block mt-4 text-sm font-medium text-brand-blue">← Ver el ITP en todas las comunidades</a>
+    </div>
+  </footer>
+</Layout>

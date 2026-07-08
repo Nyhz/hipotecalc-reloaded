@@ -10,7 +10,30 @@ const blog = defineCollection({
     description: z.string(),
     pubDate: z.coerce.date(),
     updatedDate: z.coerce.date().optional(),
+    // Título corto para la etiqueta <title> (si no, se usa title + sufijo)
+    seoTitle: z.string().optional(),
+    // Preguntas frecuentes: se muestran ya dentro del contenido del artículo;
+    // este campo solo alimenta el JSON-LD FAQPage (rich snippet en Google)
+    faq: z
+      .array(z.object({ question: z.string(), answer: z.string() }))
+      .optional(),
   }),
 })
 
-export const collections = { blog }
+// Guías ITP: un .md por comunidad autónoma en src/content/guias/itp/.
+// El slug del fichero es la URL (/itp/<slug>). `comunidad` debe coincidir
+// exactamente con el nombre en src/constants/comunidades.ts para precargar
+// la calculadora.
+const itp = defineCollection({
+  loader: glob({ pattern: '**/*.md', base: './src/content/guias/itp' }),
+  schema: z.object({
+    title: z.string(),
+    description: z.string(),
+    comunidad: z.string(),
+    tipoGeneral: z.string(),
+    resumen: z.string(),
+    updatedDate: z.coerce.date(),
+  }),
+})
+
+export const collections = { blog, itp }

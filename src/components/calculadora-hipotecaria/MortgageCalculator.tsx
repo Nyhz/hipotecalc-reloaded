@@ -47,9 +47,11 @@ const initialState = {
 
 interface MortgageCalculatorProps {
   lang?: 'es' | 'en'
+  /** Preselecciona la comunidad autónoma (nombre exacto de COMUNIDADES) */
+  initialComunidad?: string
 }
 
-const MortgageCalculator: React.FC<MortgageCalculatorProps> = ({ lang = 'es' }) => {
+const MortgageCalculator: React.FC<MortgageCalculatorProps> = ({ lang = 'es', initialComunidad }) => {
   const { trackCalculatorUsage } = useGoogleAnalytics()
   const { t, currentLang } = useTranslations(lang)
 
@@ -65,7 +67,10 @@ const MortgageCalculator: React.FC<MortgageCalculatorProps> = ({ lang = 'es' }) 
   ] // TODO: Añadir MIXTA.
   
   const [showItpModal, setShowItpModal] = useState(false)
-  const [form, setForm] = useState(initialState)
+  const [form, setForm] = useState(() => ({
+    ...initialState,
+    ...(initialComunidad ? { comunidad: initialComunidad } : {}),
+  }))
 
   const [itpCalculado, setItpCalculado] = useState(false)
   const [itpValorModal, setItpValorModal] = useState<number | null>(null)
