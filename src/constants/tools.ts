@@ -32,6 +32,17 @@ export const getTools = (lang: 'es' | 'en' = 'es') => {
         active: true,
       },
       {
+        icon: "lucide:landmark",
+        title: "ITP por comunidad",
+        label: "ITP por comunidad",
+        description:
+          "Cuánto ITP se paga en cada comunidad autónoma: tipos vigentes, reducciones y bonificaciones de 2026.",
+        href: "/itp",
+        nav: true,
+        active: true,
+        card: false,
+      },
+      {
         icon: "lucide:book-open",
         title: "Guías",
         label: "Guías",

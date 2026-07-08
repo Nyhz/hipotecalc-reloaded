@@ -4,6 +4,7 @@ import Layout from '../../layouts/Layout.astro';
 import Breadcrumbs from '../../components/seo/Breadcrumbs.astro';
 import PageTracking from '../../components/PageTracking.tsx';
 import MortgageCalculator from '../../components/calculadora-hipotecaria/MortgageCalculator';
+import FAQSection from '../../components/seo/FAQSection.astro';
 
 export async function getStaticPaths() {
   const guias = await getCollection('itp');
@@ -36,6 +37,40 @@ const articleSchema = JSON.stringify({
 
 // Nombre corto para encabezados de sección
 const nombreCorto = guia.id === 'ceuta-melilla' ? 'Ceuta y Melilla' : guia.data.comunidad;
+
+// FAQ con marcado FAQPage (bloques "Otras preguntas" de Google). Respuestas
+// construidas desde los datos verificados del frontmatter, con las
+// particularidades forales y de imposición indirecta de cada territorio.
+const esForal = ['Navarra', 'País Vasco'].includes(guia.data.comunidad);
+const tipoEnFrase = guia.data.tipoGeneral.charAt(0).toLowerCase() + guia.data.tipoGeneral.slice(1);
+
+const impuestoObraNueva =
+  guia.id === 'canarias'
+    ? 'No. La primera transmisión de una vivienda nueva en Canarias no paga ITP ni IVA: tributa por el IGIC (Impuesto General Indirecto Canario). El ITP solo grava las viviendas de segunda mano.'
+    : guia.id === 'ceuta-melilla'
+      ? 'No. La vivienda nueva en Ceuta y Melilla no paga ITP ni IVA: tributa por el IPSI (Impuesto sobre la Producción, los Servicios y la Importación). El ITP solo grava las viviendas de segunda mano.'
+      : `No. La vivienda nueva comprada al promotor tributa por IVA al 10 % (4 % si es VPO de régimen especial) más Actos Jurídicos Documentados. El ITP solo grava las viviendas de segunda mano en ${nombreCorto}.`;
+
+const faqItems = [
+  {
+    question: `¿Cuánto ITP se paga en ${nombreCorto} en 2026?`,
+    answer: `El tipo general vigente es ${tipoEnFrase}. Además existen tipos reducidos y bonificaciones: ${guia.data.resumen}. Cada beneficio tiene requisitos detallados que se explican en esta guía con su cita legal.`,
+  },
+  {
+    question: `¿Quién paga el ITP y qué plazo hay en ${nombreCorto}?`,
+    answer: 'El ITP lo paga siempre el comprador de la vivienda usada, mediante autoliquidación ante la administración tributaria correspondiente. El plazo habitual es de 30 días hábiles o un mes desde la firma de la escritura; el modelo y el plazo exactos se detallan en esta guía.',
+  },
+  {
+    question: `¿Sobre qué valor se calcula el ITP en ${nombreCorto}?`,
+    answer: esForal
+      ? `${nombreCorto} tiene régimen foral y aplica sus propias reglas de valoración, que no siguen el sistema estatal del valor de referencia de Catastro. El detalle está en el apartado de base imponible de esta guía.`
+      : 'Sobre el valor de referencia de Catastro o el precio de compraventa si es mayor (art. 10 del TRLITPAJD, desde 2022). Pagar un precio inferior al valor de referencia no reduce el impuesto.',
+  },
+  {
+    question: `¿La vivienda nueva paga ITP en ${nombreCorto}?`,
+    answer: impuestoObraNueva,
+  },
+];
 ---
 <Layout
   title={`${guia.data.title} | Hipotecalc`}
@@ -102,6 +137,11 @@ const nombreCorto = guia.id === 'ceuta-melilla' ? 'Ceuta y Melilla' : guia.data.
     </div>
     <MortgageCalculator client:visible lang="es" initialComunidad={guia.data.comunidad} />
   </section>
+
+  <FAQSection
+    title={`Preguntas frecuentes sobre el ITP en ${nombreCorto}`}
+    items={faqItems}
+  />
 
   <footer class="w-full max-w-3xl mx-auto pb-10">
     <div class="pt-6 border-t border-line">

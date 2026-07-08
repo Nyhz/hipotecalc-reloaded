@@ -1,4 +1,5 @@
 ---
+import { getCollection } from 'astro:content';
 import Herramientas from '../components/home/Herramientas.astro';
 import { getTools } from '../constants/tools';
 import Hero from '../components/home/Hero.astro';
@@ -8,6 +9,13 @@ import EuriborChart from '../components/home/EuriborChart';
 import BrokerBand from '../components/home/BrokerBand.astro';
 import PageTracking from '../components/PageTracking.tsx';
 import { t } from '../utils/i18n';
+
+// Comunidades con más volumen de búsqueda, enlazadas desde la home para
+// repartir autoridad al clúster ITP
+const guiasItp = await getCollection('itp');
+const itpDestacadas = ['madrid', 'cataluna', 'andalucia', 'comunidad-valenciana', 'baleares']
+  .map((slug) => guiasItp.find((g) => g.id === slug))
+  .filter((g) => g !== undefined);
 ---
 <Layout
   title={t('seo.home.title')}
@@ -18,6 +26,34 @@ import { t } from '../utils/i18n';
   <Hero lang="es" />
   <StatsStrip lang="es" />
   <Herramientas tools={getTools('es')} lang="es" />
+
+  <section class="w-full max-w-5xl mx-auto py-14">
+    <div class="text-center mb-8">
+      <span class="eyebrow">ITP por comunidad autónoma</span>
+      <h2 class="font-heading text-2xl md:text-3xl font-semibold text-ink mt-3 mb-3">
+        ¿Cuánto ITP pagarás? Elige tu comunidad
+      </h2>
+      <p class="text-ink-soft max-w-3xl mx-auto">
+        El Impuesto de Transmisiones Patrimoniales es el mayor gasto al comprar vivienda usada
+        y cambia por completo según dónde compres: del 3&nbsp;% efectivo al 13&nbsp;% de los
+        tramos más altos. Consulta los tipos y bonificaciones de 2026, verificados con
+        fuentes oficiales.
+      </p>
+    </div>
+    <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
+      {itpDestacadas.map((guia) => (
+        <a href={`/itp/${guia.id}`} class="pl-card pl-card-hover p-4 flex flex-col gap-1">
+          <span class="font-medium text-ink text-sm">{guia.data.comunidad}</span>
+          <span class="font-data text-xs text-ink-soft">ITP: {guia.data.tipoGeneral}</span>
+        </a>
+      ))}
+      <a href="/itp" class="pl-card pl-card-hover p-4 flex flex-col justify-center gap-1 border-l-4 border-lime">
+        <span class="font-medium text-ink text-sm">Todas las comunidades</span>
+        <span class="font-data text-xs text-brand-blue">Ver el cuadro completo →</span>
+      </a>
+    </div>
+  </section>
+
   <EuriborChart client:only="react" />
   <BrokerBand lang="es" />
 
