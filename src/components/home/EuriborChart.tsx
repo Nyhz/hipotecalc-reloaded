@@ -9,7 +9,13 @@ const ReactECharts = lazy(() => import("echarts-for-react"))
 const years = euriborData.map((d) => d.year)
 const values = euriborData.map((d) => d.value)
 
-const EuriborChart: React.FC = () => {
+interface EuriborChartProps {
+  /** Enlace "ver más" bajo el gráfico (la home apunta a /euribor) */
+  ctaHref?: string
+  ctaLabel?: string
+}
+
+const EuriborChart: React.FC<EuriborChartProps> = ({ ctaHref, ctaLabel }) => {
   const { t } = useTranslations()
 
   const reduced =
@@ -108,6 +114,13 @@ const EuriborChart: React.FC = () => {
           </a>{" "}
           {t('home.hero.approximateAnnual')}
         </div>
+        {ctaHref && (
+          <div className='text-center mt-6'>
+            <a href={ctaHref} className='btn-outline px-6 py-3 text-sm inline-block' style={{ color: "var(--color-paper)", borderColor: "rgba(250,249,244,.4)" }}>
+              {ctaLabel ?? 'Ver más'} →
+            </a>
+          </div>
+        )}
       </div>
     </section>
   )

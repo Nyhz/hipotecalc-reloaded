@@ -27,6 +27,8 @@ interface ITPCalculatorProps {
   onComunidadChange?: (comunidad: string) => void
   onTipoViviendaChange?: (tipoVivienda: string) => void
   lang?: 'es' | 'en'
+  /** Renderiza el formulario en la página (sin overlay modal ni cierre) */
+  inline?: boolean
 }
 
 const initialForm = {
@@ -73,6 +75,7 @@ const ITPCalculator: React.FC<ITPCalculatorProps> = ({
   onComunidadChange,
   onTipoViviendaChange,
   lang = 'es',
+  inline = false,
 }) => {
   const { t, currentLang } = useTranslations(lang)
   const [form, setForm] = useState({
@@ -221,8 +224,8 @@ const ITPCalculator: React.FC<ITPCalculatorProps> = ({
   const titleText = esObraNueva ? t('mortgage.form.itpModal.vatTitle') : t('mortgage.form.itpModal.title')
   const calculateButtonText = esObraNueva ? t('mortgage.form.itpModal.calculateVAT') : t('mortgage.form.itpModal.calculateITP')
 
-  return (
-    <Modal open={open} onClose={onClose}>
+  const formContent = (
+    <>
       <h2 className='font-heading font-semibold text-ink text-xl mb-4'>
         {titleText}
       </h2>
@@ -663,6 +666,16 @@ const ITPCalculator: React.FC<ITPCalculatorProps> = ({
           </button>
         </div>
       </form>
+    </>
+  )
+
+  if (inline) {
+    return <div className='pl-card p-5 md:p-6'>{formContent}</div>
+  }
+
+  return (
+    <Modal open={open} onClose={onClose}>
+      {formContent}
     </Modal>
   )
 }

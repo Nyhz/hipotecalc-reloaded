@@ -1,0 +1,86 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Breadcrumbs from '../components/seo/Breadcrumbs.astro';
+import PageTracking from '../components/PageTracking.tsx';
+import FAQSection from '../components/seo/FAQSection.astro';
+import PrestamoMaximoCalculator from '../components/prestamo/PrestamoMaximoCalculator';
+
+const title = '¿Cuánto me puede prestar el banco? Calcula tu hipoteca máxima | Hipotecalc';
+const description =
+  'Calcula cuánto dinero te prestaría el banco para tu hipoteca con la regla del 35 % de endeudamiento: cuota máxima, capital, precio de vivienda alcanzable y ahorro necesario.';
+---
+<Layout title={title} description={description}>
+  <PageTracking client:load pagePath="/cuanto-me-prestan" pageTitle={title} />
+
+  <Breadcrumbs items={[
+    { name: 'Inicio', href: '/' },
+    { name: '¿Cuánto me prestan?', href: '/cuanto-me-prestan' }
+  ]} />
+
+  <div class="w-full max-w-4xl mx-auto py-10">
+    <header class="text-center mb-10">
+      <span class="eyebrow">Capacidad de endeudamiento · Regla del 35 %</span>
+      <h1 class="font-heading text-3xl md:text-4xl lg:text-[44px] font-semibold tracking-[-1px] text-ink mt-4 mb-4">
+        ¿Cuánto me puede prestar el banco?
+      </h1>
+      <p class="text-ink-soft max-w-3xl mx-auto text-base md:text-lg">
+        Antes de buscar piso, la pregunta clave: con tus ingresos, ¿qué hipoteca máxima
+        te darían? Introduce tus datos y obtén tu cuota máxima asumible, el capital que
+        te prestarían y el precio de vivienda al que puedes aspirar.
+      </p>
+    </header>
+
+    <PrestamoMaximoCalculator client:load />
+
+    <section class="mt-14 max-w-3xl mx-auto">
+      <h2 class="font-heading text-2xl font-semibold text-ink mb-4">La regla del 35 %, explicada</h2>
+      <div class="text-ink-soft space-y-4 leading-relaxed">
+        <p>
+          El criterio general del sector —y la recomendación del Banco de España— es que el
+          total de tus cuotas de préstamos no supere el <strong class="text-ink">35 % de los
+          ingresos netos mensuales</strong> del hogar. Si entre nómina y otros ingresos entran
+          3.000 € netos al mes, tus deudas no deberían pasar de unos 1.050 €; si ya pagas
+          200 € de un coche, te quedan 850 € de margen para la cuota de la hipoteca.
+        </p>
+        <p>
+          A partir de esa cuota máxima, el capital que te prestarán depende del tipo de
+          interés y del plazo: a más plazo o menos interés, más capital para la misma cuota.
+          Recuerda que el banco financia normalmente <strong class="text-ink">hasta el 80 %
+          del menor entre precio y tasación</strong>: el 20 % restante y los gastos e
+          impuestos (un 10-12 % adicional) tienen que salir de tu ahorro. Puedes ver el
+          detalle de esos gastos en la <a href="/guias/gastos-compraventa" class="underline text-brand-blue">guía de gastos de compraventa</a>
+          y el impuesto de tu comunidad en la <a href="/calculadora-itp" class="underline text-brand-blue">calculadora de ITP</a>.
+        </p>
+        <p>
+          El 35 % es una regla prudente, no una promesa: cada entidad valora también la
+          estabilidad de tus ingresos, tu edad frente al plazo, tu historial y la tasación.
+          Algunos bancos aprietan hasta el 40 % con perfiles muy solventes; otros no pasan
+          del 30 % con ingresos variables. Usa el resultado como brújula y compara después
+          las <a href="/comparativa-hipotecas" class="underline text-brand-blue">ofertas reales de cada banco</a>.
+        </p>
+      </div>
+    </section>
+  </div>
+
+  <FAQSection
+    title="Preguntas frecuentes sobre la hipoteca máxima"
+    items={[
+      {
+        question: "¿Cuánto me puede prestar el banco con mi sueldo?",
+        answer: "Como regla general, la cuota de todas tus deudas no debería superar el 35 % de tus ingresos netos mensuales. Con 2.000 € netos, una cuota máxima de unos 700 €/mes, que a 30 años y un interés del 3 % equivale a un capital aproximado de 166.000 €."
+      },
+      {
+        question: "¿Los bancos prestan el 100 % del precio de la vivienda?",
+        answer: "Con carácter general financian hasta el 80 % del menor entre el precio y la tasación para vivienda habitual. Existen excepciones (perfiles muy solventes, pisos de la propia entidad o avales públicos como el del ICO para jóvenes), pero no son la norma."
+      },
+      {
+        question: "¿Cuentan los ingresos de mi pareja?",
+        answer: "Sí. Si firmáis la hipoteca los dos, el banco suma los ingresos netos del hogar y aplica el límite de endeudamiento sobre el total. También suma las deudas de ambos."
+      },
+      {
+        question: "¿Qué pasa si supero el 35 % de endeudamiento?",
+        answer: "Es probable que el banco deniegue la operación o pida garantías extra (avalistas, doble garantía). Aunque te la aprobaran, ir por encima del 35 % deja poco margen ante imprevistos o subidas del euríbor si la hipoteca es variable."
+      }
+    ]}
+  />
+</Layout>

@@ -1,0 +1,116 @@
+---
+import { getCollection, render } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+import Breadcrumbs from '../../components/seo/Breadcrumbs.astro';
+import PageTracking from '../../components/PageTracking.tsx';
+import FAQSection from '../../components/seo/FAQSection.astro';
+import MortgageCalculator from '../../components/calculadora-hipotecaria/MortgageCalculator';
+import ITPStandalone from '../../components/calculadora-itp/ITPStandalone';
+import PrestamoMaximoCalculator from '../../components/prestamo/PrestamoMaximoCalculator';
+
+export async function getStaticPaths() {
+  const guias = await getCollection('guias');
+  return guias.map((guia) => ({
+    params: { slug: guia.id },
+    props: { guia },
+  }));
+}
+
+const { guia } = Astro.props;
+const { Content } = await render(guia);
+
+const formatDate = (d: Date) =>
+  d.toLocaleDateString('es-ES', { day: 'numeric', month: 'long', year: 'numeric' });
+
+const SITE_BASE = 'https://www.hipotecalc.com';
+const canonical = `${SITE_BASE}/guias/${guia.id}`;
+
+const articleSchema = JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": guia.data.title,
+  "description": guia.data.description,
+  "url": canonical,
+  "dateModified": guia.data.updatedDate.toISOString(),
+  "inLanguage": "es",
+  "publisher": { "@id": `${SITE_BASE}/#organization` },
+  "mainEntityOfPage": canonical,
+});
+
+const tituloCalculadora = {
+  hipoteca: 'Simula tu hipoteca con tus propias cifras',
+  itp: 'Calcula el ITP de tu comunidad',
+  prestamo: '¿Cuánto te prestaría el banco?',
+}[guia.data.calculadora ?? 'hipoteca'];
+---
+<Layout
+  title={`${guia.data.title} | Hipotecalc`}
+  description={guia.data.description}
+  pageType="legal"
+>
+  <PageTracking client:load pagePath={`/guias/${guia.id}`} pageTitle={guia.data.title} />
+  <script type="application/ld+json" set:html={articleSchema} />
+
+  <Breadcrumbs items={[
+    { name: 'Inicio', href: '/' },
+    { name: 'Guías', href: '/guias' },
+    { name: guia.data.title, href: `/guias/${guia.id}` }
+  ]} />
+
+  <article class="w-full max-w-3xl mx-auto py-10">
+    <header class="mb-8">
+      <span class="eyebrow">Guía</span>
+      <h1 class="font-heading text-3xl md:text-4xl font-semibold tracking-[-1px] text-ink mt-4 mb-3">
+        {guia.data.title}
+      </h1>
+      <p class="font-data text-xs text-ink-soft">Actualizado: {formatDate(guia.data.updatedDate)}</p>
+    </header>
+
+    <div class="text-ink-soft leading-relaxed space-y-4
+      [&>h2]:font-heading [&>h2]:text-2xl [&>h2]:font-semibold [&>h2]:text-ink [&>h2]:mt-10 [&>h2]:mb-3
+      [&>h3]:font-heading [&>h3]:text-xl [&>h3]:font-semibold [&>h3]:text-ink [&>h3]:mt-8 [&>h3]:mb-2
+      [&>ul]:list-disc [&>ul]:pl-6 [&>ul]:space-y-1
+      [&>ol]:list-decimal [&>ol]:pl-6 [&>ol]:space-y-1
+      [&_a]:underline [&_a]:text-brand-blue
+      [&_table]:w-full [&_table]:text-sm [&_table]:my-4 [&_th]:text-left [&_th]:py-2 [&_th]:px-2 [&_th]:border-b [&_th]:border-line [&_td]:py-2 [&_td]:px-2 [&_td]:border-b [&_td]:border-line
+      [&>blockquote]:border-l-4 [&>blockquote]:border-lime [&>blockquote]:pl-4 [&>blockquote]:italic
+      [&_strong]:text-ink">
+      <Content />
+    </div>
+  </article>
+
+  {guia.data.calculadora && (
+    <section class="w-full py-14">
+      <div class="text-center mb-8">
+        <span class="eyebrow">Calculadora</span>
+        <h2 class="font-heading text-2xl md:text-3xl font-semibold text-ink mt-3">
+          {tituloCalculadora}
+        </h2>
+      </div>
+      {guia.data.calculadora === 'hipoteca' && <MortgageCalculator client:visible lang="es" />}
+      {guia.data.calculadora === 'itp' && (
+        <div class="max-w-4xl mx-auto"><ITPStandalone client:visible /></div>
+      )}
+      {guia.data.calculadora === 'prestamo' && (
+        <div class="max-w-4xl mx-auto"><PrestamoMaximoCalculator client:visible /></div>
+      )}
+    </section>
+  )}
+
+  {guia.data.faq && (
+    <FAQSection
+      title={`Preguntas frecuentes`}
+      items={guia.data.faq}
+    />
+  )}
+
+  <footer class="w-full max-w-3xl mx-auto pb-10">
+    <div class="pt-6 border-t border-line">
+      <p class="text-xs text-ink-soft">
+        Esta guía es contenido informativo y educativo, no asesoramiento financiero ni fiscal.
+        Consulta el <a href="/disclaimer-financiero" class="underline text-brand-blue">disclaimer financiero</a>.
+      </p>
+      <a href="/guias" class="inline-block mt-4 text-sm font-medium text-brand-blue">← Todas las guías</a>
+    </div>
+  </footer>
+</Layout>

@@ -32,6 +32,39 @@ export const getTools = (lang: 'es' | 'en' = 'es') => {
         active: true,
       },
       {
+        icon: "lucide:receipt-euro",
+        title: "Calculadora de ITP",
+        label: "Calculadora de ITP",
+        description:
+          "Calcula el impuesto de tu vivienda de segunda mano con las bonificaciones de tu comunidad: jóvenes, familia numerosa, discapacidad y más.",
+        href: "/calculadora-itp",
+        nav: false,
+        active: true,
+        card: true,
+      },
+      {
+        icon: "lucide:piggy-bank",
+        title: "¿Cuánto me prestan?",
+        label: "¿Cuánto me prestan?",
+        description:
+          "Descubre la hipoteca máxima que te daría el banco con tus ingresos, según la regla del 35 % de endeudamiento.",
+        href: "/cuanto-me-prestan",
+        nav: false,
+        active: true,
+        card: true,
+      },
+      {
+        icon: "lucide:trending-up",
+        title: "Euríbor hoy",
+        label: "Euríbor hoy",
+        description:
+          "El valor actual del euríbor, su histórico oficial y cómo afecta a tu cuota, con análisis mensual.",
+        href: "/euribor",
+        nav: false,
+        active: true,
+        card: false,
+      },
+      {
         icon: "lucide:landmark",
         title: "ITP por comunidad",
         label: "ITP por comunidad",

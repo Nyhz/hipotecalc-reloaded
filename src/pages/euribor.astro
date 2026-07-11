@@ -1,0 +1,147 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../layouts/Layout.astro';
+import Breadcrumbs from '../components/seo/Breadcrumbs.astro';
+import PageTracking from '../components/PageTracking.tsx';
+import FAQSection from '../components/seo/FAQSection.astro';
+import EuriborChart from '../components/home/EuriborChart';
+import EuriborImpactCalculator from '../components/euribor/EuriborImpactCalculator';
+import { currentEuribor, euriborData } from '../constants/euribor-values';
+
+const analisis = (await getCollection('blog'))
+  .filter((post) => post.data.serie === 'euribor')
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+
+const title = `Euríbor hoy: ${currentEuribor.value.toLocaleString('es-ES')} % (${currentEuribor.labelEs}) — histórico y tu cuota | Hipotecalc`;
+const description = `El euríbor a 12 meses está en el ${currentEuribor.value.toLocaleString('es-ES')} % (media de ${currentEuribor.labelEs}). Consulta el histórico oficial del BCE, calcula cómo afecta a tu cuota y lee el análisis mensual.`;
+
+const anterior = euriborData[euriborData.length - 2];
+const maximo2023 = euriborData.find((d) => d.year === 2023)?.value ?? 3.87;
+const minimo2021 = euriborData.find((d) => d.year === 2021)?.value ?? -0.49;
+
+const formatDate = (d: Date) =>
+  d.toLocaleDateString('es-ES', { day: 'numeric', month: 'long', year: 'numeric' });
+---
+<Layout title={title} description={description} pageType="legal">
+  <PageTracking client:load pagePath="/euribor" pageTitle={title} />
+
+  <Breadcrumbs items={[
+    { name: 'Inicio', href: '/' },
+    { name: 'Euríbor', href: '/euribor' }
+  ]} />
+
+  <div class="w-full max-w-5xl mx-auto py-10">
+    <header class="text-center mb-10">
+      <span class="eyebrow">Euríbor a 12 meses · Datos oficiales del BCE</span>
+      <h1 class="font-heading text-3xl md:text-4xl lg:text-[44px] font-semibold tracking-[-1px] text-ink mt-4 mb-4">
+        ¿Cómo está el euríbor hoy?
+      </h1>
+      <p class="text-ink-soft max-w-3xl mx-auto text-base md:text-lg">
+        El índice al que se referencian casi todas las hipotecas variables de España,
+        con la serie histórica oficial del Banco Central Europeo y una calculadora
+        para ver qué pasa con tu cuota si sube o baja.
+      </p>
+    </header>
+
+    <div class="pl-card p-6 md:p-8 mb-12 text-center border-l-4 border-lime">
+      <span class="font-data text-[11px] uppercase tracking-widest text-ink-soft">
+        Última media mensual publicada · {currentEuribor.labelEs}
+      </span>
+      <div class="font-heading text-5xl md:text-6xl font-bold text-brand-blue my-3">
+        {currentEuribor.value.toLocaleString('es-ES')} %
+      </div>
+      <p class="text-sm text-ink-soft max-w-2xl mx-auto">
+        Media mensual del euríbor a 12 meses, el valor que los bancos aplican en las
+        revisiones. La media anual de {anterior.year} fue del {anterior.value.toLocaleString('es-ES')} %,
+        lejos del máximo reciente de {maximo2023.toLocaleString('es-ES')} % (2023) y del mínimo
+        histórico de {minimo2021.toLocaleString('es-ES')} % (2021).
+      </p>
+    </div>
+
+    <section class="mb-4">
+      <h2 class="font-heading text-2xl md:text-3xl font-semibold text-ink mb-2 text-center">
+        ¿Cómo afecta el euríbor a tu cuota?
+      </h2>
+      <p class="text-ink-soft text-center max-w-2xl mx-auto mb-6">
+        Introduce lo que te queda de hipoteca y tu diferencial: verás tu cuota con el
+        euríbor de hoy y lo que pagarías si el índice se mueve medio punto o un punto.
+      </p>
+      <EuriborImpactCalculator client:visible />
+    </section>
+  </div>
+
+  <EuriborChart client:only="react" />
+
+  <div class="w-full max-w-5xl mx-auto">
+    <section class="py-14">
+      <div class="flex items-baseline justify-between mb-6">
+        <h2 class="font-heading text-2xl md:text-3xl font-semibold text-ink">Análisis mensual del euríbor</h2>
+        <a href="/blog" class="text-sm font-medium text-brand-blue">Todo el blog →</a>
+      </div>
+      {analisis.length > 0 ? (
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {analisis.map((post) => (
+            <a href={`/blog/${post.id}`} class="pl-card pl-card-hover p-6 flex flex-col gap-2">
+              <span class="font-data text-[11px] uppercase tracking-widest text-ink-soft">
+                {formatDate(post.data.pubDate)}
+              </span>
+              <span class="font-heading text-lg font-semibold text-ink leading-snug">{post.data.title}</span>
+              <span class="text-sm text-ink-soft leading-relaxed">{post.data.description}</span>
+            </a>
+          ))}
+        </div>
+      ) : (
+        <p class="text-ink-soft">Próximamente: análisis mensual de la evolución del índice.</p>
+      )}
+    </section>
+
+    <section class="w-full max-w-3xl mx-auto pb-4">
+      <h2 class="font-heading text-2xl font-semibold text-ink mb-4">Qué es el euríbor (y qué no es)</h2>
+      <div class="text-ink-soft space-y-4 leading-relaxed">
+        <p>
+          El euríbor (Euro Interbank Offered Rate) es el tipo de interés medio al que los
+          principales bancos europeos se prestan dinero entre sí. Lo administra el
+          <a href="https://www.emmi-benchmarks.eu/" target="_blank" rel="noopener noreferrer" class="underline text-brand-blue"> European Money Markets Institute (EMMI)</a>
+          y se publica cada día hábil. El plazo relevante para las hipotecas españolas es el
+          <strong class="text-ink"> euríbor a 12 meses</strong>.
+        </p>
+        <p>
+          Lo que afecta a tu hipoteca no es el valor diario que sale en las noticias, sino la
+          <strong class="text-ink"> media mensual</strong>: en cada revisión (anual o semestral),
+          tu banco toma la media del mes de referencia pactado en la escritura y le suma tu
+          diferencial. Por eso, un pico puntual del índice apenas importa si no mueve la media.
+          Un buen ejemplo fue <a href="/blog/guerra-iran-euribor" class="underline text-brand-blue">la guerra de Irán de 2025</a>,
+          que apenas dejó huella en el índice pese al ruido.
+        </p>
+        <p>
+          Si estás decidiendo entre fija, variable o mixta, te lo contamos con detalle en la guía de
+          <a href="/blog/tipos-de-hipoteca-fija-variable-mixta" class="underline text-brand-blue"> tipos de hipoteca</a>,
+          y puedes ver las ofertas reales de cada banco en la
+          <a href="/comparativa-hipotecas" class="underline text-brand-blue"> comparativa de hipotecas</a>.
+        </p>
+      </div>
+    </section>
+  </div>
+
+  <FAQSection
+    title="Preguntas frecuentes sobre el euríbor"
+    items={[
+      {
+        question: "¿Cuál es el valor del euríbor hoy?",
+        answer: `La última media mensual publicada del euríbor a 12 meses es del ${currentEuribor.value.toLocaleString('es-ES')} % (${currentEuribor.labelEs}), según la serie oficial del Banco Central Europeo. Es el valor que se aplica en las revisiones de las hipotecas variables.`
+      },
+      {
+        question: "¿Cuándo se actualiza el euríbor de mi hipoteca?",
+        answer: "En tu fecha de revisión, normalmente cada 12 meses (a veces cada 6). El banco toma la media mensual del euríbor del mes de referencia pactado en tu escritura, le suma tu diferencial y recalcula la cuota para el siguiente periodo."
+      },
+      {
+        question: "¿Por qué sube o baja el euríbor?",
+        answer: "Principalmente por las expectativas sobre los tipos de interés del Banco Central Europeo: si el mercado espera subidas de tipos, el euríbor sube por adelantado; si espera bajadas, cae. La inflación de la eurozona es el motor de fondo de esas decisiones."
+      },
+      {
+        question: "¿El euríbor afecta a las hipotecas fijas?",
+        answer: "No. Una hipoteca fija mantiene la misma cuota toda la vida del préstamo, pase lo que pase con el euríbor. Solo afecta a las hipotecas variables y al tramo variable de las mixtas."
+      }
+    ]}
+  />
+</Layout>

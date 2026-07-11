@@ -1,0 +1,82 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../layouts/Layout.astro';
+import Breadcrumbs from '../components/seo/Breadcrumbs.astro';
+import PageTracking from '../components/PageTracking.tsx';
+import FAQSection from '../components/seo/FAQSection.astro';
+import ITPStandalone from '../components/calculadora-itp/ITPStandalone';
+
+const guiasItp = (await getCollection('itp')).sort((a, b) =>
+  a.data.comunidad.localeCompare(b.data.comunidad, 'es')
+);
+
+const title = 'Calculadora de ITP 2026: calcula el impuesto de tu vivienda | Hipotecalc';
+const description =
+  'Calcula el ITP de tu vivienda de segunda mano en cualquier comunidad autónoma, con las bonificaciones para jóvenes, familias numerosas o discapacidad. Gratis y al instante.';
+---
+<Layout title={title} description={description}>
+  <PageTracking client:load pagePath="/calculadora-itp" pageTitle={title} />
+
+  <Breadcrumbs items={[
+    { name: 'Inicio', href: '/' },
+    { name: 'Calculadora de ITP', href: '/calculadora-itp' }
+  ]} />
+
+  <div class="w-full max-w-4xl mx-auto py-10">
+    <header class="text-center mb-10">
+      <span class="eyebrow">Calculadora de ITP · España 2026</span>
+      <h1 class="font-heading text-3xl md:text-4xl lg:text-[44px] font-semibold tracking-[-1px] text-ink mt-4 mb-4">
+        Calculadora del Impuesto de Transmisiones Patrimoniales
+      </h1>
+      <p class="text-ink-soft max-w-3xl mx-auto text-base md:text-lg">
+        Elige tu comunidad autónoma, indica el precio y tu situación (edad, familia,
+        discapacidad…) y obtén al instante el ITP estimado con las bonificaciones que
+        te corresponden. Para obra nueva, calcula el IVA equivalente.
+      </p>
+    </header>
+
+    <ITPStandalone client:load />
+
+    <section class="mt-14">
+      <h2 class="font-heading text-2xl font-semibold text-ink mb-4">
+        Consulta la guía de tu comunidad
+      </h2>
+      <p class="text-ink-soft mb-6">
+        Cada comunidad aplica tipos y requisitos distintos. En nuestras guías tienes el
+        detalle completo con su cita legal, verificado con fuentes oficiales:
+      </p>
+      <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
+        {guiasItp.map((guia) => (
+          <a href={`/itp/${guia.id}`} class="pl-card pl-card-hover p-4 flex flex-col gap-1">
+            <span class="font-medium text-ink text-sm">
+              {guia.id === 'ceuta-melilla' ? 'Ceuta y Melilla' : guia.data.comunidad}
+            </span>
+            <span class="font-data text-xs text-ink-soft">ITP: {guia.data.tipoGeneral}</span>
+          </a>
+        ))}
+      </div>
+    </section>
+  </div>
+
+  <FAQSection
+    title="Preguntas frecuentes sobre la calculadora de ITP"
+    items={[
+      {
+        question: "¿Qué es el ITP y cuándo se paga?",
+        answer: "El Impuesto de Transmisiones Patrimoniales grava la compra de vivienda de segunda mano y lo paga siempre el comprador, normalmente en un plazo de 30 días hábiles o un mes desde la escritura. La vivienda nueva no paga ITP sino IVA al 10 %."
+      },
+      {
+        question: "¿Sobre qué valor calcula el impuesto esta calculadora?",
+        answer: "Sobre el precio que introduzcas. Ten en cuenta que legalmente la base imponible es el valor de referencia de Catastro o el precio si es mayor: consulta el valor de referencia de la vivienda en la Sede del Catastro antes de firmar."
+      },
+      {
+        question: "¿Incluye las bonificaciones de mi comunidad?",
+        answer: "Sí. La calculadora aplica los tipos reducidos y bonificaciones autonómicas más habituales: jóvenes, familia numerosa o monoparental, discapacidad, víctimas, vivienda protegida o zonas poco pobladas, seleccionando siempre el tipo más beneficioso aplicable a tu caso."
+      },
+      {
+        question: "¿El resultado es exacto?",
+        answer: "Es una estimación rigurosa con los tipos vigentes en 2026, pero cada beneficio fiscal tiene requisitos finos (límites de renta o patrimonio, plazos de ocupación) que la herramienta simplifica. Verifica tu caso en la guía de tu comunidad o con un asesor fiscal."
+      }
+    ]}
+  />
+</Layout>

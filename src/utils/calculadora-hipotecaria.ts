@@ -28,25 +28,35 @@ interface MortgageParams {
   tin: number
 }
 
+// Cuota mensual por el sistema de amortización francés. Guardas numéricas:
+// un plazo 0 dividiría por cero, y un tipo 0 es válido (capital / meses).
+export function cuotaFrancesa(capital: number, tinAnual: number, anos: number): number {
+  const numPagos = anos * 12
+  if (!capital || capital <= 0 || numPagos <= 0 || !Number.isFinite(tinAnual)) return 0
+
+  const i = tinAnual / 100 / 12
+  if (i === 0) return capital / numPagos
+
+  const cuota = (capital * (i * Math.pow(1 + i, numPagos))) / (Math.pow(1 + i, numPagos) - 1)
+  return Math.round(cuota * 100) / 100
+}
+
+// Inversa de la cuota francesa: capital máximo que se amortiza con una cuota
+// dada. Base de la regla del 35 % de endeudamiento.
+export function capitalDesdeCuota(cuota: number, tinAnual: number, anos: number): number {
+  const numPagos = anos * 12
+  if (!cuota || cuota <= 0 || numPagos <= 0 || !Number.isFinite(tinAnual)) return 0
+
+  const i = tinAnual / 100 / 12
+  if (i === 0) return Math.round(cuota * numPagos * 100) / 100
+
+  const capital = (cuota * (1 - Math.pow(1 + i, -numPagos))) / i
+  return Math.round(capital * 100) / 100
+}
+
 export function cuotaMensual(params: MortgageParams): number {
   const { cantidadHipoteca, tin, plazo } = params
-
-  // Guardas numéricas: plazo "0" es truthy y dividiría por cero, y tin 0 es
-  // un tipo válido que debe llegar a la rama de interés cero
-  const numPagos = Number(plazo) * 12
-  if (!cantidadHipoteca || numPagos <= 0 || !Number.isFinite(tin)) return 0
-
-  const tinMensual = tin / 100 / 12
-
-  if (tinMensual === 0) {
-    return cantidadHipoteca / numPagos
-  }
-
-  const cuota =
-    (cantidadHipoteca * (tinMensual * Math.pow(1 + tinMensual, numPagos))) /
-    (Math.pow(1 + tinMensual, numPagos) - 1)
-
-  return Math.round(cuota * 100) / 100
+  return cuotaFrancesa(cantidadHipoteca, tin, Number(plazo))
 }
 
 export function porcentajeFinanciado(params: MortgageParams): number {

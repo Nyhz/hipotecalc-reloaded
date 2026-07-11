@@ -45,7 +45,7 @@ export default function Navbar() {
             </a>
           </div>
           <ul className="flex justify-center items-center gap-1">
-            {tools.filter((tool) => tool.active).map((tool) => (
+            {tools.filter((tool) => tool.active && tool.nav !== false).map((tool) => (
               <li key={tool.href}>
                 <a
                   href={tool.href}
@@ -112,7 +112,7 @@ export default function Navbar() {
       {isMenuOpen && (
         <div id="mobile-nav-menu" className="lg:hidden border-t border-line bg-paper">
           <ul className="max-w-7xl mx-auto px-4 py-2 space-y-1">
-            {tools.filter((tool) => tool.active).map((tool) => (
+            {tools.filter((tool) => tool.active && tool.nav !== false).map((tool) => (
               <li key={tool.href}>
                 <a
                   href={tool.href}

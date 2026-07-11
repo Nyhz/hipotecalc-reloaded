@@ -5,6 +5,9 @@ import Breadcrumbs from '../../components/seo/Breadcrumbs.astro';
 import PageTracking from '../../components/PageTracking.tsx';
 
 const guiasItp = await getCollection('itp');
+const guiasGenerales = (await getCollection('guias')).sort((a, b) =>
+  a.data.title.localeCompare(b.data.title, 'es')
+);
 const posts = (await getCollection('blog')).sort(
   (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
 );
@@ -32,6 +35,19 @@ const description =
         conectados con nuestras calculadoras.
       </p>
     </header>
+
+    <section class="mb-14">
+      <h2 class="font-heading text-2xl font-semibold text-ink mb-6">Guías de hipotecas</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        {guiasGenerales.map((guia) => (
+          <a href={`/guias/${guia.id}`} class="pl-card pl-card-hover p-6 flex flex-col gap-2">
+            <span class="font-heading text-lg font-semibold text-ink leading-snug">{guia.data.title}</span>
+            <span class="text-sm text-ink-soft leading-relaxed">{guia.data.description}</span>
+            <span class="font-data text-xs text-brand-blue mt-1">Leer la guía →</span>
+          </a>
+        ))}
+      </div>
+    </section>
 
     <section class="mb-14">
       <div class="flex items-baseline justify-between mb-6">

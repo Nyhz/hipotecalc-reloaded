@@ -38,6 +38,59 @@ export default config({
         seoTitle: fields.text({
           label: 'Título SEO corto (opcional, para la etiqueta <title>)',
         }),
+        serie: fields.select({
+          label: 'Serie temática',
+          description: 'Los análisis mensuales del euríbor se listan también en /euribor',
+          options: [
+            { label: '(ninguna)', value: '' },
+            { label: 'Análisis del euríbor', value: 'euribor' },
+          ],
+          defaultValue: '',
+        }),
+        faq: fields.array(
+          fields.object({
+            question: fields.text({ label: 'Pregunta' }),
+            answer: fields.text({ label: 'Respuesta', multiline: true }),
+          }),
+          {
+            label: 'FAQ (rich snippet, opcional)',
+            itemLabel: (props) => props.fields.question.value || 'Pregunta',
+          }
+        ),
+        content: fields.markdoc({
+          label: 'Contenido',
+          extension: 'md',
+        }),
+      },
+    }),
+    guias: collection({
+      label: 'Guías de hipotecas',
+      slugField: 'title',
+      path: 'src/content/guias/*',
+      format: { contentField: 'content' },
+      entryLayout: 'content',
+      fields: {
+        title: fields.slug({
+          name: { label: 'Título', validation: { isRequired: true } },
+        }),
+        description: fields.text({
+          label: 'Descripción (SEO)',
+          multiline: true,
+          validation: { isRequired: true },
+        }),
+        updatedDate: fields.date({
+          label: 'Última actualización',
+          validation: { isRequired: true },
+        }),
+        calculadora: fields.select({
+          label: 'Calculadora incrustada al final',
+          options: [
+            { label: 'Simulador de hipoteca', value: 'hipoteca' },
+            { label: 'Calculadora de ITP', value: 'itp' },
+            { label: '¿Cuánto me prestan? (regla del 35 %)', value: 'prestamo' },
+          ],
+          defaultValue: 'hipoteca',
+        }),
         faq: fields.array(
           fields.object({
             question: fields.text({ label: 'Pregunta' }),
