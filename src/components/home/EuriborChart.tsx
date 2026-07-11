@@ -116,7 +116,10 @@ const EuriborChart: React.FC<EuriborChartProps> = ({ ctaHref, ctaLabel }) => {
         </div>
         {ctaHref && (
           <div className='text-center mt-6'>
-            <a href={ctaHref} className='btn-outline px-6 py-3 text-sm inline-block' style={{ color: "var(--color-paper)", borderColor: "rgba(250,249,244,.4)" }}>
+            <a
+              href={ctaHref}
+              className='inline-flex items-center justify-center rounded-full font-semibold px-6 py-3 text-sm bg-lime text-ink hover:bg-lime-hover transition-colors'
+            >
               {ctaLabel ?? 'Ver más'} →
             </a>
           </div>
