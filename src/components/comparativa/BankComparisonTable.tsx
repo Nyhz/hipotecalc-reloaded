@@ -14,12 +14,15 @@ const CATEGORIAS = [
   "Cooperativa",
   "Banca ética",
   "Especialista",
+  "Otro",
+  "Extranjero",
 ] as const
 
 const tipoBadgeClass: Record<OfertaHipoteca["tipo"], string> = {
   Fija: "bg-ink text-paper",
   Variable: "bg-brand-blue/10 text-brand-blue",
   Mixta: "bg-lime/60 text-ink",
+  "Fija/Variable": "bg-paper-2 text-ink",
 }
 
 // Primer porcentaje numérico de una cadena de tipos ("2,96% / 3,96%" -> 2.96;
@@ -97,8 +100,8 @@ const LABELS = {
     sinResultados: 'No offers match the selected filters.',
     antes: 'previously',
     sinOferta: 'Institutions surveyed that do not sell mortgages',
-    tipoValor: (v: string) => ({ Todas: 'All', Fija: 'Fixed', Variable: 'Variable', Mixta: 'Mixed' }[v] ?? v),
-    categoriaValor: (v: string) => ({ Todas: 'All', Grande: 'Large', Online: 'Online', Mediano: 'Mid-size', Cooperativa: 'Cooperative', 'Banca ética': 'Ethical bank', Especialista: 'Specialist' }[v] ?? v),
+    tipoValor: (v: string) => ({ Todas: 'All', Fija: 'Fixed', Variable: 'Variable', Mixta: 'Mixed', 'Fija/Variable': 'Fixed/Variable' }[v] ?? v),
+    categoriaValor: (v: string) => ({ Todas: 'All', Grande: 'Large', Online: 'Online', Mediano: 'Mid-size', Cooperativa: 'Cooperative', 'Banca ética': 'Ethical bank', Especialista: 'Specialist', Otro: 'Other', Extranjero: 'Foreign' }[v] ?? v),
   },
 }
 
@@ -116,7 +119,7 @@ const BankComparisonTable: React.FC<BankComparisonTableProps> = ({ lang = 'es' }
   const ofertas = useMemo(() => {
     const q = busqueda.trim().toLowerCase()
     return OFERTAS_HIPOTECAS.filter((o) => {
-      if (tipo !== "Todas" && o.tipo !== tipo) return false
+      if (tipo !== "Todas" && o.tipo !== tipo && !(o.tipo === "Fija/Variable" && (tipo === "Fija" || tipo === "Variable"))) return false
       if (categoria !== "Todas" && o.categoria !== categoria) return false
       if (q && !`${o.banco} ${o.producto}`.toLowerCase().includes(q)) return false
       return true
