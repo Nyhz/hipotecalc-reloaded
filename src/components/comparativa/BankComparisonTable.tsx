@@ -28,6 +28,12 @@ const tipoBadgeClass: Record<OfertaHipoteca["tipo"], string> = {
 // Primer porcentaje numérico de una cadena de tipos ("2,96% / 3,96%" -> 2.96;
 // "Eur+0,84% / ..." -> 0.84, el diferencial). Sirve para detectar la dirección
 // del cambio entre actualizaciones de datos.
+// Versión corta para la fila principal: lo que va entre paréntesis se muestra
+// completo en el panel desplegable
+function corto(valor: string): string {
+  return valor.split(" (")[0].trim()
+}
+
 function primerPorcentaje(valor: string | undefined): number | null {
   if (!valor) return null
   const m = valor.match(/(\d+(?:[.,]\d+)?)\s*%/)
@@ -185,17 +191,17 @@ const BankComparisonTable: React.FC<BankComparisonTableProps> = ({ lang = 'es' }
       {/* Tabla */}
       <div className="pl-card p-0 overflow-hidden">
         <div className="overflow-x-auto">
-          <table className="w-full text-sm min-w-[900px]">
+          <table className="w-full text-sm table-fixed min-w-[760px] lg:min-w-0">
             <thead>
               <tr className="border-b border-line bg-paper-2/60 font-data text-[11px] uppercase tracking-wider text-ink-soft">
-                <th className="text-left py-3 px-4">{t.banco}</th>
-                <th className="text-left py-3 px-3">{t.producto}</th>
-                <th className="text-left py-3 px-3">{t.tipo}</th>
-                <th className="text-left py-3 px-3">{t.tin}</th>
-                <th className="text-left py-3 px-3">{t.tae}</th>
-                <th className="text-left py-3 px-3">{t.plazo}</th>
-                <th className="text-left py-3 px-3">{t.financiacion}</th>
-                <th className="text-left py-3 px-3" aria-label="Detalle"></th>
+                <th className="text-left py-3 px-3 w-[15%]">{t.banco}</th>
+                <th className="text-left py-3 px-2 w-[19%]">{t.producto}</th>
+                <th className="text-left py-3 px-2 w-[9%]">{t.tipo}</th>
+                <th className="text-left py-3 px-2 w-[16%]">{t.tin}</th>
+                <th className="text-left py-3 px-2 w-[14%]">{t.tae}</th>
+                <th className="text-left py-3 px-2 w-[11%]">{t.plazo}</th>
+                <th className="text-left py-3 px-2 w-[12%]">{t.financiacion}</th>
+                <th className="text-left py-3 px-2 w-[4%]" aria-label="Detalle"></th>
               </tr>
             </thead>
             <tbody>
@@ -205,13 +211,13 @@ const BankComparisonTable: React.FC<BankComparisonTableProps> = ({ lang = 'es' }
                     className="border-b border-line/60 hover:bg-paper-2/40 cursor-pointer transition-colors"
                     onClick={() => setExpandida(expandida === i ? null : i)}
                   >
-                    <td className="py-3 px-4 font-semibold text-ink whitespace-nowrap">
+                    <td className="py-3 px-3 font-semibold text-ink">
                       {o.banco}
                       <div className="font-data text-[10px] uppercase tracking-wide text-ink-soft font-normal">
                         {lang === "en" ? t.categoriaValor(o.categoria) : o.categoria}
                       </div>
                     </td>
-                    <td className="py-3 px-3 text-ink-soft">{o.producto}</td>
+                    <td className="py-3 px-2 text-ink-soft">{o.producto}</td>
                     <td className="py-3 px-3">
                       <span
                         className={`inline-block rounded-full px-2.5 py-0.5 font-data text-[11px] ${tipoBadgeClass[o.tipo]}`}
@@ -219,10 +225,10 @@ const BankComparisonTable: React.FC<BankComparisonTableProps> = ({ lang = 'es' }
                         {lang === "en" ? t.tipoValor(o.tipo) : o.tipo}
                       </span>
                     </td>
-                    <td className="py-3 px-3 text-ink whitespace-nowrap">{o.tin || "N/D"}<RateTrend actual={o.tin} anterior={o.tinAnterior} antesLabel={t.antes} /></td>
-                    <td className="py-3 px-3 text-ink whitespace-nowrap">{o.tae || "N/D"}<RateTrend actual={o.tae} anterior={o.taeAnterior} antesLabel={t.antes} /></td>
-                    <td className="py-3 px-3 text-ink-soft whitespace-nowrap">{o.plazoMax || "N/D"}</td>
-                    <td className="py-3 px-3 text-ink-soft">{o.financiacionMax || "N/D"}</td>
+                    <td className="py-3 px-2 text-ink">{o.tin || "N/D"}<RateTrend actual={o.tin} anterior={o.tinAnterior} antesLabel={t.antes} /></td>
+                    <td className="py-3 px-2 text-ink">{o.tae || "N/D"}<RateTrend actual={o.tae} anterior={o.taeAnterior} antesLabel={t.antes} /></td>
+                    <td className="py-3 px-2 text-ink-soft">{corto(o.plazoMax) || "N/D"}</td>
+                    <td className="py-3 px-2 text-ink-soft">{corto(o.financiacionMax) || "N/D"}</td>
                     <td className="py-3 px-3 text-ink-soft" aria-hidden="true">
                       <span
                         className={`inline-block transition-transform ${expandida === i ? "rotate-180" : ""}`}
@@ -235,6 +241,18 @@ const BankComparisonTable: React.FC<BankComparisonTableProps> = ({ lang = 'es' }
                     <tr className="border-b border-line/60 bg-paper-2/30">
                       <td colSpan={8} className="py-4 px-4">
                         <dl className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-2 text-sm">
+                          {corto(o.plazoMax) !== o.plazoMax && (
+                            <div>
+                              <dt className="font-data text-[10.5px] uppercase tracking-wide text-ink-soft">{t.plazo}</dt>
+                              <dd className="text-ink">{o.plazoMax}</dd>
+                            </div>
+                          )}
+                          {corto(o.financiacionMax) !== o.financiacionMax && (
+                            <div>
+                              <dt className="font-data text-[10.5px] uppercase tracking-wide text-ink-soft">{t.financiacion}</dt>
+                              <dd className="text-ink">{o.financiacionMax}</dd>
+                            </div>
+                          )}
                           {o.diferencial && (
                             <div>
                               <dt className="font-data text-[10.5px] uppercase tracking-wide text-ink-soft">{t.diferencial}</dt>
