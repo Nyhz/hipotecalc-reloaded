@@ -1,0 +1,96 @@
+---
+import { getCollection, render } from 'astro:content';
+import Layout from '../../../layouts/Layout.astro';
+import Breadcrumbs from '../../../components/seo/Breadcrumbs.astro';
+import PageTracking from '../../../components/PageTracking.tsx';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blogEn');
+  return posts.map((post) => ({
+    params: { slug: post.id },
+    props: { post },
+  }));
+}
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+
+const formatDate = (d: Date) =>
+  d.toLocaleDateString('en-US', { day: 'numeric', month: 'long', year: 'numeric' });
+
+const SITE_BASE = 'https://www.hipotecalc.com';
+const canonical = `${SITE_BASE}/en/blog/${post.id}`;
+
+const articleSchema = JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": post.data.title,
+  "description": post.data.description,
+  "url": canonical,
+  "datePublished": post.data.pubDate.toISOString(),
+  ...(post.data.updatedDate ? { "dateModified": post.data.updatedDate.toISOString() } : {}),
+  "inLanguage": "en",
+  "publisher": { "@id": `${SITE_BASE}/#organization` },
+  "mainEntityOfPage": canonical,
+});
+
+const faqSchema = post.data.faq?.length
+  ? JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": post.data.faq.map((item) => ({
+        "@type": "Question",
+        "name": item.question,
+        "acceptedAnswer": { "@type": "Answer", "text": item.answer },
+      })),
+    })
+  : null;
+---
+<Layout
+  title={post.data.seoTitle ?? `${post.data.title} | Hipotecalc Blog`}
+  description={post.data.description}
+  pageType="legal"
+>
+  <PageTracking client:load pagePath={`/en/blog/${post.id}`} pageTitle={post.data.title} />
+  <script type="application/ld+json" set:html={articleSchema} />
+  {faqSchema && <script type="application/ld+json" set:html={faqSchema} />}
+
+  <Breadcrumbs items={[
+    { name: 'Home', href: '/en' },
+    { name: 'Blog', href: '/en/blog' },
+    { name: post.data.title, href: `/en/blog/${post.id}` }
+  ]} />
+
+  <article class="w-full max-w-3xl mx-auto py-10">
+    <header class="mb-10">
+      <p class="font-data text-[11px] uppercase tracking-widest text-ink-soft mb-3">
+        {formatDate(post.data.pubDate)}
+        {post.data.updatedDate && ` · Updated: ${formatDate(post.data.updatedDate)}`}
+      </p>
+      <h1 class="font-heading text-3xl md:text-4xl font-semibold tracking-[-1px] text-ink mb-4">
+        {post.data.title}
+      </h1>
+      <p class="text-ink-soft text-lg leading-relaxed">{post.data.description}</p>
+    </header>
+
+    <div class="text-ink-soft leading-relaxed space-y-4
+      [&>h2]:font-heading [&>h2]:text-2xl [&>h2]:font-semibold [&>h2]:text-ink [&>h2]:mt-10 [&>h2]:mb-3
+      [&>h3]:font-heading [&>h3]:text-xl [&>h3]:font-semibold [&>h3]:text-ink [&>h3]:mt-8 [&>h3]:mb-2
+      [&>ul]:list-disc [&>ul]:pl-6 [&>ul]:space-y-1
+      [&>ol]:list-decimal [&>ol]:pl-6 [&>ol]:space-y-1
+      [&_a]:underline [&_a]:text-brand-blue
+      [&_table]:w-full [&_table]:text-sm [&_table]:my-4 [&_th]:text-left [&_th]:py-2 [&_th]:px-2 [&_th]:border-b [&_th]:border-line [&_td]:py-2 [&_td]:px-2 [&_td]:border-b [&_td]:border-line
+      [&>blockquote]:border-l-4 [&>blockquote]:border-lime [&>blockquote]:pl-4 [&>blockquote]:italic
+      [&_strong]:text-ink">
+      <Content />
+    </div>
+
+    <footer class="mt-12 pt-6 border-t border-line">
+      <p class="text-xs text-ink-soft">
+        This article is informational and educational content, not financial advice.
+        See the <a href="/en/financial-disclaimer" class="underline text-brand-blue">financial disclaimer</a>.
+      </p>
+      <a href="/en/blog" class="inline-block mt-4 text-sm font-medium text-brand-blue">← Back to the blog</a>
+    </footer>
+  </article>
+</Layout>

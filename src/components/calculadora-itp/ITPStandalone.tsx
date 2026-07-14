@@ -10,7 +10,29 @@ interface Resultado {
   descripcion?: string
 }
 
-const ITPStandalone: React.FC = () => {
+const LABELS = {
+  es: {
+    resultado: 'Impuesto estimado',
+    ctaCalc: 'Calcular la hipoteca completa →',
+    ctaGuia: 'Ver la guía de tu comunidad',
+    calcHref: '/calculadora-hipotecaria',
+    guiaHref: '/itp',
+  },
+  en: {
+    resultado: 'Estimated tax',
+    ctaCalc: 'Calculate the full mortgage →',
+    ctaGuia: "See your region's guide",
+    calcHref: '/en/mortgage-calculator',
+    guiaHref: '/en/itp',
+  },
+}
+
+interface ITPStandaloneProps {
+  lang?: 'es' | 'en'
+}
+
+const ITPStandalone: React.FC<ITPStandaloneProps> = ({ lang = 'es' }) => {
+  const t = LABELS[lang]
   const [resultado, setResultado] = useState<Resultado | null>(null)
   const resultadoRef = useRef<HTMLDivElement>(null)
 
@@ -29,25 +51,26 @@ const ITPStandalone: React.FC = () => {
         open={true}
         onClose={() => {}}
         onResult={handleResult}
+        lang={lang}
       />
 
       {resultado && (
         <div ref={resultadoRef} className='pl-card p-6 border-l-4 border-lime'>
           <span className='font-data text-[11px] uppercase tracking-widest text-ink-soft'>
-            Impuesto estimado
+            {t.resultado}
           </span>
           <div className='font-heading text-4xl font-bold text-brand-blue my-2'>
-            {formatNumberByLang(resultado.itp, "es")} €
+            {formatNumberByLang(resultado.itp, lang)} €
           </div>
           {resultado.descripcion && (
             <p className='text-sm text-ink-soft mb-4'>{resultado.descripcion}</p>
           )}
           <div className='flex flex-wrap gap-3 mt-2'>
-            <a href='/calculadora-hipotecaria' className='btn-ink px-5 py-2.5 text-sm'>
-              Calcular la hipoteca completa →
+            <a href={t.calcHref} className='btn-ink px-5 py-2.5 text-sm'>
+              {t.ctaCalc}
             </a>
-            <a href='/itp' className='btn-outline px-5 py-2.5 text-sm'>
-              Ver la guía de tu comunidad
+            <a href={t.guiaHref} className='btn-outline px-5 py-2.5 text-sm'>
+              {t.ctaGuia}
             </a>
           </div>
         </div>

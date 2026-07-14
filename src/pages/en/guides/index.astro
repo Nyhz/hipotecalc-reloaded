@@ -1,0 +1,114 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../../../layouts/Layout.astro';
+import Breadcrumbs from '../../../components/seo/Breadcrumbs.astro';
+import PageTracking from '../../../components/PageTracking.tsx';
+import { regionNameEn } from '../../../utils/i18n';
+
+const guiasItp = await getCollection('itpEn');
+const guiasGenerales = (await getCollection('guiasEn')).sort((a, b) =>
+  a.data.title.localeCompare(b.data.title, 'en')
+);
+const posts = (await getCollection('blogEn')).sort(
+  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
+);
+
+const title = 'Mortgage and housing tax guides for Spain | Hipotecalc';
+const description =
+  'Practical guides for buying a home in Spain: the ITP transfer tax in every region, mortgage types, the Euribor and taxes, with verified data.';
+
+const nombre = (guia: (typeof guiasItp)[number]) =>
+  guia.id === 'ceuta-melilla' ? 'Ceuta and Melilla' : regionNameEn(guia.data.comunidad);
+---
+<Layout title={title} description={description} pageType="legal">
+  <PageTracking client:load pagePath="/en/guides" pageTitle={title} />
+
+  <Breadcrumbs items={[
+    { name: 'Home', href: '/en' },
+    { name: 'Guides', href: '/en/guides' }
+  ]} />
+
+  <div class="w-full max-w-5xl mx-auto py-10">
+    <header class="text-center mb-12">
+      <span class="eyebrow">Guides</span>
+      <h1 class="font-heading text-3xl md:text-4xl lg:text-[44px] font-semibold tracking-[-1px] text-ink mt-4 mb-4">
+        Guides for buying with a cool head
+      </h1>
+      <p class="text-ink-soft max-w-3xl mx-auto text-base md:text-lg">
+        Taxes, mortgage types and the market, explained with verified data and
+        connected to our calculators.
+      </p>
+    </header>
+
+    <section class="mb-14">
+      <h2 class="font-heading text-2xl font-semibold text-ink mb-6">Mortgage guides</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        {guiasGenerales.map((guia) => (
+          <a href={`/en/guides/${guia.id}`} class="pl-card pl-card-hover p-6 flex flex-col gap-2">
+            <span class="font-heading text-lg font-semibold text-ink leading-snug">{guia.data.title}</span>
+            <span class="text-sm text-ink-soft leading-relaxed">{guia.data.description}</span>
+            <span class="font-data text-xs text-brand-blue mt-1">Read the guide →</span>
+          </a>
+        ))}
+      </div>
+    </section>
+
+    <section class="mb-14">
+      <div class="flex items-baseline justify-between mb-6">
+        <h2 class="font-heading text-2xl font-semibold text-ink">ITP by region</h2>
+        <a href="/en/itp" class="text-sm font-medium text-brand-blue">See the full table →</a>
+      </div>
+      <p class="text-ink-soft mb-6 max-w-3xl">
+        How much ITP transfer tax you pay when buying a resale home in each Spanish
+        region in 2026, with current rates, every reduction and relief, its legal
+        citation and the calculator preloaded for your region. {guiasItp.length} guides
+        verified against official sources.
+      </p>
+      <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
+        {guiasItp
+          .sort((a, b) => a.data.comunidad.localeCompare(b.data.comunidad, 'es'))
+          .map((guia) => (
+            <a
+              href={`/en/itp/${guia.id}`}
+              class="pl-card pl-card-hover p-4 flex flex-col gap-1"
+            >
+              <span class="font-medium text-ink text-sm">{nombre(guia)}</span>
+              <span class="font-data text-xs text-ink-soft">ITP: {guia.data.tipoGeneral}</span>
+            </a>
+          ))}
+      </div>
+    </section>
+
+    <section class="mb-14">
+      <div class="flex items-baseline justify-between mb-6">
+        <h2 class="font-heading text-2xl font-semibold text-ink">From the blog</h2>
+        <a href="/en/blog" class="text-sm font-medium text-brand-blue">All articles →</a>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        {posts.slice(0, 4).map((post) => (
+          <a href={`/en/blog/${post.id}`} class="pl-card pl-card-hover p-6 flex flex-col gap-2">
+            <span class="font-data text-[11px] uppercase tracking-widest text-ink-soft">
+              {post.data.pubDate.toLocaleDateString('en-US', { month: 'long', year: 'numeric' })}
+            </span>
+            <span class="font-heading text-lg font-semibold text-ink leading-snug">{post.data.title}</span>
+            <span class="text-sm text-ink-soft leading-relaxed">{post.data.description}</span>
+          </a>
+        ))}
+      </div>
+    </section>
+
+    <section class="pl-card p-6 md:p-8 text-center">
+      <h2 class="font-heading text-xl md:text-2xl font-semibold text-ink mb-2">
+        Got the numbers for your purchase?
+      </h2>
+      <p class="text-ink-soft mb-5 max-w-2xl mx-auto">
+        Move from theory to your case: simulate the payment, the ITP and the total
+        cost with our free calculators, or compare current bank offers.
+      </p>
+      <div class="flex flex-wrap justify-center gap-3">
+        <a href="/en/mortgage-calculator" class="btn-ink px-6 py-3 text-sm">Calculate mortgage →</a>
+        <a href="/en/mortgage-comparison" class="btn-outline px-6 py-3 text-sm">Compare banks</a>
+      </div>
+    </section>
+  </div>
+</Layout>

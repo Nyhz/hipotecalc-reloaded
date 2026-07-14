@@ -5,6 +5,7 @@ import Input from "./Input"
 import Select from "./Select"
 import RentalKPIs from "./RentalKPIs"
 import RentalCharts from "./RentalCharts"
+import CashFlowEntradaChart from "./CashFlowEntradaChart"
 import ContactButton from "../ContactButton"
 import AnimatedNumber from "../ui/AnimatedNumber"
 import { useTranslations } from "../../hooks/useTranslations"
@@ -279,6 +280,17 @@ const RentalCalculator: React.FC<RentalCalculatorProps> = ({ lang = 'es' }) => {
       {/* KPIs y gráficas a lo ancho, debajo */}
       <div className="mt-6">
         <RentalKPIs calculations={calculations} lang={lang} />
+      </div>
+      <div className="mt-6">
+        <CashFlowEntradaChart
+          precioTotal={calculations.precioTotal}
+          interes={Number(form.interes) || 0}
+          plazo={Number(form.plazo) || 0}
+          ingresosMensuales={calculations.ingresosMensuales}
+          gastosMensuales={calculations.gastosMensuales}
+          entradaActual={Number(form.entrada) || 0}
+          lang={lang}
+        />
       </div>
       <div className="mt-6">
         <RentalCharts calculations={calculations} lang={lang} />

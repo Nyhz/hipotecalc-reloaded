@@ -8,7 +8,47 @@ import { formatNumberByLang } from "../../utils/number-format"
 // hipoteca variable (euríbor + diferencial) si el índice sube o baja.
 const ESCENARIOS = [-1.0, -0.5, 0, 0.5, 1.0]
 
-const EuriborImpactCalculator: React.FC = () => {
+const LABELS = {
+  es: {
+    capital: 'Capital pendiente (€)',
+    plazo: 'Plazo restante (años)',
+    diferencial: 'Diferencial (%)',
+    escenario: 'Escenario',
+    euribor: 'Euríbor',
+    interes: 'Tu interés',
+    cuota: 'Cuota mensual',
+    diferencia: 'Diferencia',
+    hoy: 'Hoy',
+    puntos: 'puntos',
+    mes: '€/mes',
+    nota: 'Cálculo orientativo por el sistema francés con revisión inmediata del índice. En una hipoteca real, el nuevo euríbor se aplica en tu próxima fecha de revisión (anual o semestral). ¿Quieres el cálculo completo con impuestos y gastos? Usa el ',
+    notaLink: 'simulador de hipoteca',
+    calcHref: '/calculadora-hipotecaria',
+  },
+  en: {
+    capital: 'Outstanding balance (€)',
+    plazo: 'Remaining term (years)',
+    diferencial: 'Spread (%)',
+    escenario: 'Scenario',
+    euribor: 'Euribor',
+    interes: 'Your rate',
+    cuota: 'Monthly payment',
+    diferencia: 'Difference',
+    hoy: 'Today',
+    puntos: 'points',
+    mes: '€/month',
+    nota: 'Indicative calculation using the French amortization system with an immediate index reset. In a real mortgage, the new Euribor applies at your next review date (annual or semi-annual). Want the full calculation with taxes and costs? Use the ',
+    notaLink: 'mortgage calculator',
+    calcHref: '/en/mortgage-calculator',
+  },
+}
+
+interface EuriborImpactCalculatorProps {
+  lang?: 'es' | 'en'
+}
+
+const EuriborImpactCalculator: React.FC<EuriborImpactCalculatorProps> = ({ lang = 'es' }) => {
+  const t = LABELS[lang]
   const [form, setForm] = useState({
     capital: "150000",
     plazo: "25",
@@ -45,7 +85,7 @@ const EuriborImpactCalculator: React.FC = () => {
     <div className='pl-card p-5 md:p-6'>
       <div className='grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6'>
         <Input
-          label='Capital pendiente (€)'
+          label={t.capital}
           name='capital'
           value={form.capital}
           onChange={handleChange}
@@ -54,7 +94,7 @@ const EuriborImpactCalculator: React.FC = () => {
           showEuroSymbol={true}
         />
         <Input
-          label='Plazo restante (años)'
+          label={t.plazo}
           name='plazo'
           value={form.plazo}
           onChange={handleChange}
@@ -63,7 +103,7 @@ const EuriborImpactCalculator: React.FC = () => {
           max={40}
         />
         <Input
-          label='Diferencial (%)'
+          label={t.diferencial}
           name='diferencial'
           value={form.diferencial}
           onChange={handleChange}
@@ -77,11 +117,11 @@ const EuriborImpactCalculator: React.FC = () => {
         <table className='w-full text-sm'>
           <thead>
             <tr className='border-b border-line font-data text-[11px] uppercase tracking-wide text-ink-soft'>
-              <th className='text-left py-2 px-2'>Escenario</th>
-              <th className='text-right py-2 px-2'>Euríbor</th>
-              <th className='text-right py-2 px-2'>Tu interés</th>
-              <th className='text-right py-2 px-2'>Cuota mensual</th>
-              <th className='text-right py-2 px-2'>Diferencia</th>
+              <th className='text-left py-2 px-2'>{t.escenario}</th>
+              <th className='text-right py-2 px-2'>{t.euribor}</th>
+              <th className='text-right py-2 px-2'>{t.interes}</th>
+              <th className='text-right py-2 px-2'>{t.cuota}</th>
+              <th className='text-right py-2 px-2'>{t.diferencia}</th>
             </tr>
           </thead>
           <tbody>
@@ -92,15 +132,15 @@ const EuriborImpactCalculator: React.FC = () => {
               >
                 <td className='py-2 px-2 text-ink'>
                   {fila.delta === 0
-                    ? `Hoy (${currentEuribor.labelEs})`
-                    : `${fila.delta > 0 ? "+" : ""}${fila.delta.toFixed(1)} puntos`}
+                    ? `${t.hoy} (${lang === 'en' ? currentEuribor.labelEn : currentEuribor.labelEs})`
+                    : `${fila.delta > 0 ? "+" : ""}${fila.delta.toFixed(1)} ${t.puntos}`}
                 </td>
                 <td className='py-2 px-2 text-right text-ink'>{fila.euribor.toFixed(2)} %</td>
                 <td className='py-2 px-2 text-right text-ink-soft'>
                   {(fila.euribor + (Number(form.diferencial) || 0)).toFixed(2)} %
                 </td>
                 <td className='py-2 px-2 text-right text-ink'>
-                  {formatNumberByLang(fila.cuota, "es")} €
+                  {formatNumberByLang(fila.cuota, lang)} €
                 </td>
                 <td
                   className='py-2 px-2 text-right'
@@ -115,7 +155,7 @@ const EuriborImpactCalculator: React.FC = () => {
                 >
                   {fila.diferencia === 0
                     ? "—"
-                    : `${fila.diferencia > 0 ? "+" : ""}${formatNumberByLang(fila.diferencia, "es")} €/mes`}
+                    : `${fila.diferencia > 0 ? "+" : ""}${formatNumberByLang(fila.diferencia, lang)} ${t.mes}`}
                 </td>
               </tr>
             ))}
@@ -124,11 +164,9 @@ const EuriborImpactCalculator: React.FC = () => {
       </div>
 
       <p className='text-xs text-ink-soft mt-4'>
-        Cálculo orientativo por el sistema francés con revisión inmediata del índice. En una
-        hipoteca real, el nuevo euríbor se aplica en tu próxima fecha de revisión (anual o
-        semestral). ¿Quieres el cálculo completo con impuestos y gastos? Usa el{" "}
-        <a href='/calculadora-hipotecaria' className='underline text-brand-blue'>
-          simulador de hipoteca
+        {t.nota}
+        <a href={t.calcHref} className='underline text-brand-blue'>
+          {t.notaLink}
         </a>
         .
       </p>

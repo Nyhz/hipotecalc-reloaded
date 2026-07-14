@@ -36,6 +36,23 @@ export function getAlternateLang(currentLang: Language): Language {
   return currentLang === 'es' ? 'en' : 'es'
 }
 
+// Nombre en inglés de cada comunidad (las claves son los nombres exactos de
+// src/constants/comunidades.ts, que no se traducen en datos ni frontmatter)
+const REGION_EN: Record<string, string> = {
+  'Andalucía': 'Andalusia',
+  'Aragón': 'Aragon',
+  'Baleares': 'Balearic Islands',
+  'Canarias': 'Canary Islands',
+  'Cataluña': 'Catalonia',
+  'Comunidad Valenciana': 'Valencian Community',
+  'Navarra': 'Navarre',
+  'País Vasco': 'Basque Country',
+}
+
+export function regionNameEn(nombre: string): string {
+  return REGION_EN[nombre] ?? nombre
+}
+
 // Normaliza a la forma canónica sin barra final (salvo la raíz), que es como
 // sirve las URLs producción (vercel.json trailingSlash: false)
 export function normalizePath(pathname: string): string {
@@ -43,26 +60,47 @@ export function normalizePath(pathname: string): string {
   return pathname.replace(/\/+$/, '')
 }
 
+// Pares estáticos ES ↔ EN. Las secciones de contenido (blog, guías, ITP) se
+// emparejan por prefijo: el fichero inglés usa el MISMO slug que el español.
+const RUTAS_ES_EN: Record<string, string> = {
+  '/': '/en',
+  '/calculadora-hipotecaria': '/en/mortgage-calculator',
+  '/calculadora-alquiler': '/en/rental-calculator',
+  '/calculadora-itp': '/en/itp-calculator',
+  '/cuanto-me-prestan': '/en/how-much-can-i-borrow',
+  '/comparativa-hipotecas': '/en/mortgage-comparison',
+  '/euribor': '/en/euribor',
+  '/guias': '/en/guides',
+  '/itp': '/en/itp',
+  '/blog': '/en/blog',
+  '/aviso-legal': '/en/legal-notice',
+  '/politica-de-privacidad': '/en/privacy-policy',
+  '/politica-de-cookies': '/en/cookie-policy',
+  '/disclaimer-financiero': '/en/financial-disclaimer',
+}
+
+const PREFIJOS_ES_EN: [string, string][] = [
+  ['/blog/', '/en/blog/'],
+  ['/guias/', '/en/guides/'],
+  ['/itp/', '/en/itp/'],
+]
+
 export function getAlternatePath(pathname: string): string {
   const normalized = normalizePath(pathname)
   const currentLang = getCurrentLang(normalized)
 
   if (currentLang === 'es') {
-    if (normalized === '/') return '/en'
-    if (normalized === '/calculadora-hipotecaria') return '/en/mortgage-calculator'
-    if (normalized === '/calculadora-alquiler') return '/en/rental-calculator'
-    if (normalized === '/aviso-legal') return '/en/legal-notice'
-    if (normalized === '/politica-de-privacidad') return '/en/privacy-policy'
-    if (normalized === '/politica-de-cookies') return '/en/cookie-policy'
-    if (normalized === '/disclaimer-financiero') return '/en/financial-disclaimer'
+    if (RUTAS_ES_EN[normalized]) return RUTAS_ES_EN[normalized]
+    for (const [es, en] of PREFIJOS_ES_EN) {
+      if (normalized.startsWith(es)) return en + normalized.slice(es.length)
+    }
   } else {
-    if (normalized === '/en') return '/'
-    if (normalized === '/en/mortgage-calculator') return '/calculadora-hipotecaria'
-    if (normalized === '/en/rental-calculator') return '/calculadora-alquiler'
-    if (normalized === '/en/legal-notice') return '/aviso-legal'
-    if (normalized === '/en/privacy-policy') return '/politica-de-privacidad'
-    if (normalized === '/en/cookie-policy') return '/politica-de-cookies'
-    if (normalized === '/en/financial-disclaimer') return '/disclaimer-financiero'
+    for (const [es, en] of Object.entries(RUTAS_ES_EN)) {
+      if (en === normalized) return es
+    }
+    for (const [es, en] of PREFIJOS_ES_EN) {
+      if (normalized.startsWith(en)) return es + normalized.slice(en.length)
+    }
   }
 
   return pathname

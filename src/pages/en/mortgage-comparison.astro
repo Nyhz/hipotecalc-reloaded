@@ -1,0 +1,79 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Breadcrumbs from '../../components/seo/Breadcrumbs.astro';
+import FAQSection from '../../components/seo/FAQSection.astro';
+import PageTracking from '../../components/PageTracking.tsx';
+import BankComparisonTable from '../../components/comparativa/BankComparisonTable.tsx';
+import { OFERTAS_HIPOTECAS, FECHA_DATOS, EURIBOR_REFERENCIA } from '../../constants/hipotecas-bancos';
+
+const numBancos = new Set(OFERTAS_HIPOTECAS.map(o => o.banco)).size;
+const title = `Spanish Mortgage Comparison ${new Date().getFullYear()}: ${numBancos} banks side by side | Hipotecalc`;
+const description = `Compare fixed, variable and mixed mortgages from ${numBancos} Spanish banks: TIN, APR, term, financing, bundled products and fees, from official sources.`;
+---
+<Layout
+  title={title}
+  description={description}
+  keywords="mortgage comparison spain, best spanish mortgages 2026, fixed mortgage, variable mortgage, mixed mortgage, TIN, APR, spanish banks"
+  pageType="legal"
+>
+  <PageTracking client:load pagePath="/en/mortgage-comparison" pageTitle={title} />
+
+  <Breadcrumbs items={[
+    { name: 'Home', href: '/en' },
+    { name: 'Mortgage Comparison', href: '/en/mortgage-comparison' }
+  ]} />
+
+  <div class="w-full py-8">
+    <div class="text-center mb-8 reveal-up">
+      <span class="eyebrow">Mortgage comparison · Spain {new Date().getFullYear()}</span>
+      <h1 class="font-heading text-3xl md:text-4xl lg:text-[44px] font-semibold tracking-[-1px] text-ink mt-4 mb-3">
+        {numBancos} banks, all their mortgages
+      </h1>
+      <p class="text-ink-soft max-w-3xl mx-auto text-base md:text-lg">
+        The mortgage offers published by Spanish banks and credit cooperatives: fixed,
+        variable and mixed, with TIN, APR, terms, maximum financing, bundled products
+        and fees. Click any row for the details.
+      </p>
+      <p class="font-data text-xs text-ink-soft mt-3">
+        Data: {FECHA_DATOS} · Reference Euribor {EURIBOR_REFERENCIA}
+      </p>
+    </div>
+
+    <div class="reveal-up reveal-delay-1">
+      <BankComparisonTable client:load lang="en" />
+    </div>
+
+    <div class="max-w-3xl mx-auto mt-10 text-sm text-ink-soft space-y-3">
+      <p>
+        <strong class="text-ink">How to read the table:</strong> rates are shown as
+        <em> with / without bonus</em>. The bonus rate requires bundled products
+        (payroll, insurance, cards…) whose cost you should weigh; the APR is the most
+        comparable figure because it incorporates fees and bundles. "FIPRE / Web oficial"
+        means data published by the institution; "Comparador" means indicative figures
+        from specialised portals. Product details are kept in Spanish as published in
+        each lender's official documentation.
+      </p>
+      <p>
+        All figures are indicative and change frequently. Before contracting, request
+        the personalised FIPRE/FEIN from each institution and read our
+        <a href="/en/financial-disclaimer" class="underline text-brand-blue">financial disclaimer</a>.
+        You can simulate the payment for any of these offers with the
+        <a href="/en/mortgage-calculator" class="underline text-brand-blue">mortgage calculator</a>.
+      </p>
+    </div>
+  </div>
+
+  <FAQSection
+    title="Frequently asked questions"
+    items={[
+      {
+        question: "Which is the best mortgage in Spain right now?",
+        answer: "There is no single best mortgage: it depends on your profile, savings and risk tolerance. Compare the APR (not just the TIN), the bundled products required and the fees, and simulate the payment with your own numbers before deciding."
+      },
+      {
+        question: "What is the difference between TIN and APR?",
+        answer: "The TIN is the nominal interest rate applied to the loan. The APR (TAE in Spanish) adds fees and the cost of bundled products, so it reflects the real annual cost and is the right figure for comparing offers."
+      }
+    ]}
+  />
+</Layout>

@@ -1,0 +1,149 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+import Breadcrumbs from '../../components/seo/Breadcrumbs.astro';
+import PageTracking from '../../components/PageTracking.tsx';
+import FAQSection from '../../components/seo/FAQSection.astro';
+import EuriborChart from '../../components/home/EuriborChart';
+import EuriborImpactCalculator from '../../components/euribor/EuriborImpactCalculator';
+import { currentEuribor, euriborData } from '../../constants/euribor-values';
+
+const analisis = (await getCollection('blogEn'))
+  .filter((post) => post.data.serie === 'euribor')
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+
+const title = `Euribor today: ${currentEuribor.value.toLocaleString('en-US')}% (${currentEuribor.labelEn}) — history and your payment | Hipotecalc`;
+const description = `The 12-month Euribor stands at ${currentEuribor.value.toLocaleString('en-US')}% (${currentEuribor.labelEn} average). Check the official ECB history, calculate how it affects your payment and read the monthly analysis.`;
+
+const anterior = euriborData[euriborData.length - 2];
+const maximo2023 = euriborData.find((d) => d.year === 2023)?.value ?? 3.87;
+const minimo2021 = euriborData.find((d) => d.year === 2021)?.value ?? -0.49;
+
+const formatDate = (d: Date) =>
+  d.toLocaleDateString('en-US', { day: 'numeric', month: 'long', year: 'numeric' });
+---
+<Layout title={title} description={description} pageType="legal">
+  <PageTracking client:load pagePath="/en/euribor" pageTitle={title} />
+
+  <Breadcrumbs items={[
+    { name: 'Home', href: '/en' },
+    { name: 'Euribor', href: '/en/euribor' }
+  ]} />
+
+  <div class="w-full max-w-5xl mx-auto py-10">
+    <header class="text-center mb-10">
+      <span class="eyebrow">12-month Euribor · Official ECB data</span>
+      <h1 class="font-heading text-3xl md:text-4xl lg:text-[44px] font-semibold tracking-[-1px] text-ink mt-4 mb-4">
+        Where is the Euribor today?
+      </h1>
+      <p class="text-ink-soft max-w-3xl mx-auto text-base md:text-lg">
+        The index almost every variable mortgage in Spain is tied to, with the
+        official European Central Bank historical series and a calculator to see
+        what happens to your payment if it rises or falls.
+      </p>
+    </header>
+
+    <div class="pl-card p-6 md:p-8 mb-12 text-center border-l-4 border-lime">
+      <span class="font-data text-[11px] uppercase tracking-widest text-ink-soft">
+        Latest published monthly average · {currentEuribor.labelEn}
+      </span>
+      <div class="font-heading text-5xl md:text-6xl font-bold text-brand-blue my-3">
+        {currentEuribor.value.toLocaleString('en-US')}%
+      </div>
+      <p class="text-sm text-ink-soft max-w-2xl mx-auto">
+        Monthly average of the 12-month Euribor, the value banks apply at mortgage
+        reviews. The {anterior.year} annual average was {anterior.value.toLocaleString('en-US')}%,
+        far from the recent peak of {maximo2023.toLocaleString('en-US')}% (2023) and the all-time
+        low of {minimo2021.toLocaleString('en-US')}% (2021).
+      </p>
+    </div>
+
+    <section class="mb-4">
+      <h2 class="font-heading text-2xl md:text-3xl font-semibold text-ink mb-2 text-center">
+        How does the Euribor affect your payment?
+      </h2>
+      <p class="text-ink-soft text-center max-w-2xl mx-auto mb-6">
+        Enter your outstanding mortgage and spread: you'll see your payment at
+        today's Euribor and what you'd pay if the index moves half a point or a
+        full point.
+      </p>
+      <EuriborImpactCalculator client:visible lang="en" />
+    </section>
+  </div>
+
+  <EuriborChart client:only="react" />
+
+  <div class="w-full max-w-5xl mx-auto">
+    <section class="py-14">
+      <div class="flex items-baseline justify-between mb-6">
+        <h2 class="font-heading text-2xl md:text-3xl font-semibold text-ink">Monthly Euribor analysis</h2>
+        <a href="/en/blog" class="text-sm font-medium text-brand-blue">Full blog →</a>
+      </div>
+      {analisis.length > 0 ? (
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {analisis.map((post) => (
+            <a href={`/en/blog/${post.id}`} class="pl-card pl-card-hover p-6 flex flex-col gap-2">
+              <span class="font-data text-[11px] uppercase tracking-widest text-ink-soft">
+                {formatDate(post.data.pubDate)}
+              </span>
+              <span class="font-heading text-lg font-semibold text-ink leading-snug">{post.data.title}</span>
+              <span class="text-sm text-ink-soft leading-relaxed">{post.data.description}</span>
+            </a>
+          ))}
+        </div>
+      ) : (
+        <p class="text-ink-soft">Coming soon: monthly analysis of the index.</p>
+      )}
+    </section>
+
+    <section class="w-full max-w-3xl mx-auto pb-4">
+      <h2 class="font-heading text-2xl font-semibold text-ink mb-4">What the Euribor is (and what it isn't)</h2>
+      <div class="text-ink-soft space-y-4 leading-relaxed">
+        <p>
+          The Euribor (Euro Interbank Offered Rate) is the average interest rate at
+          which major European banks lend money to each other. It is administered by the
+          <a href="https://www.emmi-benchmarks.eu/" target="_blank" rel="noopener noreferrer" class="underline text-brand-blue"> European Money Markets Institute (EMMI)</a>
+          and published every business day. The term that matters for Spanish
+          mortgages is the <strong class="text-ink">12-month Euribor</strong>.
+        </p>
+        <p>
+          What affects your mortgage is not the daily value in the news but the
+          <strong class="text-ink"> monthly average</strong>: at each review (annual or
+          semi-annual), your bank takes the average of the reference month agreed in
+          your deed and adds your spread. That's why a one-day spike barely matters
+          unless it moves the average. A good example was
+          <a href="/en/blog/guerra-iran-euribor" class="underline text-brand-blue"> the 2025 Iran war</a>,
+          which left almost no trace on the index despite the noise.
+        </p>
+        <p>
+          If you're choosing between fixed, variable or mixed, we cover it in detail in the
+          <a href="/en/blog/tipos-de-hipoteca-fija-variable-mixta" class="underline text-brand-blue"> mortgage types guide</a>,
+          and you can see each bank's actual offers in the
+          <a href="/en/mortgage-comparison" class="underline text-brand-blue"> mortgage comparison</a>.
+        </p>
+      </div>
+    </section>
+  </div>
+
+  <FAQSection
+    title="Frequently asked questions about the Euribor"
+    items={[
+      {
+        question: "What is the Euribor value today?",
+        answer: `The latest published monthly average of the 12-month Euribor is ${currentEuribor.value.toLocaleString('en-US')}% (${currentEuribor.labelEn}), according to the official European Central Bank series. It is the value applied at variable-mortgage reviews.`
+      },
+      {
+        question: "When does my mortgage's Euribor update?",
+        answer: "At your review date, usually every 12 months (sometimes every 6). The bank takes the monthly Euribor average of the reference month agreed in your deed, adds your spread and recalculates the payment for the next period."
+      },
+      {
+        question: "Why does the Euribor rise or fall?",
+        answer: "Mainly because of expectations about European Central Bank interest rates: if the market expects hikes, the Euribor rises in advance; if it expects cuts, it falls. Eurozone inflation is the underlying driver of those decisions."
+      },
+      {
+        question: "Does the Euribor affect fixed mortgages?",
+        answer: "No. A fixed mortgage keeps the same payment for the whole life of the loan, whatever the Euribor does. It only affects variable mortgages and the variable phase of mixed ones."
+      }
+    ]}
+  />
+</Layout>

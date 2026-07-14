@@ -145,5 +145,81 @@ export default config({
         }),
       },
     }),
+    blogEn: collection({
+      label: 'Blog posts (English)',
+      slugField: 'title',
+      path: 'src/content/en/blog/*',
+      format: { contentField: 'content' },
+      entryLayout: 'content',
+      fields: {
+        title: fields.slug({ name: { label: 'Title', validation: { isRequired: true } } }),
+        description: fields.text({ label: 'Description (SEO)', multiline: true, validation: { isRequired: true } }),
+        pubDate: fields.date({ label: 'Publish date', validation: { isRequired: true } }),
+        updatedDate: fields.date({ label: 'Last updated (optional)' }),
+        seoTitle: fields.text({ label: 'Short SEO title (optional, for the <title> tag)' }),
+        serie: fields.select({
+          label: 'Series',
+          description: 'Monthly Euribor analyses are also listed on /en/euribor',
+          options: [
+            { label: '(none)', value: '' },
+            { label: 'Euribor analysis', value: 'euribor' },
+          ],
+          defaultValue: '',
+        }),
+        faq: fields.array(
+          fields.object({
+            question: fields.text({ label: 'Question' }),
+            answer: fields.text({ label: 'Answer', multiline: true }),
+          }),
+          { label: 'FAQ (rich snippet, optional)', itemLabel: (props) => props.fields.question.value || 'Question' }
+        ),
+        content: fields.markdoc({ label: 'Content', extension: 'md' }),
+      },
+    }),
+    guiasEn: collection({
+      label: 'Mortgage guides (English)',
+      slugField: 'title',
+      path: 'src/content/en/guias/*',
+      format: { contentField: 'content' },
+      entryLayout: 'content',
+      fields: {
+        title: fields.slug({ name: { label: 'Title', validation: { isRequired: true } } }),
+        description: fields.text({ label: 'Description (SEO)', multiline: true, validation: { isRequired: true } }),
+        updatedDate: fields.date({ label: 'Last updated', validation: { isRequired: true } }),
+        calculadora: fields.select({
+          label: 'Calculator embedded at the end',
+          options: [
+            { label: 'Mortgage calculator', value: 'hipoteca' },
+            { label: 'ITP calculator', value: 'itp' },
+            { label: 'How much can I borrow? (35% rule)', value: 'prestamo' },
+          ],
+          defaultValue: 'hipoteca',
+        }),
+        faq: fields.array(
+          fields.object({
+            question: fields.text({ label: 'Question' }),
+            answer: fields.text({ label: 'Answer', multiline: true }),
+          }),
+          { label: 'FAQ (rich snippet, optional)', itemLabel: (props) => props.fields.question.value || 'Question' }
+        ),
+        content: fields.markdoc({ label: 'Content', extension: 'md' }),
+      },
+    }),
+    itpEn: collection({
+      label: 'ITP guides by region (English)',
+      slugField: 'title',
+      path: 'src/content/en/guias/itp/*',
+      format: { contentField: 'content' },
+      entryLayout: 'content',
+      fields: {
+        title: fields.slug({ name: { label: 'Title', validation: { isRequired: true } } }),
+        description: fields.text({ label: 'Description (SEO)', multiline: true, validation: { isRequired: true } }),
+        comunidad: fields.text({ label: 'Region (exact name from comunidades.ts, in Spanish, for the calculator)', validation: { isRequired: true } }),
+        tipoGeneral: fields.text({ label: 'General rate 2026 (e.g. "6 %")', validation: { isRequired: true } }),
+        resumen: fields.text({ label: 'Reductions summary (for the comparison table)', multiline: true, validation: { isRequired: true } }),
+        updatedDate: fields.date({ label: 'Legislation last verified', validation: { isRequired: true } }),
+        content: fields.markdoc({ label: 'Content', extension: 'md' }),
+      },
+    }),
   },
 })

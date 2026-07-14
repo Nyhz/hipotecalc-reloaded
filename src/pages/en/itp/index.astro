@@ -1,0 +1,113 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../../../layouts/Layout.astro';
+import Breadcrumbs from '../../../components/seo/Breadcrumbs.astro';
+import PageTracking from '../../../components/PageTracking.tsx';
+import FAQSection from '../../../components/seo/FAQSection.astro';
+import { regionNameEn } from '../../../utils/i18n';
+
+const guias = (await getCollection('itpEn')).sort((a, b) =>
+  a.data.comunidad.localeCompare(b.data.comunidad, 'es')
+);
+
+const title = 'ITP property transfer tax by Spanish region 2026: full guide | Hipotecalc';
+const description =
+  'How much ITP transfer tax you pay when buying a resale home in each Spanish region in 2026: general rates, reductions and reliefs, verified against official sources.';
+
+const nombre = (guia: (typeof guias)[number]) =>
+  guia.id === 'ceuta-melilla' ? 'Ceuta and Melilla' : regionNameEn(guia.data.comunidad);
+---
+<Layout title={title} description={description} pageType="legal">
+  <PageTracking client:load pagePath="/en/itp" pageTitle={title} />
+
+  <Breadcrumbs items={[
+    { name: 'Home', href: '/en' },
+    { name: 'Guides', href: '/en/guides' },
+    { name: 'ITP by region', href: '/en/itp' }
+  ]} />
+
+  <div class="w-full max-w-5xl mx-auto py-10">
+    <header class="text-center mb-10">
+      <span class="eyebrow">ITP guide · Spain 2026</span>
+      <h1 class="font-heading text-3xl md:text-4xl lg:text-[44px] font-semibold tracking-[-1px] text-ink mt-4 mb-4">
+        The ITP transfer tax in every Spanish region
+      </h1>
+      <p class="text-ink-soft max-w-3xl mx-auto text-base md:text-lg">
+        The ITP (Impuesto de Transmisiones Patrimoniales) is the biggest cost when
+        buying a resale home in Spain, and every region sets its own rates and
+        reliefs: from an effective 3% in Ceuta and Melilla to 13% in the top
+        brackets of Catalonia or the Balearic Islands. Pick your region for the
+        current rates, verified against official sources.
+      </p>
+    </header>
+
+    <div class="pl-card p-5 mb-10 text-sm text-ink-soft leading-relaxed">
+      <p>
+        <strong class="text-ink">Two rules common to all of Spain:</strong> the buyer
+        always pays the tax, and since 2022 the taxable base is the
+        <strong class="text-ink"> cadastral reference value</strong> — or the agreed
+        price if higher — not simply the price (art. 10 TRLITPAJD). Navarre and the
+        Basque Country apply their own foral valuation rules. New-build homes pay
+        VAT at 10% instead of ITP: you can compare both cases in the
+        <a href="/en/mortgage-calculator" class="underline text-brand-blue">mortgage calculator</a>.
+      </p>
+    </div>
+
+    <div class="overflow-x-auto pl-card p-2 md:p-4 mb-12">
+      <table class="w-full text-sm">
+        <thead>
+          <tr class="border-b border-line font-data text-[11px] uppercase tracking-wide text-ink-soft">
+            <th class="text-left py-3 px-3">Territory</th>
+            <th class="text-left py-3 px-3">General rate 2026</th>
+            <th class="text-left py-3 px-3 hidden md:table-cell">Main reductions and reliefs</th>
+            <th class="text-right py-3 px-3">Guide</th>
+          </tr>
+        </thead>
+        <tbody>
+          {guias.map((guia) => (
+            <tr class="border-b border-line hover:bg-paper-2/60 transition-colors">
+              <td class="py-3 px-3 font-medium text-ink whitespace-nowrap">
+                <a href={`/en/itp/${guia.id}`} class="hover:text-brand-blue transition-colors">{nombre(guia)}</a>
+              </td>
+              <td class="py-3 px-3 text-ink whitespace-nowrap">{guia.data.tipoGeneral}</td>
+              <td class="py-3 px-3 text-ink-soft hidden md:table-cell">{guia.data.resumen}</td>
+              <td class="py-3 px-3 text-right">
+                <a href={`/en/itp/${guia.id}`} class="text-brand-blue font-medium whitespace-nowrap">See guide →</a>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+
+    <p class="text-xs text-ink-soft mb-12 max-w-3xl">
+      Indicative table compiled from the consolidated texts in the BOE, regional
+      gazettes and the Spanish Ministry of Finance's "Tributación Autonómica.
+      Medidas 2026". Every relief has detailed requirements (income limits, wealth,
+      surface area, occupancy periods…) explained in each region's guide with its
+      legal citation.
+    </p>
+  </div>
+
+  <FAQSection
+    title="Frequently asked questions about the ITP"
+    items={[
+      {
+        question: "Who pays the ITP and when?",
+        answer: "The buyer of the resale home always pays the ITP, through a self-assessment (form 600 in most regions) within 30 working days or one month from signing the deed, depending on the region."
+      },
+      {
+        question: "What amount is the ITP calculated on?",
+        answer: "Since 2022, on the cadastral reference value or the purchase price if higher. Paying a price below the reference value does not reduce the tax. Navarre and the Basque Country apply their own foral valuation rules."
+      },
+      {
+        question: "Which region has the lowest ITP in 2026?",
+        answer: "Among common-regime regions, Madrid applies the lowest general rate (6%), followed by the Canary Islands (6.5%). In Ceuta and Melilla the effective rate is 3% thanks to the 50% state relief, and in the Basque Country homes are taxed at 4%."
+      },
+      {
+        question: "Do new-build homes pay ITP?",
+        answer: "No. The first sale of a new home is subject to 10% VAT (4% for special-regime subsidised housing) plus stamp duty (AJD). The ITP only applies to resale homes."
+      }
+    ]}
+  />
+</Layout>

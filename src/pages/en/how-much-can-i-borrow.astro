@@ -1,0 +1,90 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Breadcrumbs from '../../components/seo/Breadcrumbs.astro';
+import PageTracking from '../../components/PageTracking.tsx';
+import FAQSection from '../../components/seo/FAQSection.astro';
+import PrestamoMaximoCalculator from '../../components/prestamo/PrestamoMaximoCalculator';
+
+const title = 'How much can I borrow for a mortgage in Spain? | Hipotecalc';
+const description =
+  'Calculate how much a Spanish bank would lend you for a mortgage using the 35% debt-to-income rule: maximum payment, capital, reachable property price and required savings.';
+---
+<Layout title={title} description={description}>
+  <PageTracking client:load pagePath="/en/how-much-can-i-borrow" pageTitle={title} />
+
+  <Breadcrumbs items={[
+    { name: 'Home', href: '/en' },
+    { name: 'How much can I borrow?', href: '/en/how-much-can-i-borrow' }
+  ]} />
+
+  <div class="w-full max-w-4xl mx-auto py-10">
+    <header class="text-center mb-10">
+      <span class="eyebrow">Borrowing capacity · The 35% rule</span>
+      <h1 class="font-heading text-3xl md:text-4xl lg:text-[44px] font-semibold tracking-[-1px] text-ink mt-4 mb-4">
+        How much can a bank lend me?
+      </h1>
+      <p class="text-ink-soft max-w-3xl mx-auto text-base md:text-lg">
+        Before house-hunting, the key question: with your income, what's the biggest
+        mortgage you'd get? Enter your numbers to see your maximum affordable
+        payment, the capital a bank would lend and the property price you can aim for.
+      </p>
+    </header>
+
+    <PrestamoMaximoCalculator client:load lang="en" />
+
+    <section class="mt-14 max-w-3xl mx-auto">
+      <h2 class="font-heading text-2xl font-semibold text-ink mb-4">The 35% rule, explained</h2>
+      <div class="text-ink-soft space-y-4 leading-relaxed">
+        <p>
+          The general criterion in the sector — and the Bank of Spain's
+          recommendation — is that all your loan payments together should not exceed
+          <strong class="text-ink"> 35% of the household's net monthly income</strong>.
+          If your household nets €3,000 a month, your debts shouldn't exceed about
+          €1,050; if you already pay €200 for a car, that leaves €850 of headroom for
+          the mortgage payment.
+        </p>
+        <p>
+          From that maximum payment, the capital a bank will lend depends on the
+          interest rate and the term: a longer term or a lower rate means more
+          capital for the same payment. Remember that banks typically finance
+          <strong class="text-ink"> up to 80% of the lower of price and appraisal</strong>:
+          the remaining 20% plus taxes and costs (an extra 10–12%) must come from
+          your savings. See the breakdown in the
+          <a href="/en/guides/gastos-compraventa" class="underline text-brand-blue">purchase costs guide</a>
+          and your region's tax in the
+          <a href="/en/itp-calculator" class="underline text-brand-blue">ITP calculator</a>.
+        </p>
+        <p>
+          The 35% is a prudent rule, not a promise: each lender also weighs the
+          stability of your income, your age versus the term, your credit history
+          and the appraisal. Some banks stretch to 40% for very solvent profiles;
+          others stop at 30% for variable incomes. Use the result as a compass and
+          then compare
+          <a href="/en/mortgage-comparison" class="underline text-brand-blue">each bank's actual offers</a>.
+        </p>
+      </div>
+    </section>
+  </div>
+
+  <FAQSection
+    title="Frequently asked questions about your maximum mortgage"
+    items={[
+      {
+        question: "How much can a bank lend me with my salary?",
+        answer: "As a general rule, all your debt payments together shouldn't exceed 35% of your net monthly income. With €2,000 net, a maximum payment of about €700/month, which over 30 years at a 3% rate equals roughly €166,000 of capital."
+      },
+      {
+        question: "Do Spanish banks lend 100% of the property price?",
+        answer: "As a general rule they finance up to 80% of the lower of price and appraisal for a primary residence. Exceptions exist (very solvent profiles, bank-owned properties or public guarantees such as the ICO scheme for young buyers), but they are not the norm."
+      },
+      {
+        question: "Does my partner's income count?",
+        answer: "Yes. If you both sign the mortgage, the bank adds up the household's net incomes and applies the debt limit to the total. It also adds both partners' debts."
+      },
+      {
+        question: "What if I exceed 35% debt-to-income?",
+        answer: "The bank will likely decline the application or ask for extra guarantees (guarantors, additional collateral). Even if approved, going above 35% leaves little margin for surprises or Euribor rises if the mortgage is variable."
+      }
+    ]}
+  />
+</Layout>

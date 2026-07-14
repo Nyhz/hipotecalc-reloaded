@@ -118,6 +118,81 @@ export const getTools = (lang: 'es' | 'en' = 'es') => {
         nav: true,
         active: true,
       },
+      {
+        icon: "lucide:table",
+        title: "Mortgage Comparison",
+        label: "Comparison",
+        description:
+          "Mortgage offers from Spanish banks side by side: TIN, APR, bundled products and fees.",
+        href: "/en/mortgage-comparison",
+        nav: true,
+        active: true,
+      },
+      {
+        icon: "lucide:receipt-euro",
+        title: "ITP Calculator",
+        label: "ITP Calculator",
+        description:
+          "Calculate the ITP transfer tax on a resale home with your region's reductions: young buyers, large families, disability and more.",
+        href: "/en/itp-calculator",
+        nav: false,
+        active: true,
+        card: true,
+      },
+      {
+        icon: "lucide:piggy-bank",
+        title: "How much can I borrow?",
+        label: "How much can I borrow?",
+        description:
+          "Find out the maximum mortgage a bank would grant you with your income, using the 35% debt-to-income rule.",
+        href: "/en/how-much-can-i-borrow",
+        nav: false,
+        active: true,
+        card: true,
+      },
+      {
+        icon: "lucide:trending-up",
+        title: "Euribor today",
+        label: "Euribor today",
+        description:
+          "The current Euribor value, its official history and how it affects your payment, with monthly analysis.",
+        href: "/en/euribor",
+        nav: false,
+        active: true,
+        card: false,
+      },
+      {
+        icon: "lucide:landmark",
+        title: "ITP by region",
+        label: "ITP by region",
+        description:
+          "How much ITP is paid in each Spanish region: current rates, reductions and reliefs for 2026.",
+        href: "/en/itp",
+        nav: true,
+        active: true,
+        card: false,
+      },
+      {
+        icon: "lucide:book-open",
+        title: "Guides",
+        label: "Guides",
+        description:
+          "ITP in every region, mortgage types and housing taxes in Spain, with verified data.",
+        href: "/en/guides",
+        nav: true,
+        active: true,
+        card: false,
+      },
+      {
+        icon: "lucide:newspaper",
+        title: "Blog",
+        label: "Blog",
+        description: "Guides and analysis on mortgages, the Euribor and housing in Spain.",
+        href: "/en/blog",
+        nav: true,
+        active: true,
+        card: false,
+      },
     ]
   };
   

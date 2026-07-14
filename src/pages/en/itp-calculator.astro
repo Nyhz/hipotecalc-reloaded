@@ -1,0 +1,83 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+import Breadcrumbs from '../../components/seo/Breadcrumbs.astro';
+import PageTracking from '../../components/PageTracking.tsx';
+import FAQSection from '../../components/seo/FAQSection.astro';
+import ITPStandalone from '../../components/calculadora-itp/ITPStandalone';
+import { regionNameEn } from '../../utils/i18n';
+
+const guiasItp = (await getCollection('itpEn')).sort((a, b) =>
+  a.data.comunidad.localeCompare(b.data.comunidad, 'es')
+);
+
+const title = 'ITP Calculator 2026: property transfer tax in Spain | Hipotecalc';
+const description =
+  "Calculate the ITP transfer tax on a resale home in any Spanish region, with the reductions for young buyers, large families or disability. Free and instant.";
+---
+<Layout title={title} description={description}>
+  <PageTracking client:load pagePath="/en/itp-calculator" pageTitle={title} />
+
+  <Breadcrumbs items={[
+    { name: 'Home', href: '/en' },
+    { name: 'ITP Calculator', href: '/en/itp-calculator' }
+  ]} />
+
+  <div class="w-full max-w-4xl mx-auto py-10">
+    <header class="text-center mb-10">
+      <span class="eyebrow">ITP calculator · Spain 2026</span>
+      <h1 class="font-heading text-3xl md:text-4xl lg:text-[44px] font-semibold tracking-[-1px] text-ink mt-4 mb-4">
+        Property transfer tax (ITP) calculator
+      </h1>
+      <p class="text-ink-soft max-w-3xl mx-auto text-base md:text-lg">
+        Pick your region, enter the price and your situation (age, family,
+        disability…) and instantly get the estimated ITP with the reliefs you
+        qualify for. For new builds, it calculates the equivalent VAT.
+      </p>
+    </header>
+
+    <ITPStandalone client:load lang="en" />
+
+    <section class="mt-14">
+      <h2 class="font-heading text-2xl font-semibold text-ink mb-4">
+        Check your region's guide
+      </h2>
+      <p class="text-ink-soft mb-6">
+        Each region applies different rates and requirements. Our guides have the
+        full details with legal citations, verified against official sources:
+      </p>
+      <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
+        {guiasItp.map((guia) => (
+          <a href={`/en/itp/${guia.id}`} class="pl-card pl-card-hover p-4 flex flex-col gap-1">
+            <span class="font-medium text-ink text-sm">
+              {guia.id === 'ceuta-melilla' ? 'Ceuta and Melilla' : regionNameEn(guia.data.comunidad)}
+            </span>
+            <span class="font-data text-xs text-ink-soft">ITP: {guia.data.tipoGeneral}</span>
+          </a>
+        ))}
+      </div>
+    </section>
+  </div>
+
+  <FAQSection
+    title="Frequently asked questions about the ITP calculator"
+    items={[
+      {
+        question: "What is the ITP and when is it paid?",
+        answer: "The ITP (Impuesto de Transmisiones Patrimoniales) taxes the purchase of resale homes and is always paid by the buyer, usually within 30 working days or one month from the deed. New homes pay 10% VAT instead of ITP."
+      },
+      {
+        question: "What value does this calculator use for the tax?",
+        answer: "The price you enter. Bear in mind that legally the taxable base is the cadastral reference value or the price if higher: check the property's reference value at the Cadastre's online office before signing."
+      },
+      {
+        question: "Does it include my region's reliefs?",
+        answer: "Yes. The calculator applies the most common regional reduced rates and reliefs: young buyers, large or single-parent families, disability, victims, subsidised housing or sparsely populated areas, always selecting the most beneficial rate applicable to your case."
+      },
+      {
+        question: "Is the result exact?",
+        answer: "It is a rigorous estimate using the rates in force in 2026, but each relief has fine-grained requirements (income or wealth limits, occupancy periods) that the tool simplifies. Verify your case in your region's guide or with a tax advisor."
+      }
+    ]}
+  />
+</Layout>

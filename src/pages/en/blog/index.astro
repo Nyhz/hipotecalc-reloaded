@@ -1,0 +1,56 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../../../layouts/Layout.astro';
+import Breadcrumbs from '../../../components/seo/Breadcrumbs.astro';
+import PageTracking from '../../../components/PageTracking.tsx';
+
+const posts = (await getCollection('blogEn')).sort(
+  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
+);
+
+const formatDate = (d: Date) =>
+  d.toLocaleDateString('en-US', { day: 'numeric', month: 'long', year: 'numeric' });
+
+const title = 'Blog | Hipotecalc';
+const description = 'Guides and analysis on mortgages, the Euribor, taxes and housing in Spain. No fluff: official data and calculations you can reproduce.';
+---
+<Layout title={title} description={description} pageType="legal">
+  <PageTracking client:load pagePath="/en/blog" pageTitle={title} />
+
+  <Breadcrumbs items={[
+    { name: 'Home', href: '/en' },
+    { name: 'Blog', href: '/en/blog' }
+  ]} />
+
+  <div class="w-full max-w-4xl mx-auto py-10">
+    <div class="mb-10 reveal-up">
+      <span class="eyebrow">Blog</span>
+      <h1 class="font-heading text-3xl md:text-4xl font-semibold tracking-[-1px] text-ink mt-4 mb-3">
+        Mortgages and the Euribor, no fluff
+      </h1>
+      <p class="text-ink-soft max-w-2xl">
+        Analysis and guides on the Spanish mortgage market, with official data and
+        calculations you can reproduce in our calculators.
+      </p>
+    </div>
+
+    {posts.length === 0 ? (
+      <p class="text-ink-soft">No articles published yet.</p>
+    ) : (
+      <div class="space-y-6">
+        {posts.map((post) => (
+          <a href={`/en/blog/${post.id}`} class="pl-card pl-card-hover block p-6 md:p-7">
+            <p class="font-data text-[11px] uppercase tracking-widest text-ink-soft mb-2">
+              {formatDate(post.data.pubDate)}
+            </p>
+            <h2 class="font-heading text-xl md:text-2xl font-semibold text-ink mb-2">
+              {post.data.title}
+            </h2>
+            <p class="text-ink-soft text-sm leading-relaxed">{post.data.description}</p>
+            <span class="inline-block mt-4 text-sm font-medium text-brand-blue">Read article →</span>
+          </a>
+        ))}
+      </div>
+    )}
+  </div>
+</Layout>

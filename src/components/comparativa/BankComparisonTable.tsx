@@ -22,7 +22,57 @@ const tipoBadgeClass: Record<OfertaHipoteca["tipo"], string> = {
   Mixta: "bg-lime/60 text-ink",
 }
 
-const BankComparisonTable: React.FC = () => {
+// Etiquetas de la interfaz. Los datos de las ofertas (vinculaciones,
+// comisiones, notas) proceden de las FIPRE en español y no se traducen.
+const LABELS = {
+  es: {
+    buscar: 'Buscar banco o producto',
+    placeholder: 'Ej: Santander, mixta, NARANJA…',
+    tipoHipoteca: 'Tipo de hipoteca',
+    tipoEntidad: 'Tipo de entidad',
+    oferta: 'oferta',
+    ofertas: 'ofertas',
+    banco: 'Banco', producto: 'Producto', tipo: 'Tipo',
+    tin: 'TIN (bonif. / sin)', tae: 'TAE (bonif. / sin)',
+    plazo: 'Plazo máx.', financiacion: 'Financiación',
+    diferencial: 'Diferencial / tramo fijo',
+    vinculaciones: 'Vinculaciones / bonificaciones',
+    comisiones: 'Comisiones',
+    requisitos: 'Requisitos / notas',
+    fuente: 'Fuente / fiabilidad',
+    sinResultados: 'Ninguna oferta coincide con los filtros seleccionados.',
+    sinOferta: 'Entidades consultadas que no comercializan hipotecas',
+    tipoValor: (v: string) => v,
+    categoriaValor: (v: string) => v,
+  },
+  en: {
+    buscar: 'Search bank or product',
+    placeholder: 'E.g.: Santander, mixed, NARANJA…',
+    tipoHipoteca: 'Mortgage type',
+    tipoEntidad: 'Institution type',
+    oferta: 'offer',
+    ofertas: 'offers',
+    banco: 'Bank', producto: 'Product', tipo: 'Type',
+    tin: 'TIN (bonus / without)', tae: 'APR (bonus / without)',
+    plazo: 'Max. term', financiacion: 'Financing',
+    diferencial: 'Spread / fixed period',
+    vinculaciones: 'Bundled products / discounts',
+    comisiones: 'Fees',
+    requisitos: 'Requirements / notes',
+    fuente: 'Source / reliability',
+    sinResultados: 'No offers match the selected filters.',
+    sinOferta: 'Institutions surveyed that do not sell mortgages',
+    tipoValor: (v: string) => ({ Todas: 'All', Fija: 'Fixed', Variable: 'Variable', Mixta: 'Mixed' }[v] ?? v),
+    categoriaValor: (v: string) => ({ Todas: 'All', Grande: 'Large', Online: 'Online', Mediano: 'Mid-size', Cooperativa: 'Cooperative', 'Banca ética': 'Ethical bank', Especialista: 'Specialist' }[v] ?? v),
+  },
+}
+
+interface BankComparisonTableProps {
+  lang?: 'es' | 'en'
+}
+
+const BankComparisonTable: React.FC<BankComparisonTableProps> = ({ lang = 'es' }) => {
+  const t = LABELS[lang]
   const [tipo, setTipo] = useState<(typeof TIPOS)[number]>("Todas")
   const [categoria, setCategoria] = useState<(typeof CATEGORIAS)[number]>("Todas")
   const [busqueda, setBusqueda] = useState("")
@@ -44,20 +94,20 @@ const BankComparisonTable: React.FC = () => {
       <div className="pl-card p-4 md:p-5 mb-6 flex flex-col md:flex-row gap-4 md:items-end">
         <div className="flex-1">
           <label htmlFor="busqueda-banco" className="label-pl">
-            Buscar banco o producto
+            {t.buscar}
           </label>
           <input
             id="busqueda-banco"
             type="text"
             value={busqueda}
             onChange={(e) => setBusqueda(e.target.value)}
-            placeholder="Ej: Santander, mixta, NARANJA…"
+            placeholder={t.placeholder}
             className="input-pl"
           />
         </div>
         <div>
           <label htmlFor="filtro-tipo" className="label-pl">
-            Tipo de hipoteca
+            {t.tipoHipoteca}
           </label>
           <select
             id="filtro-tipo"
@@ -65,16 +115,16 @@ const BankComparisonTable: React.FC = () => {
             onChange={(e) => setTipo(e.target.value as (typeof TIPOS)[number])}
             className="input-pl"
           >
-            {TIPOS.map((t) => (
-              <option key={t} value={t}>
-                {t}
+            {TIPOS.map((v) => (
+              <option key={v} value={v}>
+                {t.tipoValor(v)}
               </option>
             ))}
           </select>
         </div>
         <div>
           <label htmlFor="filtro-categoria" className="label-pl">
-            Tipo de entidad
+            {t.tipoEntidad}
           </label>
           <select
             id="filtro-categoria"
@@ -84,13 +134,13 @@ const BankComparisonTable: React.FC = () => {
           >
             {CATEGORIAS.map((c) => (
               <option key={c} value={c}>
-                {c}
+                {t.categoriaValor(c)}
               </option>
             ))}
           </select>
         </div>
         <div className="font-data text-xs text-ink-soft whitespace-nowrap pb-2">
-          {ofertas.length} oferta{ofertas.length === 1 ? "" : "s"}
+          {ofertas.length} {ofertas.length === 1 ? t.oferta : t.ofertas}
         </div>
       </div>
 
@@ -100,13 +150,13 @@ const BankComparisonTable: React.FC = () => {
           <table className="w-full text-sm min-w-[900px]">
             <thead>
               <tr className="border-b border-line bg-paper-2/60 font-data text-[11px] uppercase tracking-wider text-ink-soft">
-                <th className="text-left py-3 px-4">Banco</th>
-                <th className="text-left py-3 px-3">Producto</th>
-                <th className="text-left py-3 px-3">Tipo</th>
-                <th className="text-left py-3 px-3">TIN (bonif. / sin)</th>
-                <th className="text-left py-3 px-3">TAE (bonif. / sin)</th>
-                <th className="text-left py-3 px-3">Plazo máx.</th>
-                <th className="text-left py-3 px-3">Financiación</th>
+                <th className="text-left py-3 px-4">{t.banco}</th>
+                <th className="text-left py-3 px-3">{t.producto}</th>
+                <th className="text-left py-3 px-3">{t.tipo}</th>
+                <th className="text-left py-3 px-3">{t.tin}</th>
+                <th className="text-left py-3 px-3">{t.tae}</th>
+                <th className="text-left py-3 px-3">{t.plazo}</th>
+                <th className="text-left py-3 px-3">{t.financiacion}</th>
                 <th className="text-left py-3 px-3" aria-label="Detalle"></th>
               </tr>
             </thead>
@@ -120,7 +170,7 @@ const BankComparisonTable: React.FC = () => {
                     <td className="py-3 px-4 font-semibold text-ink whitespace-nowrap">
                       {o.banco}
                       <div className="font-data text-[10px] uppercase tracking-wide text-ink-soft font-normal">
-                        {o.categoria}
+                        {lang === "en" ? t.categoriaValor(o.categoria) : o.categoria}
                       </div>
                     </td>
                     <td className="py-3 px-3 text-ink-soft">{o.producto}</td>
@@ -128,7 +178,7 @@ const BankComparisonTable: React.FC = () => {
                       <span
                         className={`inline-block rounded-full px-2.5 py-0.5 font-data text-[11px] ${tipoBadgeClass[o.tipo]}`}
                       >
-                        {o.tipo}
+                        {lang === "en" ? t.tipoValor(o.tipo) : o.tipo}
                       </span>
                     </td>
                     <td className="py-3 px-3 text-ink">{o.tin || "N/D"}</td>
@@ -149,30 +199,30 @@ const BankComparisonTable: React.FC = () => {
                         <dl className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-2 text-sm">
                           {o.diferencial && (
                             <div>
-                              <dt className="font-data text-[10.5px] uppercase tracking-wide text-ink-soft">Diferencial / tramo fijo</dt>
+                              <dt className="font-data text-[10.5px] uppercase tracking-wide text-ink-soft">{t.diferencial}</dt>
                               <dd className="text-ink">{o.diferencial}</dd>
                             </div>
                           )}
                           {o.vinculaciones && (
                             <div>
-                              <dt className="font-data text-[10.5px] uppercase tracking-wide text-ink-soft">Vinculaciones / bonificaciones</dt>
+                              <dt className="font-data text-[10.5px] uppercase tracking-wide text-ink-soft">{t.vinculaciones}</dt>
                               <dd className="text-ink">{o.vinculaciones}</dd>
                             </div>
                           )}
                           {o.comisiones && (
                             <div>
-                              <dt className="font-data text-[10.5px] uppercase tracking-wide text-ink-soft">Comisiones</dt>
+                              <dt className="font-data text-[10.5px] uppercase tracking-wide text-ink-soft">{t.comisiones}</dt>
                               <dd className="text-ink">{o.comisiones}</dd>
                             </div>
                           )}
                           {o.requisitos && (
                             <div>
-                              <dt className="font-data text-[10.5px] uppercase tracking-wide text-ink-soft">Requisitos / notas</dt>
+                              <dt className="font-data text-[10.5px] uppercase tracking-wide text-ink-soft">{t.requisitos}</dt>
                               <dd className="text-ink">{o.requisitos}</dd>
                             </div>
                           )}
                           <div>
-                            <dt className="font-data text-[10.5px] uppercase tracking-wide text-ink-soft">Fuente / fiabilidad</dt>
+                            <dt className="font-data text-[10.5px] uppercase tracking-wide text-ink-soft">{t.fuente}</dt>
                             <dd className="text-ink">{o.fuente || "N/D"}</dd>
                           </div>
                         </dl>
@@ -184,7 +234,7 @@ const BankComparisonTable: React.FC = () => {
               {ofertas.length === 0 && (
                 <tr>
                   <td colSpan={8} className="py-10 px-4 text-center text-ink-soft">
-                    Ninguna oferta coincide con los filtros seleccionados.
+                    {t.sinResultados}
                   </td>
                 </tr>
               )}
@@ -196,7 +246,7 @@ const BankComparisonTable: React.FC = () => {
       {/* Entidades sin oferta */}
       <details className="mt-8 pl-card p-5">
         <summary className="cursor-pointer font-heading font-semibold text-ink">
-          Entidades consultadas que no comercializan hipotecas ({ENTIDADES_SIN_OFERTA.length})
+          {t.sinOferta} ({ENTIDADES_SIN_OFERTA.length})
         </summary>
         <ul className="mt-4 space-y-2 text-sm text-ink-soft list-disc pl-6">
           {ENTIDADES_SIN_OFERTA.map((e) => (
