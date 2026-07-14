@@ -22,6 +22,39 @@ const tipoBadgeClass: Record<OfertaHipoteca["tipo"], string> = {
   Mixta: "bg-lime/60 text-ink",
 }
 
+// Primer porcentaje numérico de una cadena de tipos ("2,96% / 3,96%" -> 2.96;
+// "Eur+0,84% / ..." -> 0.84, el diferencial). Sirve para detectar la dirección
+// del cambio entre actualizaciones de datos.
+function primerPorcentaje(valor: string | undefined): number | null {
+  if (!valor) return null
+  const m = valor.match(/(\d+(?:[.,]\d+)?)\s*%/)
+  return m ? parseFloat(m[1].replace(",", ".")) : null
+}
+
+// Flecha de evolución del tipo respecto a la actualización anterior:
+// roja hacia arriba si ha subido, verde hacia abajo si ha bajado.
+const RateTrend: React.FC<{ actual: string; anterior?: string; antesLabel: string }> = ({
+  actual,
+  anterior,
+  antesLabel,
+}) => {
+  const nuevo = primerPorcentaje(actual)
+  const viejo = primerPorcentaje(anterior)
+  if (nuevo === null || viejo === null || nuevo === viejo) return null
+
+  const subida = nuevo > viejo
+  return (
+    <span
+      className="ml-1 font-data text-[13px] align-middle cursor-help"
+      style={{ color: subida ? "var(--color-negative)" : "var(--color-positive)" }}
+      title={`${antesLabel}: ${anterior}`}
+      aria-label={`${antesLabel}: ${anterior}`}
+    >
+      {subida ? "▲" : "▼"}
+    </span>
+  )
+}
+
 // Etiquetas de la interfaz. Los datos de las ofertas (vinculaciones,
 // comisiones, notas) proceden de las FIPRE en español y no se traducen.
 const LABELS = {
@@ -41,6 +74,7 @@ const LABELS = {
     requisitos: 'Requisitos / notas',
     fuente: 'Fuente / fiabilidad',
     sinResultados: 'Ninguna oferta coincide con los filtros seleccionados.',
+    antes: 'antes',
     sinOferta: 'Entidades consultadas que no comercializan hipotecas',
     tipoValor: (v: string) => v,
     categoriaValor: (v: string) => v,
@@ -61,6 +95,7 @@ const LABELS = {
     requisitos: 'Requirements / notes',
     fuente: 'Source / reliability',
     sinResultados: 'No offers match the selected filters.',
+    antes: 'previously',
     sinOferta: 'Institutions surveyed that do not sell mortgages',
     tipoValor: (v: string) => ({ Todas: 'All', Fija: 'Fixed', Variable: 'Variable', Mixta: 'Mixed' }[v] ?? v),
     categoriaValor: (v: string) => ({ Todas: 'All', Grande: 'Large', Online: 'Online', Mediano: 'Mid-size', Cooperativa: 'Cooperative', 'Banca ética': 'Ethical bank', Especialista: 'Specialist' }[v] ?? v),
@@ -181,8 +216,8 @@ const BankComparisonTable: React.FC<BankComparisonTableProps> = ({ lang = 'es' }
                         {lang === "en" ? t.tipoValor(o.tipo) : o.tipo}
                       </span>
                     </td>
-                    <td className="py-3 px-3 text-ink">{o.tin || "N/D"}</td>
-                    <td className="py-3 px-3 text-ink">{o.tae || "N/D"}</td>
+                    <td className="py-3 px-3 text-ink whitespace-nowrap">{o.tin || "N/D"}<RateTrend actual={o.tin} anterior={o.tinAnterior} antesLabel={t.antes} /></td>
+                    <td className="py-3 px-3 text-ink whitespace-nowrap">{o.tae || "N/D"}<RateTrend actual={o.tae} anterior={o.taeAnterior} antesLabel={t.antes} /></td>
                     <td className="py-3 px-3 text-ink-soft whitespace-nowrap">{o.plazoMax || "N/D"}</td>
                     <td className="py-3 px-3 text-ink-soft">{o.financiacionMax || "N/D"}</td>
                     <td className="py-3 px-3 text-ink-soft" aria-hidden="true">

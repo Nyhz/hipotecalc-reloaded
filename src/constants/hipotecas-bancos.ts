@@ -15,6 +15,11 @@ export interface OfertaHipoteca {
   comisiones: string
   requisitos: string
   fuente: string
+  // Valores de la actualización anterior (si la oferta ya existía): la tabla
+  // los compara con tin/tae y pinta una flecha roja (subida) o verde (bajada).
+  // Al actualizar datos: mover el tin/tae antiguo aquí antes de sobreescribir.
+  tinAnterior?: string
+  taeAnterior?: string
 }
 
 export const FECHA_DATOS = 'julio de 2026'
