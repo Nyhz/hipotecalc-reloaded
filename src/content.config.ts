@@ -40,7 +40,7 @@ const guiasSchema = z.object({
   title: z.string(),
   description: z.string(),
   updatedDate: z.coerce.date(),
-  calculadora: z.enum(['hipoteca', 'itp', 'prestamo']).optional(),
+  calculadora: z.enum(['hipoteca', 'itp', 'prestamo', 'gastos']).optional(),
   faq: z
     .array(z.object({ question: z.string(), answer: z.string() }))
     .optional(),

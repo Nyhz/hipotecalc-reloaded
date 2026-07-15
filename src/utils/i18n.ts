@@ -118,9 +118,23 @@ const SLUGS_EN_ES: Record<string, string> = Object.fromEntries(
   Object.entries(SLUGS_ES_EN).map(([es, en]) => [en, es])
 )
 
+// Contenido nativo en inglés SIN par español (guías para el comprador
+// internacional): no debe emitir hreflang a una ruta española inexistente
+// ni romper el selector de idioma. Añade aquí cada pieza EN-only nueva.
+const RUTAS_SOLO_EN = new Set([
+  '/en/guides/mortgages-in-spain-for-non-residents',
+  '/en/guides/buying-property-in-spain-taxes',
+  '/en/guides/nie-number-buying-property-spain',
+  '/en/guides/spanish-mortgage-calculator-for-expats',
+  '/en/guides/non-resident-property-taxes-spain',
+  '/en/guides/buying-property-in-spain-process',
+])
+
 export function getAlternatePath(pathname: string): string {
   const normalized = normalizePath(pathname)
   const currentLang = getCurrentLang(normalized)
+
+  if (RUTAS_SOLO_EN.has(normalized)) return pathname
 
   if (currentLang === 'es') {
     if (RUTAS_ES_EN[normalized]) return RUTAS_ES_EN[normalized]

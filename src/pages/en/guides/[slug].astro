@@ -7,6 +7,7 @@ import FAQSection from '../../../components/seo/FAQSection.astro';
 import MortgageCalculator from '../../../components/calculadora-hipotecaria/MortgageCalculator';
 import ITPStandalone from '../../../components/calculadora-itp/ITPStandalone';
 import PrestamoMaximoCalculator from '../../../components/prestamo/PrestamoMaximoCalculator';
+import GastosCompraventaCalculator from '../../../components/gastos/GastosCompraventaCalculator';
 
 export async function getStaticPaths() {
   const guias = await getCollection('guiasEn');
@@ -41,6 +42,7 @@ const tituloCalculadora = {
   hipoteca: 'Simulate your mortgage with your own numbers',
   itp: "Calculate your region's ITP",
   prestamo: 'How much would a bank lend you?',
+  gastos: 'Calculate your full purchase costs',
 }[guia.data.calculadora ?? 'hipoteca'];
 ---
 <Layout
@@ -93,6 +95,9 @@ const tituloCalculadora = {
       )}
       {guia.data.calculadora === 'prestamo' && (
         <div class="max-w-4xl mx-auto"><PrestamoMaximoCalculator client:visible lang="en" /></div>
+      )}
+      {guia.data.calculadora === 'gastos' && (
+        <div class="max-w-4xl mx-auto"><GastosCompraventaCalculator client:visible lang="en" /></div>
       )}
     </section>
   )}
