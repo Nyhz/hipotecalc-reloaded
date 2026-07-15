@@ -73,6 +73,7 @@ const RUTAS_ES_EN: Record<string, string> = {
   '/guias': '/en/guides',
   '/itp': '/en/itp',
   '/blog': '/en/blog',
+  '/metodologia': '/en/methodology',
   '/aviso-legal': '/en/legal-notice',
   '/politica-de-privacidad': '/en/privacy-policy',
   '/politica-de-cookies': '/en/cookie-policy',

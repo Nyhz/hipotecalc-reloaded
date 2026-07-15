@@ -1,0 +1,113 @@
+---
+import LegalLayout from '../layouts/LegalLayout.astro';
+import { OFERTAS_HIPOTECAS, ENTIDADES_SIN_OFERTA, FECHA_DATOS } from '../constants/hipotecas-bancos';
+import { currentEuribor } from '../constants/euribor-values';
+
+const numBancos = new Set(OFERTAS_HIPOTECAS.map((o) => o.banco)).size;
+const numOfertas = OFERTAS_HIPOTECAS.length;
+const numSinOferta = ENTIDADES_SIN_OFERTA.length;
+---
+<LegalLayout
+  title="Metodología y política editorial | Hipotecalc"
+  description={`De dónde salen los datos de Hipotecalc: la comparativa de ${numBancos} bancos, el euríbor oficial del BCE y las guías del ITP, con sus fuentes y frecuencia de revisión.`}
+  heading="Metodología y política editorial"
+  path="/metodologia"
+  lang="es"
+  lastUpdated="julio de 2026"
+>
+  <p>
+    Hipotecalc es una herramienta informativa. Su utilidad depende de que puedas
+    fiarte de los números, así que esta página explica de dónde sale cada dato,
+    cada cuánto se revisa y qué hacemos cuando algo cambia o nos equivocamos.
+  </p>
+
+  <h2>1. La comparativa de hipotecas</h2>
+  <p>
+    La <a href="/comparativa-hipotecas">comparativa</a> recoge actualmente
+    {numOfertas} ofertas de {numBancos} bancos, cajas y cooperativas españolas
+    (más {numSinOferta} entidades consultadas que no comercializan hipotecas).
+    Los datos salen de las <strong>webs oficiales de los propios bancos</strong>:
+    sus páginas de hipotecas y, cuando están publicados, sus documentos
+    precontractuales FIPRE. Cuando una entidad no publica sus tipos online,
+    recurrimos a portales comparadores especializados y lo señalamos: la columna
+    <em> Fuente / fiabilidad</em> de cada oferta indica exactamente de dónde
+    procede la cifra.
+  </p>
+  <ul>
+    <li>
+      <strong>Frecuencia de revisión:</strong> la comparativa se revisa
+      <strong> al menos una vez al mes</strong>, coincidiendo con la publicación
+      de la media mensual del euríbor, y siempre que detectamos un cambio
+      relevante de una entidad. La fecha de la última extracción figura en la
+      cabecera de la tabla (ahora mismo: {FECHA_DATOS}).
+    </li>
+    <li>
+      <strong>Evolución de los tipos:</strong> al actualizar los datos
+      conservamos los valores de la extracción anterior; las flechas de la tabla
+      (roja al alza, verde a la baja) marcan qué ofertas han cambiado y el
+      tooltip muestra el valor previo.
+    </li>
+    <li>
+      <strong>Qué no hacemos:</strong> ningún banco paga por aparecer, por su
+      posición ni por sus cifras. Incluimos las entidades por relevancia en el
+      mercado español, tengan o no relación comercial con nosotros, y también
+      las que no comercializan hipotecas, para que no las busques en vano.
+    </li>
+    <li>
+      <strong>Límites del dato:</strong> los tipos publicados son el punto de
+      partida comercial de cada entidad; tu oferta personalizada (FEIN) puede
+      diferir según tu perfil. Por eso mostramos siempre tipo bonificado y sin
+      bonificar, y recomendamos comparar por TAE.
+    </li>
+  </ul>
+
+  <h2>2. El euríbor</h2>
+  <p>
+    Los valores del euríbor a 12 meses proceden de la
+    <a href="https://data.ecb.europa.eu/data/datasets/FM/FM.M.U2.EUR.RT.MM.EURIBOR1YD_.HSTA" target="_blank" rel="noopener noreferrer">serie oficial del Banco Central Europeo</a>,
+    que un proceso automático descarga y publica en la web cada mes, cuando el
+    BCE difunde la media mensual (última: {currentEuribor.value.toLocaleString('es-ES')} %,
+    {currentEuribor.labelEs}). El índice es administrado por
+    <a href="https://www.emmi-benchmarks.eu/" target="_blank" rel="noopener noreferrer">EMMI</a>,
+    su fuente original, y puede contrastarse en el
+    <a href="https://www.bde.es/" target="_blank" rel="noopener noreferrer">Banco de España</a>.
+  </p>
+
+  <h2>3. Las guías del ITP y la fiscalidad</h2>
+  <p>
+    Las <a href="/itp">guías del ITP por comunidad</a> se redactan a partir de
+    los textos consolidados del BOE, los boletines autonómicos y forales y el
+    inventario anual «Tributación Autonómica» del Ministerio de Hacienda. Cada
+    guía cita la norma exacta de cada tipo y bonificación, enlaza a las fuentes
+    oficiales y muestra su fecha de verificación. Se revisan cuando cambia la
+    normativa y, como mínimo, en cada ejercicio fiscal.
+  </p>
+
+  <h2>4. Las calculadoras</h2>
+  <p>
+    Todas las calculadoras usan la fórmula estándar de amortización del
+    <strong> sistema francés</strong> — la que aplican los bancos españoles — y
+    los cálculos se ejecutan en tu navegador: los datos que introduces no se
+    envían a ningún servidor. Los resultados son estimaciones orientativas; el
+    detalle de sus supuestos y límites está en el
+    <a href="/disclaimer-financiero">disclaimer financiero</a>.
+  </p>
+
+  <h2>5. Correcciones</h2>
+  <p>
+    Si detectas un dato erróneo o desactualizado —un tipo que un banco ya no
+    ofrece, una bonificación autonómica que ha cambiado—, escríbenos a través de
+    los canales de contacto del sitio. Verificamos contra la fuente oficial y,
+    si procede, corregimos y actualizamos la fecha de revisión de la página
+    afectada.
+  </p>
+
+  <h2>6. Independencia editorial</h2>
+  <p>
+    Hipotecalc colabora con un bróker hipotecario, claramente identificado en
+    los botones de contacto. Esa colaboración no interviene en los datos: la
+    comparativa, las guías y las calculadoras se elaboran con los criterios de
+    esta página, y ninguna entidad financiera revisa ni aprueba nuestro
+    contenido antes de publicarse.
+  </p>
+</LegalLayout>

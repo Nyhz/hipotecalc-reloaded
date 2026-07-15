@@ -99,6 +99,8 @@ function buildLastmodMap() {
     '/en/itp-calculator': 'src/pages/en/itp-calculator.astro',
     '/cuanto-me-prestan': 'src/pages/cuanto-me-prestan.astro',
     '/en/how-much-can-i-borrow': 'src/pages/en/how-much-can-i-borrow.astro',
+    '/metodologia': 'src/pages/metodologia.astro',
+    '/en/methodology': 'src/pages/en/methodology.astro',
     '/aviso-legal': 'src/pages/aviso-legal.astro',
     '/en/legal-notice': 'src/pages/en/legal-notice.astro',
     '/politica-de-privacidad': 'src/pages/politica-de-privacidad.astro',

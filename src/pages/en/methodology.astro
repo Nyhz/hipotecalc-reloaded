@@ -1,0 +1,112 @@
+---
+import LegalLayout from '../../layouts/LegalLayout.astro';
+import { OFERTAS_HIPOTECAS, ENTIDADES_SIN_OFERTA, FECHA_DATOS } from '../../constants/hipotecas-bancos';
+import { currentEuribor } from '../../constants/euribor-values';
+
+const numBancos = new Set(OFERTAS_HIPOTECAS.map((o) => o.banco)).size;
+const numOfertas = OFERTAS_HIPOTECAS.length;
+const numSinOferta = ENTIDADES_SIN_OFERTA.length;
+---
+<LegalLayout
+  title="Methodology and editorial policy | Hipotecalc"
+  description={`Where Hipotecalc's data comes from: the ${numBancos}-bank mortgage comparison, the official ECB Euribor and the ITP guides, with sources and review frequency.`}
+  heading="Methodology and editorial policy"
+  path="/en/methodology"
+  lang="en"
+  lastUpdated="July 2026"
+>
+  <p>
+    Hipotecalc is an informational tool. Its usefulness depends on you being able
+    to trust the numbers, so this page explains where every figure comes from,
+    how often it is reviewed, and what we do when something changes or we get it
+    wrong.
+  </p>
+
+  <h2>1. The mortgage comparison</h2>
+  <p>
+    The <a href="/en/mortgage-comparison">comparison</a> currently covers
+    {numOfertas} offers from {numBancos} Spanish banks and credit cooperatives
+    (plus {numSinOferta} institutions we surveyed that do not sell mortgages).
+    The data comes from the <strong>banks' own official websites</strong>: their
+    mortgage pages and, where published, their pre-contractual FIPRE documents.
+    When an institution does not publish its rates online, we fall back on
+    specialised comparison portals and flag it: the <em>Source / reliability</em>
+    column of each offer states exactly where the figure comes from.
+  </p>
+  <ul>
+    <li>
+      <strong>Review frequency:</strong> the comparison is reviewed
+      <strong> at least once a month</strong>, alongside the publication of the
+      monthly Euribor average, and whenever we detect a relevant change at an
+      institution. The date of the latest extraction is shown in the table
+      header (currently: {FECHA_DATOS}, as published in the Spanish source data).
+    </li>
+    <li>
+      <strong>Rate evolution:</strong> when updating the data we keep the values
+      from the previous extraction; the arrows in the table (red up, green down)
+      mark which offers changed, and the tooltip shows the previous value.
+    </li>
+    <li>
+      <strong>What we don't do:</strong> no bank pays to appear, for its
+      position or for its figures. We include institutions based on their
+      relevance in the Spanish market, whether or not they have any commercial
+      relationship with us — including those that don't sell mortgages, so you
+      don't search for them in vain.
+    </li>
+    <li>
+      <strong>Limits of the data:</strong> published rates are each bank's
+      commercial starting point; your personalised offer (FEIN) may differ based
+      on your profile. That's why we always show both the bonus and non-bonus
+      rate, and recommend comparing by APR.
+    </li>
+  </ul>
+
+  <h2>2. The Euribor</h2>
+  <p>
+    The 12-month Euribor values come from the
+    <a href="https://data.ecb.europa.eu/data/datasets/FM/FM.M.U2.EUR.RT.MM.EURIBOR1YD_.HSTA" target="_blank" rel="noopener noreferrer">official European Central Bank series</a>,
+    which an automated process downloads and publishes on the site every month,
+    when the ECB releases the monthly average (latest:
+    {currentEuribor.value.toLocaleString('en-US')}%, {currentEuribor.labelEn}).
+    The index is administered by
+    <a href="https://www.emmi-benchmarks.eu/" target="_blank" rel="noopener noreferrer">EMMI</a>,
+    its original source, and can be cross-checked at the
+    <a href="https://www.bde.es/" target="_blank" rel="noopener noreferrer">Bank of Spain</a>.
+  </p>
+
+  <h2>3. The ITP and tax guides</h2>
+  <p>
+    The <a href="/en/itp">regional ITP guides</a> are written from the
+    consolidated legal texts in the BOE, the regional and foral gazettes and the
+    Spanish Ministry of Finance's annual "Tributación Autonómica" inventory.
+    Each guide cites the exact legislation behind every rate and relief, links
+    to the official sources and shows its verification date. They are reviewed
+    whenever the legislation changes and at least once per tax year.
+  </p>
+
+  <h2>4. The calculators</h2>
+  <p>
+    All calculators use the standard <strong>French amortization</strong>
+    formula — the one Spanish banks apply — and calculations run in your
+    browser: the data you enter is never sent to any server. Results are
+    indicative estimates; the assumptions and limits are detailed in the
+    <a href="/en/financial-disclaimer">financial disclaimer</a>.
+  </p>
+
+  <h2>5. Corrections</h2>
+  <p>
+    If you spot a wrong or outdated figure — a rate a bank no longer offers, a
+    regional relief that has changed — write to us through the site's contact
+    channels. We verify against the official source and, where appropriate,
+    correct it and update the review date of the affected page.
+  </p>
+
+  <h2>6. Editorial independence</h2>
+  <p>
+    Hipotecalc works with a mortgage broker, clearly identified in the contact
+    buttons. That partnership plays no part in the data: the comparison, the
+    guides and the calculators are produced under the criteria on this page,
+    and no financial institution reviews or approves our content before
+    publication.
+  </p>
+</LegalLayout>
