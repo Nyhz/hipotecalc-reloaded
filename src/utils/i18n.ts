@@ -67,6 +67,8 @@ const RUTAS_ES_EN: Record<string, string> = {
   '/calculadora-hipotecaria': '/en/mortgage-calculator',
   '/calculadora-alquiler': '/en/rental-calculator',
   '/calculadora-itp': '/en/itp-calculator',
+  '/calculadora-plusvalia': '/en/plusvalia-calculator',
+  '/calculadora-gastos-compraventa': '/en/property-purchase-costs-calculator',
   '/cuanto-me-prestan': '/en/how-much-can-i-borrow',
   '/comparativa-hipotecas': '/en/mortgage-comparison',
   '/euribor': '/en/euribor',

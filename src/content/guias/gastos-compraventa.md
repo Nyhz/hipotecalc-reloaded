@@ -69,6 +69,7 @@ Vivienda de segunda mano de **200.000 € en Andalucía** (ITP 7 %):
 - Entrada del 20 % que el banco no financia: 40.000 €
 - **Ahorro total necesario: ≈ 56.000 €**
 
-¿Te salen las cuentas? Puedes comprobar cuánto te prestaría el banco con tus
+Puedes obtener este desglose con tus cifras en la [calculadora de gastos de
+compraventa](/calculadora-gastos-compraventa). ¿Te salen las cuentas? Puedes comprobar cuánto te prestaría el banco con tus
 ingresos en [¿cuánto me puede prestar el banco?](/cuanto-me-prestan) y simular
 la operación completa —impuestos incluidos— en la calculadora de abajo.

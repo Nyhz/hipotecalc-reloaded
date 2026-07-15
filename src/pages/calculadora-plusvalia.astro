@@ -1,0 +1,88 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Breadcrumbs from '../components/seo/Breadcrumbs.astro';
+import PageTracking from '../components/PageTracking.tsx';
+import FAQSection from '../components/seo/FAQSection.astro';
+import PlusvaliaCalculator from '../components/plusvalia/PlusvaliaCalculator';
+
+const title = 'Calculadora de plusvalía municipal 2026: cuánto pagarás al vender | Hipotecalc';
+const description =
+  'Calcula la plusvalía municipal (IIVTNU) al vender tu vivienda: método objetivo y real tras el RDL 26/2021, exención por pérdidas y la cuota que te corresponde pagar.';
+---
+<Layout title={title} description={description}>
+  <PageTracking client:load pagePath="/calculadora-plusvalia" pageTitle={title} />
+
+  <Breadcrumbs items={[
+    { name: 'Inicio', href: '/' },
+    { name: 'Calculadora de plusvalía', href: '/calculadora-plusvalia' }
+  ]} />
+
+  <div class="w-full max-w-4xl mx-auto py-10">
+    <header class="text-center mb-10">
+      <span class="eyebrow">Plusvalía municipal (IIVTNU) · 2026</span>
+      <h1 class="font-heading text-3xl md:text-4xl lg:text-[44px] font-semibold tracking-[-1px] text-ink mt-4 mb-4">
+        Calculadora de plusvalía municipal
+      </h1>
+      <p class="text-ink-soft max-w-3xl mx-auto text-base md:text-lg">
+        El impuesto que paga <strong>quien vende</strong> una vivienda. Desde la reforma
+        de 2021 puedes elegir entre dos métodos de cálculo y pagar el más barato —
+        y si vendes con pérdidas, no pagas nada. Introduce tus datos y compara.
+      </p>
+    </header>
+
+    <PlusvaliaCalculator client:load lang="es" />
+
+    <section class="mt-14 max-w-3xl mx-auto">
+      <h2 class="font-heading text-2xl font-semibold text-ink mb-4">Cómo funciona la plusvalía desde 2021</h2>
+      <div class="text-ink-soft space-y-4 leading-relaxed">
+        <p>
+          La plusvalía municipal (formalmente, Impuesto sobre el Incremento de Valor de los
+          Terrenos de Naturaleza Urbana) grava la revalorización <strong>del suelo</strong>
+          mientras fuiste propietario. Tras la sentencia del Tribunal Constitucional de
+          octubre de 2021, el <a href="https://www.boe.es/buscar/act.php?id=BOE-A-2021-18276" target="_blank" rel="noopener noreferrer" class="underline text-brand-blue">Real Decreto-ley 26/2021</a>
+          rediseñó el cálculo con dos vías:
+        </p>
+        <ul class="list-disc pl-6 space-y-1">
+          <li>
+            <strong>Método objetivo:</strong> valor catastral del suelo × un coeficiente
+            según los años de tenencia (máximos estatales que cada ayuntamiento puede
+            reducir) × el tipo municipal (máximo 30 %).
+          </li>
+          <li>
+            <strong>Método real:</strong> la ganancia efectiva (venta − compra) × la
+            proporción que el suelo representa en el valor catastral × el tipo municipal.
+          </li>
+        </ul>
+        <p>
+          Puedes exigir el que te salga más barato, y si vendiste <strong>sin
+          ganancia, estás exento</strong> — acreditándolo con ambas escrituras. Si estás
+          calculando la venta para comprar otra vivienda, te interesan también la
+          <a href="/calculadora-gastos-compraventa" class="underline text-brand-blue"> calculadora de gastos de compraventa</a>
+          y el <a href="/itp" class="underline text-brand-blue">ITP de tu comunidad</a>.
+        </p>
+      </div>
+    </section>
+  </div>
+
+  <FAQSection
+    title="Preguntas frecuentes sobre la plusvalía municipal"
+    items={[
+      {
+        question: "¿Quién paga la plusvalía municipal, comprador o vendedor?",
+        answer: "El vendedor (en las compraventas). Solo en las herencias y donaciones la paga quien recibe el inmueble. El plazo habitual es de 30 días hábiles desde la venta (6 meses en herencias, prorrogables)."
+      },
+      {
+        question: "¿Qué pasa si vendo con pérdidas?",
+        answer: "No se paga plusvalía: desde la sentencia del Tribunal Constitucional y el RDL 26/2021, las transmisiones sin incremento de valor están exentas. Debes comunicarlo igualmente al ayuntamiento y acreditarlo con las escrituras de compra y de venta."
+      },
+      {
+        question: "¿Dónde encuentro el valor catastral del suelo?",
+        answer: "En el recibo del IBI o en la Sede Electrónica del Catastro, donde aparece desglosado el valor catastral total, el del suelo y el de construcción. La calculadora necesita ambos para comparar los dos métodos."
+      },
+      {
+        question: "¿Por qué mi ayuntamiento puede dar una cifra distinta?",
+        answer: "Porque esta calculadora usa los coeficientes máximos estatales y el tipo que tú indiques: cada ayuntamiento aprueba en su ordenanza coeficientes iguales o menores, su propio tipo (hasta el 30 %) y bonificaciones propias, por ejemplo para herencias de vivienda habitual."
+      }
+    ]}
+  />
+</Layout>

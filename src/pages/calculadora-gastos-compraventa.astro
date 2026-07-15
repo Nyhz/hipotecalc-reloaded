@@ -1,0 +1,80 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Breadcrumbs from '../components/seo/Breadcrumbs.astro';
+import PageTracking from '../components/PageTracking.tsx';
+import FAQSection from '../components/seo/FAQSection.astro';
+import GastosCompraventaCalculator from '../components/gastos/GastosCompraventaCalculator';
+
+const title = 'Calculadora de gastos de compraventa de vivienda 2026 | Hipotecalc';
+const description =
+  'Calcula todos los gastos de comprar una vivienda: ITP o IVA y AJD según tu comunidad, notaría, registro, gestoría y tasación, con el total y el ahorro necesario.';
+---
+<Layout title={title} description={description}>
+  <PageTracking client:load pagePath="/calculadora-gastos-compraventa" pageTitle={title} />
+
+  <Breadcrumbs items={[
+    { name: 'Inicio', href: '/' },
+    { name: 'Calculadora de gastos', href: '/calculadora-gastos-compraventa' }
+  ]} />
+
+  <div class="w-full max-w-4xl mx-auto py-10">
+    <header class="text-center mb-10">
+      <span class="eyebrow">Gastos de compraventa · España 2026</span>
+      <h1 class="font-heading text-3xl md:text-4xl lg:text-[44px] font-semibold tracking-[-1px] text-ink mt-4 mb-4">
+        ¿Cuánto cuesta de verdad comprar una vivienda?
+      </h1>
+      <p class="text-ink-soft max-w-3xl mx-auto text-base md:text-lg">
+        Al precio del piso hay que sumarle entre un 8 % y un 14 % en impuestos y
+        gastos. Elige tu comunidad y el tipo de vivienda y obtén el desglose
+        completo: impuestos, notaría, registro, gestoría y tasación.
+      </p>
+    </header>
+
+    <GastosCompraventaCalculator client:load lang="es" />
+
+    <section class="mt-14 max-w-3xl mx-auto">
+      <h2 class="font-heading text-2xl font-semibold text-ink mb-4">Qué incluye (y qué no)</h2>
+      <div class="text-ink-soft space-y-4 leading-relaxed">
+        <p>
+          El desglose cubre los gastos <strong>de la compraventa</strong>: el impuesto
+          (ITP al tipo general de tu comunidad en vivienda usada; IVA del 10 % más AJD
+          en obra nueva), la notaría y el registro —aranceles regulados que crecen con
+          el precio— y, si compras con hipoteca, la gestoría y la tasación. Desde la
+          Ley 5/2019, los gastos del <em>préstamo</em> (su notaría, registro, gestoría
+          y AJD) los paga el banco, así que no se suman aquí: el detalle está en la
+          <a href="/guias/gastos-compraventa" class="underline text-brand-blue"> guía de gastos de compraventa</a>.
+        </p>
+        <p>
+          El ITP aplicado es el tipo general: si eres joven, familia numerosa o tienes
+          derecho a otras bonificaciones, tu impuesto puede ser bastante menor —
+          compruébalo en la <a href="/calculadora-itp" class="underline text-brand-blue">calculadora de ITP</a>
+          o en la <a href="/itp" class="underline text-brand-blue">guía de tu comunidad</a>.
+          Y si aún no sabes cuánto te prestaría el banco, empieza por
+          <a href="/cuanto-me-prestan" class="underline text-brand-blue"> ¿cuánto me prestan?</a>.
+        </p>
+      </div>
+    </section>
+  </div>
+
+  <FAQSection
+    title="Preguntas frecuentes sobre los gastos de compraventa"
+    items={[
+      {
+        question: "¿Cuánto suman los gastos de comprar una vivienda?",
+        answer: "Entre un 8 % y un 12 % del precio en vivienda usada (el grueso es el ITP autonómico, del 3 % efectivo al 13 %) y un 12-14 % en obra nueva (IVA del 10 % más AJD). A eso se añade la entrada del 20 % que el banco no financia."
+      },
+      {
+        question: "¿Qué gastos paga el banco y cuáles el comprador?",
+        answer: "Desde la Ley 5/2019, el banco paga la notaría, el registro, la gestoría y el AJD del préstamo hipotecario; el comprador paga la tasación y todos los gastos de la compraventa: impuestos, notaría y registro de la compra."
+      },
+      {
+        question: "¿La calculadora incluye las bonificaciones del ITP?",
+        answer: "No, aplica el tipo general de cada comunidad para darte el escenario base. Si tienes derecho a tipos reducidos (jóvenes, familia numerosa, discapacidad, VPO…), usa la calculadora de ITP, que sí los aplica, y resta la diferencia."
+      },
+      {
+        question: "¿Por qué la notaría y el registro son aproximados?",
+        answer: "Son aranceles regulados que dependen del importe de la operación y de la extensión de la escritura (folios, copias). La calculadora usa una estimación realista por tramos de precio; la cifra exacta te la dará la notaría al preparar la firma."
+      }
+    ]}
+  />
+</Layout>

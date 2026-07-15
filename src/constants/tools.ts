@@ -54,6 +54,28 @@ export const getTools = (lang: 'es' | 'en' = 'es') => {
         card: true,
       },
       {
+        icon: "lucide:coins",
+        title: "Gastos de compraventa",
+        label: "Gastos de compraventa",
+        description:
+          "El coste real de comprar: ITP o IVA, notaría, registro, gestoría y tasación, desglosados según tu comunidad.",
+        href: "/calculadora-gastos-compraventa",
+        nav: false,
+        active: true,
+        card: true,
+      },
+      {
+        icon: "lucide:home",
+        title: "Plusvalía municipal",
+        label: "Plusvalía municipal",
+        description:
+          "Lo que pagarás al vender: compara el método objetivo y el real tras la reforma de 2021 y quédate con el más barato.",
+        href: "/calculadora-plusvalia",
+        nav: false,
+        active: true,
+        card: true,
+      },
+      {
         icon: "lucide:trending-up",
         title: "Euríbor hoy",
         label: "Euríbor hoy",
@@ -146,6 +168,28 @@ export const getTools = (lang: 'es' | 'en' = 'es') => {
         description:
           "Find out the maximum mortgage a bank would grant you with your income, using the 35% debt-to-income rule.",
         href: "/en/how-much-can-i-borrow",
+        nav: false,
+        active: true,
+        card: true,
+      },
+      {
+        icon: "lucide:coins",
+        title: "Purchase costs",
+        label: "Purchase costs",
+        description:
+          "The real cost of buying: ITP or VAT, notary, registry, agency and appraisal, broken down by region.",
+        href: "/en/property-purchase-costs-calculator",
+        nav: false,
+        active: true,
+        card: true,
+      },
+      {
+        icon: "lucide:home",
+        title: "Plusvalía tax",
+        label: "Plusvalía tax",
+        description:
+          "What you'll pay when selling: compare the objective and real methods after the 2021 reform and keep the cheaper one.",
+        href: "/en/plusvalia-calculator",
         nav: false,
         active: true,
         card: true,

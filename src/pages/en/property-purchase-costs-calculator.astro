@@ -1,0 +1,81 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Breadcrumbs from '../../components/seo/Breadcrumbs.astro';
+import PageTracking from '../../components/PageTracking.tsx';
+import FAQSection from '../../components/seo/FAQSection.astro';
+import GastosCompraventaCalculator from '../../components/gastos/GastosCompraventaCalculator';
+
+const title = 'Property purchase costs calculator for Spain 2026 | Hipotecalc';
+const description =
+  'Calculate every cost of buying a home in Spain: ITP or VAT and AJD by region, notary, registry, agency and appraisal fees, with the total and the savings you need.';
+---
+<Layout title={title} description={description}>
+  <PageTracking client:load pagePath="/en/property-purchase-costs-calculator" pageTitle={title} />
+
+  <Breadcrumbs items={[
+    { name: 'Home', href: '/en' },
+    { name: 'Purchase costs calculator', href: '/en/property-purchase-costs-calculator' }
+  ]} />
+
+  <div class="w-full max-w-4xl mx-auto py-10">
+    <header class="text-center mb-10">
+      <span class="eyebrow">Purchase costs · Spain 2026</span>
+      <h1 class="font-heading text-3xl md:text-4xl lg:text-[44px] font-semibold tracking-[-1px] text-ink mt-4 mb-4">
+        What does buying a home in Spain really cost?
+      </h1>
+      <p class="text-ink-soft max-w-3xl mx-auto text-base md:text-lg">
+        On top of the price you'll pay another 8% to 14% in taxes and fees. Pick
+        your region and property type and get the full breakdown: taxes, notary,
+        registry, agency and appraisal.
+      </p>
+    </header>
+
+    <GastosCompraventaCalculator client:load lang="en" />
+
+    <section class="mt-14 max-w-3xl mx-auto">
+      <h2 class="font-heading text-2xl font-semibold text-ink mb-4">What it includes (and what it doesn't)</h2>
+      <div class="text-ink-soft space-y-4 leading-relaxed">
+        <p>
+          The breakdown covers the costs <strong>of the purchase</strong>: the tax
+          (ITP at your region's general rate for resale homes; 10% VAT plus AJD stamp
+          duty for new builds), the notary and registry — regulated fees that grow
+          with the price — and, if you buy with a mortgage, the agency and the
+          appraisal. Since Ley 5/2019, the <em>loan's</em> costs (its notary,
+          registry, agency and AJD) are paid by the bank, so they are not added here:
+          the details are in the
+          <a href="/en/guides/property-purchase-costs" class="underline text-brand-blue"> purchase costs guide</a>.
+        </p>
+        <p>
+          The ITP applied is the general rate: if you're a young buyer, a large
+          family or qualify for other reliefs, your tax can be considerably lower —
+          check it with the <a href="/en/itp-calculator" class="underline text-brand-blue">ITP calculator</a>
+          or in <a href="/en/itp" class="underline text-brand-blue">your region's guide</a>.
+          And if you don't yet know how much a bank would lend you, start with
+          <a href="/en/how-much-can-i-borrow" class="underline text-brand-blue"> how much can I borrow?</a>.
+        </p>
+      </div>
+    </section>
+  </div>
+
+  <FAQSection
+    title="Frequently asked questions about purchase costs"
+    items={[
+      {
+        question: "How much do the costs of buying a home in Spain add up to?",
+        answer: "Between 8% and 12% of the price for resale homes (the bulk is the regional ITP, from an effective 3% up to 13%) and 12-14% for new builds (10% VAT plus AJD). On top of that comes the 20% down payment banks don't finance."
+      },
+      {
+        question: "Which costs does the bank pay and which does the buyer pay?",
+        answer: "Since Ley 5/2019, the bank pays the notary, registry, agency and AJD of the mortgage loan; the buyer pays the appraisal and all the purchase costs: taxes, notary and registry of the sale itself."
+      },
+      {
+        question: "Does the calculator include ITP reductions?",
+        answer: "No, it applies each region's general rate to give you the base scenario. If you qualify for reduced rates (young buyers, large families, disability, subsidised housing…), use the ITP calculator, which does apply them, and subtract the difference."
+      },
+      {
+        question: "Why are the notary and registry figures approximate?",
+        answer: "They are regulated fees that depend on the transaction amount and the deed's length (pages, copies). The calculator uses a realistic banded estimate; the exact figure comes from the notary when preparing the signing."
+      }
+    ]}
+  />
+</Layout>

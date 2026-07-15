@@ -14,6 +14,10 @@ export async function getStaticPaths() {
   }));
 }
 
+const todasLasGuias = (await getCollection('itp')).sort((a, b) =>
+  a.data.comunidad.localeCompare(b.data.comunidad, 'es')
+);
+
 const { guia } = Astro.props;
 const { Content } = await render(guia);
 
@@ -142,6 +146,28 @@ const faqItems = [
     title={`Preguntas frecuentes sobre el ITP en ${nombreCorto}`}
     items={faqItems}
   />
+
+  <section class="w-full max-w-5xl mx-auto py-10">
+    <h2 class="font-heading text-2xl font-semibold text-ink mb-2">
+      ¿Comparas con otra comunidad?
+    </h2>
+    <p class="text-ink-soft mb-6 max-w-3xl">
+      El mismo piso puede pagar un impuesto muy distinto a pocos kilómetros:
+      consulta el ITP vigente en el resto de comunidades.
+    </p>
+    <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
+      {todasLasGuias
+        .filter((otra) => otra.id !== guia.id)
+        .map((otra) => (
+          <a href={`/itp/${otra.id}`} class="pl-card pl-card-hover p-3 flex flex-col gap-0.5">
+            <span class="font-medium text-ink text-sm">
+              {otra.id === 'ceuta-melilla' ? 'Ceuta y Melilla' : otra.data.comunidad}
+            </span>
+            <span class="font-data text-xs text-ink-soft">{otra.data.tipoGeneral}</span>
+          </a>
+        ))}
+    </div>
+  </section>
 
   <footer class="w-full max-w-3xl mx-auto pb-10">
     <div class="pt-6 border-t border-line">
