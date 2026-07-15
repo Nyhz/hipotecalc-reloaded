@@ -4,6 +4,8 @@ import tailwindcss from "@tailwindcss/vite"
 import compress from "astro-compress"
 import sitemap from "@astrojs/sitemap"
 import vercel from "@astrojs/vercel"
+import { readFileSync, readdirSync } from "node:fs"
+import { execSync } from "node:child_process"
 
 
 import icon from "astro-icon"
@@ -15,6 +17,105 @@ import keystatic from "@keystatic/astro"
 // producción es 100% estático y los artículos se publican desde los .md del
 // repo. Así evitamos necesitar SSR y la incompatibilidad peer con Astro 7.
 const isDev = process.env.NODE_ENV !== "production"
+
+// ---------------------------------------------------------------------------
+// <lastmod> del sitemap: fechas fiables por tipo de página.
+// - Contenido (blog/guías/ITP): updatedDate ?? pubDate del frontmatter.
+// - Índices de sección: la fecha más reciente de sus hijos.
+// - /euribor y las portadas: fecha de la última actualización del dato del
+//   euríbor (se regenera cada mes con la Action).
+// - /comparativa-hipotecas: FECHA_DATOS del fichero de ofertas.
+// - Resto de páginas estáticas: fecha del último commit de su fichero fuente.
+// ---------------------------------------------------------------------------
+const MESES = { enero: '01', febrero: '02', marzo: '03', abril: '04', mayo: '05', junio: '06', julio: '07', agosto: '08', septiembre: '09', octubre: '10', noviembre: '11', diciembre: '12' }
+
+function frontmatterDate(path) {
+  try {
+    const fm = readFileSync(path, 'utf8').match(/^---\n([\s\S]*?)\n---/)?.[1] ?? ''
+    const d = fm.match(/^updatedDate:\s*["']?(\d{4}-\d{2}-\d{2})/m)?.[1]
+      ?? fm.match(/^pubDate:\s*["']?(\d{4}-\d{2}-\d{2})/m)?.[1]
+    return d ?? null
+  } catch { return null }
+}
+
+function gitDate(path) {
+  try {
+    const out = execSync(`git log -1 --format=%cs -- "${path}"`, { encoding: 'utf8' }).trim()
+    return out || null
+  } catch { return null }
+}
+
+function buildLastmodMap() {
+  const map = {}
+  const addDir = (dir, rutaBase) => {
+    let max = null
+    for (const f of readdirSync(dir).filter((f) => f.endsWith('.md'))) {
+      const d = frontmatterDate(`${dir}/${f}`)
+      if (!d) continue
+      map[`${rutaBase}/${f.replace(/\.md$/, '')}`] = d
+      if (!max || d > max) max = d
+    }
+    if (max) map[rutaBase] = max
+  }
+  addDir('src/content/blog', '/blog')
+  addDir('src/content/en/blog', '/en/blog')
+  addDir('src/content/guias', '/guias')
+  addDir('src/content/en/guias', '/en/guides')
+  addDir('src/content/guias/itp', '/itp')
+  addDir('src/content/en/guias/itp', '/en/itp')
+
+  // Euríbor: el periodo "YYYY-MM" es la media publicada a primeros del mes
+  // siguiente, que es cuando cambió la página
+  try {
+    const periodo = readFileSync('src/constants/euribor-values.ts', 'utf8').match(/period:\s*"(\d{4})-(\d{2})"/)
+    if (periodo) {
+      const [_, y, m] = periodo
+      const fecha = m === '12' ? `${Number(y) + 1}-01-01` : `${y}-${String(Number(m) + 1).padStart(2, '0')}-01`
+      for (const ruta of ['/euribor', '/en/euribor']) map[ruta] = fecha
+      // Las portadas muestran el dato del euríbor: cambian al menos cada mes
+      const gitHome = gitDate('src/pages/index.astro')
+      map['/'] = gitHome && gitHome > fecha ? gitHome : fecha
+      map['/en'] = map['/']
+    }
+  } catch { /* sin dato, sin lastmod */ }
+
+  // Comparativa: fecha de extracción de los datos ("13 de julio de 2026")
+  try {
+    const m = readFileSync('src/constants/hipotecas-bancos.ts', 'utf8').match(/FECHA_DATOS = '(\d{1,2}) de (\w+) de (\d{4})'/)
+    if (m) {
+      const fecha = `${m[3]}-${MESES[m[2]]}-${m[1].padStart(2, '0')}`
+      map['/comparativa-hipotecas'] = fecha
+      map['/en/mortgage-comparison'] = fecha
+    }
+  } catch { /* sin dato */ }
+
+  // Páginas estáticas restantes: último commit de su fichero fuente
+  const estaticas = {
+    '/calculadora-hipotecaria': 'src/pages/calculadora-hipotecaria.astro',
+    '/en/mortgage-calculator': 'src/pages/en/mortgage-calculator.astro',
+    '/calculadora-alquiler': 'src/pages/calculadora-alquiler.astro',
+    '/en/rental-calculator': 'src/pages/en/rental-calculator.astro',
+    '/calculadora-itp': 'src/pages/calculadora-itp.astro',
+    '/en/itp-calculator': 'src/pages/en/itp-calculator.astro',
+    '/cuanto-me-prestan': 'src/pages/cuanto-me-prestan.astro',
+    '/en/how-much-can-i-borrow': 'src/pages/en/how-much-can-i-borrow.astro',
+    '/aviso-legal': 'src/pages/aviso-legal.astro',
+    '/en/legal-notice': 'src/pages/en/legal-notice.astro',
+    '/politica-de-privacidad': 'src/pages/politica-de-privacidad.astro',
+    '/en/privacy-policy': 'src/pages/en/privacy-policy.astro',
+    '/politica-de-cookies': 'src/pages/politica-de-cookies.astro',
+    '/en/cookie-policy': 'src/pages/en/cookie-policy.astro',
+    '/disclaimer-financiero': 'src/pages/disclaimer-financiero.astro',
+    '/en/financial-disclaimer': 'src/pages/en/financial-disclaimer.astro',
+  }
+  for (const [ruta, fichero] of Object.entries(estaticas)) {
+    const d = gitDate(fichero)
+    if (d) map[ruta] = d
+  }
+  return map
+}
+
+const LASTMOD = buildLastmodMap()
 
 // https://astro.build/config
 export default defineConfig({
@@ -61,7 +162,14 @@ export default defineConfig({
   integrations: [
     icon(),
     react(),
-    sitemap(),
+    sitemap({
+      serialize(item) {
+        const ruta = new URL(item.url).pathname.replace(/\/$/, '') || '/'
+        const lastmod = LASTMOD[ruta]
+        if (lastmod) item.lastmod = lastmod
+        return item
+      },
+    }),
     ...(isDev ? [keystatic()] : []),
 
     compress({

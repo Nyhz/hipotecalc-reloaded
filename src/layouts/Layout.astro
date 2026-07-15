@@ -3,6 +3,17 @@ import { ClientRouter } from "astro:transitions";
 import Navbar from '../components/Navbar.tsx';
 import Footer from '../components/Footer.astro';
 import '../style/globals.css';
+// Fuentes autohospedadas (antes Google Fonts): sin conexiones a terceros,
+// sin CSS bloqueante y con los pesos que realmente usa la web
+import '@fontsource/fraunces/600.css';
+import '@fontsource/fraunces/700.css';
+import '@fontsource/inter/400.css';
+import '@fontsource/inter/500.css';
+import '@fontsource/inter/600.css';
+import '@fontsource/inter/700.css';
+import '@fontsource/ibm-plex-mono/400.css';
+import '@fontsource/ibm-plex-mono/600.css';
+import '@fontsource/ibm-plex-mono/700.css';
 import { getCurrentLang, getAlternatePath, normalizePath } from '../utils/i18n';
 
 export interface Props {
@@ -104,14 +115,6 @@ const webPageSchema = pageType === 'legal' ? JSON.stringify({
 ---
 <html lang={langAttribute}>
   <head>
-    {!isLocalEnv && (
-      <>
-        <!-- Start cookieyes banner with error handling -->
-        <script id="cookieyes" type="text/javascript" src="https://cdn-cookieyes.com/client_data/9f0e347f752a5c179f39585d/script.js" onerror="window.cookieYesBlocked = true;"></script>
-        <!-- End cookieyes banner -->
-      </>
-    )}
-    
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     
@@ -158,17 +161,13 @@ const webPageSchema = pageType === 'legal' ? JSON.stringify({
     <meta name="googlebot" content="index, follow" />
     <meta name="theme-color" content="#FAF9F4" />
     
-    <!-- Resource hints for better performance -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    
-    <!-- Optimized non-render-blocking font loading -->
-    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" />
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" media="print" onload="this.media='all'" />
-    <noscript>
-      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" />
-    </noscript>
-    
+    <!-- Banner de consentimiento (CookieYes): defer para no bloquear el
+         render. Los defaults de Consent Mode se fijan en el script inline de
+         más abajo, que al ser inline se ejecuta siempre antes que un defer. -->
+    {!isLocalEnv && (
+      <script defer id="cookieyes" type="text/javascript" src="https://cdn-cookieyes.com/client_data/9f0e347f752a5c179f39585d/script.js" onerror="window.cookieYesBlocked = true;"></script>
+    )}
+
     <!-- Structured Data -->
     <script type="application/ld+json" set:html={organizationSchema} />
     {webSiteSchema && <script type="application/ld+json" set:html={webSiteSchema} />}
