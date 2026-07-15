@@ -41,7 +41,7 @@ registradores están regulados y dependen del precio:
 | Concepto | Coste orientativo | Quién lo paga |
 |---|---|---|
 | Notaría (escritura de compraventa) | 600 – 1.000 € | Comprador* |
-| Registro de la Propiedad | 400 – 700 € | Comprador |
+| Registro de la Propiedad | 250 – 450 € | Comprador |
 | Gestoría (si hay hipoteca, la exige el banco) | 300 – 500 € | Comprador |
 | Tasación de la vivienda | 300 – 600 € | Comprador |
 | Plusvalía municipal | Según municipio y años | Vendedor |
@@ -63,11 +63,11 @@ inmueble, que siguen siendo tuyos.
 Vivienda de segunda mano de **200.000 € en Andalucía** (ITP 7 %):
 
 - ITP: 14.000 €
-- Notaría + registro + gestoría: ≈ 1.700 €
+- Notaría + registro + gestoría: ≈ 1.500 €
 - Tasación: ≈ 400 €
-- **Total gastos: ≈ 16.100 € (un 8 % del precio)**
+- **Total gastos: ≈ 15.900 € (un 8 % del precio)**
 - Entrada del 20 % que el banco no financia: 40.000 €
-- **Ahorro total necesario: ≈ 56.000 €**
+- **Ahorro total necesario: ≈ 55.900 €**
 
 Puedes obtener este desglose con tus cifras en la [calculadora de gastos de
 compraventa](/calculadora-gastos-compraventa). ¿Te salen las cuentas? Puedes comprobar cuánto te prestaría el banco con tus

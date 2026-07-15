@@ -63,6 +63,90 @@ const description =
         </p>
       </div>
     </section>
+
+    <section class="mt-14 max-w-3xl mx-auto">
+      <h2 class="font-heading text-2xl font-semibold text-ink mb-4">Objective vs real method, with numbers</h2>
+      <div class="text-ink-soft space-y-4 leading-relaxed">
+        <p>
+          The practical rule: the <strong>objective method usually wins when the real
+          gain is large</strong> (you bought years ago and the market has climbed), and
+          the <strong>real method wins when the gain is small</strong> relative to the
+          land value. Two sales show it — both at the 30% maximum rate; if your town
+          hall applies a lower one, everything scales down.
+        </p>
+        <div class="pl-card p-5">
+          <p class="font-medium text-ink mb-2">Example 1 — the objective method wins (large accumulated gain)</p>
+          <p class="text-sm">
+            Flat bought in 2014 for €180,000 and sold in 2026 for €250,000 (12 years
+            of ownership). Cadastral value: €90,000, of which €54,000 is land (60%).
+          </p>
+          <ul class="list-disc pl-6 mt-2 space-y-1 text-sm">
+            <li><strong>Objective:</strong> €54,000 × 0.09 coefficient (12 years) = €4,860 base → <strong>€1,458</strong> due.</li>
+            <li><strong>Real:</strong> €70,000 gain × 60% land share = €42,000 base → €12,600 due.</li>
+          </ul>
+          <p class="text-sm mt-2">You pay the lower one: <strong>€1,458</strong>, almost nine times less than the real route.</p>
+        </div>
+        <div class="pl-card p-5">
+          <p class="font-medium text-ink mb-2">Example 2 — the real method wins (small gain)</p>
+          <p class="text-sm">
+            Flat bought in 2019 for €200,000 and sold in 2026 for €206,000 (7 years).
+            Cadastral value: €100,000, of which €40,000 is land (40%).
+          </p>
+          <ul class="list-disc pl-6 mt-2 space-y-1 text-sm">
+            <li><strong>Objective:</strong> €40,000 × 0.20 coefficient (7 years) = €8,000 base → €2,400 due.</li>
+            <li><strong>Real:</strong> €6,000 gain × 40% land share = €2,400 base → <strong>€720</strong> due.</li>
+          </ul>
+          <p class="text-sm mt-2">Here you declare the actual gain: <strong>€720</strong>, less than a third of the bill.</p>
+        </div>
+        <p>
+          The town hall must apply the real method if you request it and it favours
+          you (art. 107.5 TRLHL, as worded by RDL 26/2021) — but it won't do it
+          unprompted: run both numbers before self-assessing. The usual deadline is
+          <strong>30 working days</strong> from the sale.
+        </p>
+      </div>
+    </section>
+
+    <section class="mt-14 max-w-3xl mx-auto">
+      <h2 class="font-heading text-2xl font-semibold text-ink mb-4">The objective method's coefficients</h2>
+      <div class="text-ink-soft space-y-4 leading-relaxed">
+        <p>
+          These are the <strong>state maximum coefficients</strong> by years of
+          ownership in force in 2026 (RDL 8/2023, applying since 2024 and extended
+          after its replacements failed to pass), the ones the calculator uses. Note
+          the wave shape: holdings of 5-8 years and very long ones pay the most, with
+          the low point between 12 and 15 years.
+        </p>
+        <div class="overflow-x-auto">
+          <table class="w-full text-sm font-data">
+            <thead>
+              <tr class="text-left text-ink border-b border-ink/20">
+                <th class="py-2 pr-3 font-medium">Years</th><th class="py-2 pr-6 font-medium">Coef.</th>
+                <th class="py-2 pr-3 font-medium">Years</th><th class="py-2 pr-6 font-medium">Coef.</th>
+                <th class="py-2 pr-3 font-medium">Years</th><th class="py-2 font-medium">Coef.</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="border-b border-ink/10"><td class="py-1.5 pr-3">&lt; 1</td><td class="pr-6">0.15</td><td class="pr-3">7</td><td class="pr-6">0.20</td><td class="pr-3">14</td><td>0.09</td></tr>
+              <tr class="border-b border-ink/10"><td class="py-1.5 pr-3">1</td><td class="pr-6">0.15</td><td class="pr-3">8</td><td class="pr-6">0.19</td><td class="pr-3">15</td><td>0.09</td></tr>
+              <tr class="border-b border-ink/10"><td class="py-1.5 pr-3">2</td><td class="pr-6">0.14</td><td class="pr-3">9</td><td class="pr-6">0.15</td><td class="pr-3">16</td><td>0.10</td></tr>
+              <tr class="border-b border-ink/10"><td class="py-1.5 pr-3">3</td><td class="pr-6">0.14</td><td class="pr-3">10</td><td class="pr-6">0.12</td><td class="pr-3">17</td><td>0.13</td></tr>
+              <tr class="border-b border-ink/10"><td class="py-1.5 pr-3">4</td><td class="pr-6">0.16</td><td class="pr-3">11</td><td class="pr-6">0.10</td><td class="pr-3">18</td><td>0.17</td></tr>
+              <tr class="border-b border-ink/10"><td class="py-1.5 pr-3">5</td><td class="pr-6">0.18</td><td class="pr-3">12</td><td class="pr-6">0.09</td><td class="pr-3">19</td><td>0.23</td></tr>
+              <tr><td class="py-1.5 pr-3">6</td><td class="pr-6">0.19</td><td class="pr-3">13</td><td class="pr-6">0.09</td><td class="pr-3">≥ 20</td><td>0.40</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p>
+          Two important caveats: the state may update these maxima each year (the
+          2026 ones are still those of RDL 8/2023, because the decrees raising them
+          were not ratified), and <strong>each town hall approves its own
+          coefficients</strong> in its bylaw, equal to or lower than the state ones. So the calculator's figure is
+          the ceiling: your municipality can never charge more under the objective
+          method, but it can charge less.
+        </p>
+      </div>
+    </section>
   </div>
 
   <FAQSection
@@ -79,6 +163,10 @@ const description =
       {
         question: "Where do I find the cadastral land value?",
         answer: "On the IBI (property tax) bill or at the Cadastre's online office, where the total cadastral value is broken down into land and construction. The calculator needs both to compare the two methods."
+      },
+      {
+        question: "Which method is better for me, objective or real?",
+        answer: "It depends on your gain: if it's large (you bought years ago and prices have risen a lot), the objective method almost always wins; if it's small relative to the land value, the real method wins. The town hall won't automatically pick the cheaper one for you: calculate both — the calculator does — and declare the lower."
       },
       {
         question: "Why might my town hall quote a different figure?",

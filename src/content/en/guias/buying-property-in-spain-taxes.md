@@ -1,7 +1,7 @@
 ---
 title: "Buying property in Spain: every tax you'll pay, explained"
 description: "The taxes when buying property in Spain: ITP by region on resale homes, 10% VAT plus AJD on new builds, who pays the plusvalía, and what it all adds up to."
-updatedDate: 2026-07-16
+updatedDate: 2026-07-15
 calculadora: itp
 faq:
   - question: "What taxes do you pay when buying a property in Spain?"
@@ -65,7 +65,7 @@ region — around 11-12% combined versus, say, Madrid's 6% ITP.
 ## The costs that aren't taxes
 
 On top of the tax bill: notary and land registry fees (regulated, roughly
-€1,000-€2,000 combined for typical prices), an agency (gestoría) if a mortgage
+€900-€1,400 combined for typical prices), an agency (gestoría) if a mortgage
 is involved, and the bank's appraisal. Get the full itemised figure for your
 case with the [purchase costs calculator](/en/property-purchase-costs-calculator).
 

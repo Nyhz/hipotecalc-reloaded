@@ -1,7 +1,7 @@
 ---
 title: "Buying property in Spain: the process step by step, from offer to keys"
 description: "The Spanish property purchase process for foreign buyers: NIE, reservation, the arras contract, notary completion, registration, costs and a realistic timeline."
-updatedDate: 2026-07-16
+updatedDate: 2026-07-15
 calculadora: gastos
 faq:
   - question: "What are the steps to buy a property in Spain?"

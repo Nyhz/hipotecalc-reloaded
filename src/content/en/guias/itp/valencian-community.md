@@ -2,7 +2,7 @@
 title: "ITP in the Valencian Community 2026: rates, reductions and rebates"
 description: "How much ITP you pay when buying a resale home in the Valencian Community in 2026: new 9% general rate, reduced 6% and 3% rates and the DANA rebate."
 comunidad: "Comunidad Valenciana"
-tipoGeneral: "9 % (11 % si >1 M€)"
+tipoGeneral: "9% (11% above €1M)"
 resumen: "9% general from June 2026; 6/8% young buyers <35; 3/4% large and single-parent families, disability, victims and special-regime VPO; 100% DANA rebate"
 updatedDate: 2026-07-08
 ---

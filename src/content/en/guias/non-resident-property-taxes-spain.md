@@ -1,7 +1,7 @@
 ---
 title: "Non-resident property taxes in Spain: what you pay every year after buying"
 description: "The annual taxes for non-resident property owners in Spain: IBI, the imputed non-resident income tax (IRNR), rental income rules, and what happens when you sell."
-updatedDate: 2026-07-16
+updatedDate: 2026-07-15
 faq:
   - question: "What taxes does a non-resident pay for owning a home in Spain?"
     answer: "Two recurring ones: the municipal IBI (paid by every owner), and the non-resident income tax (IRNR) — either on an imputed income if the home is for your own use, or on the rental income if you let it. Depending on total Spanish assets, wealth tax may also apply."

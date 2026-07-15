@@ -2,7 +2,7 @@
 title: "ITP in Castilla y León 2026: rates, reductions and rebates"
 description: "How much ITP you pay when buying a resale home in Castilla y León in 2026: 8% general rate, 4% reduced rate and the token 0.01% rate for young rural buyers."
 comunidad: "Castilla y León"
-tipoGeneral: "8 % (+10 % sobre el exceso de 250.000 €)"
+tipoGeneral: "8% (+10% above €250,000)"
 resumen: "4% large family, disability ≥65%, under-36s and VPO; 0.01% young buyers in rural areas <€150,000"
 updatedDate: 2026-07-08
 ---

@@ -118,6 +118,10 @@ function buildLastmodMap() {
     const d = gitDate(fichero)
     if (d) map[ruta] = d
   }
+  // Google descarta el lastmod de todo el sitio si detecta fechas no fiables:
+  // ninguna puede superar el momento del build (en UTC, que es como se publica)
+  const hoyUTC = new Date().toISOString().slice(0, 10)
+  for (const ruta of Object.keys(map)) if (map[ruta] > hoyUTC) map[ruta] = hoyUTC
   return map
 }
 

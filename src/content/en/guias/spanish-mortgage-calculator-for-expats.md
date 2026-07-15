@@ -1,7 +1,7 @@
 ---
 title: "Spanish mortgage calculator for expats: run your numbers the way a bank will"
 description: "How to simulate a Spanish mortgage as an expat or foreign buyer: the inputs that differ (LTV, taxes by region, foreign income), and the calculator to do it."
-updatedDate: 2026-07-16
+updatedDate: 2026-07-15
 calculadora: hipoteca
 faq:
   - question: "How is a Spanish mortgage calculated?"

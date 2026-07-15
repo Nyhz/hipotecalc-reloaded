@@ -1,7 +1,7 @@
 ---
 title: "Mortgages in Spain for non-residents: rates, LTV limits and requirements"
 description: "How non-residents get a mortgage in Spain: 60-70% loan-to-value, the documents banks ask for, realistic rates, timelines and the extra costs to budget."
-updatedDate: 2026-07-16
+updatedDate: 2026-07-15
 calculadora: prestamo
 faq:
   - question: "Can non-residents get a mortgage in Spain?"

@@ -2,7 +2,7 @@
 title: "ITP in Catalonia 2026: rate scale, reductions and rebates"
 description: "How much ITP you pay when buying a resale home in Catalonia in 2026: a 10% to 13% scale, a 5% rate for young buyers and other groups, and 20% for large holders."
 comunidad: "Cataluña"
-tipoGeneral: "Tarifa 10–13 %"
+tipoGeneral: "10–13% scale"
 resumen: "Bracketed scale from 10% to 13% (20% large holders); 5% young buyers ≤35, large and single-parent families, disability and victims; 7% VPO; 4/3% rural"
 updatedDate: 2026-07-08
 ---

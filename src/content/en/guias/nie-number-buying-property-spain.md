@@ -1,7 +1,7 @@
 ---
 title: "The NIE number: the first document you need to buy property in Spain"
 description: "What the NIE is, why you can't buy a Spanish property without it, and how to get one — in Spain or at a consulate — with the EX-15 form, fees and timelines."
-updatedDate: 2026-07-16
+updatedDate: 2026-07-15
 faq:
   - question: "Can I buy a property in Spain without an NIE?"
     answer: "In practice, no. The NIE identifies you before the Spanish tax authorities, and you need it to pay the purchase taxes, sign the deed before a notary and register the property. You can sign a reservation or arras contract while your NIE is in progress, but you'll need it before completion."

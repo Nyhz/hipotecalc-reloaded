@@ -42,7 +42,7 @@ regulated and depend on the price:
 | Item | Approximate cost | Who pays it |
 |---|---|---|
 | Notary (deed of sale) | €600 – €1,000 | Buyer* |
-| Land Registry | €400 – €700 | Buyer |
+| Land Registry | €250 – €450 | Buyer |
 | Gestoría (if there is a mortgage, the bank requires it) | €300 – €500 | Buyer |
 | Property valuation | €300 – €600 | Buyer |
 | Municipal capital gains tax (plusvalía) | Depends on municipality and years | Seller |
@@ -64,11 +64,11 @@ property purchase itself, which are still yours.
 A resale home costing **€200,000 in Andalusia** (ITP at 7%):
 
 - ITP: €14,000
-- Notary + registry + gestoría: ≈ €1,700
+- Notary + registry + gestoría: ≈ €1,500
 - Valuation: ≈ €400
-- **Total costs: ≈ €16,100 (8% of the price)**
+- **Total costs: ≈ €15,900 (8% of the price)**
 - 20% down payment the bank does not finance: €40,000
-- **Total savings needed: ≈ €56,000**
+- **Total savings needed: ≈ €55,900**
 
 Do the numbers work for you? You can check how much the bank would lend you on
 your income in [how much can the bank lend me?](/en/how-much-can-i-borrow) and

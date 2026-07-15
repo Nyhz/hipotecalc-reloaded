@@ -6,11 +6,12 @@ import { formatNumberByLang } from "../../utils/number-format"
 // elegir entre la base objetiva (valor catastral del suelo × coeficiente por
 // años de tenencia) y la real (ganancia × proporción del suelo). Se paga la
 // menor; si hay pérdida, la operación está exenta.
-// Coeficientes: máximos estatales del RDL 26/2021 (los ayuntamientos pueden
-// aplicar otros menores y los PGE los actualizan anualmente).
+// Coeficientes: máximos estatales vigentes desde el 1-1-2024 (art. 24 del
+// RDL 8/2023), prorrogados en 2025 y 2026 al no convalidarse los RDL 9/2024
+// y 16/2025 que los sustituían. Los ayuntamientos pueden aplicar otros menores.
 const COEFICIENTES = [
-  0.14, 0.13, 0.15, 0.16, 0.17, 0.17, 0.16, 0.12, 0.1, 0.09, 0.08,
-  0.08, 0.08, 0.08, 0.1, 0.12, 0.16, 0.2, 0.26, 0.36, 0.45,
+  0.15, 0.15, 0.14, 0.14, 0.16, 0.18, 0.19, 0.2, 0.19, 0.15, 0.12,
+  0.1, 0.09, 0.09, 0.09, 0.09, 0.1, 0.13, 0.17, 0.23, 0.4,
 ]
 
 const LABELS = {
@@ -30,7 +31,7 @@ const LABELS = {
     base: "Base imponible",
     cuota: "Cuota",
     eligeMenor: "Por ley pagas la menor de las dos",
-    nota: "Estimación con los coeficientes máximos estatales del RDL 26/2021 y el tipo que indiques (máximo legal: 30 %). Cada ayuntamiento fija sus propios coeficientes (≤ a los estatales), su tipo y posibles bonificaciones: confirma el cálculo en tu sede municipal. El valor catastral (suelo y total) figura en el recibo del IBI.",
+    nota: "Estimación con los coeficientes máximos estatales vigentes (RDL 8/2023, prorrogados para 2026) y el tipo que indiques (máximo legal: 30 %). Cada ayuntamiento fija sus propios coeficientes (≤ a los estatales), su tipo y posibles bonificaciones: confirma el cálculo en tu sede municipal. El valor catastral (suelo y total) figura en el recibo del IBI.",
   },
   en: {
     precioCompra: "Purchase price (€)",
@@ -48,7 +49,7 @@ const LABELS = {
     base: "Taxable base",
     cuota: "Tax due",
     eligeMenor: "By law you pay the lower of the two",
-    nota: "Estimate using the state maximum coefficients of RDL 26/2021 and the rate you enter (legal maximum: 30%). Each town hall sets its own coefficients (≤ the state ones), its rate and possible reliefs: confirm the figure with your municipality. The cadastral values (land and total) appear on the IBI bill.",
+    nota: "Estimate using the state maximum coefficients in force (RDL 8/2023, extended into 2026) and the rate you enter (legal maximum: 30%). Each town hall sets its own coefficients (≤ the state ones), its rate and possible reliefs: confirm the figure with your municipality. The cadastral values (land and total) appear on the IBI bill.",
   },
 }
 

@@ -97,9 +97,10 @@ const GastosCompraventaCalculator: React.FC<GastosCompraventaCalculatorProps> = 
           importe: calcularITP(precio, porcentajeITP),
         })
       }
-      // Aranceles aproximados por tramos (notaría y registro regulados)
+      // Aranceles aproximados por tramos (notaría: RD 1426/1989; registro:
+      // RD 1427/1989 — arancel de inscripción + IVA y conceptos menores)
       filas.push({ etiqueta: t.notaria, importe: Math.min(1200, Math.max(650, Math.round(600 + precio * 0.0009))) })
-      filas.push({ etiqueta: t.registro, importe: Math.min(800, Math.max(420, Math.round(400 + precio * 0.0005))) })
+      filas.push({ etiqueta: t.registro, importe: Math.min(500, Math.max(250, Math.round(230 + precio * 0.0005))) })
       if (form.conHipoteca) {
         filas.push({ etiqueta: t.gestoria, importe: 350 })
         filas.push({ etiqueta: t.tasacion, importe: 400 })

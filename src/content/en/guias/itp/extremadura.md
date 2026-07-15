@@ -2,7 +2,7 @@
 title: "ITP in Extremadura 2026: rate scale, reductions and rebates"
 description: "How much ITP you pay when buying a resale home in Extremadura in 2026: an 8% to 11% scale, a 7% rate for primary residences and reduced 4% rates."
 comunidad: "Extremadura"
-tipoGeneral: "Tarifa 8/10/11 %"
+tipoGeneral: "8/10/11% scale"
 resumen: "7% primary residence ≤€200,000; 4% under-36s, large family and disability; 4% VPO and rural areas"
 updatedDate: 2026-07-08
 ---
