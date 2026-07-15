@@ -42,7 +42,7 @@ signed before June 2019 are governed by whatever was agreed in it.
 1. **Notify your bank** (online banking, phone or branch) that you want to make
    a partial early repayment and for what amount.
 2. **Choose what to reduce:** the monthly payment or the term. It is the key
-   decision and we analyze it in depth in [reduce the payment or the term?](/en/blog/amortizar-cuota-o-plazo).
+   decision and we analyze it in depth in [reduce the payment or the term?](/en/blog/pay-off-mortgage-reduce-payment-or-term).
 3. **Sign the order.** The bank recalculates the amortization schedule and gives
    you a receipt showing the new outstanding principal.
 
@@ -71,5 +71,5 @@ Euribor: less outstanding principal means each rise in the index hurts less
 (you can measure it on our [Euribor page](/en/euribor)). In a **fixed-rate
 mortgage**, the saving is exact and predictable from day one. And if your
 strategy is to repay heavily during the first few years, a
-[mixed mortgage](/en/blog/tipos-de-hipoteca-fija-variable-mixta)
+[mixed mortgage](/en/blog/mortgage-types-fixed-variable-mixed)
 may suit you particularly well.

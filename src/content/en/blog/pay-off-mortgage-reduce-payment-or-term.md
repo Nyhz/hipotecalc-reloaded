@@ -70,7 +70,7 @@ term, while keeping the flexibility to step back whenever you want.
 ## Before ordering the overpayment
 
 Review the fees, legal limits and step-by-step process in our
-[guide to early repayment](/en/guides/amortizacion-anticipada) — since
+[guide to early repayment](/en/guides/early-mortgage-repayment) — since
 Ley 5/2019 the fees are capped and, after the first few years, they are usually
 zero on variable-rate mortgages. And for your specific case, run the numbers
 with the [mortgage calculator](/en/mortgage-calculator): compare your current

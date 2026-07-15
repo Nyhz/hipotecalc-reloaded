@@ -85,6 +85,36 @@ const PREFIJOS_ES_EN: [string, string][] = [
   ['/itp/', '/en/itp/'],
 ]
 
+// Los slugs ingleses están traducidos para las SERPs anglófonas. Al crear un
+// contenido nuevo en ambos idiomas: si los slugs difieren, añade el par aquí;
+// si son idénticos, no hace falta (el emparejado por prefijo lo cubre).
+const SLUGS_ES_EN: Record<string, string> = {
+  // blog
+  'guerra-iran-euribor': 'iran-war-euribor',
+  'tipos-de-hipoteca-fija-variable-mixta': 'mortgage-types-fixed-variable-mixed',
+  'amortizar-cuota-o-plazo': 'pay-off-mortgage-reduce-payment-or-term',
+  'euribor-junio-2026': 'euribor-june-2026',
+  'quien-paga-ajd-hipoteca': 'who-pays-ajd-mortgage-stamp-duty',
+  // guías
+  'amortizacion-anticipada': 'early-mortgage-repayment',
+  'gastos-compraventa': 'property-purchase-costs',
+  'tin-vs-tae': 'tin-vs-apr',
+  'avales-ico-hipoteca-joven': 'ico-mortgage-guarantee-young-buyers',
+  'subrogacion-hipoteca': 'mortgage-subrogation',
+  // ITP por comunidad
+  'andalucia': 'andalusia',
+  'baleares': 'balearic-islands',
+  'canarias': 'canary-islands',
+  'cataluna': 'catalonia',
+  'comunidad-valenciana': 'valencian-community',
+  'navarra': 'navarre',
+  'pais-vasco': 'basque-country',
+}
+
+const SLUGS_EN_ES: Record<string, string> = Object.fromEntries(
+  Object.entries(SLUGS_ES_EN).map(([es, en]) => [en, es])
+)
+
 export function getAlternatePath(pathname: string): string {
   const normalized = normalizePath(pathname)
   const currentLang = getCurrentLang(normalized)
@@ -92,14 +122,20 @@ export function getAlternatePath(pathname: string): string {
   if (currentLang === 'es') {
     if (RUTAS_ES_EN[normalized]) return RUTAS_ES_EN[normalized]
     for (const [es, en] of PREFIJOS_ES_EN) {
-      if (normalized.startsWith(es)) return en + normalized.slice(es.length)
+      if (normalized.startsWith(es)) {
+        const slug = normalized.slice(es.length)
+        return en + (SLUGS_ES_EN[slug] ?? slug)
+      }
     }
   } else {
     for (const [es, en] of Object.entries(RUTAS_ES_EN)) {
       if (en === normalized) return es
     }
     for (const [es, en] of PREFIJOS_ES_EN) {
-      if (normalized.startsWith(en)) return es + normalized.slice(en.length)
+      if (normalized.startsWith(en)) {
+        const slug = normalized.slice(en.length)
+        return es + (SLUGS_EN_ES[slug] ?? slug)
+      }
     }
   }
 

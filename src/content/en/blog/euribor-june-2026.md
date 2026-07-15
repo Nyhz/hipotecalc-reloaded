@@ -51,7 +51,7 @@ practical ideas:
    higher payment and adjust your budget in advance.
 2. **If you are considering switching from variable to fixed or mixed**, compare
    calmly: in our guide to
-   [mortgage types](/en/blog/tipos-de-hipoteca-fija-variable-mixta) we explain
+   [mortgage types](/en/blog/mortgage-types-fixed-variable-mixed) we explain
    when each option pays off, and in the
    [mortgage comparison](/en/mortgage-comparison) you have the current offers
    from each bank.

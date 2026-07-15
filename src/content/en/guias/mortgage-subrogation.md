@@ -39,7 +39,7 @@ cheaper by Ley 5/2019:
   early repayment — on variable-rate mortgages, 0.25%/0.15% only in the first
   years and 0% afterwards; on fixed-rate ones, up to 2% in the first ten years
   and 1.5% afterwards.
-  For the details, see the [early repayment guide](/en/guides/amortizacion-anticipada).
+  For the details, see the [early repayment guide](/en/guides/early-mortgage-repayment).
 - **Costs of the operation** (notary, land registry, administrative agency):
   borne by the lenders since Ley 5/2019. At most, you pay for the new
   valuation.

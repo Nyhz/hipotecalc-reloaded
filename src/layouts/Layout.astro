@@ -19,7 +19,6 @@ import { getCurrentLang, getAlternatePath, normalizePath } from '../utils/i18n';
 export interface Props {
   title?: string;
   description?: string;
-  keywords?: string;
   ogImage?: string;
   canonicalURL?: string;
   /** 'legal' emite schema WebPage en lugar de WebApplication */
@@ -35,7 +34,6 @@ const normalizedPath = normalizePath(Astro.url.pathname);
 const {
   title = "Calculadora Hipotecaria - España | Herramientas Financieras",
   description = "Calculadora hipotecaria, de alquiler e ITP para España. Herramientas financieras precisas y profesionales para calcular tu hipoteca, impuestos y más.",
-  keywords = "calculadora hipoteca, calculadora alquiler, calculadora ITP, finanzas, España, euribor, impuestos, vivienda",
   ogImage,
   canonicalURL = `${SITE_BASE}${normalizedPath}`,
   pageType = 'calculator'
@@ -99,8 +97,7 @@ const webAppSchema = !isHome && pageType === 'calculator' ? JSON.stringify({
     "priceCurrency": "EUR"
   },
   "creator": { "@id": `${SITE_BASE}/#organization` },
-  "inLanguage": langAttribute,
-  "keywords": keywords
+  "inLanguage": langAttribute
 }) : null;
 
 const webPageSchema = pageType === 'legal' ? JSON.stringify({
@@ -126,7 +123,6 @@ const webPageSchema = pageType === 'legal' ? JSON.stringify({
     <!-- Basic SEO -->
     <title>{title}</title>
     <meta name="description" content={description} />
-    <meta name="keywords" content={keywords} />
     <meta name="author" content="Hipotecalc" />
     <link rel="canonical" href={canonicalURL} />
 

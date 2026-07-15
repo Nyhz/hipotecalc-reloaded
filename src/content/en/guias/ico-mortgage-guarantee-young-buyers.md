@@ -50,7 +50,7 @@ The guarantee replaces the down payment, **not the costs or the monthly
 payment**:
 
 1. **The purchase taxes and costs** (10-12%) still come out of your
-   pocket. Check the details in the [costs guide](/en/guides/gastos-compraventa)
+   pocket. Check the details in the [costs guide](/en/guides/property-purchase-costs)
    and the ITP (Impuesto de Transmisiones Patrimoniales, the property transfer
    tax) in your region with the [ITP calculator](/en/itp-calculator) — note that
    many regions also have reduced rates for young buyers.

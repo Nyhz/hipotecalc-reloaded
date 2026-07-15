@@ -4,7 +4,7 @@ import tailwindcss from "@tailwindcss/vite"
 import compress from "astro-compress"
 import sitemap from "@astrojs/sitemap"
 import vercel from "@astrojs/vercel"
-import { readFileSync, readdirSync } from "node:fs"
+import { readFileSync, readdirSync, writeFileSync } from "node:fs"
 import { execSync } from "node:child_process"
 
 
@@ -170,6 +170,25 @@ export default defineConfig({
         return item
       },
     }),
+    {
+      // Con trailingSlash "never", @astrojs/sitemap reescribe el <loc> de la
+      // raíz sin barra final (ignorando serialize); la reponemos para que
+      // coincida con el canonical de la home (https://www.hipotecalc.com/).
+      name: 'sitemap-root-slash',
+      hooks: {
+        'astro:build:done': ({ dir }) => {
+          const dirPath = new URL(dir).pathname
+          for (const f of readdirSync(dirPath).filter((f) => /^sitemap-\d+\.xml$/.test(f))) {
+            const p = `${dirPath}/${f}`
+            const s = readFileSync(p, 'utf8').replace(
+              '<loc>https://www.hipotecalc.com</loc>',
+              '<loc>https://www.hipotecalc.com/</loc>'
+            )
+            writeFileSync(p, s)
+          }
+        },
+      },
+    },
     ...(isDev ? [keystatic()] : []),
 
     compress({

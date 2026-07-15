@@ -90,7 +90,7 @@ The bank takes on the AJD **of the loan**, not of your purchase:
   [ITP calculator](/en/itp-calculator).
 - **Novations and subrogations:** these are **exempt** from AJD in the cases
   covered by Ley 2/1994 (switching banks or renegotiating rate and term) —
-  one more reason why [transferring your mortgage](/en/guides/subrogacion-hipoteca)
+  one more reason why [transferring your mortgage](/en/guides/mortgage-subrogation)
   is so cheap.
 
 ## The honest fine print
@@ -102,7 +102,7 @@ practical consequence for you is a different one: **no more tax surprises at
 the loan signing**, and comparing mortgages is cleaner than ever because the
 APR reflects what you actually pay. That's what the
 [mortgage comparison](/en/mortgage-comparison) and the
-[purchase costs guide](/en/guides/gastos-compraventa) are for, with the full
+[purchase costs guide](/en/guides/property-purchase-costs) are for, with the full
 account of what does come out of your pocket.
 
 > **Note:** informational content, not tax or legal advice. The legislation

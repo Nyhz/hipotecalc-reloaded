@@ -20,6 +20,91 @@
       "source": "/sitemap.xml",
       "destination": "/sitemap-index.xml",
       "permanent": true
+    },
+    {
+      "source": "/en/blog/guerra-iran-euribor",
+      "destination": "/en/blog/iran-war-euribor",
+      "permanent": true
+    },
+    {
+      "source": "/en/blog/tipos-de-hipoteca-fija-variable-mixta",
+      "destination": "/en/blog/mortgage-types-fixed-variable-mixed",
+      "permanent": true
+    },
+    {
+      "source": "/en/blog/amortizar-cuota-o-plazo",
+      "destination": "/en/blog/pay-off-mortgage-reduce-payment-or-term",
+      "permanent": true
+    },
+    {
+      "source": "/en/blog/euribor-junio-2026",
+      "destination": "/en/blog/euribor-june-2026",
+      "permanent": true
+    },
+    {
+      "source": "/en/blog/quien-paga-ajd-hipoteca",
+      "destination": "/en/blog/who-pays-ajd-mortgage-stamp-duty",
+      "permanent": true
+    },
+    {
+      "source": "/en/guides/amortizacion-anticipada",
+      "destination": "/en/guides/early-mortgage-repayment",
+      "permanent": true
+    },
+    {
+      "source": "/en/guides/gastos-compraventa",
+      "destination": "/en/guides/property-purchase-costs",
+      "permanent": true
+    },
+    {
+      "source": "/en/guides/tin-vs-tae",
+      "destination": "/en/guides/tin-vs-apr",
+      "permanent": true
+    },
+    {
+      "source": "/en/guides/avales-ico-hipoteca-joven",
+      "destination": "/en/guides/ico-mortgage-guarantee-young-buyers",
+      "permanent": true
+    },
+    {
+      "source": "/en/guides/subrogacion-hipoteca",
+      "destination": "/en/guides/mortgage-subrogation",
+      "permanent": true
+    },
+    {
+      "source": "/en/itp/andalucia",
+      "destination": "/en/itp/andalusia",
+      "permanent": true
+    },
+    {
+      "source": "/en/itp/baleares",
+      "destination": "/en/itp/balearic-islands",
+      "permanent": true
+    },
+    {
+      "source": "/en/itp/canarias",
+      "destination": "/en/itp/canary-islands",
+      "permanent": true
+    },
+    {
+      "source": "/en/itp/cataluna",
+      "destination": "/en/itp/catalonia",
+      "permanent": true
+    },
+    {
+      "source": "/en/itp/comunidad-valenciana",
+      "destination": "/en/itp/valencian-community",
+      "permanent": true
+    },
+    {
+      "source": "/en/itp/navarra",
+      "destination": "/en/itp/navarre",
+      "permanent": true
+    },
+    {
+      "source": "/en/itp/pais-vasco",
+      "destination": "/en/itp/basque-country",
+      "permanent": true
     }
   ],
   "headers": [

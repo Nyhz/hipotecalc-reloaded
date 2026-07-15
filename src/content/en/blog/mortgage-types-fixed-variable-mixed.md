@@ -133,7 +133,7 @@ For those who want security in the early years but expect to overpay or even sel
 
 ## The market context in 2026
 
-As of mid-2026, the 12-month Euribor is moving at around **2.7%**, after a cycle of sharp rises in 2022 and 2023 — with the odd geopolitical scare along the way, as we analysed in [the Iran war and the Euribor](/en/blog/guerra-iran-euribor) — and a subsequent period of moderation. The European Central Bank is keeping its rates at contained levels and the market is not pricing in big moves in the short term, which has given the index a degree of stability.
+As of mid-2026, the 12-month Euribor is moving at around **2.7%**, after a cycle of sharp rises in 2022 and 2023 — with the odd geopolitical scare along the way, as we analysed in [the Iran war and the Euribor](/en/blog/iran-war-euribor) — and a subsequent period of moderation. The European Central Bank is keeping its rates at contained levels and the market is not pricing in big moves in the short term, which has given the index a degree of stability.
 
 In this scenario:
 

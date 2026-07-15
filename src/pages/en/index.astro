@@ -12,14 +12,13 @@ import { t, regionNameEn } from '../../utils/i18n';
 
 // Highest-search-volume regions, linked from the home to feed the ITP cluster
 const guiasItp = await getCollection('itpEn');
-const itpDestacadas = ['madrid', 'cataluna', 'andalucia', 'comunidad-valenciana', 'baleares']
+const itpDestacadas = ['madrid', 'catalonia', 'andalusia', 'valencian-community', 'balearic-islands']
   .map((slug) => guiasItp.find((g) => g.id === slug))
   .filter((g) => g !== undefined);
 ---
 <Layout
   title={t('seo.home.title', 'en')}
   description={t('seo.home.description', 'en')}
-  keywords={t('seo.home.keywords', 'en')}
 >
   <PageTracking client:load pagePath="/en" pageTitle={t('seo.home.title', 'en')} />
   <Hero lang="en" />
