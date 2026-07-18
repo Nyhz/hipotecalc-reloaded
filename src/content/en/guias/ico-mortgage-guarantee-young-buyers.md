@@ -1,13 +1,13 @@
 ---
 title: "ICO guarantee and young buyer mortgages: how to buy a home with less than 20% saved"
 description: "How the ICO guarantee for young people and families with dependent children works, which banks offer it, what the requirements are, and what regional alternatives and young buyer mortgages exist."
-updatedDate: 2026-07-12
+updatedDate: 2026-07-18
 calculadora: prestamo
 faq:
   - question: "What is the ICO guarantee for buying a home?"
     answer: "A State-backed guarantee line, managed by the Instituto de Crédito Oficial (Spain's official credit institute), that guarantees part of the mortgage to the bank (as a general rule up to 20% of the price, extendable to 25% for homes with high energy efficiency). It allows you to finance up to 100% without having the down payment saved."
   - question: "Who can apply for the ICO guarantee?"
-    answer: "Young people up to age 35 and families with dependent children, for their first primary residence in Spain, subject to income limits (around €37,800 per year per borrower, plus more per child) and price limits depending on the province. The exact conditions and validity period should be checked with the ICO and with the lender."
+    answer: "Young people up to age 35 and families with dependent children, for their first primary residence in Spain, subject to income limits by province (from €37,800 up to €63,000 per year per borrower since June 2026, plus more per child), a €150,000 wealth cap and a price cap by region. The exact conditions and validity period should be checked with the ICO and with the lender."
   - question: "Is the ICO guarantee money the State gives me?"
     answer: "No. It is a guarantee: if you stopped paying, the State would answer to the bank for the guaranteed portion. You still owe 100% of the loan and keep paying your monthly instalment; the guarantee only replaces the down payment you haven't saved."
   - question: "What is a young buyer mortgage?"
@@ -32,10 +32,13 @@ Key points of the programme:
 
 - **Who it's for:** young people up to age 35 and families with dependent
   children, buying their **first primary residence** in Spain.
-- **Income limits:** around €37,800 gross per year per borrower (double if two
-  people sign), with increases per dependent child.
-- **Price limits:** they vary by province; the programme sets caps so that the
-  guarantee focuses on affordable housing.
+- **Income limits:** by province since June 2026 — from €37,800 gross per year
+  per borrower under the general rule up to €63,000 in the most expensive
+  provinces (Madrid, Barcelona, the Balearics…), with increases per dependent
+  child and a €150,000 wealth cap.
+- **Price limits:** by region — from €200,000 (Extremadura) to €325,000
+  (Madrid); the programme sets caps so that the guarantee focuses on
+  affordable housing.
 - **It is not a subsidy:** you still owe the whole loan. If something goes
   wrong, the State pays the bank the guaranteed portion… and then claims it
   back from you.
@@ -69,6 +72,12 @@ others), which can be combined with or used instead of the national one
 depending on the case. And almost every bank markets some kind of **young buyer
 mortgage** with more financing or sharper rates — you'll find them identified in
 our [mortgage comparison](/en/mortgage-comparison).
+
+The national programme's conditions change with every extension — we keep the
+current state (deadlines, income limits by province and the wealth cap) up to
+date in [the ICO guarantee in 2026](/en/blog/ico-mortgage-guarantee-2026-update),
+and the full map of routes to 100% financing in
+[no-deposit mortgages in 2026](/en/blog/no-deposit-mortgage-spain).
 
 The sensible strategy: first work out how much you can pay per month, then what
 home price that implies, and only then look at which combination of guarantee +

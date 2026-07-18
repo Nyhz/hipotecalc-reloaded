@@ -1,13 +1,13 @@
 ---
 title: "Aval ICO e hipoteca joven: cómo comprar casa con menos del 20 % ahorrado"
 description: "Cómo funciona el aval del ICO para jóvenes y familias con menores, qué bancos lo ofrecen, qué requisitos tiene y qué alternativas autonómicas e hipotecas joven existen."
-updatedDate: 2026-07-12
+updatedDate: 2026-07-18
 calculadora: prestamo
 faq:
   - question: "¿Qué es el aval ICO para la compra de vivienda?"
     answer: "Una línea de avales del Estado, gestionada por el Instituto de Crédito Oficial, que garantiza ante el banco una parte de la hipoteca (con carácter general hasta el 20 % del precio, ampliable al 25 % en viviendas con alta eficiencia energética). Permite financiar hasta el 100 % sin tener ahorrada la entrada."
   - question: "¿Quién puede pedir el aval ICO?"
-    answer: "Jóvenes de hasta 35 años y familias con menores a cargo, para su primera vivienda habitual en España, con límites de ingresos (en torno a 37.800 € anuales por titular, más por hijo) y de precio según la provincia. Las condiciones exactas y la vigencia se consultan en el ICO y en la entidad."
+    answer: "Jóvenes de hasta 35 años y familias con menores a cargo, para su primera vivienda habitual en España, con límites de ingresos por provincia (desde 37.800 € hasta 63.000 € anuales por titular desde junio de 2026, más un extra por hijo), tope de patrimonio de 150.000 € y precio máximo por comunidad autónoma. Las condiciones exactas y la vigencia se consultan en el ICO y en la entidad."
   - question: "¿El aval ICO es dinero que me da el Estado?"
     answer: "No. Es una garantía: si dejaras de pagar, el Estado respondería ante el banco por la parte avalada. Tú sigues debiendo el 100 % del préstamo y pagando tu cuota; el aval solo sustituye la entrada que no tienes ahorrada."
   - question: "¿Qué es una hipoteca joven?"
@@ -31,10 +31,13 @@ Puntos clave del programa:
 
 - **Para quién:** jóvenes de hasta 35 años y familias con menores a cargo,
   compradores de su **primera vivienda habitual** en España.
-- **Límites de ingresos:** en el entorno de los 37.800 € brutos anuales por
-  titular (el doble si firman dos), con ampliaciones por hijo a cargo.
-- **Límites de precio:** varían por provincia; el programa fija topes para que
-  el aval se concentre en vivienda asequible.
+- **Límites de ingresos:** por provincia desde junio de 2026 — de 37.800 €
+  brutos anuales por titular en el régimen general hasta 63.000 € en las
+  provincias más caras (Madrid, Barcelona, Baleares…), con ampliaciones por
+  hijo a cargo y un tope de patrimonio de 150.000 €.
+- **Límites de precio:** por comunidad autónoma — de 200.000 € (Extremadura) a
+  325.000 € (Madrid); el programa fija topes para que el aval se concentre en
+  vivienda asequible.
 - **No es una subvención:** sigues debiendo todo el préstamo. Si algo va mal,
   el Estado paga al banco la parte avalada… y después te la reclama a ti.
 - **Vigencia y bancos adheridos:** el plazo de solicitud se ha ido ampliando
@@ -63,6 +66,12 @@ otras), acumulables o alternativos al estatal según el caso. Y casi todos los
 bancos comercializan alguna **hipoteca joven** con más financiación o tipos
 afinados — las tienes identificadas en nuestra
 [comparativa de hipotecas](/comparativa-hipotecas).
+
+Las condiciones del programa estatal cambian con cada prórroga — el estado
+actual (plazos, límites de ingresos por provincia y patrimonio) lo mantenemos
+al día en [el aval ICO en 2026](/blog/aval-ico-2026), y el mapa completo de
+vías para financiar el 100 % en
+[hipoteca sin entrada en 2026](/blog/hipoteca-sin-entrada).
 
 La estrategia sensata: calcula primero cuánto puedes pagar al mes, después qué
 precio de vivienda implica, y solo entonces mira qué combinación de aval +
