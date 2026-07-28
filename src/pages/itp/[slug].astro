@@ -48,6 +48,32 @@ const nombreCorto = guia.id === 'ceuta-melilla' ? 'Ceuta y Melilla' : guia.data.
 const esForal = ['Navarra', 'País Vasco'].includes(guia.data.comunidad);
 const tipoEnFrase = guia.data.tipoGeneral.charAt(0).toLowerCase() + guia.data.tipoGeneral.slice(1);
 
+// Experimento SEO (jul-2026): <title> con el dato SOLO en estas 3 comunidades.
+// El resto conserva su title y actúa como grupo de control — no ampliar la
+// lista sin revisar los resultados del experimento. Cifras tomadas del
+// frontmatter/datos verificados de cada guía.
+const TITULOS_CON_DATO: Record<string, string> = {
+  'castilla-y-leon': 'ITP en Castilla y León 2026: 8 % general y reducido del 4 % | Hipotecalc',
+  'comunidad-valenciana': 'ITP en la Comunitat Valenciana 2026: 9 % general y reducido del 6 % | Hipotecalc',
+  'pais-vasco': 'ITP en el País Vasco 2026: 4 % vivienda (7 % general) y reducido del 2,5 % | Hipotecalc',
+};
+const tituloPagina = TITULOS_CON_DATO[guia.id] ?? `${guia.data.title} | Hipotecalc`;
+
+// Párrafo-respuesta bajo el H1: contesta la consulta principal en prosa con
+// los datos del frontmatter. Si el resumen arranca repitiendo el tipo general
+// (o la tarifa), se omite esa primera cláusula para no duplicar.
+const tipoParaRespuesta = /^\d/.test(guia.data.tipoGeneral)
+  ? `del ${guia.data.tipoGeneral}`
+  : `de ${tipoEnFrase}`;
+const clausulasResumen = guia.data.resumen.split('; ');
+const matizResumen =
+  clausulasResumen.length > 1 && /general|tarifa/i.test(clausulasResumen[0])
+    ? clausulasResumen.slice(1).join('; ')
+    : guia.data.resumen;
+const articuloNombre =
+  guia.id === 'pais-vasco' ? 'el ' : guia.id === 'comunidad-valenciana' ? 'la ' : '';
+const parrafoRespuesta = `En ${articuloNombre}${nombreCorto}, el ITP por la compra de una vivienda de segunda mano en 2026 es ${tipoParaRespuesta}, con estos tipos reducidos y bonificaciones principales: ${matizResumen}.`;
+
 const impuestoObraNueva =
   guia.id === 'canarias'
     ? 'No. La primera transmisión de una vivienda nueva en Canarias no paga ITP ni IVA: tributa por el IGIC (Impuesto General Indirecto Canario). El ITP solo grava las viviendas de segunda mano.'
@@ -77,7 +103,7 @@ const faqItems = [
 ];
 ---
 <Layout
-  title={`${guia.data.title} | Hipotecalc`}
+  title={tituloPagina}
   description={guia.data.description}
   pageType="legal"
 >
@@ -97,6 +123,7 @@ const faqItems = [
       <h1 class="font-heading text-3xl md:text-4xl font-semibold tracking-[-1px] text-ink mt-4 mb-3">
         {guia.data.title}
       </h1>
+      <p class="text-ink-soft leading-relaxed mb-3">{parrafoRespuesta}</p>
       <p class="font-data text-xs text-ink-soft">
         Actualizado: {formatDate(guia.data.updatedDate)} · Normativa verificada con fuentes oficiales
       </p>
@@ -107,10 +134,7 @@ const faqItems = [
         <span class="font-data text-[11px] uppercase tracking-widest text-ink-soft">Tipo general 2026</span>
         <span class="font-heading text-2xl font-bold text-ink">{guia.data.tipoGeneral}</span>
       </div>
-      <p class="text-sm text-ink-soft leading-relaxed">
-        <strong class="text-ink">Reducciones y bonificaciones:</strong> {guia.data.resumen}.
-      </p>
-      <a href="#calculadora" class="inline-block mt-3 text-sm font-medium text-brand-blue underline">
+      <a href="#calculadora" class="inline-block mt-1 text-sm font-medium text-brand-blue underline">
         Calcula tu ITP y tu hipoteca en {nombreCorto} ↓
       </a>
     </div>

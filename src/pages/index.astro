@@ -10,10 +10,10 @@ import BrokerBand from '../components/home/BrokerBand.astro';
 import PageTracking from '../components/PageTracking.tsx';
 import { t } from '../utils/i18n';
 
-// Comunidades con más volumen de búsqueda, enlazadas desde la home para
-// repartir autoridad al clúster ITP
+// Comunidades enlazadas desde la home para repartir autoridad al clúster ITP
+// (selección y orden definidos por el experimento SEO de julio de 2026)
 const guiasItp = await getCollection('itp');
-const itpDestacadas = ['madrid', 'cataluna', 'andalucia', 'comunidad-valenciana', 'baleares']
+const itpDestacadas = ['castilla-y-leon', 'galicia', 'aragon', 'madrid', 'cataluna', 'comunidad-valenciana']
   .map((slug) => guiasItp.find((g) => g.id === slug))
   .filter((g) => g !== undefined);
 ---
@@ -42,14 +42,13 @@ const itpDestacadas = ['madrid', 'cataluna', 'andalucia', 'comunidad-valenciana'
     <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
       {itpDestacadas.map((guia) => (
         <a href={`/itp/${guia.id}`} class="pl-card pl-card-hover p-4 flex flex-col gap-1">
-          <span class="font-medium text-ink text-sm">{guia.data.comunidad}</span>
-          <span class="font-data text-xs text-ink-soft">ITP: {guia.data.tipoGeneral}</span>
+          <span class="font-medium text-ink text-sm">ITP en {guia.data.comunidad}</span>
+          <span class="font-data text-xs text-ink-soft">{guia.data.tipoGeneral}</span>
         </a>
       ))}
-      <a href="/itp" class="pl-card pl-card-hover p-4 flex flex-col justify-center gap-1 border-l-4 border-lime">
-        <span class="font-medium text-ink text-sm">Todas las comunidades</span>
-        <span class="font-data text-xs text-brand-blue">Ver el cuadro completo →</span>
-      </a>
+    </div>
+    <div class="text-center mt-5">
+      <a href="/itp" class="text-sm font-medium text-brand-blue underline">Ver las 17 comunidades →</a>
     </div>
   </section>
 
