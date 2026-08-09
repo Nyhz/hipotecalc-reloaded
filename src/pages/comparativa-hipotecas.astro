@@ -4,7 +4,8 @@ import Breadcrumbs from '../components/seo/Breadcrumbs.astro';
 import FAQSection from '../components/seo/FAQSection.astro';
 import PageTracking from '../components/PageTracking.tsx';
 import BankComparisonTable from '../components/comparativa/BankComparisonTable.tsx';
-import { OFERTAS_HIPOTECAS, FECHA_DATOS, EURIBOR_REFERENCIA } from '../constants/hipotecas-bancos';
+import { OFERTAS_HIPOTECAS, FECHA_DATOS } from '../constants/hipotecas-bancos';
+import { currentEuribor } from '../constants/euribor-values';
 
 const numBancos = new Set(OFERTAS_HIPOTECAS.map(o => o.banco)).size;
 const title = `Comparativa de Hipotecas ${new Date().getFullYear()}: ${numBancos} bancos frente a frente | Hipotecalc`;
@@ -33,7 +34,7 @@ const description = `Compara las hipotecas fijas, variables y mixtas de ${numBan
         con TIN, TAE, plazos, financiación máxima, vinculaciones y comisiones. Pulsa en cualquier fila para ver el detalle.
       </p>
       <p class="font-data text-xs text-ink-soft mt-3">
-        Datos: {FECHA_DATOS} · Euríbor de referencia {EURIBOR_REFERENCIA}
+        Datos: {FECHA_DATOS} · Euríbor de referencia {currentEuribor.value.toLocaleString('es-ES')}% ({currentEuribor.labelEs})
       </p>
     </div>
 

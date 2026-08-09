@@ -99,6 +99,7 @@ const SLUGS_ES_EN: Record<string, string> = {
   'tipos-de-hipoteca-fija-variable-mixta': 'mortgage-types-fixed-variable-mixed',
   'amortizar-cuota-o-plazo': 'pay-off-mortgage-reduce-payment-or-term',
   'euribor-junio-2026': 'euribor-june-2026',
+  'euribor-julio-2026': 'euribor-july-2026',
   'quien-paga-ajd-hipoteca': 'who-pays-ajd-mortgage-stamp-duty',
   'aval-ico-2026': 'ico-mortgage-guarantee-2026-update',
   'hipoteca-sin-entrada': 'no-deposit-mortgage-spain',

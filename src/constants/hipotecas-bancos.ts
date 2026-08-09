@@ -23,6 +23,9 @@ export interface OfertaHipoteca {
 }
 
 export const FECHA_DATOS = '9 de agosto de 2026'
+// Euríbor asumido en las TAE de esta extracción. Las páginas ya NO muestran
+// este valor: usan currentEuribor (euribor-values.ts), la misma fuente que
+// /euribor, para que ambas no puedan divergir.
 export const EURIBOR_REFERENCIA = '2,855% (media de julio de 2026)'
 
 export const OFERTAS_HIPOTECAS: OfertaHipoteca[] = [

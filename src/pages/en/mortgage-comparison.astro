@@ -4,7 +4,8 @@ import Breadcrumbs from '../../components/seo/Breadcrumbs.astro';
 import FAQSection from '../../components/seo/FAQSection.astro';
 import PageTracking from '../../components/PageTracking.tsx';
 import BankComparisonTable from '../../components/comparativa/BankComparisonTable.tsx';
-import { OFERTAS_HIPOTECAS, FECHA_DATOS, EURIBOR_REFERENCIA } from '../../constants/hipotecas-bancos';
+import { OFERTAS_HIPOTECAS, FECHA_DATOS } from '../../constants/hipotecas-bancos';
+import { currentEuribor } from '../../constants/euribor-values';
 
 const numBancos = new Set(OFERTAS_HIPOTECAS.map(o => o.banco)).size;
 const title = `Spanish Mortgage Comparison ${new Date().getFullYear()}: ${numBancos} banks side by side | Hipotecalc`;
@@ -34,7 +35,7 @@ const description = `Compare fixed, variable and mixed mortgages from ${numBanco
         and fees. Click any row for the details.
       </p>
       <p class="font-data text-xs text-ink-soft mt-3">
-        Data: {FECHA_DATOS} · Reference Euribor {EURIBOR_REFERENCIA}
+        Data: {FECHA_DATOS} · Reference Euribor {currentEuribor.value.toLocaleString('en-US')}% ({currentEuribor.labelEn})
       </p>
     </div>
 
