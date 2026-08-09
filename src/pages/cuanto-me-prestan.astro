@@ -1,5 +1,8 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import Byline from '../components/seo/Byline.astro';
+import { resolverAutoria } from '../data/authors';
+import { ultimaModificacion } from '../utils/ultima-modificacion';
 import Breadcrumbs from '../components/seo/Breadcrumbs.astro';
 import PageTracking from '../components/PageTracking.tsx';
 import FAQSection from '../components/seo/FAQSection.astro';
@@ -8,6 +11,9 @@ import PrestamoMaximoCalculator from '../components/prestamo/PrestamoMaximoCalcu
 const title = '¿Cuánto me puede prestar el banco? Calcula tu hipoteca máxima | Hipotecalc';
 const description =
   'Calcula cuánto dinero te prestaría el banco para tu hipoteca con la regla del 35 % de endeudamiento: cuota máxima, capital, precio de vivienda alcanzable y ahorro necesario.';
+const autoria = resolverAutoria('calculadora');
+const actualizado = ultimaModificacion('src/pages/cuanto-me-prestan.astro');
+
 ---
 <Layout title={title} description={description}>
   <PageTracking client:load pagePath="/cuanto-me-prestan" pageTitle={title} />
@@ -23,6 +29,7 @@ const description =
       <h1 class="font-heading text-3xl md:text-4xl lg:text-[44px] font-semibold tracking-[-1px] text-ink mt-4 mb-4">
         ¿Cuánto me puede prestar el banco?
       </h1>
+      <div class="mt-2 mb-1"><Byline autoria={autoria} lang="es" updated={actualizado} /></div>
       <p class="text-ink-soft max-w-3xl mx-auto text-base md:text-lg">
         Antes de buscar piso, la pregunta clave: con tus ingresos, ¿qué hipoteca máxima
         te darían? Introduce tus datos y obtén tu cuota máxima asumible, el capital que

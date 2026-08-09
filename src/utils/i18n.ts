@@ -76,6 +76,8 @@ const RUTAS_ES_EN: Record<string, string> = {
   '/itp': '/en/itp',
   '/blog': '/en/blog',
   '/metodologia': '/en/methodology',
+  '/sobre-nosotros': '/en/about',
+  '/autores/jose-perales': '/en/authors/jose-perales',
   '/aviso-legal': '/en/legal-notice',
   '/politica-de-privacidad': '/en/privacy-policy',
   '/politica-de-cookies': '/en/cookie-policy',

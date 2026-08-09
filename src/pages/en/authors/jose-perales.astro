@@ -1,0 +1,106 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../../../layouts/Layout.astro';
+import Breadcrumbs from '../../../components/seo/Breadcrumbs.astro';
+import PageTracking from '../../../components/PageTracking.tsx';
+import { AUTORES, personSchemaCompleto, resolverAutoria } from '../../../data/authors';
+
+const autor = AUTORES['jose-perales'];
+
+const [guias, posts] = await Promise.all([getCollection('guiasEn'), getCollection('blogEn')]);
+const firmadas = {
+  guias: guias.filter((g) => resolverAutoria('guia', g.data).autor.id === autor.id),
+  posts: posts.filter((p) => resolverAutoria('blog', p.data).autor.id === autor.id),
+};
+const revisadas = {
+  guias: guias.filter((g) => resolverAutoria('guia', g.data).revisor?.id === autor.id),
+  posts: posts.filter((p) => resolverAutoria('blog', p.data).revisor?.id === autor.id),
+};
+const ordenar = <T extends { data: { title: string } }>(arr: T[]) =>
+  [...arr].sort((a, b) => a.data.title.localeCompare(b.data.title, 'en'));
+
+const title = 'José Perales, mortgage advisor — Hipotecalc author | Hipotecalc';
+const description =
+  "José Perales is a mortgage advisor and real estate credit intermediary registered with the Bank of Spain (no. E286). He authors Hipotecalc's financial content.";
+
+const schemaPersona = JSON.stringify(personSchemaCompleto(autor, 'en'));
+---
+<Layout title={title} description={description}>
+  <PageTracking client:load pagePath="/en/authors/jose-perales" pageTitle={title} />
+  <script type="application/ld+json" set:html={schemaPersona} />
+
+  <Breadcrumbs items={[
+    { name: 'Home', href: '/en' },
+    { name: 'About us', href: '/en/about' },
+    { name: 'José Perales', href: '/en/authors/jose-perales' }
+  ]} />
+
+  <article class="w-full max-w-3xl mx-auto py-10">
+    <header class="mb-8">
+      <span class="eyebrow">Who writes Hipotecalc</span>
+      <h1 class="font-heading text-3xl md:text-4xl font-semibold tracking-[-1px] text-ink mt-4 mb-2">
+        {autor.nombre}
+      </h1>
+      <p class="text-ink-soft">{autor.cargo.en}</p>
+    </header>
+
+    {autor.imagen && (
+      <img src={autor.imagen} alt={`Photo of ${autor.nombre}`} width="160" height="160" class="rounded-full mb-6" />
+    )}
+
+    <div class="text-ink-soft leading-relaxed space-y-4">
+      <p>{autor.bio.en}</p>
+      {autor.credenciales && (
+        <p>
+          <span class="font-data text-xs uppercase tracking-widest text-ink-soft">Credential</span><br />
+          {autor.credenciales.texto.en}. You can verify it in the
+          <a href="https://www.bde.es/" target="_blank" rel="noopener" class="underline text-brand-blue"> Bank of Spain's public register</a>.
+        </p>
+      )}
+      <p>
+        Find José on
+        <a href="https://www.linkedin.com/in/joseperalesbh/" target="_blank" rel="noopener" class="underline text-brand-blue">LinkedIn</a>,
+        <a href="https://www.instagram.com/joseperalesbh/" target="_blank" rel="noopener" class="underline text-brand-blue">Instagram</a> and
+        <a href="https://www.tiktok.com/@joseperalesbh" target="_blank" rel="noopener" class="underline text-brand-blue">TikTok</a>,
+        or <a href="https://cal.com/jose-perales-asesor/Hr8YvL" target="_blank" rel="noopener" class="underline text-brand-blue">book a call with him</a>.
+      </p>
+      <p class="text-sm">
+        Hipotecalc has a commercial lead-referral agreement with José Perales:
+        we explain it in detail in <a href="/en/about" class="underline text-brand-blue">about us</a> and
+        in our <a href="/en/methodology" class="underline text-brand-blue">methodology</a>.
+      </p>
+    </div>
+
+    {firmadas.guias.length + firmadas.posts.length > 0 && (
+      <section class="mt-10">
+        <h2 class="font-heading text-2xl font-semibold text-ink mb-4">Content signed by José</h2>
+        <p class="text-ink-soft mb-4">
+          José signs Hipotecalc's editorial financial content: the guides, the blog and the
+          regional ITP guides.
+        </p>
+        <ul class="list-disc pl-6 space-y-1 text-ink-soft">
+          <li><a href="/en/itp" class="underline text-brand-blue">Regional ITP guides (18 pages)</a></li>
+          {ordenar(firmadas.guias).map((g) => (
+            <li><a href={`/en/guides/${g.id}`} class="underline text-brand-blue">{g.data.title}</a></li>
+          ))}
+          {ordenar(firmadas.posts).map((p) => (
+            <li><a href={`/en/blog/${p.id}`} class="underline text-brand-blue">{p.data.title}</a></li>
+          ))}
+        </ul>
+      </section>
+    )}
+
+    <section class="mt-10">
+      <h2 class="font-heading text-2xl font-semibold text-ink mb-4">Content he reviews</h2>
+      <ul class="list-disc pl-6 space-y-1 text-ink-soft">
+        <li>The <a href="/en/mortgage-calculator" class="underline text-brand-blue">Hipotecalc calculators</a> (mortgage, ITP, plusvalía, purchase costs, rental and how much can I borrow)</li>
+          {ordenar(revisadas.guias).map((g) => (
+            <li><a href={`/en/guides/${g.id}`} class="underline text-brand-blue">{g.data.title}</a></li>
+          ))}
+          {ordenar(revisadas.posts).map((p) => (
+            <li><a href={`/en/blog/${p.id}`} class="underline text-brand-blue">{p.data.title}</a></li>
+          ))}
+      </ul>
+    </section>
+  </article>
+</Layout>

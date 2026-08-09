@@ -1,5 +1,8 @@
 ---
 import { getCollection } from 'astro:content';
+import Byline from '../components/seo/Byline.astro';
+import { resolverAutoria } from '../data/authors';
+import { ultimaModificacion } from '../utils/ultima-modificacion';
 import Layout from '../layouts/Layout.astro';
 import Breadcrumbs from '../components/seo/Breadcrumbs.astro';
 import PageTracking from '../components/PageTracking.tsx';
@@ -13,6 +16,9 @@ const guiasItp = (await getCollection('itp')).sort((a, b) =>
 const title = 'Calculadora de ITP 2026: calcula el impuesto de tu vivienda | Hipotecalc';
 const description =
   'Calcula el ITP de tu vivienda de segunda mano en cualquier comunidad autónoma, con las bonificaciones para jóvenes, familias numerosas o discapacidad. Gratis y al instante.';
+const autoria = resolverAutoria('calculadora');
+const actualizado = ultimaModificacion('src/pages/calculadora-itp.astro');
+
 ---
 <Layout title={title} description={description}>
   <PageTracking client:load pagePath="/calculadora-itp" pageTitle={title} />
@@ -28,6 +34,7 @@ const description =
       <h1 class="font-heading text-3xl md:text-4xl lg:text-[44px] font-semibold tracking-[-1px] text-ink mt-4 mb-4">
         Calculadora del Impuesto de Transmisiones Patrimoniales
       </h1>
+      <div class="mt-2 mb-1"><Byline autoria={autoria} lang="es" updated={actualizado} /></div>
       <p class="text-ink-soft max-w-3xl mx-auto text-base md:text-lg">
         Elige tu comunidad autónoma, indica el precio y tu situación (edad, familia,
         discapacidad…) y obtén al instante el ITP estimado con las bonificaciones que

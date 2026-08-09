@@ -69,7 +69,15 @@ const organizationSchema = JSON.stringify({
   "@id": `${SITE_BASE}/#organization`,
   "name": "Hipotecalc",
   "url": `${SITE_BASE}/`,
-  "logo": `${SITE_BASE}/hipotecalc-og.jpg`
+  "description": langAttribute === 'en'
+    ? "Free web-based financial tools and up-to-date, reliable information on the Spanish mortgage market."
+    : "Herramientas financieras web gratuitas e información fiable y actualizada sobre el mercado hipotecario español.",
+  "logo": {
+    "@type": "ImageObject",
+    "url": `${SITE_BASE}/logo-512.png`,
+    "width": 512,
+    "height": 512
+  }
 });
 
 const webSiteSchema = isHome ? JSON.stringify({
@@ -107,6 +115,7 @@ const webPageSchema = pageType === 'legal' ? JSON.stringify({
   "description": description,
   "url": canonicalURL,
   "inLanguage": langAttribute,
+  "author": { "@id": `${SITE_BASE}/#organization` },
   "publisher": { "@id": `${SITE_BASE}/#organization` }
 }) : null;
 ---

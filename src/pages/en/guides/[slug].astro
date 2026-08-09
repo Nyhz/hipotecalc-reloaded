@@ -3,6 +3,8 @@ import { getCollection, render } from 'astro:content';
 import Layout from '../../../layouts/Layout.astro';
 import Breadcrumbs from '../../../components/seo/Breadcrumbs.astro';
 import PageTracking from '../../../components/PageTracking.tsx';
+import Byline from '../../../components/seo/Byline.astro';
+import { resolverAutoria, refSchema } from '../../../data/authors';
 import FAQSection from '../../../components/seo/FAQSection.astro';
 import MortgageCalculator from '../../../components/calculadora-hipotecaria/MortgageCalculator';
 import ITPStandalone from '../../../components/calculadora-itp/ITPStandalone';
@@ -26,6 +28,10 @@ const formatDate = (d: Date) =>
 const SITE_BASE = 'https://www.hipotecalc.com';
 const canonical = `${SITE_BASE}/en/guides/${guia.id}`;
 
+// Autoría: frontmatter > defaults de src/data/authors.ts — el schema debe
+// reflejar exactamente lo que muestra el byline visible
+const autoria = resolverAutoria('guia', guia.data);
+
 const articleSchema = JSON.stringify({
   "@context": "https://schema.org",
   "@type": "Article",
@@ -33,6 +39,8 @@ const articleSchema = JSON.stringify({
   "description": guia.data.description,
   "url": canonical,
   "dateModified": guia.data.updatedDate.toISOString(),
+  "author": refSchema(autoria.autor, 'en'),
+  ...(autoria.revisor ? { "reviewedBy": refSchema(autoria.revisor, 'en') } : {}),
   "inLanguage": "en",
   "publisher": { "@id": `${SITE_BASE}/#organization` },
   "mainEntityOfPage": canonical,
@@ -65,7 +73,7 @@ const tituloCalculadora = {
       <h1 class="font-heading text-3xl md:text-4xl font-semibold tracking-[-1px] text-ink mt-4 mb-3">
         {guia.data.title}
       </h1>
-      <p class="font-data text-xs text-ink-soft">Updated: {formatDate(guia.data.updatedDate)}</p>
+      <Byline autoria={autoria} lang="en" updated={guia.data.updatedDate} policyLinks />
     </header>
 
     <div class="text-ink-soft leading-relaxed space-y-4

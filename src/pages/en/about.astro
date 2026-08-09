@@ -1,0 +1,71 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Breadcrumbs from '../../components/seo/Breadcrumbs.astro';
+import PageTracking from '../../components/PageTracking.tsx';
+import { AUTORES } from '../../data/authors';
+
+const equipo = AUTORES['equipo'];
+const jose = AUTORES['jose-perales'];
+
+const title = 'About us: who makes Hipotecalc | Hipotecalc';
+const description =
+  'Who is behind Hipotecalc: a two-person team building free web-based financial tools and up-to-date information on the Spanish mortgage market, reviewed by an advisor registered with the Bank of Spain.';
+---
+<Layout title={title} description={description}>
+  <PageTracking client:load pagePath="/en/about" pageTitle={title} />
+
+  <Breadcrumbs items={[
+    { name: 'Home', href: '/en' },
+    { name: 'About us', href: '/en/about' }
+  ]} />
+
+  <article class="w-full max-w-3xl mx-auto py-10">
+    <header class="mb-8">
+      <span class="eyebrow">Who's behind this</span>
+      <h1 class="font-heading text-3xl md:text-4xl font-semibold tracking-[-1px] text-ink mt-4 mb-3">
+        About us
+      </h1>
+    </header>
+
+    <div class="text-ink-soft leading-relaxed space-y-4">
+      <p>
+        <strong class="text-ink">Hipotecalc</strong> produces free web-based financial
+        tools — mortgage, ITP, plusvalía, purchase-costs and rental-profitability
+        calculators — and reliable, up-to-date information on the Spanish mortgage
+        market. How we source and verify every figure is explained in our
+        <a href="/en/methodology" class="underline text-brand-blue">methodology</a>.
+      </p>
+
+      <h2 class="font-heading text-2xl font-semibold text-ink mt-8 mb-2">The team</h2>
+      <p>{equipo.bio.en}</p>
+
+      <h2 class="font-heading text-2xl font-semibold text-ink mt-8 mb-2">Who signs the content</h2>
+      <p>
+        The editorial financial content is authored by
+        <a href="/en/authors/jose-perales" class="underline text-brand-blue">{jose.nombre}</a>,
+        mortgage advisor and real estate credit intermediary registered with the Bank of
+        Spain under number {jose.credenciales?.registro}. The team builds the tools and
+        maintains the data.
+      </p>
+
+      <h2 class="font-heading text-2xl font-semibold text-ink mt-8 mb-2">Our relationship with the advisor</h2>
+      <p>
+        No fine print: Hipotecalc has a
+        <strong class="text-ink"> commercial lead-referral agreement</strong> with José Perales.
+        When you use the site's "contact our broker" buttons and end up working with him,
+        Hipotecalc may receive compensation for that introduction. This agreement doesn't
+        change what we publish: the calculators, the comparison data and the guides are
+        built from official sources and are identical for every reader, whether or not
+        they contact the advisor.
+      </p>
+
+      <h2 class="font-heading text-2xl font-semibold text-ink mt-8 mb-2">What we are not</h2>
+      <p>
+        Hipotecalc is not a financial institution and does not provide personalised
+        advice: it is informational content and calculation tools. Before signing a
+        mortgage, check your case with a professional. More detail in the
+        <a href="/en/financial-disclaimer" class="underline text-brand-blue">financial disclaimer</a>.
+      </p>
+    </div>
+  </article>
+</Layout>

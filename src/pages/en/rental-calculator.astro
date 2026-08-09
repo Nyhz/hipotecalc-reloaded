@@ -1,10 +1,16 @@
 ---
 import Layout from '../../layouts/Layout.astro';
+import Byline from '../../components/seo/Byline.astro';
+import { resolverAutoria } from '../../data/authors';
+import { ultimaModificacion } from '../../utils/ultima-modificacion';
 import RentalCalculator from '../../components/calculadora-alquiler/RentalCalculator.tsx';
 import PageTracking from '../../components/PageTracking.tsx';
 import Breadcrumbs from '../../components/seo/Breadcrumbs.astro';
 import FAQSection from '../../components/seo/FAQSection.astro';
 import { t } from '../../utils/i18n';
+const autoria = resolverAutoria('calculadora');
+const actualizado = ultimaModificacion('src/pages/en/rental-calculator.astro');
+
 ---
 
 <Layout
@@ -24,6 +30,7 @@ import { t } from '../../utils/i18n';
       <h1 class="font-heading text-3xl md:text-4xl lg:text-[44px] font-semibold tracking-[-1px] text-ink mt-4 mb-3">
         {t('rental.hero.title', 'en')}
       </h1>
+      <div class="mt-2 mb-1"><Byline autoria={autoria} lang="en" updated={actualizado} /></div>
       <p class="text-ink-soft max-w-3xl mx-auto text-base md:text-lg">{t('rental.hero.description', 'en')}</p>
     </div>
     <div class="reveal-up reveal-delay-1">

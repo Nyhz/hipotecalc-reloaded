@@ -1,5 +1,8 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import Byline from '../components/seo/Byline.astro';
+import { resolverAutoria } from '../data/authors';
+import { ultimaModificacion } from '../utils/ultima-modificacion';
 import Breadcrumbs from '../components/seo/Breadcrumbs.astro';
 import PageTracking from '../components/PageTracking.tsx';
 import FAQSection from '../components/seo/FAQSection.astro';
@@ -8,6 +11,9 @@ import GastosCompraventaCalculator from '../components/gastos/GastosCompraventaC
 const title = 'Calculadora de gastos de compraventa de vivienda 2026 | Hipotecalc';
 const description =
   'Calcula todos los gastos de comprar una vivienda: ITP o IVA y AJD según tu comunidad, notaría, registro, gestoría y tasación, con el total y el ahorro necesario.';
+const autoria = resolverAutoria('calculadora');
+const actualizado = ultimaModificacion('src/pages/calculadora-gastos-compraventa.astro');
+
 ---
 <Layout title={title} description={description}>
   <PageTracking client:load pagePath="/calculadora-gastos-compraventa" pageTitle={title} />
@@ -23,6 +29,7 @@ const description =
       <h1 class="font-heading text-3xl md:text-4xl lg:text-[44px] font-semibold tracking-[-1px] text-ink mt-4 mb-4">
         ¿Cuánto cuesta de verdad comprar una vivienda?
       </h1>
+      <div class="mt-2 mb-1"><Byline autoria={autoria} lang="es" updated={actualizado} /></div>
       <p class="text-ink-soft max-w-3xl mx-auto text-base md:text-lg">
         Al precio del piso hay que sumarle entre un 8 % y un 14 % en impuestos y
         gastos. Elige tu comunidad y el tipo de vivienda y obtén el desglose

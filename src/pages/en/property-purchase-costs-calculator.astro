@@ -1,5 +1,8 @@
 ---
 import Layout from '../../layouts/Layout.astro';
+import Byline from '../../components/seo/Byline.astro';
+import { resolverAutoria } from '../../data/authors';
+import { ultimaModificacion } from '../../utils/ultima-modificacion';
 import Breadcrumbs from '../../components/seo/Breadcrumbs.astro';
 import PageTracking from '../../components/PageTracking.tsx';
 import FAQSection from '../../components/seo/FAQSection.astro';
@@ -8,6 +11,9 @@ import GastosCompraventaCalculator from '../../components/gastos/GastosCompraven
 const title = 'Property purchase costs calculator for Spain 2026 | Hipotecalc';
 const description =
   'Calculate every cost of buying a home in Spain: ITP or VAT and AJD by region, notary, registry, agency and appraisal fees, with the total and the savings you need.';
+const autoria = resolverAutoria('calculadora');
+const actualizado = ultimaModificacion('src/pages/en/property-purchase-costs-calculator.astro');
+
 ---
 <Layout title={title} description={description}>
   <PageTracking client:load pagePath="/en/property-purchase-costs-calculator" pageTitle={title} />
@@ -23,6 +29,7 @@ const description =
       <h1 class="font-heading text-3xl md:text-4xl lg:text-[44px] font-semibold tracking-[-1px] text-ink mt-4 mb-4">
         What does buying a home in Spain really cost?
       </h1>
+      <div class="mt-2 mb-1"><Byline autoria={autoria} lang="en" updated={actualizado} /></div>
       <p class="text-ink-soft max-w-3xl mx-auto text-base md:text-lg">
         On top of the price you'll pay another 8% to 14% in taxes and fees. Pick
         your region and property type and get the full breakdown: taxes, notary,

@@ -19,6 +19,10 @@ const blogSchema = z.object({
   // se listan también en la página /euribor. Keystatic escribe "" cuando
   // no hay serie seleccionada.
   serie: z.enum(['euribor']).or(z.literal('')).optional(),
+  // Autoría (opcional): sobrescribe los defaults de src/data/authors.ts.
+  // reviewedBy: 'none' elimina el revisor de forma explícita.
+  author: z.enum(['equipo', 'jose-perales']).optional(),
+  reviewedBy: z.enum(['jose-perales', 'none']).optional(),
 })
 
 const blog = defineCollection({
@@ -44,6 +48,10 @@ const guiasSchema = z.object({
   faq: z
     .array(z.object({ question: z.string(), answer: z.string() }))
     .optional(),
+  // Autoría (opcional): sobrescribe los defaults de src/data/authors.ts.
+  // reviewedBy: 'none' elimina el revisor de forma explícita.
+  author: z.enum(['equipo', 'jose-perales']).optional(),
+  reviewedBy: z.enum(['jose-perales', 'none']).optional(),
 })
 
 const guias = defineCollection({
@@ -67,6 +75,10 @@ const itpSchema = z.object({
   tipoGeneral: z.string(),
   resumen: z.string(),
   updatedDate: z.coerce.date(),
+  // Autoría (opcional): sobrescribe los defaults de src/data/authors.ts.
+  // reviewedBy: 'none' elimina el revisor de forma explícita.
+  author: z.enum(['equipo', 'jose-perales']).optional(),
+  reviewedBy: z.enum(['jose-perales', 'none']).optional(),
 })
 
 const itp = defineCollection({

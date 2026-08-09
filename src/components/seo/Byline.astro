@@ -1,0 +1,45 @@
+---
+// Línea de metadatos de autoría (E-E-A-T): "Por {autor} · Revisado por
+// {revisor} · Actualizado el {fecha}". Sobria, sin cajas ni negritas.
+// El schema de cada página debe reflejar EXACTAMENTE lo que muestra esta
+// línea: mismo autor, mismo revisor (o ninguno).
+import type { Autoria, Lang } from '../../data/authors';
+
+export interface Props {
+  autoria: Autoria;
+  lang?: Lang;
+  /** Fecha de última actualización (se muestra "Actualizado el …") */
+  updated?: Date;
+  /** Fecha de publicación: se usa si no hay updated ("Publicado el …") */
+  published?: Date;
+  /** Enlaces discretos a metodología y disclaimer (guías/blog/ITP) */
+  policyLinks?: boolean;
+}
+
+const { autoria, lang = 'es', updated, published, policyLinks = false } = Astro.props;
+const { autor, revisor } = autoria;
+
+const fmt = (d: Date) =>
+  // Las fechas del frontmatter son medianoche UTC: formatear en UTC evita el
+  // desfase de un día cuando el build corre en una zona horaria negativa
+  d.toLocaleDateString(lang === 'en' ? 'en-GB' : 'es-ES', {
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric',
+    timeZone: 'UTC',
+  });
+
+const L = lang === 'en'
+  ? { por: 'By', revisado: 'Reviewed by', actualizado: 'Updated', publicado: 'Published', metodologia: 'Methodology', disclaimer: 'Financial disclaimer', metodologiaHref: '/en/methodology', disclaimerHref: '/en/financial-disclaimer' }
+  : { por: 'Por', revisado: 'Revisado por', actualizado: 'Actualizado el', publicado: 'Publicado el', metodologia: 'Metodología', disclaimer: 'Disclaimer financiero', metodologiaHref: '/metodologia', disclaimerHref: '/disclaimer-financiero' };
+
+const fecha = updated ?? published;
+const etiquetaFecha = updated ? L.actualizado : L.publicado;
+---
+<p class="font-data text-xs text-ink-soft">
+  {L.por} <a href={autor.pagina[lang]} class="underline hover:text-ink">{autor.nombre}</a>{revisor && (
+    <> · {L.revisado} <a href={revisor.pagina[lang]} class="underline hover:text-ink">{revisor.nombre}</a></>
+  )}{fecha && <> · {etiquetaFecha} {fmt(fecha)}</>}{policyLinks && (
+    <> · <a href={L.metodologiaHref} class="underline hover:text-ink">{L.metodologia}</a> · <a href={L.disclaimerHref} class="underline hover:text-ink">{L.disclaimer}</a></>
+  )}
+</p>

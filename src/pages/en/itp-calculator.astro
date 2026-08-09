@@ -1,5 +1,8 @@
 ---
 import { getCollection } from 'astro:content';
+import Byline from '../../components/seo/Byline.astro';
+import { resolverAutoria } from '../../data/authors';
+import { ultimaModificacion } from '../../utils/ultima-modificacion';
 import Layout from '../../layouts/Layout.astro';
 import Breadcrumbs from '../../components/seo/Breadcrumbs.astro';
 import PageTracking from '../../components/PageTracking.tsx';
@@ -14,6 +17,9 @@ const guiasItp = (await getCollection('itpEn')).sort((a, b) =>
 const title = 'ITP Calculator 2026: property transfer tax in Spain | Hipotecalc';
 const description =
   "Calculate the ITP transfer tax on a resale home in any Spanish region, with the reductions for young buyers, large families or disability. Free and instant.";
+const autoria = resolverAutoria('calculadora');
+const actualizado = ultimaModificacion('src/pages/en/itp-calculator.astro');
+
 ---
 <Layout title={title} description={description}>
   <PageTracking client:load pagePath="/en/itp-calculator" pageTitle={title} />
@@ -29,6 +35,7 @@ const description =
       <h1 class="font-heading text-3xl md:text-4xl lg:text-[44px] font-semibold tracking-[-1px] text-ink mt-4 mb-4">
         Property transfer tax (ITP) calculator
       </h1>
+      <div class="mt-2 mb-1"><Byline autoria={autoria} lang="en" updated={actualizado} /></div>
       <p class="text-ink-soft max-w-3xl mx-auto text-base md:text-lg">
         Pick your region, enter the price and your situation (age, family,
         disability…) and instantly get the estimated ITP with the reliefs you

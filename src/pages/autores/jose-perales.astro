@@ -1,0 +1,108 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+import Breadcrumbs from '../../components/seo/Breadcrumbs.astro';
+import PageTracking from '../../components/PageTracking.tsx';
+import { AUTORES, personSchemaCompleto, resolverAutoria } from '../../data/authors';
+
+const autor = AUTORES['jose-perales'];
+
+// Contenidos en los que participa: como autor firmante o como revisor
+// (con los defaults actuales revisa todo el contenido editorial)
+const [guias, posts] = await Promise.all([getCollection('guias'), getCollection('blog')]);
+const firmadas = {
+  guias: guias.filter((g) => resolverAutoria('guia', g.data).autor.id === autor.id),
+  posts: posts.filter((p) => resolverAutoria('blog', p.data).autor.id === autor.id),
+};
+const revisadas = {
+  guias: guias.filter((g) => resolverAutoria('guia', g.data).revisor?.id === autor.id),
+  posts: posts.filter((p) => resolverAutoria('blog', p.data).revisor?.id === autor.id),
+};
+const ordenar = <T extends { data: { title: string } }>(arr: T[]) =>
+  [...arr].sort((a, b) => a.data.title.localeCompare(b.data.title, 'es'));
+
+const title = 'José Perales, asesor hipotecario — autor de Hipotecalc | Hipotecalc';
+const description =
+  'José Perales es asesor hipotecario e intermediario de crédito inmobiliario inscrito en el Banco de España (nº E286). Firma los contenidos financieros de Hipotecalc.';
+
+const schemaPersona = JSON.stringify(personSchemaCompleto(autor, 'es'));
+---
+<Layout title={title} description={description}>
+  <PageTracking client:load pagePath="/autores/jose-perales" pageTitle={title} />
+  <script type="application/ld+json" set:html={schemaPersona} />
+
+  <Breadcrumbs items={[
+    { name: 'Inicio', href: '/' },
+    { name: 'Sobre nosotros', href: '/sobre-nosotros' },
+    { name: 'José Perales', href: '/autores/jose-perales' }
+  ]} />
+
+  <article class="w-full max-w-3xl mx-auto py-10">
+    <header class="mb-8">
+      <span class="eyebrow">Quién escribe en Hipotecalc</span>
+      <h1 class="font-heading text-3xl md:text-4xl font-semibold tracking-[-1px] text-ink mt-4 mb-2">
+        {autor.nombre}
+      </h1>
+      <p class="text-ink-soft">{autor.cargo.es}</p>
+    </header>
+
+    {autor.imagen && (
+      <img src={autor.imagen} alt={`Foto de ${autor.nombre}`} width="160" height="160" class="rounded-full mb-6" />
+    )}
+
+    <div class="text-ink-soft leading-relaxed space-y-4">
+      <p>{autor.bio.es}</p>
+      {autor.credenciales && (
+        <p>
+          <span class="font-data text-xs uppercase tracking-widest text-ink-soft">Credencial</span><br />
+          {autor.credenciales.texto.es}. Puedes comprobarla en el
+          <a href="https://www.bde.es/" target="_blank" rel="noopener" class="underline text-brand-blue"> registro público del Banco de España</a>.
+        </p>
+      )}
+      <p>
+        Encuentra a José en
+        <a href="https://www.linkedin.com/in/joseperalesbh/" target="_blank" rel="noopener" class="underline text-brand-blue">LinkedIn</a>,
+        <a href="https://www.instagram.com/joseperalesbh/" target="_blank" rel="noopener" class="underline text-brand-blue">Instagram</a> y
+        <a href="https://www.tiktok.com/@joseperalesbh" target="_blank" rel="noopener" class="underline text-brand-blue">TikTok</a>,
+        o <a href="https://cal.com/jose-perales-asesor/Hr8YvL" target="_blank" rel="noopener" class="underline text-brand-blue">reserva una llamada con él</a>.
+      </p>
+      <p class="text-sm">
+        Hipotecalc mantiene un acuerdo comercial de captación de clientes con José Perales:
+        lo explicamos con detalle en <a href="/sobre-nosotros" class="underline text-brand-blue">sobre nosotros</a> y
+        en la <a href="/metodologia" class="underline text-brand-blue">metodología</a>.
+      </p>
+    </div>
+
+    {firmadas.guias.length + firmadas.posts.length > 0 && (
+      <section class="mt-10">
+        <h2 class="font-heading text-2xl font-semibold text-ink mb-4">Contenidos firmados por José</h2>
+        <p class="text-ink-soft mb-4">
+          José firma el contenido financiero editorial de Hipotecalc: las guías, el blog y las
+          guías del ITP por comunidad.
+        </p>
+        <ul class="list-disc pl-6 space-y-1 text-ink-soft">
+          <li><a href="/itp" class="underline text-brand-blue">Guías del ITP por comunidad autónoma (18 páginas)</a></li>
+          {ordenar(firmadas.guias).map((g) => (
+            <li><a href={`/guias/${g.id}`} class="underline text-brand-blue">{g.data.title}</a></li>
+          ))}
+          {ordenar(firmadas.posts).map((p) => (
+            <li><a href={`/blog/${p.id}`} class="underline text-brand-blue">{p.data.title}</a></li>
+          ))}
+        </ul>
+      </section>
+    )}
+
+    <section class="mt-10">
+      <h2 class="font-heading text-2xl font-semibold text-ink mb-4">Contenidos que revisa</h2>
+      <ul class="list-disc pl-6 space-y-1 text-ink-soft">
+        <li>Las <a href="/calculadora-hipotecaria" class="underline text-brand-blue">calculadoras de Hipotecalc</a> (hipoteca, ITP, plusvalía, gastos, alquiler y ¿cuánto me prestan?)</li>
+          {ordenar(revisadas.guias).map((g) => (
+            <li><a href={`/guias/${g.id}`} class="underline text-brand-blue">{g.data.title}</a></li>
+          ))}
+          {ordenar(revisadas.posts).map((p) => (
+            <li><a href={`/blog/${p.id}`} class="underline text-brand-blue">{p.data.title}</a></li>
+          ))}
+      </ul>
+    </section>
+  </article>
+</Layout>

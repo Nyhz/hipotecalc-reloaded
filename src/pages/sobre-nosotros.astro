@@ -1,0 +1,71 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Breadcrumbs from '../components/seo/Breadcrumbs.astro';
+import PageTracking from '../components/PageTracking.tsx';
+import { AUTORES } from '../data/authors';
+
+const equipo = AUTORES['equipo'];
+const jose = AUTORES['jose-perales'];
+
+const title = 'Sobre nosotros: quién hace Hipotecalc | Hipotecalc';
+const description =
+  'Quién está detrás de Hipotecalc: un equipo de dos personas que construye herramientas financieras web e información actualizada del mercado hipotecario, con revisión de un asesor inscrito en el Banco de España.';
+---
+<Layout title={title} description={description}>
+  <PageTracking client:load pagePath="/sobre-nosotros" pageTitle={title} />
+
+  <Breadcrumbs items={[
+    { name: 'Inicio', href: '/' },
+    { name: 'Sobre nosotros', href: '/sobre-nosotros' }
+  ]} />
+
+  <article class="w-full max-w-3xl mx-auto py-10">
+    <header class="mb-8">
+      <span class="eyebrow">Quién hay detrás</span>
+      <h1 class="font-heading text-3xl md:text-4xl font-semibold tracking-[-1px] text-ink mt-4 mb-3">
+        Sobre nosotros
+      </h1>
+    </header>
+
+    <div class="text-ink-soft leading-relaxed space-y-4">
+      <p>
+        <strong class="text-ink">Hipotecalc</strong> produce herramientas financieras web
+        gratuitas — calculadoras de hipoteca, ITP, plusvalía, gastos de compraventa y
+        rentabilidad de alquiler — e información fiable y actualizada sobre el mercado
+        hipotecario español. Cómo elaboramos y verificamos los datos está explicado,
+        cifra a cifra, en nuestra <a href="/metodologia" class="underline text-brand-blue">metodología</a>.
+      </p>
+
+      <h2 class="font-heading text-2xl font-semibold text-ink mt-8 mb-2">El equipo</h2>
+      <p>{equipo.bio.es}</p>
+
+      <h2 class="font-heading text-2xl font-semibold text-ink mt-8 mb-2">Quién firma el contenido</h2>
+      <p>
+        El contenido financiero editorial lo firma
+        <a href="/autores/jose-perales" class="underline text-brand-blue">{jose.nombre}</a>,
+        {jose.cargo.es.toLowerCase()}, inscrito en el registro del Banco de España con el
+        número {jose.credenciales?.registro}. El equipo construye las herramientas y
+        mantiene los datos.
+      </p>
+
+      <h2 class="font-heading text-2xl font-semibold text-ink mt-8 mb-2">Nuestra relación con el asesor</h2>
+      <p>
+        Lo decimos sin letra pequeña: Hipotecalc mantiene un
+        <strong class="text-ink"> acuerdo comercial de captación de clientes</strong> con José Perales.
+        Cuando usas los botones de "contactar con el bróker" del sitio y acabas trabajando
+        con él, Hipotecalc puede recibir una contraprestación por esa presentación. Este
+        acuerdo no cambia lo que publicamos: las calculadoras, los datos de la comparativa
+        y las guías se elaboran con fuentes oficiales y son iguales para todos los lectores,
+        contacten o no con el asesor.
+      </p>
+
+      <h2 class="font-heading text-2xl font-semibold text-ink mt-8 mb-2">Lo que no somos</h2>
+      <p>
+        Hipotecalc no es una entidad financiera ni presta asesoramiento personalizado: es
+        contenido informativo y herramientas de cálculo. Antes de firmar una hipoteca,
+        contrasta tu caso con un profesional. Más detalle en el
+        <a href="/disclaimer-financiero" class="underline text-brand-blue">disclaimer financiero</a>.
+      </p>
+    </div>
+  </article>
+</Layout>
