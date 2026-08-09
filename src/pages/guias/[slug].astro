@@ -4,6 +4,7 @@ import Layout from '../../layouts/Layout.astro';
 import Breadcrumbs from '../../components/seo/Breadcrumbs.astro';
 import PageTracking from '../../components/PageTracking.tsx';
 import Byline from '../../components/seo/Byline.astro';
+import { fechaPublicacion } from '../../utils/ultima-modificacion';
 import { resolverAutoria, refSchema } from '../../data/authors';
 import FAQSection from '../../components/seo/FAQSection.astro';
 import MortgageCalculator from '../../components/calculadora-hipotecaria/MortgageCalculator';
@@ -31,6 +32,11 @@ const canonical = `${SITE_BASE}/guias/${guia.id}`;
 // Autoría: frontmatter > defaults de src/data/authors.ts — el schema debe
 // reflejar exactamente lo que muestra el byline visible
 const autoria = resolverAutoria('guia', guia.data);
+// Fecha real de publicación: primer commit del fichero de contenido
+const publicadoGit = fechaPublicacion(`src/content/guias/${guia.id}.md`);
+// nunca posterior a updatedDate (p. ej. traducciones añadidas a git después
+// de la fecha declarada): datePublished ≤ dateModified siempre
+const publicado = publicadoGit && publicadoGit < guia.data.updatedDate ? publicadoGit : guia.data.updatedDate;
 
 const articleSchema = JSON.stringify({
   "@context": "https://schema.org",
@@ -38,6 +44,7 @@ const articleSchema = JSON.stringify({
   "headline": guia.data.title,
   "description": guia.data.description,
   "url": canonical,
+  "datePublished": publicado.toISOString(),
   "dateModified": guia.data.updatedDate.toISOString(),
   "author": refSchema(autoria.autor, 'es'),
   ...(autoria.revisor ? { "reviewedBy": refSchema(autoria.revisor, 'es') } : {}),

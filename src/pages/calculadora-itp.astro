@@ -2,7 +2,7 @@
 import { getCollection } from 'astro:content';
 import Byline from '../components/seo/Byline.astro';
 import { resolverAutoria } from '../data/authors';
-import { ultimaModificacion } from '../utils/ultima-modificacion';
+import { ultimaModificacion, fechaPublicacion } from '../utils/ultima-modificacion';
 import Layout from '../layouts/Layout.astro';
 import Breadcrumbs from '../components/seo/Breadcrumbs.astro';
 import PageTracking from '../components/PageTracking.tsx';
@@ -18,9 +18,10 @@ const description =
   'Calcula el ITP de tu vivienda de segunda mano en cualquier comunidad autónoma, con las bonificaciones para jóvenes, familias numerosas o discapacidad. Gratis y al instante.';
 const autoria = resolverAutoria('calculadora');
 const actualizado = ultimaModificacion('src/pages/calculadora-itp.astro');
+const publicado = fechaPublicacion('src/pages/calculadora-itp.astro');
 
 ---
-<Layout autoria={autoria} title={title} description={description}>
+<Layout autoria={autoria} datePublished={publicado} dateModified={actualizado} title={title} description={description}>
   <PageTracking client:load pagePath="/calculadora-itp" pageTitle={title} />
 
   <Breadcrumbs items={[

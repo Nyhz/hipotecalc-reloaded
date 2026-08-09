@@ -5,18 +5,43 @@ import FAQSection from '../../components/seo/FAQSection.astro';
 import PageTracking from '../../components/PageTracking.tsx';
 import BankComparisonTable from '../../components/comparativa/BankComparisonTable.tsx';
 import { OFERTAS_HIPOTECAS, FECHA_DATOS } from '../../constants/hipotecas-bancos';
+import { fechaPublicacion } from '../../utils/ultima-modificacion';
 import { currentEuribor } from '../../constants/euribor-values';
 
 const numBancos = new Set(OFERTAS_HIPOTECAS.map(o => o.banco)).size;
 const title = `Spanish Mortgage Comparison ${new Date().getFullYear()}: ${numBancos} banks side by side | Hipotecalc`;
 const description = `Compare fixed, variable and mixed mortgages from ${numBancos} Spanish banks: TIN, APR, term, financing, bundled products and fees, from official sources.`;
+
+// Fechas para el schema: la extracción de datos marca la última modificación
+const MESES_NUM = { enero: 0, febrero: 1, marzo: 2, abril: 3, mayo: 4, junio: 5, julio: 6, agosto: 7, septiembre: 8, octubre: 9, noviembre: 10, diciembre: 11 } as const;
+const mFecha = FECHA_DATOS.match(/(\d{1,2}) de (\w+) de (\d{4})/);
+const fechaDatos = mFecha ? new Date(Date.UTC(Number(mFecha[3]), MESES_NUM[mFecha[2] as keyof typeof MESES_NUM], Number(mFecha[1]))) : undefined;
+const publicado = fechaPublicacion('src/pages/en/mortgage-comparison.astro');
+
+// Las ofertas de la tabla como Dataset: datos estructurados del activo principal
+const datasetSchema = JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": "Dataset",
+  "name": `Spanish bank mortgage comparison dataset (${new Date().getFullYear()})`,
+  "description": `${OFERTAS_HIPOTECAS.length} mortgage offers (fixed, variable and mixed) from ${numBancos} Spanish banks and credit cooperatives: TIN, APR, term, maximum financing, bundled products and fees, compiled from official websites and FIPRE sheets.`,
+  "url": "https://www.hipotecalc.com/en/mortgage-comparison",
+  "creator": { "@id": "https://www.hipotecalc.com/#organization" },
+  "publisher": { "@id": "https://www.hipotecalc.com/#organization" },
+  "isAccessibleForFree": true,
+  "inLanguage": "en",
+  ...(publicado ? { "datePublished": publicado.toISOString() } : {}),
+  ...(fechaDatos ? { "dateModified": fechaDatos.toISOString(), "temporalCoverage": fechaDatos.toISOString().slice(0, 10) } : {}),
+});
 ---
 <Layout
   title={title}
   description={description}
   pageType="legal"
+  datePublished={publicado}
+  dateModified={fechaDatos}
 >
   <PageTracking client:load pagePath="/en/mortgage-comparison" pageTitle={title} />
+  <script type="application/ld+json" set:html={datasetSchema} />
 
   <Breadcrumbs items={[
     { name: 'Home', href: '/en' },

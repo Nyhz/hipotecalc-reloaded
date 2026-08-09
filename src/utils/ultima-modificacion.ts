@@ -13,3 +13,16 @@ export function ultimaModificacion(ficheroFuente: string): Date | undefined {
     return undefined
   }
 }
+
+/** Fecha del PRIMER commit del fichero (fecha real de publicación). */
+export function fechaPublicacion(ficheroFuente: string): Date | undefined {
+  try {
+    const out = execSync(
+      `git log --diff-filter=A --follow --format=%cs -- "${ficheroFuente}" | tail -1`,
+      { encoding: 'utf8' }
+    ).trim()
+    return out ? new Date(out) : undefined
+  } catch {
+    return undefined
+  }
+}

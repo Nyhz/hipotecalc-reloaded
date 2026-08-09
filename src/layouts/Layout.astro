@@ -27,6 +27,9 @@ export interface Props {
   /** Autoría de la página: si se pasa, el schema WebApplication/WebPage la
    * refleja (author + reviewedBy) igual que el byline visible */
   autoria?: Autoria;
+  /** Fechas para el schema (WebApplication/WebPage): publicación y última modificación */
+  datePublished?: Date;
+  dateModified?: Date;
 }
 
 const SITE_BASE = 'https://www.hipotecalc.com';
@@ -41,7 +44,9 @@ const {
   ogImage,
   canonicalURL = `${SITE_BASE}${normalizedPath}`,
   pageType = 'calculator',
-  autoria
+  autoria,
+  datePublished,
+  dateModified
 } = Astro.props;
 
 const currentLang = getCurrentLang(normalizedPath);
@@ -115,6 +120,8 @@ const webAppSchema = !isHome && pageType === 'calculator' ? JSON.stringify({
   "creator": { "@id": `${SITE_BASE}/#organization` },
   ...(autoria ? { "author": refSchema(autoria.autor, currentLang) } : {}),
   ...(autoria?.revisor ? { "reviewedBy": refSchema(autoria.revisor, currentLang) } : {}),
+  ...(datePublished ? { "datePublished": datePublished.toISOString() } : {}),
+  ...(dateModified ? { "dateModified": dateModified.toISOString() } : {}),
   "inLanguage": langAttribute
 }) : null;
 
@@ -125,6 +132,8 @@ const webPageSchema = pageType === 'legal' ? JSON.stringify({
   "description": description,
   "url": canonicalURL,
   "inLanguage": langAttribute,
+  ...(datePublished ? { "datePublished": datePublished.toISOString() } : {}),
+  ...(dateModified ? { "dateModified": dateModified.toISOString() } : {}),
   "author": { "@id": `${SITE_BASE}/#organization` },
   "publisher": { "@id": `${SITE_BASE}/#organization` }
 }) : null;
