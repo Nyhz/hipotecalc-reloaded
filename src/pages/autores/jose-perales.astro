@@ -27,7 +27,7 @@ const description =
 
 const schemaPersona = JSON.stringify(personSchemaCompleto(autor, 'es'));
 ---
-<Layout title={title} description={description}>
+<Layout title={title} description={description} pageType="legal">
   <PageTracking client:load pagePath="/autores/jose-perales" pageTitle={title} />
   <script type="application/ld+json" set:html={schemaPersona} />
 

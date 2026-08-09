@@ -15,7 +15,7 @@ const autoria = resolverAutoria('calculadora');
 const actualizado = ultimaModificacion('src/pages/en/plusvalia-calculator.astro');
 
 ---
-<Layout title={title} description={description}>
+<Layout autoria={autoria} title={title} description={description}>
   <PageTracking client:load pagePath="/en/plusvalia-calculator" pageTitle={title} />
 
   <Breadcrumbs items={[

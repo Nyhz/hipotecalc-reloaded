@@ -20,7 +20,7 @@ const autoria = resolverAutoria('calculadora');
 const actualizado = ultimaModificacion('src/pages/calculadora-itp.astro');
 
 ---
-<Layout title={title} description={description}>
+<Layout autoria={autoria} title={title} description={description}>
   <PageTracking client:load pagePath="/calculadora-itp" pageTitle={title} />
 
   <Breadcrumbs items={[

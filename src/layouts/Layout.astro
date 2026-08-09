@@ -15,6 +15,7 @@ import '@fontsource/ibm-plex-mono/400.css';
 import '@fontsource/ibm-plex-mono/600.css';
 import '@fontsource/ibm-plex-mono/700.css';
 import { getCurrentLang, getAlternatePath, normalizePath } from '../utils/i18n';
+import { refSchema, type Autoria } from '../data/authors';
 
 export interface Props {
   title?: string;
@@ -23,6 +24,9 @@ export interface Props {
   canonicalURL?: string;
   /** 'legal' emite schema WebPage en lugar de WebApplication */
   pageType?: 'calculator' | 'legal';
+  /** Autoría de la página: si se pasa, el schema WebApplication/WebPage la
+   * refleja (author + reviewedBy) igual que el byline visible */
+  autoria?: Autoria;
 }
 
 const SITE_BASE = 'https://www.hipotecalc.com';
@@ -36,7 +40,8 @@ const {
   description = "Calculadora hipotecaria, de alquiler e ITP para España. Herramientas financieras precisas y profesionales para calcular tu hipoteca, impuestos y más.",
   ogImage,
   canonicalURL = `${SITE_BASE}${normalizedPath}`,
-  pageType = 'calculator'
+  pageType = 'calculator',
+  autoria
 } = Astro.props;
 
 const currentLang = getCurrentLang(normalizedPath);
@@ -68,6 +73,7 @@ const organizationSchema = JSON.stringify({
   "@type": "Organization",
   "@id": `${SITE_BASE}/#organization`,
   "name": "Hipotecalc",
+  "alternateName": "Equipo Hipotecalc",
   "url": `${SITE_BASE}/`,
   "description": langAttribute === 'en'
     ? "Free web-based financial tools and up-to-date, reliable information on the Spanish mortgage market."
@@ -93,7 +99,9 @@ const webSiteSchema = isHome ? JSON.stringify({
 
 const webAppSchema = !isHome && pageType === 'calculator' ? JSON.stringify({
   "@context": "https://schema.org",
-  "@type": "WebApplication",
+  // WebPage además de WebApplication: reviewedBy es propiedad de WebPage,
+  // así el schema puede espejar el byline visible sin salirse del vocabulario
+  "@type": ["WebApplication", "WebPage"],
   "name": title,
   "description": description,
   "url": canonicalURL,
@@ -105,6 +113,8 @@ const webAppSchema = !isHome && pageType === 'calculator' ? JSON.stringify({
     "priceCurrency": "EUR"
   },
   "creator": { "@id": `${SITE_BASE}/#organization` },
+  ...(autoria ? { "author": refSchema(autoria.autor, currentLang) } : {}),
+  ...(autoria?.revisor ? { "reviewedBy": refSchema(autoria.revisor, currentLang) } : {}),
   "inLanguage": langAttribute
 }) : null;
 

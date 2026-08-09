@@ -15,7 +15,7 @@ const autoria = resolverAutoria('calculadora');
 const actualizado = ultimaModificacion('src/pages/en/how-much-can-i-borrow.astro');
 
 ---
-<Layout title={title} description={description}>
+<Layout autoria={autoria} title={title} description={description}>
   <PageTracking client:load pagePath="/en/how-much-can-i-borrow" pageTitle={title} />
 
   <Breadcrumbs items={[

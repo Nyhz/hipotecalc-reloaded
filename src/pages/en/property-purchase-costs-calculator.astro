@@ -15,7 +15,7 @@ const autoria = resolverAutoria('calculadora');
 const actualizado = ultimaModificacion('src/pages/en/property-purchase-costs-calculator.astro');
 
 ---
-<Layout title={title} description={description}>
+<Layout autoria={autoria} title={title} description={description}>
   <PageTracking client:load pagePath="/en/property-purchase-costs-calculator" pageTitle={title} />
 
   <Breadcrumbs items={[
