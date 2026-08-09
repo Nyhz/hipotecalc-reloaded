@@ -656,7 +656,7 @@ const MortgageCalculator: React.FC<MortgageCalculatorProps> = ({ lang = 'es', in
           <AnimatedNumber value={calculations.cuota} suffix={'\u00A0€'} decimals={2} className='receipt-num' />
         </div>
 
-        <ContactButton variant='receipt' labelKey='mortgage.results.improveCta' source='mortgage_receipt' />
+        <ContactButton variant='receipt' labelKey='mortgage.results.improveCta' lang={lang} source='mortgage_receipt' />
 
         {/* Escenarios para hipotecas variables integrados */}
         {calculations.esHipotecaVariable && (

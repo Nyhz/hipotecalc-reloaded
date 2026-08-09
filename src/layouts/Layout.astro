@@ -353,7 +353,7 @@ const webPageSchema = pageType === 'legal' ? JSON.stringify({
     <ClientRouter />
   </head>
   <body class="min-h-screen flex flex-col">
-    <Navbar client:load />
+    <Navbar client:load lang={currentLang} path={normalizedPath} />
     <main class="flex-1 w-full max-w-7xl mx-auto px-4 sm:px-6 flex flex-col">
       <slot />
     </main>

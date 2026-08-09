@@ -4,10 +4,17 @@ import ContactButton from "./ContactButton"
 import LanguageSwitcher from "./LanguageSwitcher"
 import { getCurrentLang, type Language } from '../utils/i18n'
 
-export default function Navbar() {
+interface NavbarProps {
+  /** Idioma de la página en el HTML estático: evita servir el menú en español
+   * en las páginas /en/ antes de la hidratación */
+  lang?: Language
+  path?: string
+}
+
+export default function Navbar({ lang = 'es', path = '/' }: NavbarProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
-  const [currentLang, setCurrentLang] = useState<Language>('es')
-  const [currentPath, setCurrentPath] = useState("/")
+  const [currentLang, setCurrentLang] = useState<Language>(lang)
+  const [currentPath, setCurrentPath] = useState(path)
   const tools = getTools(currentLang)
 
   useEffect(() => {
