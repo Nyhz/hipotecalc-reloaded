@@ -1,0 +1,77 @@
+---
+import Layout from '../layouts/Layout.astro';
+import PageTracking from '../components/PageTracking.tsx';
+
+// Página 404 única para todo el sitio (Vercel la sirve con estado 404 para
+// cualquier ruta inexistente). Es estática: el idioma se resuelve en cliente
+// según el prefijo /en/ de la URL fallida; sin JS se muestra el español.
+const title = 'Página no encontrada (404) | Hipotecalc';
+const description =
+  'Esta página no existe o ha cambiado de dirección. Encuentra las calculadoras y guías de Hipotecalc desde aquí.';
+
+const enlaces = {
+  es: [
+    { href: '/calculadora-hipotecaria', label: 'Calculadora de hipoteca' },
+    { href: '/calculadora-itp', label: 'Calculadora de ITP' },
+    { href: '/comparativa-hipotecas', label: 'Comparativa de hipotecas' },
+    { href: '/euribor', label: 'Euríbor hoy' },
+    { href: '/guias', label: 'Guías' },
+    { href: '/blog', label: 'Blog' },
+  ],
+  en: [
+    { href: '/en/mortgage-calculator', label: 'Mortgage calculator' },
+    { href: '/en/itp-calculator', label: 'ITP calculator' },
+    { href: '/en/mortgage-comparison', label: 'Mortgage comparison' },
+    { href: '/en/euribor', label: 'Euribor today' },
+    { href: '/en/guides', label: 'Guides' },
+    { href: '/en/blog', label: 'Blog' },
+  ],
+};
+---
+<Layout title={title} description={description} pageType="legal">
+  <PageTracking client:load pagePath="/404" pageTitle={title} />
+
+  <div class="w-full max-w-3xl mx-auto py-20 text-center">
+    <div id="cuatrocero-es">
+      <span class="eyebrow">Error 404</span>
+      <h1 class="font-heading text-3xl md:text-4xl font-semibold tracking-[-1px] text-ink mt-4 mb-3">
+        Esta página no existe
+      </h1>
+      <p class="text-ink-soft max-w-xl mx-auto mb-8">
+        Puede que el enlace esté anticuado o que la dirección tenga una errata.
+        Estas son las puertas de entrada más útiles del sitio:
+      </p>
+      <div class="grid grid-cols-2 sm:grid-cols-3 gap-3 mb-8">
+        {enlaces.es.map((e) => (
+          <a href={e.href} class="pl-card pl-card-hover p-4 text-sm font-medium text-ink">{e.label}</a>
+        ))}
+      </div>
+      <a href="/" class="text-sm font-medium text-brand-blue underline">← Volver a la portada</a>
+    </div>
+
+    <div id="cuatrocero-en" hidden>
+      <span class="eyebrow">Error 404</span>
+      <h1 class="font-heading text-3xl md:text-4xl font-semibold tracking-[-1px] text-ink mt-4 mb-3">
+        This page doesn't exist
+      </h1>
+      <p class="text-ink-soft max-w-xl mx-auto mb-8">
+        The link may be outdated or the address mistyped. These are the most
+        useful ways back into the site:
+      </p>
+      <div class="grid grid-cols-2 sm:grid-cols-3 gap-3 mb-8">
+        {enlaces.en.map((e) => (
+          <a href={e.href} class="pl-card pl-card-hover p-4 text-sm font-medium text-ink">{e.label}</a>
+        ))}
+      </div>
+      <a href="/en" class="text-sm font-medium text-brand-blue underline">← Back to the home page</a>
+    </div>
+  </div>
+
+  <script>
+    // La URL fallida se conserva en un 404: si era inglesa, mostramos el inglés
+    if (location.pathname === '/en' || location.pathname.startsWith('/en/')) {
+      document.getElementById('cuatrocero-es')?.setAttribute('hidden', '');
+      document.getElementById('cuatrocero-en')?.removeAttribute('hidden');
+    }
+  </script>
+</Layout>
