@@ -17,7 +17,8 @@ const description =
 const nombre = (guia: (typeof guias)[number]) =>
   guia.id === 'ceuta-melilla' ? 'Ceuta and Melilla' : regionNameEn(guia.data.comunidad);
 ---
-<Layout title={title} description={description} pageType="legal">
+<Layout title={title} description={description} pageType="legal"
+  ogImage="https://www.hipotecalc.com/img/itp-map-spain-by-region-2026.png">
   <PageTracking client:load pagePath="/en/itp" pageTitle={title} />
 
   <Breadcrumbs items={[
@@ -40,6 +41,10 @@ const nombre = (guia: (typeof guias)[number]) =>
         current rates, verified against official sources.
       </p>
     </header>
+
+    <figure class="mb-10 max-w-4xl mx-auto">
+      <img src="/img/itp-map-spain-by-region-2026.png" alt="Map of Spain with the effective ITP transfer tax by region in 2026 on a €200,000 resale home: from 3% in Ceuta and Melilla to 10% in Catalonia" width="1800" height="1238" loading="eager" fetchpriority="high" decoding="async" class="w-full h-auto rounded-lg" />
+    </figure>
 
     <div class="pl-card p-5 mb-10 text-sm text-ink-soft leading-relaxed">
       <p>

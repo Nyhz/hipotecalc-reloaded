@@ -12,12 +12,15 @@ faq:
     answer: "En general sí: al ordenar la amortización parcial, el banco te pregunta el destino. Algunas escrituras antiguas fijan una opción por defecto; revisa la tuya o pregunta antes de firmar la orden."
   - question: "¿Es mejor amortizar al principio o al final de la hipoteca?"
     answer: "Al principio. Con el sistema francés, los primeros años pagas sobre todo intereses, así que cada euro amortizado pronto trabaja durante más tiempo. En los últimos años ya casi solo devuelves capital y el ahorro es pequeño."
+ogImage: /img/amortizar-cuota-o-plazo-2026.png
 ---
 
 Tienes 20.000 € ahorrados y decides adelantarlos a tu hipoteca. Enhorabuena:
 es de las mejores decisiones financieras posibles. Pero el banco te hará **la
 pregunta**: ¿reduzco la cuota o reduzco el plazo? Y esa respuesta puede valer
 más de 10.000 €.
+
+<img src="/img/amortizar-cuota-o-plazo-2026.png" alt="Comparación de intereses totales al amortizar 10.000 € en una hipoteca de 150.000 € al 3 %: sin amortizar 63.395 €, reduciendo cuota 60.100 €, reduciendo plazo 55.767 €" width="1800" height="1012" loading="lazy" decoding="async" class="w-full h-auto rounded-lg" />
 
 ## Las dos opciones, en una frase
 

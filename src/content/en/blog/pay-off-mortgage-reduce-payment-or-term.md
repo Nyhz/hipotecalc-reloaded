@@ -12,12 +12,15 @@ faq:
     answer: "In general, yes: when you order the partial overpayment, the bank asks you which one you want. Some older deeds set a default option; check yours or ask before signing the order."
   - question: "Is it better to overpay at the start or at the end of the mortgage?"
     answer: "At the start. Under the French amortization system, in the early years you mostly pay interest, so every euro repaid early works for longer. In the final years you are almost only repaying capital and the savings are small."
+ogImage: /img/overpay-mortgage-payment-vs-term-2026.png
 ---
 
 You have €20,000 saved up and decide to put it towards your mortgage.
 Congratulations: it is one of the best financial decisions you can make. But the
 bank will ask you **the question**: shall I reduce the payment or reduce the
 term? And that answer can be worth more than €10,000.
+
+<img src="/img/overpay-mortgage-payment-vs-term-2026.png" alt="Total interest comparison when overpaying €10,000 on a €150,000 mortgage at 3%: no overpayment €63,395, cutting the payment €60,100, cutting the term €55,767" width="1800" height="1012" loading="lazy" decoding="async" class="w-full h-auto rounded-lg" />
 
 ## The two options, in one sentence
 

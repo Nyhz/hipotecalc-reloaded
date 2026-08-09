@@ -12,6 +12,7 @@ faq:
     answer: "Around 30-32% of the price: the 20% down payment the bank does not usually finance plus 10-12% in taxes and costs. For a €200,000 home, roughly €60,000-64,000."
   - question: "Who pays the municipal capital gains tax (plusvalía)?"
     answer: "The seller. It is the municipal tax on the increase in land value (IIVTNU) and by law it falls on the party transferring the property, although in sales between private individuals something different is sometimes agreed in writing."
+ogImage: /img/savings-needed-buy-home-spain-2026.png
 ---
 
 The price of the property is only the beginning. Between taxes, notary fees,
@@ -60,6 +61,8 @@ Bear in mind that this applies to the mortgage costs, not to the costs of the
 property purchase itself, which are still yours.
 
 ## The full bill: an example
+
+<img src="/img/savings-needed-buy-home-spain-2026.png" alt="Breakdown of the savings needed to buy a €200,000 home in Andalusia: €40,000 down payment, €14,000 ITP and €1,900 in notary, registry, agency and appraisal — €55,900 in total" width="1800" height="900" loading="lazy" decoding="async" class="w-full h-auto rounded-lg" />
 
 A resale home costing **€200,000 in Andalusia** (ITP at 7%):
 

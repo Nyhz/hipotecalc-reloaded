@@ -55,6 +55,7 @@ const faqSchema = post.data.faq?.length
   : null;
 ---
 <Layout
+  ogImage={post.data.ogImage ? `${SITE_BASE}${post.data.ogImage}` : undefined}
   title={post.data.seoTitle ?? `${post.data.title} | Hipotecalc Blog`}
   description={post.data.description}
   pageType="legal"

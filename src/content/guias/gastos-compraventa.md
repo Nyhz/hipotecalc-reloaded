@@ -12,6 +12,7 @@ faq:
     answer: "En torno al 30-32 % del precio: el 20 % de entrada que el banco no suele financiar más el 10-12 % de impuestos y gastos. Para una vivienda de 200.000 €, unos 60.000-64.000 €."
   - question: "¿Quién paga la plusvalía municipal?"
     answer: "El vendedor. Es el impuesto municipal sobre el incremento del valor del suelo (IIVTNU) y por ley corresponde a quien transmite, aunque en compraventas entre particulares a veces se pacta otra cosa por escrito."
+ogImage: /img/ahorro-necesario-comprar-casa-2026.png
 ---
 
 El precio del piso es solo el principio. Entre impuestos, notaría, registro y
@@ -59,6 +60,8 @@ esto aplica a los gastos de la hipoteca, no a los de la compraventa del
 inmueble, que siguen siendo tuyos.
 
 ## La cuenta completa: un ejemplo
+
+<img src="/img/ahorro-necesario-comprar-casa-2026.png" alt="Desglose del ahorro necesario para comprar una casa de 200.000 € en Andalucía: 40.000 € de entrada, 14.000 € de ITP y 1.900 € de notaría, registro, gestoría y tasación — 55.900 € en total" width="1800" height="900" loading="lazy" decoding="async" class="w-full h-auto rounded-lg" />
 
 Vivienda de segunda mano de **200.000 € en Andalucía** (ITP 7 %):
 

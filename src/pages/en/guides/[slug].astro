@@ -54,6 +54,7 @@ const tituloCalculadora = {
 }[guia.data.calculadora ?? 'hipoteca'];
 ---
 <Layout
+  ogImage={guia.data.ogImage ? `${SITE_BASE}${guia.data.ogImage}` : undefined}
   title={`${guia.data.title} | Hipotecalc`}
   description={guia.data.description}
   pageType="legal"

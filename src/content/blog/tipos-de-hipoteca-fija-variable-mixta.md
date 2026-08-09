@@ -14,6 +14,7 @@ faq:
     answer: "Sí, mediante una novación con tu propio banco o una subrogación a otro banco. La ley española limita las comisiones por estos cambios, aunque conviene calcular si el ahorro compensa los gastos."
   - question: "¿Qué debo mirar para comparar hipotecas?"
     answer: "Fíjate en la TAE (no solo el TIN), en el diferencial de las variables, en las comisiones y en los productos vinculados que te exigen, que mejoran el tipo pero encarecen el coste total."
+ogImage: /img/hipoteca-fija-variable-mixta-2026.png
 ---
 
 Elegir hipoteca es, para la mayoría de las personas, la decisión financiera más importante de su vida. No solo por la cantidad de dinero implicada, sino porque las condiciones que firmes hoy te acompañarán durante 20, 25 o 30 años. Y dentro de esa decisión, hay una pregunta que lo condiciona casi todo: **¿hipoteca fija, variable o mixta?**
@@ -21,6 +22,8 @@ Elegir hipoteca es, para la mayoría de las personas, la decisión financiera m�
 En esta guía te explicamos **los tipos de hipoteca** que existen en España, cómo funciona cada uno, qué riesgos y beneficios tiene y en qué situación conviene cada opción. Sin tecnicismos innecesarios y con el contexto de mercado actual.
 
 > 💡 **¿Con prisa?** Si ya tienes claro el tipo y solo quieres saber cuánto pagarías, usa la [calculadora de hipoteca de Hipotecalc](/calculadora-hipotecaria) para simular tu cuota fija, variable o mixta en un minuto.
+
+<img src="/img/hipoteca-fija-variable-mixta-2026.png" alt="Cuota mensual de una hipoteca de 150.000 € a 25 años según el euríbor: fija 704 €, variable euríbor más 0,90 % (772 € con el euríbor al 2,86 %) y mixta 673 € los primeros cinco años" width="1800" height="1012" loading="lazy" decoding="async" class="w-full h-auto rounded-lg" />
 
 ## Antes de empezar: el TIN, la TAE y el euríbor
 

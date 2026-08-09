@@ -16,7 +16,8 @@ const description =
 const nombreCorto = (guia: (typeof guias)[number]) =>
   guia.id === 'ceuta-melilla' ? 'Ceuta y Melilla' : guia.data.comunidad;
 ---
-<Layout title={title} description={description} pageType="legal">
+<Layout title={title} description={description} pageType="legal"
+  ogImage="https://www.hipotecalc.com/img/itp-mapa-espana-2026.png">
   <PageTracking client:load pagePath="/itp" pageTitle={title} />
 
   <Breadcrumbs items={[
@@ -38,6 +39,10 @@ const nombreCorto = (guia: (typeof guias)[number]) =>
         Elige tu comunidad y consulta los tipos vigentes, verificados con fuentes oficiales.
       </p>
     </header>
+
+    <figure class="mb-10 max-w-4xl mx-auto">
+      <img src="/img/itp-mapa-espana-2026.png" alt="Mapa de España con el ITP efectivo por comunidad autónoma en 2026 sobre una vivienda usada de 200.000 €: del 3 % de Ceuta y Melilla al 10 % de Cataluña" width="1800" height="1238" loading="eager" fetchpriority="high" decoding="async" class="w-full h-auto rounded-lg" />
+    </figure>
 
     <div class="pl-card p-5 mb-10 text-sm text-ink-soft leading-relaxed">
       <p>

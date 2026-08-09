@@ -23,6 +23,8 @@ const blogSchema = z.object({
   // reviewedBy: 'none' elimina el revisor de forma explícita.
   author: z.enum(['equipo', 'jose-perales']).optional(),
   reviewedBy: z.enum(['jose-perales', 'none']).optional(),
+  // Imagen destacada (og:image y cuerpo). Ruta bajo /public, p. ej. /img/x.png
+  ogImage: z.string().optional(),
 })
 
 const blog = defineCollection({
@@ -52,6 +54,8 @@ const guiasSchema = z.object({
   // reviewedBy: 'none' elimina el revisor de forma explícita.
   author: z.enum(['equipo', 'jose-perales']).optional(),
   reviewedBy: z.enum(['jose-perales', 'none']).optional(),
+  // Imagen destacada (og:image y cuerpo). Ruta bajo /public, p. ej. /img/x.png
+  ogImage: z.string().optional(),
 })
 
 const guias = defineCollection({

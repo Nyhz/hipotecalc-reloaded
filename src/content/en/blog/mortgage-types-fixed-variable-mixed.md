@@ -14,6 +14,7 @@ faq:
     answer: "Yes, through a novation with your own bank or a subrogation to another bank. Spanish law caps the fees for these changes, although it is worth calculating whether the savings outweigh the costs."
   - question: "What should I look at when comparing mortgages?"
     answer: "Look at the APR (not just the TIN), the spread on variable rates, the fees, and the linked products they require, which improve the rate but increase the total cost."
+ogImage: /img/fixed-variable-mixed-mortgage-2026.png
 ---
 
 Choosing a mortgage is, for most people, the most important financial decision of their lives. Not only because of the amount of money involved, but because the terms you sign today will stay with you for 20, 25 or 30 years. And within that decision, there is one question that shapes almost everything else: **fixed, variable or mixed mortgage?**
@@ -21,6 +22,8 @@ Choosing a mortgage is, for most people, the most important financial decision o
 In this guide we explain **the types of mortgage** that exist in Spain, how each one works, what risks and benefits it carries, and in which situation each option makes sense. Without unnecessary jargon and with the current market context.
 
 > 💡 **In a hurry?** If you already know which type you want and just want to know how much you would pay, use the [Hipotecalc mortgage calculator](/en/mortgage-calculator) to simulate your fixed, variable or mixed payment in one minute.
+
+<img src="/img/fixed-variable-mixed-mortgage-2026.png" alt="Monthly payment of a €150,000, 25-year mortgage by Euribor level: fixed €704, variable Euribor plus 0.90% (€772 at a 2.86% Euribor) and mixed €673 for the first five years" width="1800" height="1012" loading="lazy" decoding="async" class="w-full h-auto rounded-lg" />
 
 ## Before we start: the TIN, the APR and the Euribor
 
