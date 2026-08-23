@@ -16,6 +16,7 @@ import '@fontsource/ibm-plex-mono/600.css';
 import '@fontsource/ibm-plex-mono/700.css';
 import { getCurrentLang, getAlternatePath, normalizePath } from '../utils/i18n';
 import { refSchema, type Autoria } from '../data/authors';
+import { ogImageMeta } from '../utils/og-image-meta';
 
 export interface Props {
   title?: string;
@@ -30,6 +31,10 @@ export interface Props {
   /** Fechas para el schema (WebApplication/WebPage): publicación y última modificación */
   datePublished?: Date;
   dateModified?: Date;
+  /** Alt de la og:image; por defecto, el genérico del sitio */
+  ogImageAlt?: string;
+  /** og:type: 'article' para blog, guías e ITP; 'website' para el resto */
+  ogType?: 'website' | 'article';
 }
 
 const SITE_BASE = 'https://www.hipotecalc.com';
@@ -46,16 +51,21 @@ const {
   pageType = 'calculator',
   autoria,
   datePublished,
-  dateModified
+  dateModified,
+  ogImageAlt: ogImageAltProp,
+  ogType = 'website'
 } = Astro.props;
 
 const currentLang = getCurrentLang(normalizedPath);
 const langAttribute = currentLang === 'en' ? 'en' : 'es';
 const ogLocale = currentLang === 'en' ? 'en_US' : 'es_ES';
 const ogImageURL = ogImage ?? `${SITE_BASE}/${currentLang === 'en' ? 'hipotecalc-og-en.jpg' : 'hipotecalc-og.jpg'}`;
-const ogImageAlt = currentLang === 'en'
+const ogImageAlt = ogImageAltProp ?? (currentLang === 'en'
   ? 'Hipotecalc — free mortgage and rental calculators for Spain'
-  : 'Hipotecalc — calculadoras gratuitas de hipoteca y alquiler para España';
+  : 'Hipotecalc — calculadoras gratuitas de hipoteca y alquiler para España');
+// Dimensiones y MIME leídos del fichero real: las tarjetas sociales reservan
+// el hueco con estos valores y una proporción falsa recorta la imagen
+const ogMeta = ogImageMeta(new URL(ogImageURL).pathname);
 const isLocalEnv =
   Astro.url.hostname === "localhost" || Astro.url.hostname === "127.0.0.1";
 
@@ -161,14 +171,14 @@ const webPageSchema = pageType === 'legal' ? JSON.stringify({
     <link rel="alternate" hreflang="x-default" href={hrefLangDefault} />
 
     <!-- Open Graph / Facebook -->
-    <meta property="og:type" content="website" />
+    <meta property="og:type" content={ogType} />
     <meta property="og:url" content={canonicalURL} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:image" content={ogImageURL} />
-    <meta property="og:image:width" content="1200" />
-    <meta property="og:image:height" content="630" />
-    <meta property="og:image:type" content="image/jpeg" />
+    {ogMeta && <meta property="og:image:width" content={String(ogMeta.width)} />}
+    {ogMeta && <meta property="og:image:height" content={String(ogMeta.height)} />}
+    {ogMeta && <meta property="og:image:type" content={ogMeta.type} />}
     <meta property="og:image:alt" content={ogImageAlt} />
     <meta property="og:locale" content={ogLocale} />
     <meta property="og:site_name" content="Hipotecalc" />

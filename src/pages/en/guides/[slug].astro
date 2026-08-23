@@ -62,6 +62,8 @@ const tituloCalculadora = {
 ---
 <Layout
   ogImage={guia.data.ogImage ? `${SITE_BASE}${guia.data.ogImage}` : undefined}
+  ogImageAlt={guia.data.ogImage ? guia.body?.match(new RegExp(`src="${guia.data.ogImage}" alt="([^"]+)"`))?.[1] : undefined}
+  ogType="article"
   title={`${guia.data.title} | Hipotecalc`}
   description={guia.data.description}
   pageType="legal"

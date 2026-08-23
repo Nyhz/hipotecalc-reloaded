@@ -59,6 +59,7 @@ const articleSchema = JSON.stringify({
 
 // Nombre corto para encabezados de sección
 const nombreCorto = guia.id === 'ceuta-melilla' ? 'Ceuta y Melilla' : guia.data.comunidad;
+const altMapa = `Mapa del ITP por comunidad autónoma en 2026 con ${nombreCorto} resaltada: ${guia.data.tipoGeneral} frente al resto de España, sobre una vivienda usada de 200.000 €`;
 
 // FAQ con marcado FAQPage (bloques "Otras preguntas" de Google). Respuestas
 // construidas desde los datos verificados del frontmatter, con las
@@ -138,6 +139,8 @@ const faqItems = [
   description={guia.data.description}
   pageType="legal"
   ogImage={`${SITE_BASE}${mapaRegion}`}
+  ogImageAlt={altMapa}
+  ogType="article"
 >
   <PageTracking client:load pagePath={`/itp/${guia.id}`} pageTitle={guia.data.title} />
   <script type="application/ld+json" set:html={articleSchema} />
@@ -168,7 +171,7 @@ const faqItems = [
     </section>
 
     <figure class="mb-10">
-      <img src={mapaRegion} alt={`Mapa del ITP por comunidad autónoma en 2026 con ${nombreCorto} resaltada: ${guia.data.tipoGeneral} frente al resto de España, sobre una vivienda usada de 200.000 €`} width="1800" height="1238" loading="lazy" decoding="async" class="w-full h-auto rounded-lg" />
+      <img src={mapaRegion} alt={altMapa} width="1800" height="1238" loading="lazy" decoding="async" class="w-full h-auto rounded-lg" />
     </figure>
 
     <div class="pl-card p-5 mb-10 border-l-4 border-lime">

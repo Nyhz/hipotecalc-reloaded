@@ -58,6 +58,8 @@ const faqSchema = post.data.faq?.length
 ---
 <Layout
   ogImage={post.data.ogImage ? `${SITE_BASE}${post.data.ogImage}` : undefined}
+  ogImageAlt={post.data.ogImage ? post.body?.match(new RegExp(`src="${post.data.ogImage}" alt="([^"]+)"`))?.[1] : undefined}
+  ogType="article"
   title={post.data.seoTitle ?? `${post.data.title} | Blog Hipotecalc`}
   description={post.data.description}
   pageType="legal"

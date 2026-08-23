@@ -59,6 +59,7 @@ const articleSchema = JSON.stringify({
 });
 
 const nombre = guia.id === 'ceuta-melilla' ? 'Ceuta and Melilla' : regionNameEn(guia.data.comunidad);
+const altMapa = `Map of ITP transfer tax by Spanish region in 2026 with ${nombre} highlighted: ${guia.data.tipoGeneral} versus the rest of Spain, on a €200,000 resale home`;
 
 const esForal = ['Navarra', 'País Vasco'].includes(guia.data.comunidad);
 const tipoEnFrase = guia.data.tipoGeneral.charAt(0).toLowerCase() + guia.data.tipoGeneral.slice(1);
@@ -96,6 +97,8 @@ const faqItems = [
   description={guia.data.description}
   pageType="legal"
   ogImage={`${SITE_BASE}${mapaRegion}`}
+  ogImageAlt={altMapa}
+  ogType="article"
 >
   <PageTracking client:load pagePath={`/en/itp/${guia.id}`} pageTitle={guia.data.title} />
   <script type="application/ld+json" set:html={articleSchema} />
@@ -125,7 +128,7 @@ const faqItems = [
     </section>
 
     <figure class="mb-10">
-      <img src={mapaRegion} alt={`Map of ITP transfer tax by Spanish region in 2026 with ${nombre} highlighted: ${guia.data.tipoGeneral} versus the rest of Spain, on a €200,000 resale home`} width="1800" height="1238" loading="lazy" decoding="async" class="w-full h-auto rounded-lg" />
+      <img src={mapaRegion} alt={altMapa} width="1800" height="1238" loading="lazy" decoding="async" class="w-full h-auto rounded-lg" />
     </figure>
 
     <div class="pl-card p-5 mb-10 border-l-4 border-lime">
