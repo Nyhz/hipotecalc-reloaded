@@ -1,6 +1,6 @@
 ---
 title: "ITP en Andalucía 2026: tipos, reducciones y bonificaciones"
-description: "Cuánto ITP se paga al comprar vivienda usada en Andalucía en 2026: tipo general del 7 %, tipo del 6 % para vivienda habitual y reducciones del 3,5 %."
+description: "Calcula tu ITP exacto en Andalucía: pon el precio y te decimos lo que pagas, con el 7 % general y los reducidos del 6 % y del 3,5 % ya aplicados."
 comunidad: "Andalucía"
 tipoGeneral: "7 %"
 resumen: "6 % vivienda habitual ≤150.000 €; 3,5 % jóvenes <35 años, discapacidad, familia numerosa, víctimas y municipios pequeños"

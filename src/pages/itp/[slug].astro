@@ -6,6 +6,7 @@ import PageTracking from '../../components/PageTracking.tsx';
 import Byline from '../../components/seo/Byline.astro';
 import { fechaPublicacion } from '../../utils/ultima-modificacion';
 import { resolverAutoria, refSchema } from '../../data/authors';
+import ITPStandalone from '../../components/calculadora-itp/ITPStandalone';
 import MortgageCalculator from '../../components/calculadora-hipotecaria/MortgageCalculator';
 import FAQSection from '../../components/seo/FAQSection.astro';
 
@@ -29,6 +30,8 @@ const formatDate = (d: Date) =>
 
 const SITE_BASE = 'https://www.hipotecalc.com';
 const canonical = `${SITE_BASE}/itp/${guia.id}`;
+// Mapa con la región resaltada (scripts/itp-map/make_region_maps.py)
+const mapaRegion = `/img/itp/es/${guia.id}.png`;
 
 // Autoría: frontmatter > defaults de src/data/authors.ts — el schema debe
 // reflejar exactamente lo que muestra el byline visible
@@ -72,7 +75,20 @@ const TITULOS_CON_DATO: Record<string, string> = {
   'comunidad-valenciana': 'ITP en la Comunitat Valenciana 2026: 9 % general y reducido del 6 % | Hipotecalc',
   'pais-vasco': 'ITP en el País Vasco 2026: 4 % vivienda (7 % general) y reducido del 2,5 % | Hipotecalc',
 };
-const tituloPagina = TITULOS_CON_DATO[guia.id] ?? `${guia.data.title} | Hipotecalc`;
+// Experimento SEO (ago-2026): <title> con promesa de cálculo en 6 páginas.
+// Grupos: TRATAMIENTO (estas 6) · CONTROL intacto (cantabria, extremadura,
+// la-rioja, navarra, ceuta-melilla) · el brazo "dato en el título" de julio
+// (castilla-y-leon, comunidad-valenciana, pais-vasco) sigue tal cual ·
+// las 5 de más volumen reciben el cambio de description, no de título.
+const TITULOS_CALCULO: Record<string, string> = {
+  'galicia': 'ITP en Galicia 2026: calcula lo que pagarás por tu vivienda | Hipotecalc',
+  'aragon': 'ITP en Aragón 2026: calcula lo que pagarás por tu vivienda | Hipotecalc',
+  'murcia': 'ITP en Murcia 2026: calcula lo que pagarás por tu vivienda | Hipotecalc',
+  'canarias': 'ITP en Canarias 2026: calcula lo que pagarás por tu vivienda | Hipotecalc',
+  'castilla-la-mancha': 'ITP en Castilla-La Mancha 2026: calcula lo que pagarás por tu vivienda | Hipotecalc',
+  'asturias': 'ITP en Asturias 2026: calcula lo que pagarás por tu vivienda | Hipotecalc',
+};
+const tituloPagina = TITULOS_CON_DATO[guia.id] ?? TITULOS_CALCULO[guia.id] ?? `${guia.data.title} | Hipotecalc`;
 
 // Párrafo-respuesta bajo el H1: contesta la consulta principal en prosa con
 // los datos del frontmatter. Si el resumen arranca repitiendo el tipo general
@@ -121,6 +137,7 @@ const faqItems = [
   title={tituloPagina}
   description={guia.data.description}
   pageType="legal"
+  ogImage={`${SITE_BASE}${mapaRegion}`}
 >
   <PageTracking client:load pagePath={`/itp/${guia.id}`} pageTitle={guia.data.title} />
   <script type="application/ld+json" set:html={articleSchema} />
@@ -141,6 +158,18 @@ const faqItems = [
       <p class="text-ink-soft leading-relaxed mb-3">{parrafoRespuesta}</p>
       <Byline autoria={autoria} lang="es" updated={guia.data.updatedDate} policyLinks />
     </header>
+    <section id="calculadora-itp" class="mb-10">
+      <h2 class="font-heading text-xl font-semibold text-ink mb-1">Calcula tu ITP en {nombreCorto}</h2>
+      <p class="text-sm text-ink-soft mb-4">
+        Pon el precio y tus circunstancias: te decimos lo que pagas, con las bonificaciones
+        de {nombreCorto} ya aplicadas.
+      </p>
+      <ITPStandalone client:load lang="es" initialComunidad={guia.data.comunidad} />
+    </section>
+
+    <figure class="mb-10">
+      <img src={mapaRegion} alt={`Mapa del ITP por comunidad autónoma en 2026 con ${nombreCorto} resaltada: ${guia.data.tipoGeneral} frente al resto de España, sobre una vivienda usada de 200.000 €`} width="1800" height="1238" loading="lazy" decoding="async" class="w-full h-auto rounded-lg" />
+    </figure>
 
     <div class="pl-card p-5 mb-10 border-l-4 border-lime">
       <div class="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-2 mb-2">
@@ -148,7 +177,7 @@ const faqItems = [
         <span class="font-heading text-2xl font-bold text-ink">{guia.data.tipoGeneral}</span>
       </div>
       <a href="#calculadora" class="inline-block mt-1 text-sm font-medium text-brand-blue underline">
-        Calcula tu ITP y tu hipoteca en {nombreCorto} ↓
+        Simula la hipoteca completa en {nombreCorto} ↓
       </a>
     </div>
 

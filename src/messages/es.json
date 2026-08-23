@@ -160,7 +160,7 @@
         "numberOfChildren": "Número de hijos",
         "violenceVictim": "Víctima de violencia de género",
         "terrorismVictim": "Víctima de terrorismo",
-        "depopulatedArea": "Vivienda en municipio con menos de 2.500 habitantes (Madrid)",
+        "depopulatedArea": "Vivienda en zona despoblada o municipio pequeño (según la norma de tu comunidad)",
         "vpo": "VPO",
         "vmaInfo": "En País Vasco el ITP se calcula sobre el Valor Mínimo Atribuible (VMA) de la vivienda, no sobre el precio de compraventa.",
         "reducedRateQuestion": "Aplicar tipo reducido del 2,5% (País Vasco)",

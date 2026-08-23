@@ -1,6 +1,6 @@
 ---
 title: "ITP en Illes Balears 2026: tarifa, reducciones y bonificaciones"
-description: "Cuánto ITP se paga al comprar vivienda usada en Baleares en 2026: tarifa del 8 al 13 %, tipo del 4 % y del 2 % y bonificación del 100 % para jóvenes."
+description: "Calcula tu ITP exacto en Baleares: pon el precio y te decimos lo que pagas, con la tarifa del 8 al 13 % y los tipos reducidos ya aplicados."
 comunidad: "Baleares"
 tipoGeneral: "Tarifa 8–13 %"
 resumen: "4 % vivienda habitual (umbral por isla); 2 % menores de 36, discapacidad y familia numerosa; bonificación del 100 % <30 años o discapacidad"

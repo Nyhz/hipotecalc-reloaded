@@ -141,6 +141,37 @@
           "value": "Accept-Encoding"
         }
       ]
+    },
+    {
+      "source": "/_astro/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        },
+        {
+          "key": "Vary",
+          "value": "Accept-Encoding"
+        }
+      ]
+    },
+    {
+      "source": "/img/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=604800, stale-while-revalidate=2592000"
+        }
+      ]
+    },
+    {
+      "source": "/(favicon\\.ico|favicon-32x32\\.png|favicon-16x16\\.png|apple-touch-icon\\.png|logo-512\\.png|hipotecalc-og\\.jpg|hipotecalc-og-en\\.jpg)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=604800, stale-while-revalidate=2592000"
+        }
+      ]
     }
   ],
   "trailingSlash": false,

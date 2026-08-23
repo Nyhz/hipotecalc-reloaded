@@ -1,6 +1,6 @@
 ---
 title: "ITP en la Comunitat Valenciana 2026: tipos, reducciones y bonificaciones"
-description: "Cuánto ITP se paga al comprar vivienda usada en la Comunitat Valenciana en 2026: nuevo tipo general del 9 %, reducidos del 6 y el 3 % y bonificación DANA."
+description: "Calcula tu ITP exacto en la Comunitat Valenciana: pon el precio y te decimos lo que pagas, con el 9 % general y las bonificaciones ya aplicadas."
 comunidad: "Comunidad Valenciana"
 tipoGeneral: "9 % (11 % si >1 M€)"
 resumen: "9 % general desde junio de 2026; 6/8 % jóvenes <35; 3/4 % familias numerosas y monoparentales, discapacidad, víctimas y VPO especial; bonificación 100 % DANA"

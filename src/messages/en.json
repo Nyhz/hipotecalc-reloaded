@@ -160,7 +160,7 @@
         "numberOfChildren": "Number of children",
         "violenceVictim": "Are you a victim of gender violence?",
         "terrorismVictim": "Are you a victim of terrorism?",
-        "depopulatedArea": "Property in municipality with less than 2,500 inhabitants (Madrid)",
+        "depopulatedArea": "Home in a depopulated area or small municipality (per your region’s rules)",
         "vpo": "VPO",
         "vmaInfo": "In the Basque Country, ITP is calculated on the property's Minimum Attributable Value (VMA), not on the purchase price.",
         "reducedRateQuestion": "Apply the reduced 2.5% rate (Basque Country)",

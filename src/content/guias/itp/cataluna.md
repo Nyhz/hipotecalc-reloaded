@@ -1,6 +1,6 @@
 ---
 title: "ITP en Cataluña 2026: tarifa, reducciones y bonificaciones"
-description: "Cuánto ITP se paga al comprar vivienda usada en Cataluña en 2026: tarifa del 10 al 13 %, tipo del 5 % para jóvenes y colectivos y 20 % a grandes tenedores."
+description: "Calcula tu ITP exacto en Cataluña: pon el precio y te decimos lo que pagas, con la tarifa del 10 al 13 % y los tipos reducidos para jóvenes y familias ya aplicados."
 comunidad: "Cataluña"
 tipoGeneral: "Tarifa 10–13 %"
 resumen: "Tarifa por tramos del 10 al 13 % (20 % grandes tenedores); 5 % jóvenes ≤35, familias numerosas y monoparentales, discapacidad y víctimas; 7 % VPO; 4/3 % rural"

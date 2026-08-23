@@ -29,9 +29,11 @@ const LABELS = {
 
 interface ITPStandaloneProps {
   lang?: 'es' | 'en'
+  /** Comunidad precargada (páginas /itp/[region]); debe coincidir con constants/comunidades.ts */
+  initialComunidad?: string
 }
 
-const ITPStandalone: React.FC<ITPStandaloneProps> = ({ lang = 'es' }) => {
+const ITPStandalone: React.FC<ITPStandaloneProps> = ({ lang = 'es', initialComunidad }) => {
   const t = LABELS[lang]
   const [resultado, setResultado] = useState<Resultado | null>(null)
   const resultadoRef = useRef<HTMLDivElement>(null)
@@ -51,6 +53,7 @@ const ITPStandalone: React.FC<ITPStandaloneProps> = ({ lang = 'es' }) => {
         open={true}
         onClose={() => {}}
         onResult={handleResult}
+        comunidadSeleccionada={initialComunidad}
         lang={lang}
       />
 

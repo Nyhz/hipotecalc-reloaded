@@ -1,6 +1,6 @@
 ---
 title: "ITP en Madrid 2026: tipos, reducciones y bonificaciones"
-description: "Cuánto ITP se paga al comprar vivienda usada en la Comunidad de Madrid en 2026: tipo general del 6 %, 4 % familia numerosa y bonificaciones de cuota."
+description: "Calcula tu ITP exacto en Madrid: pon el precio y te decimos lo que pagas, con el 6 % general y la bonificación del 10 % para vivienda habitual ya aplicados."
 comunidad: "Madrid"
 tipoGeneral: "6 %"
 resumen: "4 % familia numerosa; bonificación del 10 % en viviendas ≤250.000 €; bonificación del 100 % para <35 años en municipios <2.500 habitantes"
