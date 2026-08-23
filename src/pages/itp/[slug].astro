@@ -32,6 +32,7 @@ const SITE_BASE = 'https://www.hipotecalc.com';
 const canonical = `${SITE_BASE}/itp/${guia.id}`;
 // Mapa con la región resaltada (scripts/itp-map/make_region_maps.py)
 const mapaRegion = `/img/itp/es/${guia.id}.png`;
+const mapaBase = mapaRegion.replace(/\.png$/, '');
 
 // Autoría: frontmatter > defaults de src/data/authors.ts — el schema debe
 // reflejar exactamente lo que muestra el byline visible
@@ -171,7 +172,14 @@ const faqItems = [
     </section>
 
     <figure class="mb-10">
-      <img src={mapaRegion} alt={altMapa} width="1800" height="1238" loading="lazy" decoding="async" class="w-full h-auto rounded-lg" />
+      <picture>
+        <source
+          type="image/webp"
+          srcset={`${mapaBase}-800.webp 800w, ${mapaBase}-1200.webp 1200w, ${mapaBase}-1800.webp 1800w`}
+          sizes="(min-width: 768px) 720px, 100vw"
+        />
+        <img src={mapaRegion} alt={altMapa} width="1800" height="1238" loading="lazy" decoding="async" class="w-full h-auto rounded-lg" />
+      </picture>
     </figure>
 
     <div class="pl-card p-5 mb-10 border-l-4 border-lime">

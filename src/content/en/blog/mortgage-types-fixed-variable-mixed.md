@@ -23,7 +23,7 @@ In this guide we explain **the types of mortgage** that exist in Spain, how each
 
 > 💡 **In a hurry?** If you already know which type you want and just want to know how much you would pay, use the [Hipotecalc mortgage calculator](/en/mortgage-calculator) to simulate your fixed, variable or mixed payment in one minute.
 
-<img src="/img/fixed-variable-mixed-mortgage-2026.png" alt="Monthly payment of a €150,000, 25-year mortgage by Euribor level: fixed €704, variable Euribor plus 0.90% (€772 at a 2.86% Euribor) and mixed €673 for the first five years" width="1800" height="1012" loading="lazy" decoding="async" class="w-full h-auto rounded-lg" />
+<picture><source type="image/webp" srcset="/img/fixed-variable-mixed-mortgage-2026-800.webp 800w, /img/fixed-variable-mixed-mortgage-2026-1200.webp 1200w, /img/fixed-variable-mixed-mortgage-2026-1800.webp 1800w" sizes="(min-width: 768px) 720px, 100vw" /><img src="/img/fixed-variable-mixed-mortgage-2026.png" alt="Monthly payment of a €150,000, 25-year mortgage by Euribor level: fixed €704, variable Euribor plus 0.90% (€772 at a 2.86% Euribor) and mixed €673 for the first five years" width="1800" height="1012" loading="lazy" decoding="async" class="w-full h-auto rounded-lg" /></picture>
 
 ## Before we start: the TIN, the APR and the Euribor
 

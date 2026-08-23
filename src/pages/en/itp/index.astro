@@ -44,7 +44,14 @@ const nombre = (guia: (typeof guias)[number]) =>
     </header>
 
     <figure class="mb-10 max-w-4xl mx-auto">
-      <img src="/img/itp-map-spain-by-region-2026.png" alt="Map of Spain with the effective ITP transfer tax by region in 2026 on a €200,000 resale home: from 3% in Ceuta and Melilla to 10% in Catalonia" width="1800" height="1238" loading="eager" fetchpriority="high" decoding="async" class="w-full h-auto rounded-lg" />
+      <picture>
+        <source
+          type="image/webp"
+          srcset="/img/itp-map-spain-by-region-2026-800.webp 800w, /img/itp-map-spain-by-region-2026-1200.webp 1200w, /img/itp-map-spain-by-region-2026-1800.webp 1800w"
+          sizes="(min-width: 896px) 864px, 100vw"
+        />
+        <img src="/img/itp-map-spain-by-region-2026.png" alt="Map of Spain with the effective ITP transfer tax by region in 2026 on a €200,000 resale home: from 3% in Ceuta and Melilla to 10% in Catalonia" width="1800" height="1238" loading="eager" fetchpriority="high" decoding="async" class="w-full h-auto rounded-lg" />
+      </picture>
     </figure>
 
     <div class="pl-card p-5 mb-10 text-sm text-ink-soft leading-relaxed">

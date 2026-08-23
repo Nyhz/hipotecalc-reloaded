@@ -20,7 +20,7 @@ Congratulations: it is one of the best financial decisions you can make. But the
 bank will ask you **the question**: shall I reduce the payment or reduce the
 term? And that answer can be worth more than €10,000.
 
-<img src="/img/overpay-mortgage-payment-vs-term-2026.png" alt="Total interest comparison when overpaying €10,000 on a €150,000 mortgage at 3%: no overpayment €63,395, cutting the payment €60,100, cutting the term €55,767" width="1800" height="1012" loading="lazy" decoding="async" class="w-full h-auto rounded-lg" />
+<picture><source type="image/webp" srcset="/img/overpay-mortgage-payment-vs-term-2026-800.webp 800w, /img/overpay-mortgage-payment-vs-term-2026-1200.webp 1200w, /img/overpay-mortgage-payment-vs-term-2026-1800.webp 1800w" sizes="(min-width: 768px) 720px, 100vw" /><img src="/img/overpay-mortgage-payment-vs-term-2026.png" alt="Total interest comparison when overpaying €10,000 on a €150,000 mortgage at 3%: no overpayment €63,395, cutting the payment €60,100, cutting the term €55,767" width="1800" height="1012" loading="lazy" decoding="async" class="w-full h-auto rounded-lg" /></picture>
 
 ## The two options, in one sentence
 

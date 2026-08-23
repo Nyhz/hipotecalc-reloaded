@@ -23,7 +23,7 @@ En esta guía te explicamos **los tipos de hipoteca** que existen en España, c�
 
 > 💡 **¿Con prisa?** Si ya tienes claro el tipo y solo quieres saber cuánto pagarías, usa la [calculadora de hipoteca de Hipotecalc](/calculadora-hipotecaria) para simular tu cuota fija, variable o mixta en un minuto.
 
-<img src="/img/hipoteca-fija-variable-mixta-2026.png" alt="Cuota mensual de una hipoteca de 150.000 € a 25 años según el euríbor: fija 704 €, variable euríbor más 0,90 % (772 € con el euríbor al 2,86 %) y mixta 673 € los primeros cinco años" width="1800" height="1012" loading="lazy" decoding="async" class="w-full h-auto rounded-lg" />
+<picture><source type="image/webp" srcset="/img/hipoteca-fija-variable-mixta-2026-800.webp 800w, /img/hipoteca-fija-variable-mixta-2026-1200.webp 1200w, /img/hipoteca-fija-variable-mixta-2026-1800.webp 1800w" sizes="(min-width: 768px) 720px, 100vw" /><img src="/img/hipoteca-fija-variable-mixta-2026.png" alt="Cuota mensual de una hipoteca de 150.000 € a 25 años según el euríbor: fija 704 €, variable euríbor más 0,90 % (772 € con el euríbor al 2,86 %) y mixta 673 € los primeros cinco años" width="1800" height="1012" loading="lazy" decoding="async" class="w-full h-auto rounded-lg" /></picture>
 
 ## Antes de empezar: el TIN, la TAE y el euríbor
 

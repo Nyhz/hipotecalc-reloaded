@@ -62,7 +62,7 @@ property purchase itself, which are still yours.
 
 ## The full bill: an example
 
-<img src="/img/savings-needed-buy-home-spain-2026.png" alt="Breakdown of the savings needed to buy a €200,000 home in Andalusia: €40,000 down payment, €14,000 ITP and €1,900 in notary, registry, agency and appraisal — €55,900 in total" width="1800" height="900" loading="lazy" decoding="async" class="w-full h-auto rounded-lg" />
+<picture><source type="image/webp" srcset="/img/savings-needed-buy-home-spain-2026-800.webp 800w, /img/savings-needed-buy-home-spain-2026-1200.webp 1200w, /img/savings-needed-buy-home-spain-2026-1800.webp 1800w" sizes="(min-width: 768px) 720px, 100vw" /><img src="/img/savings-needed-buy-home-spain-2026.png" alt="Breakdown of the savings needed to buy a €200,000 home in Andalusia: €40,000 down payment, €14,000 ITP and €1,900 in notary, registry, agency and appraisal — €55,900 in total" width="1800" height="900" loading="lazy" decoding="async" class="w-full h-auto rounded-lg" /></picture>
 
 A resale home costing **€200,000 in Andalusia** (ITP at 7%):
 

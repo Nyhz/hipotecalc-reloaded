@@ -141,8 +141,13 @@ def generar(slug):
         os.makedirs(os.path.join(OUT, lang), exist_ok=True)
         dest = os.path.join(OUT, lang, f"{out_slug}.png")
         im.quantize(colors=256, method=Image.MEDIANCUT).save(dest, optimize=True)
+        # variantes responsive WebP (las consume el <picture> de las plantillas)
+        for w in (800, 1200, 1800):
+            h = round(im.size[1] * w / im.size[0])
+            (im if w == im.size[0] else im.resize((w, h), Image.LANCZOS)).save(
+                dest[:-4] + f"-{w}.webp", "WEBP", quality=82, method=6)
         os.remove(tmp)
-        print(f"  {lang}/{out_slug}.png  {os.path.getsize(dest)//1024} KB")
+        print(f"  {lang}/{out_slug}.png  {os.path.getsize(dest)//1024} KB (+3 webp)")
 
 if __name__ == "__main__":
     slugs = sys.argv[1:] or list(REGIONES)

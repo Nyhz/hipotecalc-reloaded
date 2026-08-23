@@ -20,7 +20,7 @@ es de las mejores decisiones financieras posibles. Pero el banco te hará **la
 pregunta**: ¿reduzco la cuota o reduzco el plazo? Y esa respuesta puede valer
 más de 10.000 €.
 
-<img src="/img/amortizar-cuota-o-plazo-2026.png" alt="Comparación de intereses totales al amortizar 10.000 € en una hipoteca de 150.000 € al 3 %: sin amortizar 63.395 €, reduciendo cuota 60.100 €, reduciendo plazo 55.767 €" width="1800" height="1012" loading="lazy" decoding="async" class="w-full h-auto rounded-lg" />
+<picture><source type="image/webp" srcset="/img/amortizar-cuota-o-plazo-2026-800.webp 800w, /img/amortizar-cuota-o-plazo-2026-1200.webp 1200w, /img/amortizar-cuota-o-plazo-2026-1800.webp 1800w" sizes="(min-width: 768px) 720px, 100vw" /><img src="/img/amortizar-cuota-o-plazo-2026.png" alt="Comparación de intereses totales al amortizar 10.000 € en una hipoteca de 150.000 € al 3 %: sin amortizar 63.395 €, reduciendo cuota 60.100 €, reduciendo plazo 55.767 €" width="1800" height="1012" loading="lazy" decoding="async" class="w-full h-auto rounded-lg" /></picture>
 
 ## Las dos opciones, en una frase
 

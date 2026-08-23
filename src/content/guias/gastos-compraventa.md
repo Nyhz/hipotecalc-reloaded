@@ -61,7 +61,7 @@ inmueble, que siguen siendo tuyos.
 
 ## La cuenta completa: un ejemplo
 
-<img src="/img/ahorro-necesario-comprar-casa-2026.png" alt="Desglose del ahorro necesario para comprar una casa de 200.000 € en Andalucía: 40.000 € de entrada, 14.000 € de ITP y 1.900 € de notaría, registro, gestoría y tasación — 55.900 € en total" width="1800" height="900" loading="lazy" decoding="async" class="w-full h-auto rounded-lg" />
+<picture><source type="image/webp" srcset="/img/ahorro-necesario-comprar-casa-2026-800.webp 800w, /img/ahorro-necesario-comprar-casa-2026-1200.webp 1200w, /img/ahorro-necesario-comprar-casa-2026-1800.webp 1800w" sizes="(min-width: 768px) 720px, 100vw" /><img src="/img/ahorro-necesario-comprar-casa-2026.png" alt="Desglose del ahorro necesario para comprar una casa de 200.000 € en Andalucía: 40.000 € de entrada, 14.000 € de ITP y 1.900 € de notaría, registro, gestoría y tasación — 55.900 € en total" width="1800" height="900" loading="lazy" decoding="async" class="w-full h-auto rounded-lg" /></picture>
 
 Vivienda de segunda mano de **200.000 € en Andalucía** (ITP 7 %):
 
