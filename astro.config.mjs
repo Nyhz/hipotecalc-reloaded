@@ -161,12 +161,20 @@ export default defineConfig({
       },
       rollupOptions: {
         output: {
-          // Rolldown (Vite en Astro 7) solo acepta manualChunks como función
+          // Rolldown (Vite en Astro 7) solo acepta manualChunks como función.
+          // ORDEN Y PRECISIÓN CRÍTICOS: React se evalúa primero y con patrones
+          // delimitados por path. La versión anterior (`includes("echarts")`
+          // antes que React) capturaba también echarts-for-react —módulo CJS
+          // que requiere React— y metía la fachada de React dentro de
+          // vendor-echarts: react-dom pasaba a importar ese chunk y cualquier
+          // isla de cualquier página arrastraba 1,1 MB de ECharts.
           manualChunks(id) {
             if (!id.includes("node_modules")) return
-            if (id.includes("echarts")) return "vendor-echarts"
+            if (/node_modules[\/](react|react-dom|scheduler)[\/]/.test(id)) return "vendor-react"
+            // Solo la librería de gráficos; el wrapper echarts-for-react queda
+            // fuera a propósito y viaja con los chunks diferidos que lo importan
+            if (/node_modules[\/](echarts|zrender)[\/]/.test(id)) return "vendor-echarts"
             if (id.includes("@iconify")) return "vendor-icons"
-            if (id.includes("react-dom") || id.includes("/react/")) return "vendor-react"
           },
         },
       },
