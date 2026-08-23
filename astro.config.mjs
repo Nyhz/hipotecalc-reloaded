@@ -122,6 +122,26 @@ function buildLastmodMap() {
     const d = gitDate(fichero)
     if (d) map[ruta] = d
   }
+  // Las calculadoras muestran los tipos de comunidades.ts (las de ITP,
+  // además, a través del motor calculadora-itp.ts): su lastmod avanza
+  // también cuando se revisan esos ficheros, en paralelo con el byline
+  // (ultimaModificacionConjunta en cada página).
+  const fechaComunidades = gitDate('src/constants/comunidades.ts')
+  const fechaMotorITP = gitDate('src/utils/calculadora-itp.ts')
+  const maxFecha = (...fechas) => fechas.filter(Boolean).sort().pop() ?? null
+  const rutasConDatos = {
+    '/calculadora-itp': maxFecha(fechaComunidades, fechaMotorITP),
+    '/en/itp-calculator': maxFecha(fechaComunidades, fechaMotorITP),
+    '/calculadora-hipotecaria': maxFecha(fechaComunidades, fechaMotorITP),
+    '/en/mortgage-calculator': maxFecha(fechaComunidades, fechaMotorITP),
+    '/calculadora-gastos-compraventa': fechaComunidades,
+    '/en/property-purchase-costs-calculator': fechaComunidades,
+    '/calculadora-alquiler': fechaComunidades,
+    '/en/rental-calculator': fechaComunidades,
+  }
+  for (const [ruta, fecha] of Object.entries(rutasConDatos)) {
+    if (fecha && (!map[ruta] || fecha > map[ruta])) map[ruta] = fecha
+  }
   // Google descarta el lastmod de todo el sitio si detecta fechas no fiables:
   // ninguna puede superar el momento del build (en UTC, que es como se publica)
   const hoyUTC = new Date().toISOString().slice(0, 10)

@@ -181,7 +181,18 @@ export function calcularITPAvanzado(params: ITPParams): ITPResult {
   // beneficioso (antes se sobreescribían en orden fijo, pudiendo sustituir
   // un tipo mejor por otro peor)
   let tipoReducidoAplicado = false
-  if (comunidad.specialRates) {
+
+  // Extremadura (Ley 2/2026, desde el 5-8-2026): todos sus tipos reducidos
+  // (arts. 39, 40, 41 y 44 bis TR) exigen valor de la vivienda ≤ 200.000 € y
+  // bases imponibles del IRPF ≤ 30.000 € (individual) / 55.000 € (conjunta).
+  // Se comprueba el techo de valor y el tope conjunto de renta: por encima de
+  // 55.000 € nadie conserva el beneficio; con ingresos en blanco (0) se
+  // muestra el escenario base, como en el resto de comunidades.
+  const cumpleLimitesExtremadura =
+    nombreComunidad !== "Extremadura" ||
+    (precio <= 200000 && (params.ingresos || 0) <= 55000)
+
+  if (comunidad.specialRates && cumpleLimitesExtremadura) {
     const { specialRates } = comunidad
     const candidatos: { tipo: number; descripcion: string }[] = []
 

@@ -2,14 +2,16 @@
 import Layout from '../../layouts/Layout.astro';
 import Byline from '../../components/seo/Byline.astro';
 import { resolverAutoria } from '../../data/authors';
-import { ultimaModificacion, fechaPublicacion } from '../../utils/ultima-modificacion';
+import { ultimaModificacionConjunta, fechaPublicacion } from '../../utils/ultima-modificacion';
 import MortgageCalculator from '../../components/calculadora-hipotecaria/MortgageCalculator'
 import PageTracking from '../../components/PageTracking.tsx';
 import Breadcrumbs from '../../components/seo/Breadcrumbs.astro';
 import FAQSection from '../../components/seo/FAQSection.astro';
 import { t } from '../../utils/i18n';
 const autoria = resolverAutoria('calculadora');
-const actualizado = ultimaModificacion('src/pages/en/mortgage-calculator.astro');
+// La página muestra los tipos de comunidades.ts a través del motor de ITP:
+// su última revisión avanza también cuando se revisan esos ficheros
+const actualizado = ultimaModificacionConjunta('src/pages/en/mortgage-calculator.astro', 'src/constants/comunidades.ts', 'src/utils/calculadora-itp.ts');
 const publicado = fechaPublicacion('src/pages/en/mortgage-calculator.astro');
 
 ---

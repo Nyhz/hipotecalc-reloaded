@@ -301,26 +301,36 @@ export const COMUNIDADES: Comunidad[] = [
     }
   },
   {
+    // Tarifa del art. 36 TR (D.Leg. 1/2018) y tipos reducidos de los arts.
+    // 39-41 y 44 bis, con los límites unificados por la Ley 2/2026 (en vigor
+    // desde el 5-8-2026): valor ≤ 200.000 € y bases IRPF ≤ 30.000/55.000 €.
+    // Esos límites se comprueban en calculadora-itp.ts (gate de Extremadura).
     nombre: "Extremadura",
     ITP: 8.0,
     itpBrackets: [
-      { min: 0, max: 200000, rate: 8.0 },
-      { min: 200000, max: null, rate: 9.0 }
+      { min: 0, max: 360000, rate: 8.0 },
+      { min: 360000, max: 600000, rate: 10.0 },
+      { min: 600000, max: null, rate: 11.0 }
     ],
     specialRates: {
       firstHome: 7.0,
-      youngBuyer: 6.0,
-      largeFamily: 6.0,
-      monoparental: 6.0,
-      disability: 6.0
+      youngBuyer: 4.0,
+      largeFamily: 4.0,
+      monoparental: 4.0,
+      disability: 4.0,
+      vpo: 4.0,
+      ruralDepopulation: 4.0
     },
+    hasRuralDepopulationZones: true,
     camposDinamicos: {
       edad: true,
       discapacidad: true,
       primeraVivienda: true,
       familiaNumerosa: true,
       monoparental: true,
-      ingresos: true
+      ingresos: true,
+      vpo: true,
+      zonaDespoblada: true
     }
   },
   {
