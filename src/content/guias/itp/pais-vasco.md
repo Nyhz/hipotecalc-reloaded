@@ -4,7 +4,7 @@ description: "Cuánto ITP se paga al comprar vivienda usada en Álava, Bizkaia y
 comunidad: "País Vasco"
 tipoGeneral: "4 % vivienda (7 % general)"
 resumen: "4 % viviendas; 2,5 % vivienda habitual (≤120 m² o familia numerosa); 6 % titulares de más de 5 viviendas"
-updatedDate: 2026-07-08
+updatedDate: 2026-08-23
 ---
 
 En el País Vasco, el impuesto que grava la compra de **vivienda usada** —el Impuesto sobre Transmisiones Patrimoniales y Actos Jurídicos Documentados (ITPyAJD), en su modalidad de Transmisiones Patrimoniales Onerosas (TPO)— no se rige por la normativa estatal ni por la de las comunidades de régimen común. En virtud del **Concierto Económico** (Ley 12/2002), es un **tributo concertado de normativa autónoma** (art. 30) y su exacción corresponde a la **Diputación Foral del territorio donde radique el inmueble** (art. 31.1). Cada territorio histórico tiene su propia norma: **Álava, la Norma Foral 11/2003; Bizkaia, la Norma Foral 1/2011; y Gipuzkoa, la Norma Foral 18/1987**.

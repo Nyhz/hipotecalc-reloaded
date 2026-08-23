@@ -4,7 +4,7 @@ description: "Calcula tu ITP exacto en Madrid: pon el precio y te decimos lo que
 comunidad: "Madrid"
 tipoGeneral: "6 %"
 resumen: "4 % familia numerosa; bonificación del 10 % en viviendas ≤250.000 €; bonificación del 100 % para <35 años en municipios <2.500 habitantes"
-updatedDate: 2026-07-08
+updatedDate: 2026-08-23
 ---
 
 Si vas a comprar una vivienda de segunda mano en la Comunidad de Madrid, el impuesto que pagarás como comprador es el Impuesto sobre Transmisiones Patrimoniales y Actos Jurídicos Documentados, en su modalidad de Transmisiones Patrimoniales Onerosas (ITP-TPO). Madrid aplica desde 2014 un tipo general del 6 %, uno de los más bajos de las comunidades de régimen común, y lo complementa con un tipo reducido para familias numerosas y con bonificaciones de cuota para la vivienda habitual.

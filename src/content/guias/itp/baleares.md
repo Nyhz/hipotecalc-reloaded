@@ -4,7 +4,7 @@ description: "Calcula tu ITP exacto en Baleares: pon el precio y te decimos lo q
 comunidad: "Baleares"
 tipoGeneral: "Tarifa 8–13 %"
 resumen: "4 % vivienda habitual (umbral por isla); 2 % menores de 36, discapacidad y familia numerosa; bonificación del 100 % <30 años o discapacidad"
-updatedDate: 2026-07-08
+updatedDate: 2026-08-23
 ---
 
 En las Illes Balears, la compra de una vivienda de segunda mano tributa por el Impuesto sobre Transmisiones Patrimoniales Onerosas (ITP-TPO), que paga el comprador y gestiona la Agència Tributària de les Illes Balears (ATIB). La normativa autonómica está en el Texto Refundido de tributos cedidos aprobado por el Decreto Legislativo 1/2014, de 6 de junio.

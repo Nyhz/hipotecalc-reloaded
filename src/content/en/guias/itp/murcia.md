@@ -4,7 +4,7 @@ description: "How much ITP you pay when buying a resale home in the Region of Mu
 comunidad: "Murcia"
 tipoGeneral: "7.75%"
 resumen: "3% for buyers aged 40 or under, large families and disability ≥65%; 4% for special-regime VPO"
-updatedDate: 2026-07-08
+updatedDate: 2026-08-23
 ---
 
 Anyone buying a resale home in the Region of Murcia pays the ITP (Impuesto sobre Transmisiones Patrimoniales Onerosas, the property transfer tax; ITP-TPO). It is a tax borne by the buyer and self-assessed using modelo 600 (tax form 600) with the Agencia Tributaria de la Región de Murcia (ATRM, the regional tax agency).

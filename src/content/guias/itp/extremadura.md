@@ -4,12 +4,12 @@ description: "Cuánto ITP se paga al comprar vivienda usada en Extremadura en 20
 comunidad: "Extremadura"
 tipoGeneral: "Tarifa 8/10/11 %"
 resumen: "7 % vivienda habitual ≤200.000 €; 4 % menores de 36, familia numerosa y discapacidad; 4 % VPO y zonas rurales"
-updatedDate: 2026-07-08
+updatedDate: 2026-08-23
 ---
 
 Comprar una vivienda de segunda mano en Extremadura obliga a pagar el Impuesto sobre Transmisiones Patrimoniales Onerosas (ITP-TPO), que corre siempre a cargo del comprador. Extremadura es una de las pocas comunidades con **tarifa por tramos**: el tipo general arranca en el 8 % y puede llegar al 11 % en la parte del valor que exceda de 600.000 €.
 
-La buena noticia para la mayoría de compradores es el tipo reducido del 7 % para vivienda habitual, que la Ley 1/2025, de 3 de abril, dejó configurado con un límite de valor de 200.000 € y límites de renta más amplios que antes. Los menores de 36 años, las familias numerosas y las personas con discapacidad pueden bajar al 4 %, igual que quien compre su vivienda habitual en un municipio de menos de 3.000 habitantes. Según el Capítulo II del libro «Tributación Autonómica. Medidas 2026» del Ministerio de Hacienda (a 29-4-2026), Extremadura no ha aprobado medidas nuevas para 2026: sigue vigente el marco de 2025. Todas las cifras están contrastadas con el texto consolidado del Decreto Legislativo 1/2018 en el BOE (actualizado a 7-4-2025, que ya incorpora la Ley 1/2025).
+La buena noticia para la mayoría de compradores es el tipo reducido del 7 % para vivienda habitual, que la Ley 1/2025, de 3 de abril, dejó configurado con un límite de valor de 200.000 € y límites de renta más amplios que antes. Los menores de 36 años, las familias numerosas y las personas con discapacidad pueden bajar al 4 %, igual que quien compre su vivienda habitual en un municipio de menos de 3.000 habitantes. Atención a la novedad de este verano: la **Ley 2/2026, de 3 de agosto, de Presupuestos Generales de Extremadura** (DOE de 4-8-2026, en vigor desde el 5 de agosto de 2026) ha unificado los límites de valor y de renta de todos los tipos reducidos, ampliando los del 4 % rural y añadiendo límites al 4 % de VPO, que antes no los tenía. Todas las cifras están contrastadas con el texto consolidado del Decreto Legislativo 1/2018 en el BOE (actualizado a 4-8-2026, que ya incorpora la Ley 2/2026).
 
 ## Lo esencial en un vistazo
 
@@ -18,8 +18,8 @@ La buena noticia para la mayoría de compradores es el tipo reducido del 7 % par
 | Tipo general (tarifa) | 8 % hasta 360.000 €; 10 % de 360.000,01 a 600.000 €; 11 % el exceso | Art. 36 TR (D.Leg. 1/2018) |
 | Vivienda habitual (≤ 200.000 € y límites de renta) | 7 % | Art. 40 TR |
 | Menores de 36, familia numerosa, discapacidad ≥ 65 % (mismos límites) | 4 % | Art. 41 TR |
-| Vivienda de protección oficial con precio máximo legal | 4 % | Art. 39 TR |
-| Vivienda habitual en municipios de menos de 3.000 habitantes | 4 % | Art. 44 bis TR |
+| Vivienda de protección oficial con precio máximo legal (mismos límites) | 4 % | Art. 39 TR |
+| Vivienda habitual en municipios de menos de 3.000 habitantes (mismos límites) | 4 % | Art. 44 bis TR |
 | Compra por inmobiliarias para reventa | No existe tipo especial | — |
 | Bonificaciones de cuota en TPO | No hay ninguna | — |
 | Base imponible | El mayor entre precio y valor de referencia de Catastro | Art. 10 TRLITPAJD |
@@ -49,6 +49,8 @@ La cuota es la suma de las cuotas de cada tramo. Ejemplo: una segunda residencia
 
 Reglas comunes (art. 52 TR): la vivienda habitual se define según la normativa del IRPF; los límites de renta se refieren a la declaración del IRPF del último período cuyo plazo de presentación hubiera concluido a la fecha de devengo; las parejas de hecho inscritas en el registro autonómico se equiparan a los cónyuges; y —muy importante— la aplicación de cualquier beneficio fiscal autonómico exige que el pago se realice por medios bancarios (tarjeta, transferencia, cheque nominativo o ingreso en cuenta), nunca en efectivo (art. 52.3 TR).
 
+**Régimen transitorio:** la Ley 2/2026, de 3 de agosto, unificó desde el **5 de agosto de 2026** los límites de los tipos reducidos de los arts. 39 y 44 bis con los del resto (valor ≤ 200.000 € y rentas ≤ 30.000 € individual / 55.000 € conjunta). Las compras devengadas **antes de esa fecha** se rigen por los requisitos anteriores: en el 4 % rural, valor ≤ 180.000 €, rentas ≤ 19.000/24.000 € y un límite adicional de renta familiar agregada; en el 4 % de VPO, sin límites de valor ni de renta.
+
 ### Vivienda habitual (régimen general): 7 %
 Requisitos simultáneos (art. 40 TR, redacción de la Ley 1/2025, de 3 de abril):
 - Que el inmueble vaya a ser la vivienda habitual del comprador.
@@ -64,13 +66,13 @@ Se exigen los mismos requisitos del 7 % (valor ≤ 200.000 € y rentas ≤ 30.0
 Si compran cónyuges o pareja de hecho inscrita, basta con que **uno** cumpla el requisito de edad o de discapacidad (art. 41.2 TR).
 
 ### Viviendas de protección oficial: 4 %
-Para VPO con precio máximo legal que vayan a ser vivienda habitual del adquirente, acreditando la calificación con certificado del órgano autonómico competente (art. 39 TR). Sin límite de renta.
+Para VPO con precio máximo legal que vayan a ser vivienda habitual del adquirente, acreditando la calificación con certificado del órgano autonómico competente (art. 39 TR, redacción de la Ley 2/2026). Desde el 5 de agosto de 2026 se exigen, además, los mismos límites que en el resto de tipos reducidos: valor de la vivienda no superior a 200.000 € y bases imponibles general y del ahorro del IRPF del adquirente no superiores a 30.000 € (individual) o 55.000 € (conjunta); quien no esté obligado a declarar cumple el requisito si sus ingresos netos no superan esos límites.
 
 ### Vivienda habitual en zonas rurales: 4 %
-Requisitos simultáneos (art. 44 bis TR):
+Requisitos simultáneos (art. 44 bis TR, redacción de la Ley 2/2026):
 - Vivienda situada en municipios o entidades locales menores con población de derecho inferior a 3.000 habitantes a 31 de diciembre.
-- Valor de la vivienda no superior a 180.000 €.
-- Bases imponibles general y del ahorro del IRPF del adquirente no superiores a 19.000 € (individual) o 24.000 € (conjunta), y renta total anual de todos los miembros de la familia que vaya a habitarla no superior a 30.000 € anuales, incrementados en 3.000 € por cada hijo que conviva con el adquirente.
+- Valor de la vivienda no superior a 200.000 €.
+- Bases imponibles general y del ahorro del IRPF del adquirente no superiores a 30.000 € (individual) o 55.000 € (conjunta); quien no esté obligado a declarar cumple el requisito si sus ingresos netos no superan esos límites.
 
 ### ¿Y las inmobiliarias que compran para revender?
 Extremadura, a diferencia de otras comunidades, **no tiene un tipo especial** para la adquisición de viviendas por empresas inmobiliarias destinadas a la reventa.
@@ -86,6 +88,7 @@ La autoliquidación se presenta con el **modelo 600**, presencialmente en las of
 ## Normativa aplicable (enlaces oficiales)
 
 - Decreto Legislativo 1/2018, texto refundido de tributos cedidos de Extremadura, consolidado: https://www.boe.es/buscar/act.php?id=BOE-A-2018-8159
+- Ley 2/2026, de 3 de agosto, de Presupuestos Generales de Extremadura para 2026 (disposición final segunda; DOE núm. 149, de 4-8-2026): https://www.boe.es/buscar/doc.php?id=BOE-A-2026-17839
 - Texto Refundido de la Ley del ITPAJD (RDLeg. 1/1993): https://www.boe.es/buscar/act.php?id=BOE-A-1993-25359
 - Ficha oficial del modelo 600 (plazo y documentación), Junta de Extremadura: https://www.juntaex.es/w/0610622
 - Portal Tributario de la Junta de Extremadura, presentación del modelo 600: https://portaltributario.juntaex.es/PortalTributario/web/guest/ppt600

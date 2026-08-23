@@ -4,7 +4,7 @@ description: "How much ITP you pay when buying a resale home in Navarre in 2026:
 comunidad: "Navarra"
 tipoGeneral: "6%"
 resumen: "5% for family units with 2+ children (first €180,304); 4% in municipalities at risk of depopulation; VPO exemption"
-updatedDate: 2026-07-08
+updatedDate: 2026-08-23
 ---
 
 If you are going to buy a **resale** home in Navarre, the tax you will pay is not IVA (Spanish VAT) but the **ITP (Impuesto sobre Transmisiones Patrimoniales Onerosas, the property transfer tax; ITP-TPO)**. And in Navarre this tax has an important peculiarity: the Comunidad Foral (the chartered community of Navarre) does not apply the state rules or those of the "common regime" regions, but its **own foral (regional charter) regime**, based on the Convenio Económico between the State and Navarre (Ley 28/1990). When the property is located in Navarre, the right to levy the tax belongs to the Comunidad Foral (art. 38 of the Convenio Económico), and it is paid to the **Hacienda Foral de Navarra** (Navarre's regional tax authority).

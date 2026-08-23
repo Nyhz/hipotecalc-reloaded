@@ -4,7 +4,7 @@ description: "How much ITP you pay when buying a resale home in Catalonia in 202
 comunidad: "Cataluña"
 tipoGeneral: "10–13% scale"
 resumen: "Bracketed scale from 10% to 13% (20% large holders); 5% young buyers ≤35, large and single-parent families, disability and victims; 7% VPO; 4/3% rural"
-updatedDate: 2026-07-08
+updatedDate: 2026-08-23
 ---
 
 If you buy a second-hand home in Catalonia, the tax you will pay is not IVA but the Impuesto sobre Transmisiones Patrimoniales y Actos Jurídicos Documentados in its Transmisiones Patrimoniales Onerosas modality (ITP-TPO, the property transfer tax). It is always paid by the buyer and administered by the Agència Tributària de Catalunya (ATC, the Catalan tax agency).

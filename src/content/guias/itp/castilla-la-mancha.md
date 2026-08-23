@@ -4,7 +4,7 @@ description: "Cuánto ITP se paga al comprar vivienda usada en Castilla-La Manch
 comunidad: "Castilla-La Mancha"
 tipoGeneral: "9 %"
 resumen: "Desde marzo de 2026: 6 % primera vivienda ≤240.000 €; 3 % menores de 36; 5 % familias numerosas, monoparentales y discapacidad; 5/4/3 % en zonas despobladas"
-updatedDate: 2026-07-08
+updatedDate: 2026-08-23
 ---
 
 Quien compra una vivienda de segunda mano en Castilla-La Mancha paga, como comprador, el Impuesto sobre Transmisiones Patrimoniales Onerosas (ITP-TPO). El tipo general es del 9 %, uno de los más altos de España, pero 2026 ha traído una rebaja importante para la primera vivienda habitual: la Ley 1/2026, de 26 de marzo, de Medidas Administrativas y Tributarias (DOCM núm. 61, de 30 de marzo de 2026), en vigor para devengos desde el **31 de marzo de 2026**, elevó el límite de valor de la vivienda de 180.000 a 240.000 euros, simplificó los requisitos y creó un tipo del 3 % para menores de 36 años.

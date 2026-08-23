@@ -4,7 +4,7 @@ description: "Cuánto ITP se paga al comprar vivienda usada en La Rioja en 2026:
 comunidad: "La Rioja"
 tipoGeneral: "7 %"
 resumen: "4 % jóvenes <40 años (3 % en municipios pequeños); 5/3 % familia numerosa; 5 % VPO y discapacidad ≥33 %"
-updatedDate: 2026-07-08
+updatedDate: 2026-08-23
 ---
 
 Si compras una vivienda de segunda mano en La Rioja, pagarás como comprador el Impuesto sobre Transmisiones Patrimoniales Onerosas (ITP-TPO) al tipo general del 7 %. La comunidad mantiene, además, una batería de tipos reducidos para vivienda habitual: jóvenes menores de 40 años (4 %, y 3 % en pequeños municipios), familias numerosas (5 %, o 3 % con requisitos adicionales), personas con discapacidad (5 %) y viviendas de protección oficial (5 %).

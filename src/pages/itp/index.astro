@@ -15,6 +15,15 @@ const description =
 
 const nombreCorto = (guia: (typeof guias)[number]) =>
   guia.id === 'ceuta-melilla' ? 'Ceuta y Melilla' : guia.data.comunidad;
+
+// La celda del tipo sale del frontmatter (tipoGeneral), que también usan las
+// páginas territoriales; estos matices son solo para la tabla comparativa:
+// el 2,5 % de vivienda habitual y el 6 % de >5 viviendas en el País Vasco, y
+// el 20 % catalán a grandes tenedores (Decreto ley 5/2025, desde 27-6-2025).
+const TIPO_TABLA: Record<string, string> = {
+  'pais-vasco': '4 % vivienda; 2,5 % habitual; 6 % si >5 viviendas (7 % general)',
+  'cataluna': 'Tarifa 10–13 % (20 % grandes tenedores)',
+};
 ---
 <Layout title={title} description={description} pageType="legal"
   ogImage="https://www.hipotecalc.com/img/itp-mapa-espana-2026.png"
@@ -36,7 +45,8 @@ const nombreCorto = (guia: (typeof guias)[number]) =>
       <p class="text-ink-soft max-w-3xl mx-auto text-base md:text-lg">
         El Impuesto de Transmisiones Patrimoniales es el mayor gasto al comprar una vivienda
         de segunda mano, y cada comunidad aplica tipos y bonificaciones distintos: del 3 %
-        efectivo de Ceuta y Melilla al 13 % de los tramos altos en Cataluña o Baleares.
+        efectivo de Ceuta y Melilla al 13 % de los tramos altos en Cataluña o Baleares, con
+        un máximo del 20 % que Cataluña aplica desde junio de 2025 a los grandes tenedores.
         Elige tu comunidad y consulta los tipos vigentes, verificados con fuentes oficiales.
       </p>
     </header>
@@ -58,8 +68,12 @@ const nombreCorto = (guia: (typeof guias)[number]) =>
         siempre el comprador, y desde 2022 la base imponible es el
         <strong class="text-ink"> valor de referencia de Catastro</strong> —o el precio pactado si
         es mayor—, no el precio sin más (art. 10 del TRLITPAJD). Navarra y País Vasco aplican sus
-        propias reglas forales de valoración. Si la vivienda es nueva, no se paga ITP sino IVA
-        del 10 %: puedes comparar ambos casos en la
+        propias reglas forales de valoración. Si la vivienda es nueva, no se paga ITP: en la
+        península y Baleares tributa por IVA al 10 %, y en los territorios donde no se aplica
+        el IVA, por su impuesto indirecto propio —el IGIC en
+        <a href="/itp/canarias" class="underline text-brand-blue">Canarias</a> y el IPSI en
+        <a href="/itp/ceuta-melilla" class="underline text-brand-blue">Ceuta y Melilla</a>—.
+        Puedes comparar vivienda nueva y usada en la
         <a href="/calculadora-hipotecaria" class="underline text-brand-blue">calculadora hipotecaria</a>.
       </p>
     </div>
@@ -80,7 +94,7 @@ const nombreCorto = (guia: (typeof guias)[number]) =>
               <td class="py-3 px-3 font-medium text-ink whitespace-nowrap">
                 <a href={`/itp/${guia.id}`} class="hover:text-brand-blue transition-colors">{nombreCorto(guia)}</a>
               </td>
-              <td class="py-3 px-3 text-ink whitespace-nowrap">{guia.data.tipoGeneral}</td>
+              <td class="py-3 px-3 text-ink">{TIPO_TABLA[guia.id] ?? guia.data.tipoGeneral}</td>
               <td class="py-3 px-3 text-ink-soft hidden md:table-cell">{guia.data.resumen}</td>
               <td class="py-3 px-3 text-right">
                 <a href={`/itp/${guia.id}`} class="text-brand-blue font-medium whitespace-nowrap">Ver guía →</a>
@@ -104,7 +118,7 @@ const nombreCorto = (guia: (typeof guias)[number]) =>
     items={[
       {
         question: "¿Quién paga el ITP y cuándo?",
-        answer: "El ITP lo paga siempre el comprador de la vivienda usada, mediante autoliquidación (modelo 600 en la mayoría de comunidades) en el plazo de 30 días hábiles o un mes desde la firma de la escritura, según la comunidad."
+        answer: "El ITP lo paga siempre el comprador de la vivienda usada, mediante autoliquidación (modelo 600 en la mayoría de comunidades). El plazo depende de la comunidad y se cuenta desde el devengo (la fecha de la escritura o del contrato): dos meses en Andalucía y Navarra; un mes en Aragón, Baleares, Canarias, Castilla-La Mancha, Cataluña, la Comunitat Valenciana, Extremadura y Galicia; y 30 días hábiles —sin contar sábados, domingos ni festivos— en Asturias, Castilla y León, La Rioja, Madrid, Murcia, el País Vasco y Ceuta y Melilla. El plazo exacto está en la guía de cada comunidad."
       },
       {
         question: "¿Sobre qué cantidad se calcula el ITP?",
@@ -116,7 +130,7 @@ const nombreCorto = (guia: (typeof guias)[number]) =>
       },
       {
         question: "¿La vivienda nueva paga ITP?",
-        answer: "No. La primera transmisión de una vivienda nueva tributa por IVA al 10 % (4 % si es VPO de régimen especial) más el impuesto de Actos Jurídicos Documentados. El ITP solo grava las viviendas de segunda mano."
+        answer: "No. En la península y Baleares, la primera transmisión de una vivienda nueva tributa por IVA al 10 % (4 % si es VPO de régimen especial) más el impuesto de Actos Jurídicos Documentados. En Canarias y en Ceuta y Melilla no se aplica el IVA: la vivienda nueva tributa por el IGIC y por el IPSI, respectivamente. El ITP solo grava las viviendas de segunda mano."
       }
     ]}
   />

@@ -4,7 +4,7 @@ description: "Cuánto ITP se paga al comprar vivienda usada en Navarra en 2026: 
 comunidad: "Navarra"
 tipoGeneral: "6 %"
 resumen: "5 % unidades familiares con 2+ hijos (primeros 180.304 €); 4 % municipios en riesgo de despoblación; exención VPO"
-updatedDate: 2026-07-08
+updatedDate: 2026-08-23
 ---
 
 Si vas a comprar una vivienda **usada** en Navarra, el impuesto que pagarás no es el IVA, sino el **Impuesto sobre Transmisiones Patrimoniales Onerosas (ITP-TPO)**. Y en Navarra este impuesto tiene una particularidad importante: la Comunidad Foral no aplica la normativa estatal ni la de las comunidades de régimen común, sino su **propio régimen foral**, amparado en el Convenio Económico entre el Estado y Navarra (Ley 28/1990). Cuando el inmueble está situado en Navarra, la exacción del impuesto corresponde a la Comunidad Foral (art. 38 del Convenio Económico), y se paga a la **Hacienda Foral de Navarra**.

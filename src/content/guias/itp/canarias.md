@@ -4,7 +4,7 @@ description: "Cuánto ITP se paga al comprar vivienda usada en Canarias en 2026:
 comunidad: "Canarias"
 tipoGeneral: "6,5 %"
 resumen: "5 % vivienda habitual ≤200.000 €; 1 % familia numerosa, monoparental o discapacidad; bonificación 20 % ≤40 años; 0 % vivienda protegida"
-updatedDate: 2026-07-08
+updatedDate: 2026-08-23
 ---
 
 Al comprar una vivienda de segunda mano en Canarias, el comprador paga el Impuesto sobre Transmisiones Patrimoniales Onerosas (ITP-TPO), gestionado por la Agencia Tributaria Canaria. El tipo general es del **6,5 %**, uno de los más bajos del régimen común, y baja al **5 %** para la vivienda habitual de hasta 200.000 € de base imponible, umbral elevado por la Ley 9/2025, de 23 de diciembre (con efectos desde el 1-1-2025), que también actualizó a 46.455 € los límites de renta de los tipos del 1 % para familias numerosas, personas con discapacidad y familias monoparentales.

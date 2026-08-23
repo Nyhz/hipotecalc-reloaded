@@ -114,6 +114,33 @@ const impuestoObraNueva =
       ? 'No. La vivienda nueva en Ceuta y Melilla no paga ITP ni IVA: tributa por el IPSI (Impuesto sobre la Producción, los Servicios y la Importación). El ITP solo grava las viviendas de segunda mano.'
       : `No. La vivienda nueva comprada al promotor tributa por IVA al 10 % (4 % si es VPO de régimen especial) más Actos Jurídicos Documentados. El ITP solo grava las viviendas de segunda mano en ${nombreCorto}.`;
 
+// Plazo de autoliquidación: cada territorio tiene un plazo único, el mismo
+// que documenta el cuerpo de cada guía con su fuente oficial. Cantabria queda
+// fuera a propósito (plazo pendiente de confirmar con la ACAT) y conserva la
+// redacción genérica antigua.
+const PLAZOS: Record<string, string> = {
+  'andalucia': 'El plazo es de dos meses a contar desde el día siguiente a la fecha de devengo (la de la escritura o el contrato)',
+  'navarra': 'El plazo es de dos meses desde la fecha de devengo (la de la escritura o el contrato)',
+  'aragon': 'El plazo es de un mes contado desde el día siguiente a la fecha de la escritura o del contrato',
+  'baleares': 'El plazo es de un mes desde la fecha en que se formalice el acto o contrato (la escritura)',
+  'canarias': 'El plazo es de un mes a contar desde la fecha del acto o contrato (la escritura)',
+  'castilla-la-mancha': 'El plazo es de un mes contado desde la fecha de devengo (la de la escritura)',
+  'cataluna': 'El plazo es de un mes a contar desde la fecha del acto o contrato (la escritura), computado de fecha a fecha',
+  'comunidad-valenciana': 'El plazo es de un mes contado desde el día en que se cause el acto o contrato (la escritura)',
+  'extremadura': 'El plazo es de un mes a contar desde la fecha en que se cause el acto o contrato (la escritura)',
+  'galicia': 'El plazo es, con carácter general, de un mes desde la fecha del acto o contrato (la escritura)',
+  'asturias': 'El plazo es de 30 días hábiles desde la fecha del acto o contrato (la escritura), sin contar sábados, domingos ni festivos',
+  'castilla-y-leon': 'El plazo es de 30 días hábiles desde la fecha del acto o contrato (la escritura), sin contar sábados, domingos ni festivos',
+  'ceuta-melilla': 'El plazo es de 30 días hábiles desde la fecha del acto o contrato (la escritura), sin contar sábados, domingos ni festivos',
+  'la-rioja': 'El plazo es de 30 días hábiles desde la fecha del acto o contrato (la escritura), sin contar sábados, domingos ni festivos',
+  'madrid': 'El plazo es de 30 días hábiles desde la fecha del acto o contrato (la escritura), sin contar sábados, domingos ni festivos',
+  'murcia': 'El plazo es de 30 días hábiles desde la fecha del acto o contrato (la escritura), sin contar sábados, domingos ni festivos',
+  'pais-vasco': 'El plazo es de 30 días hábiles desde la fecha del acto o contrato (la escritura), sin contar sábados, domingos ni festivos',
+};
+const plazoFrase = PLAZOS[guia.id]
+  ? `${PLAZOS[guia.id]}; el modelo y los detalles de presentación se explican en esta guía.`
+  : 'El plazo habitual es de 30 días hábiles o un mes desde la firma de la escritura; el modelo y el plazo exactos se detallan en esta guía.';
+
 const faqItems = [
   {
     question: `¿Cuánto ITP se paga en ${nombreCorto} en 2026?`,
@@ -121,7 +148,7 @@ const faqItems = [
   },
   {
     question: `¿Quién paga el ITP y qué plazo hay en ${nombreCorto}?`,
-    answer: 'El ITP lo paga siempre el comprador de la vivienda usada, mediante autoliquidación ante la administración tributaria correspondiente. El plazo habitual es de 30 días hábiles o un mes desde la firma de la escritura; el modelo y el plazo exactos se detallan en esta guía.',
+    answer: `El ITP lo paga siempre el comprador de la vivienda usada, mediante autoliquidación ante la administración tributaria correspondiente. ${plazoFrase}`,
   },
   {
     question: `¿Sobre qué valor se calcula el ITP en ${nombreCorto}?`,

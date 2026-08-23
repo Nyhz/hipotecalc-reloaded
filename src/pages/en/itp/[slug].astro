@@ -72,6 +72,33 @@ const impuestoObraNueva =
       ? 'No. New homes in Ceuta and Melilla pay neither ITP nor VAT: they are subject to the IPSI (the local indirect tax). The ITP only applies to resale homes.'
       : `No. A new home bought from the developer is subject to 10% VAT (4% for special-regime subsidised housing) plus stamp duty (AJD). The ITP only applies to resale homes in ${nombre}.`;
 
+// Filing deadline: each territory has a single deadline, the same one the
+// body of each guide documents with its official source. Cantabria is left
+// out on purpose (deadline pending confirmation with the ACAT) and keeps the
+// old generic wording.
+const PLAZOS: Record<string, string> = {
+  'andalusia': 'The deadline is two months counted from the day after the accrual date (the date of the deed or contract)',
+  'navarre': 'The deadline is two months from the accrual date (the date of the deed or contract)',
+  'aragon': 'The deadline is one month counted from the day after the date of the deed or contract',
+  'balearic-islands': 'The deadline is one month from the date the act or contract is executed (the deed)',
+  'canary-islands': 'The deadline is one month from the date of the act or contract (the deed)',
+  'castilla-la-mancha': 'The deadline is one month from the accrual date (the date of the deed)',
+  'catalonia': 'The deadline is one month from the date of the act or contract (the deed), counted date to date',
+  'valencian-community': 'The deadline is one month from the day the act or contract takes place (the deed)',
+  'extremadura': 'The deadline is one month from the date the act or contract takes place (the deed)',
+  'galicia': 'The deadline is, as a general rule, one month from the date of the act or contract (the deed)',
+  'asturias': 'The deadline is 30 working days from the date of the act or contract (the deed), not counting Saturdays, Sundays or public holidays',
+  'castilla-y-leon': 'The deadline is 30 working days from the date of the act or contract (the deed), not counting Saturdays, Sundays or public holidays',
+  'ceuta-melilla': 'The deadline is 30 working days from the date of the act or contract (the deed), not counting Saturdays, Sundays or public holidays',
+  'la-rioja': 'The deadline is 30 working days from the date of the act or contract (the deed), not counting Saturdays, Sundays or public holidays',
+  'madrid': 'The deadline is 30 working days from the date of the act or contract (the deed), not counting Saturdays, Sundays or public holidays',
+  'murcia': 'The deadline is 30 working days from the date of the act or contract (the deed), not counting Saturdays, Sundays or public holidays',
+  'basque-country': 'The deadline is 30 working days from the date of the act or contract (the deed), not counting Saturdays, Sundays or public holidays',
+};
+const plazoFrase = PLAZOS[guia.id]
+  ? `${PLAZOS[guia.id]}; the exact form and filing details are covered in this guide.`
+  : 'The usual deadline is 30 working days or one month from signing the deed; the exact form and deadline are covered in this guide.';
+
 const faqItems = [
   {
     question: `How much ITP is paid in ${nombre} in 2026?`,
@@ -79,7 +106,7 @@ const faqItems = [
   },
   {
     question: `Who pays the ITP and what is the deadline in ${nombre}?`,
-    answer: 'The buyer of the resale home always pays the ITP, through a self-assessment filed with the corresponding tax administration. The usual deadline is 30 working days or one month from signing the deed; the exact form and deadline are covered in this guide.',
+    answer: `The buyer of the resale home always pays the ITP, through a self-assessment filed with the corresponding tax administration. ${plazoFrase}`,
   },
   {
     question: `What value is the ITP calculated on in ${nombre}?`,

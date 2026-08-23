@@ -4,7 +4,7 @@ description: "Calcula tu ITP exacto en la Comunitat Valenciana: pon el precio y 
 comunidad: "Comunidad Valenciana"
 tipoGeneral: "9 % (11 % si >1 M€)"
 resumen: "9 % general desde junio de 2026; 6/8 % jóvenes <35; 3/4 % familias numerosas y monoparentales, discapacidad, víctimas y VPO especial; bonificación 100 % DANA"
-updatedDate: 2026-07-08
+updatedDate: 2026-08-23
 ---
 
 Quien compra una vivienda de segunda mano en la Comunitat Valenciana paga el Impuesto sobre Transmisiones Patrimoniales Onerosas (ITP-TPO). Es un impuesto que corre a cargo del comprador, se autoliquida con el modelo 600 y se gestiona a través de la Agència Tributària Valenciana (ATV). Los tipos autonómicos están regulados en la Ley 13/1997, de 23 de diciembre, de la Generalitat Valenciana.

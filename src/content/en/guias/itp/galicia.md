@@ -4,7 +4,7 @@ description: "How much ITP you pay when buying a resale home in Galicia in 2026:
 comunidad: "Galicia"
 tipoGeneral: "8 %"
 resumen: "7% primary residence; 3% under-36s, large and single-parent families, disability ≥65% and victims; 100% deduction in sparsely populated parishes"
-updatedDate: 2026-07-08
+updatedDate: 2026-08-23
 ---
 
 If you are going to buy a second-hand home in Galicia, the tax that will shape your budget is the ITP (Impuesto sobre Transmisiones Patrimoniales Onerosas, the property transfer tax, TPO modality). It is always paid by the buyer and calculated on the value of the home, not on the cost of the mortgage.

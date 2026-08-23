@@ -4,7 +4,7 @@ description: "How much ITP you pay when buying a resale home in the Valencian Co
 comunidad: "Comunidad Valenciana"
 tipoGeneral: "9% (11% above €1M)"
 resumen: "9% general from June 2026; 6/8% young buyers <35; 3/4% large and single-parent families, disability, victims and special-regime VPO; 100% DANA rebate"
-updatedDate: 2026-07-08
+updatedDate: 2026-08-23
 ---
 
 Anyone buying a second-hand home in the Valencian Community pays the ITP-TPO (Impuesto sobre Transmisiones Patrimoniales Onerosas, the property transfer tax). It is a tax borne by the buyer, self-assessed using modelo 600 and administered through the Agència Tributària Valenciana (ATV, the Valencian tax agency). The regional rates are set out in Ley 13/1997, de 23 de diciembre, de la Generalitat Valenciana.

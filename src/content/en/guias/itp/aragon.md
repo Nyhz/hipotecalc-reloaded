@@ -4,7 +4,7 @@ description: "How much ITP you pay when buying a resale home in Aragon in 2026: 
 comunidad: "Aragón"
 tipoGeneral: "8–10% scale"
 resumen: "12.5% rebate (<35s, disability ≥65%, victims of gender-based violence, price ≤€100,000); 50% large families; rural rates"
-updatedDate: 2026-07-08
+updatedDate: 2026-08-23
 ---
 
 Buying a resale (second-hand) home in Aragon means paying the Impuesto sobre Transmisiones Patrimoniales Onerosas (ITP-TPO, the Spanish property transfer tax), a state tax devolved to the regions, whose administration and rates are set by the Autonomous Community. It is paid by the buyer, self-assessed (modelo 600, or the Aragonese online modelo 601) and paid to the Administración Tributaria de Aragón (the Aragonese tax authority).

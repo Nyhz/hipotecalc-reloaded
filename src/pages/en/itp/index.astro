@@ -16,6 +16,15 @@ const description =
 
 const nombre = (guia: (typeof guias)[number]) =>
   guia.id === 'ceuta-melilla' ? 'Ceuta and Melilla' : regionNameEn(guia.data.comunidad);
+
+// The rate cell comes from frontmatter (tipoGeneral), which the regional
+// pages also use; these nuances apply only to the comparison table: the 2.5%
+// primary-residence and 6% >5-homes rates in the Basque Country, and
+// Catalonia's 20% for large holders (Decreto ley 5/2025, since 27-6-2025).
+const TIPO_TABLA: Record<string, string> = {
+  'basque-country': '4% homes; 2.5% primary residence; 6% if >5 homes (7% general)',
+  'catalonia': '10–13% scale (20% large holders)',
+};
 ---
 <Layout title={title} description={description} pageType="legal"
   ogImage="https://www.hipotecalc.com/img/itp-map-spain-by-region-2026.png"
@@ -38,8 +47,9 @@ const nombre = (guia: (typeof guias)[number]) =>
         The ITP (Impuesto de Transmisiones Patrimoniales) is the biggest cost when
         buying a resale home in Spain, and every region sets its own rates and
         reliefs: from an effective 3% in Ceuta and Melilla to 13% in the top
-        brackets of Catalonia or the Balearic Islands. Pick your region for the
-        current rates, verified against official sources.
+        brackets of Catalonia or the Balearic Islands, with a 20% maximum that
+        Catalonia has applied to large holders of housing since June 2025. Pick
+        your region for the current rates, verified against official sources.
       </p>
     </header>
 
@@ -60,8 +70,12 @@ const nombre = (guia: (typeof guias)[number]) =>
         always pays the tax, and since 2022 the taxable base is the
         <strong class="text-ink"> cadastral reference value</strong> — or the agreed
         price if higher — not simply the price (art. 10 TRLITPAJD). Navarre and the
-        Basque Country apply their own foral valuation rules. New-build homes pay
-        VAT at 10% instead of ITP: you can compare both cases in the
+        Basque Country apply their own foral valuation rules. New-build homes don't
+        pay ITP: on the mainland and in the Balearics they pay 10% VAT, and in the
+        territories where VAT does not apply, their own indirect tax — the IGIC in
+        the <a href="/en/itp/canary-islands" class="underline text-brand-blue">Canary Islands</a>
+        and the IPSI in <a href="/en/itp/ceuta-melilla" class="underline text-brand-blue">Ceuta and Melilla</a>.
+        You can compare new-build and resale in the
         <a href="/en/mortgage-calculator" class="underline text-brand-blue">mortgage calculator</a>.
       </p>
     </div>
@@ -82,7 +96,7 @@ const nombre = (guia: (typeof guias)[number]) =>
               <td class="py-3 px-3 font-medium text-ink whitespace-nowrap">
                 <a href={`/en/itp/${guia.id}`} class="hover:text-brand-blue transition-colors">{nombre(guia)}</a>
               </td>
-              <td class="py-3 px-3 text-ink whitespace-nowrap">{guia.data.tipoGeneral}</td>
+              <td class="py-3 px-3 text-ink">{TIPO_TABLA[guia.id] ?? guia.data.tipoGeneral}</td>
               <td class="py-3 px-3 text-ink-soft hidden md:table-cell">{guia.data.resumen}</td>
               <td class="py-3 px-3 text-right">
                 <a href={`/en/itp/${guia.id}`} class="text-brand-blue font-medium whitespace-nowrap">See guide →</a>
@@ -107,7 +121,7 @@ const nombre = (guia: (typeof guias)[number]) =>
     items={[
       {
         question: "Who pays the ITP and when?",
-        answer: "The buyer of the resale home always pays the ITP, through a self-assessment (form 600 in most regions) within 30 working days or one month from signing the deed, depending on the region."
+        answer: "The buyer of the resale home always pays the ITP, through a self-assessment (form 600 in most regions). The deadline depends on the region and runs from the accrual date (the date of the deed or contract): two months in Andalusia and Navarre; one month in Aragón, the Balearic Islands, the Canary Islands, Castilla-La Mancha, Catalonia, the Valencian Community, Extremadura and Galicia; and 30 working days — not counting Saturdays, Sundays or public holidays — in Asturias, Castilla y León, La Rioja, Madrid, Murcia, the Basque Country and Ceuta and Melilla. The exact deadline is in each region's guide."
       },
       {
         question: "What amount is the ITP calculated on?",
@@ -119,7 +133,7 @@ const nombre = (guia: (typeof guias)[number]) =>
       },
       {
         question: "Do new-build homes pay ITP?",
-        answer: "No. The first sale of a new home is subject to 10% VAT (4% for special-regime subsidised housing) plus stamp duty (AJD). The ITP only applies to resale homes."
+        answer: "No. On the mainland and in the Balearics, the first sale of a new home is subject to 10% VAT (4% for special-regime subsidised housing) plus stamp duty (AJD). In the Canary Islands and in Ceuta and Melilla VAT does not apply: new homes pay the IGIC and the IPSI, respectively. The ITP only applies to resale homes."
       }
     ]}
   />

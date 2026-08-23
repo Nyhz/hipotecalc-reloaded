@@ -4,7 +4,7 @@ description: "How much ITP you pay when buying a resale home in Ceuta and Melill
 comunidad: "Ceuta"
 tipoGeneral: "6% with a 50% rebate → 3% effective"
 resumen: "50% rebate on the tax due (art. 57 bis TRLITPAJD); 6% state rate, filed with the AEAT"
-updatedDate: 2026-07-08
+updatedDate: 2026-08-23
 ---
 
 Ceuta and Melilla are not autonomous communities but **cities with a Statute of Autonomy**, and that difference has a direct tax consequence: **they have no power to approve their own rates** for the ITP (Impuesto sobre Transmisiones Patrimoniales y Actos Jurídicos Documentados, the property transfer tax; ITPyAJD). When buying a **resale home** in either city, the **state rules** apply in full: the Texto Refundido approved by Real Decreto Legislativo 1/1993, de 24 de septiembre (TRLITPAJD).

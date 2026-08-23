@@ -4,7 +4,7 @@ description: "Cuánto ITP se paga al comprar vivienda usada en Castilla y León 
 comunidad: "Castilla y León"
 tipoGeneral: "8 % (+10 % sobre el exceso de 250.000 €)"
 resumen: "4 % familia numerosa, discapacidad ≥65 %, <36 años y VPO; 0,01 % jóvenes en el medio rural <150.000 €"
-updatedDate: 2026-07-08
+updatedDate: 2026-08-23
 ---
 
 Al comprar una vivienda de segunda mano en Castilla y León, el comprador paga el Impuesto sobre Transmisiones Patrimoniales Onerosas (ITP-TPO). Esta comunidad aplica una escala en dos tramos: el 8 % con carácter general y el 10 % sobre la parte de la base imponible que exceda de 250.000 euros. A cambio, mantiene dos tipos reducidos muy potentes para la vivienda habitual: el 4 % para familias numerosas, personas con discapacidad, menores de 36 años y viviendas protegidas, y un llamativo 0,01 % (impuesto casi simbólico) para jóvenes que compran su primera vivienda en el medio rural.

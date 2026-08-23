@@ -4,7 +4,7 @@ description: "Cuánto ITP se paga al comprar vivienda usada en Aragón en 2026: 
 comunidad: "Aragón"
 tipoGeneral: "Escala 8–10 %"
 resumen: "Bonificación del 12,5 % (<35 años, discapacidad ≥65 %, víctimas de violencia de género, precio ≤100.000 €); 50 % familia numerosa; tipos rurales"
-updatedDate: 2026-07-08
+updatedDate: 2026-08-23
 ---
 
 Comprar una vivienda de segunda mano en Aragón obliga a pagar el Impuesto sobre Transmisiones Patrimoniales Onerosas (ITP-TPO), un tributo estatal cedido cuya gestión y tipos corresponden a la Comunidad Autónoma. Lo paga el comprador, se autoliquida (modelo 600 o el modelo 601 telemático aragonés) y se ingresa a la Administración Tributaria de Aragón.

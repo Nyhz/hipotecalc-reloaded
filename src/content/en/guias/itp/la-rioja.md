@@ -4,7 +4,7 @@ description: "How much ITP you pay when buying a resale home in La Rioja in 2026
 comunidad: "La Rioja"
 tipoGeneral: "7%"
 resumen: "4% under-40s (3% in small municipalities); 5%/3% large families; 5% VPO and disability ≥33%"
-updatedDate: 2026-07-08
+updatedDate: 2026-08-23
 ---
 
 If you buy a second-hand (resale) home in La Rioja, as the buyer you will pay the ITP (Impuesto sobre Transmisiones Patrimoniales Onerosas, the property transfer tax; ITP-TPO) at the general rate of 7%. The region also maintains a range of reduced rates for main residences: buyers under 40 (4%, and 3% in small municipalities), large families (5%, or 3% subject to additional requirements), people with disabilities (5%) and VPO (vivienda de protección oficial, subsidised housing) (5%).

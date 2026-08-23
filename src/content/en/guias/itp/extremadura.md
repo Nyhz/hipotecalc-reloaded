@@ -4,12 +4,12 @@ description: "How much ITP you pay when buying a resale home in Extremadura in 2
 comunidad: "Extremadura"
 tipoGeneral: "8/10/11% scale"
 resumen: "7% primary residence ≤€200,000; 4% under-36s, large family and disability; 4% VPO and rural areas"
-updatedDate: 2026-07-08
+updatedDate: 2026-08-23
 ---
 
 Buying a second-hand home in Extremadura means paying the ITP-TPO (Impuesto sobre Transmisiones Patrimoniales Onerosas, the property transfer tax), which is always borne by the buyer. Extremadura is one of the few regions with a **bracketed scale**: the general rate starts at 8% and can reach 11% on the part of the value exceeding €600,000.
 
-The good news for most buyers is the reduced 7% rate for primary residences, which Ley 1/2025, de 3 de abril, left configured with a value cap of €200,000 and broader income limits than before. Buyers under 36, large families and people with disabilities can drop to 4%, as can anyone buying their primary residence in a municipality of fewer than 3,000 inhabitants. According to Capítulo II of the Ministerio de Hacienda's book «Tributación Autonómica. Medidas 2026» (as of 29-4-2026), Extremadura has not approved any new measures for 2026: the 2025 framework remains in force. All the figures have been checked against the consolidated text of Decreto Legislativo 1/2018 at the BOE (updated to 7-4-2025, which already incorporates Ley 1/2025).
+The good news for most buyers is the reduced 7% rate for primary residences, which Ley 1/2025, de 3 de abril, left configured with a value cap of €200,000 and broader income limits than before. Buyers under 36, large families and people with disabilities can drop to 4%, as can anyone buying their primary residence in a municipality of fewer than 3,000 inhabitants. Mind this summer's change: **Ley 2/2026, de 3 de agosto, Extremadura's 2026 budget law** (DOE of 4-8-2026, in force since 5 August 2026) has unified the value and income limits of all the reduced rates, broadening those of the rural 4% rate and adding limits to the 4% VPO rate, which previously had none. All the figures have been checked against the consolidated text of Decreto Legislativo 1/2018 at the BOE (updated to 4-8-2026, which already incorporates Ley 2/2026).
 
 ## The essentials at a glance
 
@@ -18,8 +18,8 @@ The good news for most buyers is the reduced 7% rate for primary residences, whi
 | General rate (scale) | 8% up to €360,000; 10% from €360,000.01 to €600,000; 11% on the excess | Art. 36 TR (D.Leg. 1/2018) |
 | Primary residence (≤ €200,000 and income limits) | 7% | Art. 40 TR |
 | Under-36s, large family, disability ≥ 65% (same limits) | 4% | Art. 41 TR |
-| Officially protected housing with a legal maximum price | 4% | Art. 39 TR |
-| Primary residence in municipalities of fewer than 3,000 inhabitants | 4% | Art. 44 bis TR |
+| Officially protected housing with a legal maximum price (same limits) | 4% | Art. 39 TR |
+| Primary residence in municipalities of fewer than 3,000 inhabitants (same limits) | 4% | Art. 44 bis TR |
 | Purchases by real estate firms for resale | No special rate exists | — |
 | Rebates on the tax due under TPO | None | — |
 | Taxable base | The higher of the price and the Cadastre reference value | Art. 10 TRLITPAJD |
@@ -49,6 +49,8 @@ The total tax is the sum of the amounts for each bracket. Example: a €400,000 
 
 Common rules (art. 52 TR): the primary residence is defined under the IRPF rules; the income limits refer to the IRPF return for the last period whose filing deadline had passed by the accrual date; unmarried couples registered in the regional registry are treated as spouses; and — very important — applying any regional tax benefit requires that payment be made through banking channels (card, transfer, nominative cheque or deposit into an account), never in cash (art. 52.3 TR).
 
+**Transitional regime:** Ley 2/2026, de 3 de agosto, unified from **5 August 2026** the limits of the reduced rates of arts. 39 and 44 bis with the rest (value ≤ €200,000 and income ≤ €30,000 individual / €55,000 joint). Purchases accrued **before that date** are governed by the previous requirements: for the rural 4% rate, value ≤ €180,000, income ≤ €19,000/€24,000 and an additional aggregate family income limit; for the 4% VPO rate, no value or income limits.
+
 ### Primary residence (general regime): 7%
 Simultaneous requirements (art. 40 TR, as amended by Ley 1/2025, de 3 de abril):
 - The property must become the buyer's primary residence.
@@ -64,13 +66,13 @@ The same requirements as the 7% rate apply (value ≤ €200,000 and income ≤ 
 If the buyers are spouses or a registered unmarried couple, it is enough for **one** of them to meet the age or disability requirement (art. 41.2 TR).
 
 ### Officially protected housing: 4%
-For VPO with a legal maximum price that will become the acquirer's primary residence, with the classification evidenced by a certificate from the competent regional body (art. 39 TR). No income cap.
+For VPO with a legal maximum price that will become the acquirer's primary residence, with the classification evidenced by a certificate from the competent regional body (art. 39 TR, as amended by Ley 2/2026). Since 5 August 2026 the same limits as the other reduced rates also apply: the value of the home must not exceed €200,000 and the buyer's general and savings IRPF taxable bases must not exceed €30,000 (individual) or €55,000 (joint); anyone not required to file meets the requirement if their net income does not exceed those limits.
 
 ### Primary residence in rural areas: 4%
-Simultaneous requirements (art. 44 bis TR):
+Simultaneous requirements (art. 44 bis TR, as amended by Ley 2/2026):
 - The home is located in municipalities or minor local entities with a registered population of fewer than 3,000 inhabitants as of 31 December.
-- The value of the home does not exceed €180,000.
-- The buyer's general and savings IRPF taxable bases do not exceed €19,000 (individual) or €24,000 (joint), and the total annual income of all family members who will live in it does not exceed €30,000 per year, increased by €3,000 for each child living with the buyer.
+- The value of the home does not exceed €200,000.
+- The buyer's general and savings IRPF taxable bases do not exceed €30,000 (individual) or €55,000 (joint); anyone not required to file meets the requirement if their net income does not exceed those limits.
 
 ### What about real estate firms buying to resell?
 Extremadura, unlike other regions, has **no special rate** for the acquisition of homes by real estate companies for resale.
@@ -86,6 +88,7 @@ The self-assessment is filed with **modelo 600**, in person at the managing offi
 ## Applicable legislation (official links)
 
 - Decreto Legislativo 1/2018, consolidated text of Extremadura's devolved taxes: https://www.boe.es/buscar/act.php?id=BOE-A-2018-8159
+- Ley 2/2026, de 3 de agosto, Extremadura's 2026 budget law (disposición final segunda; DOE núm. 149, of 4-8-2026): https://www.boe.es/buscar/doc.php?id=BOE-A-2026-17839
 - Texto Refundido de la Ley del ITPAJD (RDLeg. 1/1993): https://www.boe.es/buscar/act.php?id=BOE-A-1993-25359
 - Official modelo 600 fact sheet (deadline and documentation), Junta de Extremadura: https://www.juntaex.es/w/0610622
 - Portal Tributario de la Junta de Extremadura, modelo 600 filing: https://portaltributario.juntaex.es/PortalTributario/web/guest/ppt600

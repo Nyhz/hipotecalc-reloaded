@@ -4,7 +4,7 @@ description: "How much ITP you pay when buying a resale home in the Canary Islan
 comunidad: "Canarias"
 tipoGeneral: "6.5%"
 resumen: "5% main residence ≤€200,000; 1% large family, single-parent family or disability; 20% rebate ≤40s; 0% protected housing"
-updatedDate: 2026-07-08
+updatedDate: 2026-08-23
 ---
 
 When buying a resale (second-hand) home in the Canary Islands, the buyer pays the Impuesto sobre Transmisiones Patrimoniales Onerosas (ITP-TPO, the Spanish property transfer tax), administered by the Agencia Tributaria Canaria (the Canary Islands tax agency). The general rate is **6.5%**, one of the lowest in mainland-regime Spain, and it drops to **5%** for a main residence with a taxable base of up to €200,000 — a threshold raised by Ley 9/2025, de 23 de diciembre (with effect from 1-1-2025), which also updated to €46,455 the income limits for the 1% rates for large families, people with disabilities and single-parent families.

@@ -4,7 +4,7 @@ description: "Calcula tu ITP exacto en Andalucía: pon el precio y te decimos lo
 comunidad: "Andalucía"
 tipoGeneral: "7 %"
 resumen: "6 % vivienda habitual ≤150.000 €; 3,5 % jóvenes <35 años, discapacidad, familia numerosa, víctimas y municipios pequeños"
-updatedDate: 2026-07-08
+updatedDate: 2026-08-23
 ---
 
 Si vas a comprar una vivienda de segunda mano en Andalucía, el impuesto que más pesará en tu presupuesto es el Impuesto sobre Transmisiones Patrimoniales y Actos Jurídicos Documentados, en su modalidad de Transmisiones Patrimoniales Onerosas (ITP-TPO). Lo paga siempre el comprador y se calcula aplicando un porcentaje sobre el valor de la vivienda.

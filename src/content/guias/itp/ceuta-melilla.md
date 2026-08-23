@@ -4,7 +4,7 @@ description: "Cuánto ITP se paga al comprar vivienda usada en Ceuta y Melilla e
 comunidad: "Ceuta"
 tipoGeneral: "6 % con bonificación del 50 % → 3 % efectivo"
 resumen: "Bonificación del 50 % de la cuota (art. 57 bis TRLITPAJD); tipo estatal del 6 % gestionado ante la AEAT"
-updatedDate: 2026-07-08
+updatedDate: 2026-08-23
 ---
 
 Ceuta y Melilla no son comunidades autónomas, sino **ciudades con Estatuto de Autonomía**, y esa diferencia tiene una consecuencia fiscal directa: **no tienen capacidad para aprobar sus propios tipos** en el Impuesto sobre Transmisiones Patrimoniales y Actos Jurídicos Documentados (ITPyAJD). Al comprar una **vivienda usada** en cualquiera de las dos ciudades se aplica íntegramente la **normativa estatal**: el Texto Refundido aprobado por el Real Decreto Legislativo 1/1993, de 24 de septiembre (TRLITPAJD).

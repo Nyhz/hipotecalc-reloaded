@@ -4,7 +4,7 @@ description: "How much ITP you pay when buying a resale home in the Balearic Isl
 comunidad: "Baleares"
 tipoGeneral: "8–13% scale"
 resumen: "4% main residence (threshold by island); 2% under-36s, disability and large families; 100% rebate <30s or disability"
-updatedDate: 2026-07-08
+updatedDate: 2026-08-23
 ---
 
 In the Balearic Islands, the purchase of a resale (second-hand) home is taxed under the Impuesto sobre Transmisiones Patrimoniales Onerosas (ITP-TPO, the Spanish property transfer tax), which is paid by the buyer and administered by the Agència Tributària de les Illes Balears (ATIB, the Balearic tax agency). The regional rules are contained in the consolidated text of devolved taxes approved by Decreto Legislativo 1/2014, de 6 de junio.

@@ -4,7 +4,7 @@ description: "How much ITP you pay when buying a resale home in Castilla-La Manc
 comunidad: "Castilla-La Mancha"
 tipoGeneral: "9 %"
 resumen: "From March 2026: 6% first home ≤€240,000; 3% under-36s; 5% large families, single-parent families and disability; 5/4/3% in depopulated areas"
-updatedDate: 2026-07-08
+updatedDate: 2026-08-23
 ---
 
 Anyone buying a second-hand home in Castilla-La Mancha pays, as the buyer, the ITP-TPO (Impuesto sobre Transmisiones Patrimoniales Onerosas, the property transfer tax). The general rate is 9%, one of the highest in Spain, but 2026 brought a major reduction for first primary residences: Ley 1/2026, de 26 de marzo, de Medidas Administrativas y Tributarias (DOCM núm. 61, de 30 de marzo de 2026), in force for tax events accruing from **31 March 2026**, raised the property value cap from €180,000 to €240,000, simplified the requirements and created a 3% rate for buyers under 36.

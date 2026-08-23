@@ -4,7 +4,7 @@ description: "How much ITP you pay when buying a resale home in Castilla y León
 comunidad: "Castilla y León"
 tipoGeneral: "8% (+10% above €250,000)"
 resumen: "4% large family, disability ≥65%, under-36s and VPO; 0.01% young buyers in rural areas <€150,000"
-updatedDate: 2026-07-08
+updatedDate: 2026-08-23
 ---
 
 When buying a second-hand home in Castilla y León, the buyer pays the ITP-TPO (Impuesto sobre Transmisiones Patrimoniales Onerosas, the property transfer tax). This region applies a two-bracket scale: 8% as a general rule and 10% on the part of the taxable base exceeding €250,000. In return, it maintains two very powerful reduced rates for primary residences: 4% for large families, people with disabilities, buyers under 36 and protected housing, and a striking 0.01% (an almost token tax) for young people buying their first home in rural areas.

@@ -4,7 +4,7 @@ description: "Cuánto ITP se paga al comprar vivienda usada en la Región de Mur
 comunidad: "Murcia"
 tipoGeneral: "7,75 %"
 resumen: "3 % jóvenes ≤40 años, familia numerosa y discapacidad ≥65 %; 4 % VPO de régimen especial"
-updatedDate: 2026-07-08
+updatedDate: 2026-08-23
 ---
 
 Quien compra una vivienda usada en la Región de Murcia paga el Impuesto sobre Transmisiones Patrimoniales Onerosas (ITP-TPO). Es un tributo que asume el comprador y que se autoliquida con el modelo 600 ante la Agencia Tributaria de la Región de Murcia (ATRM).

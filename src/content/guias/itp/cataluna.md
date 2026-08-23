@@ -4,7 +4,7 @@ description: "Calcula tu ITP exacto en Cataluña: pon el precio y te decimos lo 
 comunidad: "Cataluña"
 tipoGeneral: "Tarifa 10–13 %"
 resumen: "Tarifa por tramos del 10 al 13 % (20 % grandes tenedores); 5 % jóvenes ≤35, familias numerosas y monoparentales, discapacidad y víctimas; 7 % VPO; 4/3 % rural"
-updatedDate: 2026-07-08
+updatedDate: 2026-08-23
 ---
 
 Si compras una vivienda de segunda mano en Cataluña, el impuesto que pagarás no es el IVA, sino el Impuesto sobre Transmisiones Patrimoniales y Actos Jurídicos Documentados en su modalidad de Transmisiones Patrimoniales Onerosas (ITP-TPO). Lo paga siempre el comprador y lo gestiona la Agència Tributària de Catalunya (ATC).

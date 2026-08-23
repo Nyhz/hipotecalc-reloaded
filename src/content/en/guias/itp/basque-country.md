@@ -4,7 +4,7 @@ description: "How much ITP you pay when buying a resale home in Álava, Bizkaia 
 comunidad: "País Vasco"
 tipoGeneral: "4% housing (7% general)"
 resumen: "4% for housing; 2.5% main residence (≤120 m² or large family); 6% for owners of more than 5 homes"
-updatedDate: 2026-07-08
+updatedDate: 2026-08-23
 ---
 
 In the Basque Country, the tax charged on the purchase of a **resale home** — the ITP (Impuesto sobre Transmisiones Patrimoniales y Actos Jurídicos Documentados, the property transfer tax; ITPyAJD), in its Transmisiones Patrimoniales Onerosas (TPO) form — is not governed by the state rules or by those of the "common regime" regions. Under the **Concierto Económico** (Ley 12/2002), it is a **devolved tax with autonomous rules** (art. 30) and the right to levy it belongs to the **Diputación Foral (provincial council) of the territory where the property is located** (art. 31.1). Each historical territory has its own legislation: **Álava, Norma Foral 11/2003; Bizkaia, Norma Foral 1/2011; and Gipuzkoa, Norma Foral 18/1987**.

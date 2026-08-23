@@ -4,7 +4,7 @@ description: "Cuánto ITP se paga al comprar vivienda usada en Asturias en 2026:
 comunidad: "Asturias"
 tipoGeneral: "8/9/10 % según valor"
 resumen: "4 %/6 % jóvenes ≤35, familias numerosas y monoparentales, víctimas y zonas rurales; 3 % VPO; 20 % grandes tenedores"
-updatedDate: 2026-07-08
+updatedDate: 2026-08-23
 ---
 
 Comprar una vivienda de segunda mano en Asturias implica pagar el Impuesto sobre Transmisiones Patrimoniales Onerosas (ITP, modalidad TPO), que corre siempre a cargo del comprador. Asturias es una de las comunidades con el ITP más alto de España: entre el 8 % y el 10 % según el valor del inmueble.

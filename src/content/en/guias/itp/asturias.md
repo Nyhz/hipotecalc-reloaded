@@ -4,7 +4,7 @@ description: "How much ITP you pay when buying a resale home in Asturias in 2026
 comunidad: "Asturias"
 tipoGeneral: "8/9/10% by value"
 resumen: "4%/6% under-35s, large and single-parent families, victims and rural areas; 3% VPO; 20% large-scale landlords"
-updatedDate: 2026-07-08
+updatedDate: 2026-08-23
 ---
 
 Buying a resale (second-hand) home in Asturias means paying the Impuesto sobre Transmisiones Patrimoniales Onerosas (ITP, in its TPO form — the Spanish property transfer tax), which is always borne by the buyer. Asturias is one of the regions with the highest ITP in Spain: between 8% and 10% depending on the value of the property.

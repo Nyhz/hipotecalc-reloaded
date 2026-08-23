@@ -4,7 +4,7 @@ description: "How much ITP you pay when buying a resale home in Andalusia in 202
 comunidad: "Andalucía"
 tipoGeneral: "7%"
 resumen: "6% main residence ≤€150,000; 3.5% under-35s, disability, large families, victims and small municipalities"
-updatedDate: 2026-07-08
+updatedDate: 2026-08-23
 ---
 
 If you are buying a resale (second-hand) home in Andalusia, the tax that will weigh most heavily on your budget is the Impuesto sobre Transmisiones Patrimoniales y Actos Jurídicos Documentados in its Transmisiones Patrimoniales Onerosas form (ITP-TPO, the Spanish property transfer tax). It is always paid by the buyer and is calculated by applying a percentage to the value of the home.

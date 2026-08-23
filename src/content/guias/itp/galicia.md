@@ -4,7 +4,7 @@ description: "Cuánto ITP se paga al comprar vivienda usada en Galicia en 2026: 
 comunidad: "Galicia"
 tipoGeneral: "8 %"
 resumen: "7 % vivienda habitual; 3 % menores de 36, familias numerosas y monoparentales, discapacidad ≥65 % y víctimas; deducción 100 % en parroquias poco pobladas"
-updatedDate: 2026-07-08
+updatedDate: 2026-08-23
 ---
 
 Si vas a comprar una vivienda de segunda mano en Galicia, el impuesto que marcará tu presupuesto es el Impuesto sobre Transmisiones Patrimoniales Onerosas (ITP, modalidad TPO). Lo paga siempre el comprador y se calcula sobre el valor de la vivienda, no sobre lo que cueste la hipoteca.

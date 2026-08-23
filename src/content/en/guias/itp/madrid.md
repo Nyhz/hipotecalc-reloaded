@@ -4,7 +4,7 @@ description: "How much ITP you pay when buying a resale home in the Community of
 comunidad: "Madrid"
 tipoGeneral: "6%"
 resumen: "4% for large families; 10% rebate on homes ≤€250,000; 100% rebate for under-35s in municipalities with fewer than 2,500 inhabitants"
-updatedDate: 2026-07-08
+updatedDate: 2026-08-23
 ---
 
 If you are going to buy a second-hand (resale) home in the Community of Madrid, the tax you will pay as the buyer is the ITP (Impuesto de Transmisiones Patrimoniales y Actos Jurídicos Documentados, the property transfer tax), in its Transmisiones Patrimoniales Onerosas form (ITP-TPO). Since 2014 Madrid has applied a general rate of 6%, one of the lowest among the "common regime" regions, and complements it with a reduced rate for large families and with rebates on the tax due for main residences.
