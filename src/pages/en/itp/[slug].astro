@@ -73,10 +73,11 @@ const impuestoObraNueva =
       : `No. A new home bought from the developer is subject to 10% VAT (4% for special-regime subsidised housing) plus stamp duty (AJD). The ITP only applies to resale homes in ${nombre}.`;
 
 // Filing deadline: each territory has a single deadline, the same one the
-// body of each guide documents with its official source. Cantabria is left
-// out on purpose (deadline pending confirmation with the ACAT) and keeps the
-// old generic wording.
+// body of each guide documents with its official source (Cantabria: the
+// modelo 601 instructions of the ACAT's Oficina Virtual, which match the
+// state fallback rule of art. 102 RD 828/1995).
 const PLAZOS: Record<string, string> = {
+  'cantabria': 'The deadline is 30 working days from the date of the document (the deed), not counting Saturdays, Sundays or public holidays',
   'andalusia': 'The deadline is two months counted from the day after the accrual date (the date of the deed or contract)',
   'navarre': 'The deadline is two months from the accrual date (the date of the deed or contract)',
   'aragon': 'The deadline is one month counted from the day after the date of the deed or contract',

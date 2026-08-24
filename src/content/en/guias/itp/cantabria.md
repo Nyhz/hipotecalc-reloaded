@@ -4,7 +4,7 @@ description: "How much ITP you pay when buying a resale home in Cantabria in 202
 comunidad: "Cantabria"
 tipoGeneral: "9%"
 resumen: "7% main residence up to €300,000 (May 2026 reform); 4% <40s, large and single-parent families, disability, VPO and depopulation; 3% disability ≥65%"
-updatedDate: 2026-07-08
+updatedDate: 2026-08-23
 ---
 
 Anyone buying a resale (second-hand) home in Cantabria pays the Impuesto sobre Transmisiones Patrimoniales Onerosas (ITP, in its TPO form — the Spanish property transfer tax). It is paid by the buyer and calculated on the value of the home. The general rate is 9%, but hardly any main-residence buyer pays it in full: there is a 7% rate for a main residence and 4% and 3% rates for specific groups.

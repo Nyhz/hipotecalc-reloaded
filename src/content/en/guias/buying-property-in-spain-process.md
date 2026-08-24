@@ -1,7 +1,7 @@
 ---
 title: "Buying property in Spain: the process step by step, from offer to keys"
 description: "The Spanish property purchase process for foreign buyers: NIE, reservation, the arras contract, notary completion, registration, costs and a realistic timeline."
-updatedDate: 2026-07-15
+updatedDate: 2026-08-23
 calculadora: gastos
 faq:
   - question: "What are the steps to buy a property in Spain?"
@@ -72,10 +72,11 @@ the keys, and the notary sends an electronic copy to the Land Registry.
 
 ## Step 4: taxes and registration
 
-After signing you have **30 working days or one month**, depending on the
-region (Andalusia allows two months), to file and pay the ITP — or, on a new
-build, the AJD — via Modelo 600; the VAT itself is paid to the developer at
-completion. See [the tax details](/en/guides/buying-property-in-spain-taxes).
+After signing, the deadline to file and pay the ITP — or, on a new build,
+the AJD — via Modelo 600 **depends on the region**: two months in Andalusia
+and Navarre, one month in eight regions (Catalonia, the Valencian Community,
+Galicia and Extremadura, among others) and 30 working days in the rest; the
+VAT itself is paid to the developer at completion. See [the tax details](/en/guides/buying-property-in-spain-taxes).
 The gestoría or your lawyer then files the deed at the **Land Registry**.
 Registration takes a few weeks; you're the owner from the deed, but
 registration protects you against third parties.

@@ -115,10 +115,11 @@ const impuestoObraNueva =
       : `No. La vivienda nueva comprada al promotor tributa por IVA al 10 % (4 % si es VPO de régimen especial) más Actos Jurídicos Documentados. El ITP solo grava las viviendas de segunda mano en ${nombreCorto}.`;
 
 // Plazo de autoliquidación: cada territorio tiene un plazo único, el mismo
-// que documenta el cuerpo de cada guía con su fuente oficial. Cantabria queda
-// fuera a propósito (plazo pendiente de confirmar con la ACAT) y conserva la
-// redacción genérica antigua.
+// que documenta el cuerpo de cada guía con su fuente oficial (Cantabria:
+// instrucciones del modelo 601 de la Oficina Virtual de la ACAT, que
+// coinciden con la regla supletoria estatal del art. 102 RD 828/1995).
 const PLAZOS: Record<string, string> = {
+  'cantabria': 'El plazo es de 30 días hábiles desde la fecha del documento (la escritura), sin contar sábados, domingos ni festivos',
   'andalucia': 'El plazo es de dos meses a contar desde el día siguiente a la fecha de devengo (la de la escritura o el contrato)',
   'navarra': 'El plazo es de dos meses desde la fecha de devengo (la de la escritura o el contrato)',
   'aragon': 'El plazo es de un mes contado desde el día siguiente a la fecha de la escritura o del contrato',

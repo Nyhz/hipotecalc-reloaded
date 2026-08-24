@@ -4,7 +4,7 @@ description: "Cuánto ITP se paga al comprar vivienda usada en Cantabria en 2026
 comunidad: "Cantabria"
 tipoGeneral: "9 %"
 resumen: "7 % vivienda habitual hasta 300.000 € (reforma de mayo de 2026); 4 % <40 años, familias numerosas y monoparentales, discapacidad, VPO y despoblación; 3 % discapacidad ≥65 %"
-updatedDate: 2026-07-08
+updatedDate: 2026-08-23
 ---
 
 Quien compra una vivienda de segunda mano en Cantabria paga el Impuesto sobre Transmisiones Patrimoniales Onerosas (ITP, modalidad TPO). Lo abona el comprador y se calcula sobre el valor de la vivienda. El tipo general es del 9 %, pero casi ningún comprador de vivienda habitual lo paga entero: existe un tipo del 7 % para la vivienda habitual y tipos del 4 % y del 3 % para colectivos concretos.
