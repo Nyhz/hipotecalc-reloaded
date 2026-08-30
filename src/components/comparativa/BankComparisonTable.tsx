@@ -4,6 +4,8 @@ import {
   ENTIDADES_SIN_OFERTA,
   type OfertaHipoteca,
 } from "../../constants/hipotecas-bancos"
+import { referalLink } from "../../constants/referal"
+import { useGoogleAnalytics } from "../../hooks/useGoogleAnalytics"
 
 const TIPOS = ["Todas", "Fija", "Variable", "Mixta"] as const
 const CATEGORIAS = [
@@ -23,6 +25,8 @@ const tipoBadgeClass: Record<OfertaHipoteca["tipo"], string> = {
   Variable: "bg-brand-blue/10 text-brand-blue",
   Mixta: "bg-lime/60 text-ink",
   "Fija/Variable": "bg-paper-2 text-ink",
+  "Fija/Variable/Mixta": "bg-paper-2 text-ink",
+  "Variable/Mixta": "bg-paper-2 text-ink",
 }
 
 // Primer porcentaje numérico de una cadena de tipos ("2,96% / 3,96%" -> 2.96;
@@ -81,12 +85,16 @@ const LABELS = {
     vinculaciones: 'Vinculaciones / bonificaciones',
     comisiones: 'Comisiones',
     requisitos: 'Requisitos / notas',
-    fuente: 'Fuente / fiabilidad',
     sinResultados: 'Ninguna oferta coincide con los filtros seleccionados.',
     antes: 'antes',
     sinOferta: 'Entidades consultadas que no comercializan hipotecas',
     tipoValor: (v: string) => v,
     categoriaValor: (v: string) => v,
+    promoTag: 'Nuestro servicio',
+    promoTitulo: 'Mejora la hipoteca con nosotros',
+    promoBadge: 'Fija · Variable · Mixta',
+    promoTexto: 'Nuestro bróker compara tu caso con todo el mercado y negocia por ti. Estudio gratuito y sin compromiso.',
+    promoCta: 'Quiero mejorar mi hipoteca',
   },
   en: {
     buscar: 'Search bank or product',
@@ -102,12 +110,16 @@ const LABELS = {
     vinculaciones: 'Bundled products / discounts',
     comisiones: 'Fees',
     requisitos: 'Requirements / notes',
-    fuente: 'Source / reliability',
     sinResultados: 'No offers match the selected filters.',
     antes: 'previously',
     sinOferta: 'Institutions surveyed that do not sell mortgages',
-    tipoValor: (v: string) => ({ Todas: 'All', Fija: 'Fixed', Variable: 'Variable', Mixta: 'Mixed', 'Fija/Variable': 'Fixed/Variable' }[v] ?? v),
+    tipoValor: (v: string) => ({ Todas: 'All', Fija: 'Fixed', Variable: 'Variable', Mixta: 'Mixed', 'Fija/Variable': 'Fixed/Variable', 'Fija/Variable/Mixta': 'Fixed/Variable/Mixed', 'Variable/Mixta': 'Variable/Mixed' }[v] ?? v),
     categoriaValor: (v: string) => ({ Todas: 'All', Grande: 'Large', Online: 'Online', Mediano: 'Mid-size', Cooperativa: 'Cooperative', 'Banca ética': 'Ethical bank', Especialista: 'Specialist', Otro: 'Other', Extranjero: 'Foreign' }[v] ?? v),
+    promoTag: 'Our service',
+    promoTitulo: 'Improve your mortgage with us',
+    promoBadge: 'Fixed · Variable · Mixed',
+    promoTexto: 'Our broker benchmarks your case against the whole market and negotiates for you. Free, no-obligation review.',
+    promoCta: 'Improve my mortgage',
   },
 }
 
@@ -117,6 +129,7 @@ interface BankComparisonTableProps {
 
 const BankComparisonTable: React.FC<BankComparisonTableProps> = ({ lang = 'es' }) => {
   const t = LABELS[lang]
+  const { trackContactAttempt } = useGoogleAnalytics()
   const [tipo, setTipo] = useState<(typeof TIPOS)[number]>("Todas")
   const [categoria, setCategoria] = useState<(typeof CATEGORIAS)[number]>("Todas")
   const [busqueda, setBusqueda] = useState("")
@@ -125,7 +138,7 @@ const BankComparisonTable: React.FC<BankComparisonTableProps> = ({ lang = 'es' }
   const ofertas = useMemo(() => {
     const q = busqueda.trim().toLowerCase()
     return OFERTAS_HIPOTECAS.filter((o) => {
-      if (tipo !== "Todas" && o.tipo !== tipo && !(o.tipo === "Fija/Variable" && (tipo === "Fija" || tipo === "Variable"))) return false
+      if (tipo !== "Todas" && !o.tipo.split("/").includes(tipo)) return false
       if (categoria !== "Todas" && o.categoria !== categoria) return false
       if (q && !`${o.banco} ${o.producto}`.toLowerCase().includes(q)) return false
       return true
@@ -205,6 +218,39 @@ const BankComparisonTable: React.FC<BankComparisonTableProps> = ({ lang = 'es' }
               </tr>
             </thead>
             <tbody>
+              {/* Fila destacada: servicio de mejora de hipoteca. Siempre visible,
+                  por encima de todas las ofertas e independiente de los filtros. */}
+              <tr className="border-b-2 border-lime bg-lime/15">
+                <td className="py-4 px-3 font-semibold text-ink">
+                  Hipotecalc
+                  <div className="font-data text-[10px] uppercase tracking-wide text-ink-soft font-normal">
+                    {t.promoTag}
+                  </div>
+                </td>
+                <td colSpan={2} className="py-4 px-2">
+                  <span className="font-semibold text-ink">{t.promoTitulo}</span>
+                  <div className="mt-1">
+                    <span className="inline-block rounded-full px-2.5 py-0.5 font-data text-[11px] bg-ink text-paper whitespace-nowrap">
+                      {t.promoBadge}
+                    </span>
+                  </div>
+                </td>
+                <td colSpan={5} className="py-4 px-2">
+                  <div className="flex flex-col lg:flex-row lg:items-center gap-2.5 lg:gap-4">
+                    <span className="text-ink-soft text-[13px] leading-snug">{t.promoTexto}</span>
+                    <a
+                      href={referalLink}
+                      target="_blank"
+                      rel="sponsored noopener noreferrer"
+                      className="cta-broker px-4 py-2 text-xs whitespace-nowrap self-start lg:self-auto shrink-0"
+                      onClick={() => trackContactAttempt("comparativa_mejora_hipoteca")}
+                    >
+                      <span className="cta-dot"></span>
+                      {t.promoCta}
+                    </a>
+                  </div>
+                </td>
+              </tr>
               {ofertas.map((o, i) => (
                 <React.Fragment key={`${o.banco}-${o.producto}-${i}`}>
                   <tr
@@ -277,10 +323,6 @@ const BankComparisonTable: React.FC<BankComparisonTableProps> = ({ lang = 'es' }
                               <dd className="text-ink">{o.requisitos}</dd>
                             </div>
                           )}
-                          <div>
-                            <dt className="font-data text-[10.5px] uppercase tracking-wide text-ink-soft">{t.fuente}</dt>
-                            <dd className="text-ink">{o.fuente || "N/D"}</dd>
-                          </div>
                         </dl>
                       </td>
                     </tr>
