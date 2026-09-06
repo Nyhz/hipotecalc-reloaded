@@ -1,6 +1,10 @@
 import React, { useMemo, useState } from "react"
 import { COMUNIDADES } from "../../constants/comunidades"
-import { calcularITP, calcularIVA } from "../../utils/calculadora-hipotecaria"
+import { calculatePurchaseTaxes, defaultPurchase } from "../../fiscal/engine"
+import type { Purchase, TaxResult } from "../../fiscal/types"
+import { REGIONS } from "../../fiscal/sources"
+import ITPCalculator from "../calculadora-hipotecaria/ITPCalculator"
+import TaxBreakdown from "../fiscal/TaxBreakdown"
 import Input from "../calculadora-hipotecaria/Input"
 import Select from "../calculadora-hipotecaria/Select"
 import { formatNumberByLang } from "../../utils/number-format"
@@ -8,7 +12,6 @@ import { formatNumberByLang } from "../../utils/number-format"
 // Gastos de compraventa: impuestos (ITP autonómico o IVA+AJD en obra nueva)
 // más los gastos regulados (notaría, registro) y habituales (gestoría,
 // tasación si hay hipoteca). Aranceles aproximados por tramos de precio.
-const AJD_ESTIMADO = 1.2 // % orientativo en obra nueva: cada CCAA fija 0,5–1,5 %
 
 const LABELS = {
   es: {
@@ -19,8 +22,7 @@ const LABELS = {
     nueva: "Obra nueva",
     conHipoteca: "Compra con hipoteca",
     impuestoITP: "ITP",
-    impuestoIVA: "IVA (10 %)",
-    ajd: `AJD (≈${AJD_ESTIMADO} %, según CCAA)`,
+    impuestoIVA: "IVA / IGIC / IPSI",
     notaria: "Notaría (escritura de compraventa)",
     registro: "Registro de la Propiedad",
     gestoria: "Gestoría",
@@ -28,7 +30,7 @@ const LABELS = {
     total: "Total de gastos e impuestos",
     sobrePrecio: "sobre el precio",
     ahorro: "Ahorro total necesario (entrada 20 % + gastos)",
-    nota: "Estimación orientativa: notaría y registro son aranceles regulados que dependen del importe y del número de folios; la gestoría es tarifa libre. Con hipoteca, el banco paga la notaría, registro, gestoría y AJD del préstamo (Ley 5/2019) — aquí solo se cuentan los gastos de la compraventa. El ITP mostrado es el tipo general de tu comunidad: si tienes derecho a bonificaciones (jóvenes, familia numerosa…), calcula el tuyo en la ",
+    nota: "Estimación orientativa: notaría y registro son aranceles regulados que dependen del importe y del número de folios; la gestoría es tarifa libre. Con hipoteca, el banco paga la notaría, registro, gestoría y AJD del préstamo (Ley 5/2019) — aquí solo se cuentan los gastos de la compraventa. El motor muestra las reglas verificadas y los datos pendientes. Puedes comprobar tus circunstancias en este formulario o en la ",
     notaLink: "calculadora de ITP",
     itpHref: "/calculadora-itp",
   },
@@ -40,8 +42,7 @@ const LABELS = {
     nueva: "New build",
     conHipoteca: "Buying with a mortgage",
     impuestoITP: "ITP",
-    impuestoIVA: "VAT (10%)",
-    ajd: `AJD stamp duty (≈${AJD_ESTIMADO}%, varies by region)`,
+    impuestoIVA: "IVA / IGIC / IPSI",
     notaria: "Notary (purchase deed)",
     registro: "Land Registry",
     gestoria: "Gestoría (agency)",
@@ -49,7 +50,7 @@ const LABELS = {
     total: "Total costs and taxes",
     sobrePrecio: "of the price",
     ahorro: "Total savings needed (20% down payment + costs)",
-    nota: "Indicative estimate: notary and registry are regulated fees that depend on the amount and deed length; agency fees are unregulated. With a mortgage, the bank pays the loan's notary, registry, agency and AJD (Ley 5/2019) — only the purchase costs are counted here. The ITP shown is your region's general rate: if you qualify for reductions (young buyers, large families…), calculate yours with the ",
+    nota: "Indicative estimate: notary and registry are regulated fees that depend on the amount and deed length; agency fees are unregulated. With a mortgage, the bank pays the loan's notary, registry, agency and AJD (Ley 5/2019) — only the purchase costs are counted here. The engine shows verified rules and outstanding data. Check your circumstances here or in the ",
     notaLink: "ITP calculator",
     itpHref: "/en/itp-calculator",
   },
@@ -68,10 +69,22 @@ const GastosCompraventaCalculator: React.FC<GastosCompraventaCalculatorProps> = 
     conHipoteca: true,
   })
 
+  const [fiscalInput,setFiscalInput]=useState<Purchase|null>(null)
+  const [showTax,setShowTax]=useState(false)
+  const fiscal=useMemo(()=>calculatePurchaseTaxes({
+    ...(fiscalInput??defaultPurchase(Number(form.precio),form.comunidad,form.tipoVivienda==='Obra nueva'?'Obra nueva':'Segunda mano')),
+    precio:Number(form.precio),comunidad:form.comunidad,tipoVivienda:form.tipoVivienda==='Obra nueva'?'Obra nueva':'Segunda mano',
+  }),[form.precio,form.comunidad,form.tipoVivienda,fiscalInput])
+  const onTaxResult=(_n:number,_rate?:number,_description?:string,detail?:TaxResult)=>{
+    if(!detail)return
+    setFiscalInput(detail.input)
+    setForm(p=>({...p,precio:String(detail.input.precio),comunidad:REGIONS.find(([id])=>id===detail.input.comunidad)?.[1]??detail.input.comunidad,tipoVivienda:detail.input.tipoVivienda}))
+  }
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
     const { name, value, type } = e.target
+    if(["comunidad","tipoVivienda"].includes(name))setFiscalInput(null)
     if (type === "checkbox" && e.target instanceof HTMLInputElement) {
       setForm((prev) => ({ ...prev, [name]: (e.target as HTMLInputElement).checked }))
       return
@@ -82,21 +95,9 @@ const GastosCompraventaCalculator: React.FC<GastosCompraventaCalculatorProps> = 
 
   const r = useMemo(() => {
     const precio = Number(form.precio) || 0
-    const esNueva = form.tipoVivienda === "Obra nueva"
-    const comunidad = COMUNIDADES.find((c) => c.nombre === form.comunidad)
-    const porcentajeITP = comunidad?.ITP ?? 6
-
     const filas: { etiqueta: string; importe: number }[] = []
     if (precio > 0) {
-      if (esNueva) {
-        filas.push({ etiqueta: t.impuestoIVA, importe: calcularIVA(precio, 10) })
-        filas.push({ etiqueta: t.ajd, importe: Math.round(precio * AJD_ESTIMADO) / 100 })
-      } else {
-        filas.push({
-          etiqueta: `${t.impuestoITP} (${porcentajeITP}%${comunidad ? `, ${comunidad.nombre}` : ""})`,
-          importe: calcularITP(precio, porcentajeITP),
-        })
-      }
+      for(const line of fiscal.lines)if(line.amount!==null)filas.push({etiqueta:line.tax==='AJD'?t.comunidad+' · AJD':line.tax,importe:line.amount})
       // Aranceles aproximados por tramos (notaría: RD 1426/1989; registro:
       // RD 1427/1989 — arancel de inscripción + IVA y conceptos menores)
       filas.push({ etiqueta: t.notaria, importe: Math.min(1200, Math.max(650, Math.round(600 + precio * 0.0009))) })
@@ -111,9 +112,9 @@ const GastosCompraventaCalculator: React.FC<GastosCompraventaCalculatorProps> = 
     const pct = precio > 0 ? (total / precio) * 100 : 0
     const ahorro = precio * 0.2 + total
     return { filas, total, pct, ahorro }
-  }, [form, t])
+  }, [form, t, fiscal])
 
-  const fmt = (n: number) => formatNumberByLang(Math.round(n), lang)
+  const fmt = (n: number) => formatNumberByLang(n, lang)
 
   return (
     <div className='pl-card p-5 md:p-6'>
@@ -142,6 +143,9 @@ const GastosCompraventaCalculator: React.FC<GastosCompraventaCalculatorProps> = 
         {t.conHipoteca}
       </label>
 
+      <button type='button' className='btn-outline px-4 py-2 mb-4' onClick={()=>setShowTax(true)}>{lang==='es'?'Fecha, base fiscal y beneficios':'Date, tax base and relief'}</button>
+      <TaxBreakdown result={fiscal} lang={lang}/>
+      <ITPCalculator open={showTax} onClose={()=>setShowTax(false)} onResult={onTaxResult} initialPrecio={form.precio} comunidadSeleccionada={form.comunidad} initialTipoVivienda={form.tipoVivienda} initialFiscal={fiscalInput?fiscal.input:undefined} lang={lang}/>
       <div className='space-y-0'>
         {r.filas.map((f) => (
           <div key={f.etiqueta} className='flex justify-between py-2 border-b border-line text-sm'>
@@ -149,7 +153,7 @@ const GastosCompraventaCalculator: React.FC<GastosCompraventaCalculatorProps> = 
             <b className='text-ink'>{fmt(f.importe)} €</b>
           </div>
         ))}
-        {r.filas.length > 0 && (
+        {r.filas.length > 0 && fiscal.total!==null && (
           <>
             <div className='flex justify-between py-3 border-b border-line'>
               <span className='font-semibold text-ink'>{t.total}</span>

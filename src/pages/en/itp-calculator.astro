@@ -1,4 +1,5 @@
 ---
+import { REVIEWED } from '../../fiscal/sources';
 import { getCollection } from 'astro:content';
 import Byline from '../../components/seo/Byline.astro';
 import { resolverAutoria } from '../../data/authors';
@@ -20,7 +21,7 @@ const description =
 const autoria = resolverAutoria('calculadora');
 // La página muestra los tipos de comunidades.ts a través del motor de ITP:
 // su última revisión avanza también cuando se revisan esos ficheros
-const actualizado = ultimaModificacionConjunta('src/pages/en/itp-calculator.astro', 'src/constants/comunidades.ts', 'src/utils/calculadora-itp.ts');
+const actualizado = new Date(Math.max(Date.parse(REVIEWED), ultimaModificacionConjunta('src/pages/en/itp-calculator.astro', 'src/constants/comunidades.ts', 'src/utils/calculadora-itp.ts')?.getTime() ?? 0));
 const publicado = fechaPublicacion('src/pages/en/itp-calculator.astro');
 
 ---
@@ -42,7 +43,7 @@ const publicado = fechaPublicacion('src/pages/en/itp-calculator.astro');
       <p class="text-ink-soft max-w-3xl mx-auto text-base md:text-lg">
         Pick your region, enter the price and your situation (age, family,
         disability…) and instantly get the estimated ITP with the reliefs you
-        qualify for. For new builds, it calculates the equivalent VAT.
+        qualify for. A first supply of new housing does not incur ITP: see IVA, IGIC or IPSI and purchase-deed AJD separately.
       </p>
     </header>
 
@@ -74,15 +75,15 @@ const publicado = fechaPublicacion('src/pages/en/itp-calculator.astro');
     items={[
       {
         question: "What is the ITP and when is it paid?",
-        answer: "The ITP (Impuesto de Transmisiones Patrimoniales) taxes the purchase of resale homes and is always paid by the buyer. The filing deadline depends on the region and runs from the date of the deed or contract: two months in Andalusia and Navarre, one month in eight regions (Catalonia, the Valencian Community, Galicia and Extremadura, among others) and 30 working days in most of the rest. New homes don't pay ITP: they pay 10% VAT (the IGIC in the Canary Islands and the IPSI in Ceuta and Melilla)."
+        answer: "The ITP (Impuesto de Transmisiones Patrimoniales) taxes the purchase of resale homes and is always paid by the buyer. The filing deadline depends on the region and runs from the date of the deed or contract: two months in Andalusia and Navarre, one month in eight regions (Catalonia, the Valencian Community, Galicia and Extremadura, among others) and 30 working days in most of the rest. A first supply of new housing does not incur ITP: ordinary IVA is 10%, with 4% reserved for special/public-promotion VPO supplied by the developer (the IGIC in the Canary Islands and the IPSI in Ceuta and Melilla)."
       },
       {
         question: "What value does this calculator use for the tax?",
-        answer: "The price you enter. Bear in mind that legally the taxable base is the cadastral reference value or the price if higher: check the property's reference value at the Cadastre's online office before signing."
+        answer: "Price and fiscal values are separate inputs. For common-regime ITP, the engine uses the highest of price, declared value and reference value; without a reference, the supplied market value is also considered. Foral valuations are treated separately. IVA/IGIC/IPSI uses the tax-exclusive price."
       },
       {
         question: "Does it include my region's reliefs?",
-        answer: "Yes. The calculator applies the most common regional reduced rates and reliefs: young buyers, large or single-parent families, disability, victims, subsidised housing or sparsely populated areas, always selecting the most beneficial rate applicable to your case."
+        answer: "Yes. The calculator applies the most common regional reduced rates and reliefs: young buyers, large or single-parent families, disability, victims, subsidised housing or sparsely populated areas, only applying relief whose required answers are complete, and respecting partial bases, compatibility and purchase dates."
       },
       {
         question: "Is the result exact?",

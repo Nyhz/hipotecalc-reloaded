@@ -1,10 +1,12 @@
 import React, { useState, useMemo } from "react"
-import { COMUNIDADES } from "../../constants/comunidades"
-import { calcularITP, calcularIVA, calcularTIN, getEuriborActual, calcularInteresVariable } from "../../utils/calculadora-hipotecaria"
+import { calculatePurchaseTaxes, defaultPurchase } from "../../fiscal/engine"
+import type { Purchase } from "../../fiscal/types"
+import { calcularTIN, getEuriborActual, calcularInteresVariable } from "../../utils/calculadora-hipotecaria"
 import { useTranslations } from "../../hooks/useTranslations"
 import { formatNumberByLang } from "../../utils/number-format"
 
 interface SensitivityTableProps {
+  fiscalInput?: Purchase
   form: {
     precio: string
     ahorro: string
@@ -31,6 +33,7 @@ interface SensitivityTableProps {
 const SensitivityTable: React.FC<SensitivityTableProps> = ({
   form,
   calculations,
+  fiscalInput,
   itpCalculado = false,
   itpTipoAplicado = null,
   itpDescripcion = "",
@@ -73,33 +76,11 @@ const SensitivityTable: React.FC<SensitivityTableProps> = ({
       ahorroActual + (stepAhorroNum * 2),  // +2 steps
     ].filter((a, i, arr) => a >= 0 && arr.indexOf(a) === i)
 
-    // Función para calcular impuestos (igual que en la calculadora principal)
-    const calcularImpuesto = (precio: number) => {
-      let impuesto: number
-
-      if (itpCalculado) {
-        // Escalar proporcionalmente el importe calculado en el modal: conserva
-        // el tipo efectivo (tramos, bonificaciones, VMA) y garantiza que la
-        // celda central coincida exactamente con la cuota del recibo
-        impuesto = precioActual > 0
-          ? calculations.impuesto * (precio / precioActual)
-          : calculations.impuesto
-      } else {
-        // Cálculo automático por defecto
-        if (esObraNueva) {
-          impuesto = calcularIVA(precio, 10)
-        } else {
-          // Obtener el porcentaje de ITP de la comunidad seleccionada
-          const comunidadSeleccionada = COMUNIDADES.find(
-            (c) => c.nombre === form.comunidad
-          )
-          const porcentajeITP = comunidadSeleccionada?.ITP || 6
-          impuesto = calcularITP(precio, porcentajeITP)
-        }
-      }
-      
-      return impuesto
-    }
+    // Re-evaluate statutory bands and eligibility for each price; never scale a tax bill.
+    const calcularImpuesto = (precio: number) => calculatePurchaseTaxes({
+      ...(fiscalInput ?? defaultPurchase(precio,form.comunidad,esObraNueva?'Obra nueva':'Segunda mano')),
+      precio,
+    }).total
 
     // Función para calcular cuota (siguiendo exactamente el mismo flujo)
     const calcularCuota = (precio: number, ahorro: number) => {
@@ -107,6 +88,7 @@ const SensitivityTable: React.FC<SensitivityTableProps> = ({
 
       // 1. Calcular impuestos
       const impuesto = calcularImpuesto(precio)
+      if(impuesto===null)return Number.NaN
       
       // 2. Calcular precio final (precio + otros costes + impuestos)
       const precioFinal = precio + otrosCostesActual + impuesto
@@ -155,7 +137,7 @@ const SensitivityTable: React.FC<SensitivityTableProps> = ({
       stepPrecioNum,
       stepAhorroNum
     }
-  }, [form, calculations, itpCalculado, itpTipoAplicado, itpDescripcion, stepPrecio, stepAhorro])
+  }, [form, calculations, fiscalInput, itpCalculado, itpTipoAplicado, itpDescripcion, stepPrecio, stepAhorro])
 
   if (!isExpanded) {
     return (
@@ -310,7 +292,7 @@ const SensitivityTable: React.FC<SensitivityTableProps> = ({
                           ? "font-data text-blue-700 font-bold"
                           : "text-gray-700"
                       }`}>
-                        {formatNumberByLang(cuota, currentLang)} €
+                        {Number.isFinite(cuota)?`${formatNumberByLang(cuota, currentLang)} €`:'—'}
                       </span>
                     </td>
                   ))}
@@ -330,4 +312,4 @@ const SensitivityTable: React.FC<SensitivityTableProps> = ({
   )
 }
 
-export default SensitivityTable 
+export default SensitivityTable

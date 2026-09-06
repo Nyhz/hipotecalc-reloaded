@@ -1,4 +1,5 @@
 ---
+import { REVIEWED } from '../../fiscal/sources';
 import Layout from '../../layouts/Layout.astro';
 import Byline from '../../components/seo/Byline.astro';
 import { resolverAutoria } from '../../data/authors';
@@ -14,7 +15,7 @@ const description =
 const autoria = resolverAutoria('calculadora');
 // La página muestra los tipos de comunidades.ts:
 // su última revisión avanza también cuando se revisan esos ficheros
-const actualizado = ultimaModificacionConjunta('src/pages/en/property-purchase-costs-calculator.astro', 'src/constants/comunidades.ts');
+const actualizado = new Date(Math.max(Date.parse(REVIEWED), ultimaModificacionConjunta('src/pages/en/property-purchase-costs-calculator.astro', 'src/constants/comunidades.ts')?.getTime() ?? 0));
 const publicado = fechaPublicacion('src/pages/en/property-purchase-costs-calculator.astro');
 
 ---
@@ -34,7 +35,7 @@ const publicado = fechaPublicacion('src/pages/en/property-purchase-costs-calcula
       </h1>
       <div class="mt-2 mb-1"><Byline autoria={autoria} lang="en" updated={actualizado} /></div>
       <p class="text-ink-soft max-w-3xl mx-auto text-base md:text-lg">
-        On top of the price you'll pay another 8% to 14% in taxes and fees. Pick
+        Add the taxes and fees applicable to your purchase to the property price. Pick
         your region and property type and get the full breakdown: taxes, notary,
         registry, agency and appraisal.
       </p>
@@ -47,8 +48,8 @@ const publicado = fechaPublicacion('src/pages/en/property-purchase-costs-calcula
       <div class="text-ink-soft space-y-4 leading-relaxed">
         <p>
           The breakdown covers the costs <strong>of the purchase</strong>: the tax
-          (ITP at your region's general rate for resale homes; 10% VAT plus AJD stamp
-          duty for new builds), the notary and registry — regulated fees that grow
+          (ITP for resale homes; IVA, IGIC or IPSI plus purchase AJD for a first
+          supply of new housing), the notary and registry — regulated fees that grow
           with the price — and, if you buy with a mortgage, the agency and the
           appraisal. Since Ley 5/2019, the <em>loan's</em> costs (its notary,
           registry, agency and AJD) are paid by the bank, so they are not added here:
@@ -56,9 +57,9 @@ const publicado = fechaPublicacion('src/pages/en/property-purchase-costs-calcula
           <a href="/en/guides/property-purchase-costs" class="underline text-brand-blue"> purchase costs guide</a>.
         </p>
         <p>
-          The ITP applied is the general rate: if you're a young buyer, a large
-          family or qualify for other reliefs, your tax can be considerably lower —
-          check it with the <a href="/en/itp-calculator" class="underline text-brand-blue">ITP calculator</a>
+          Missing information does not qualify you for relief. Open “Date, tax base and relief”
+          to check your personal requirements; this uses the same engine as the
+          <a href="/en/itp-calculator" class="underline text-brand-blue">ITP calculator</a>
           or in <a href="/en/itp" class="underline text-brand-blue">your region's guide</a>.
           And if you don't yet know how much a bank would lend you, start with
           <a href="/en/how-much-can-i-borrow" class="underline text-brand-blue"> how much can I borrow?</a>.
@@ -70,7 +71,7 @@ const publicado = fechaPublicacion('src/pages/en/property-purchase-costs-calcula
       <h2 class="font-heading text-2xl font-semibold text-ink mb-4">A worked example: €250,000 flat in Madrid</h2>
       <div class="text-ink-soft space-y-4 leading-relaxed">
         <p>
-          Resale home, bought with a mortgage. This is the breakdown the calculator
+          Resale home, bought with a mortgage, without personal or main-residence relief. This is the breakdown the calculator
           would give you, line by line:
         </p>
         <div class="pl-card p-5">
@@ -89,7 +90,7 @@ const publicado = fechaPublicacion('src/pages/en/property-purchase-costs-calcula
           each line: the tax is 89% of the total costs. That's why the region matters
           so much — the same flat in Catalonia, at a 10% general rate, would pay
           €25,000 in ITP alone — and why new builds cost more: 10% VAT (€25,000)
-          plus the regional AJD stamp duty (0.5-1.5%: €1,250-€3,750).
+          plus purchase AJD according to the region and evidenced relief. Exemptions, rates below 0.5% and the Balearic 2% rate from €1 million also exist. The Canary Islands use IGIC, and Ceuta/Melilla IPSI, instead of IVA.
         </p>
       </div>
     </section>
@@ -103,9 +104,9 @@ const publicado = fechaPublicacion('src/pages/en/property-purchase-costs-calcula
         </p>
         <ul class="list-disc pl-6 space-y-2">
           <li>
-            <strong>Reduced ITP rates.</strong> Buyers under 35, large families,
-            people with disabilities or subsidised housing pay less in almost every
-            region — in some, half. Check your case with the
+            <strong>Reduced ITP rates.</strong> Age, family circumstances, disability
+            and protected housing may qualify for relief, with different requirements
+            in each territory. Check your case with the
             <a href="/en/itp-calculator" class="underline text-brand-blue">ITP calculator</a>.
           </li>
           <li>
@@ -136,7 +137,7 @@ const publicado = fechaPublicacion('src/pages/en/property-purchase-costs-calcula
     items={[
       {
         question: "How much do the costs of buying a home in Spain add up to?",
-        answer: "Between 8% and 12% of the price for resale homes (the bulk is the regional ITP, from an effective 3% up to 13%) and 12-14% for new builds (10% VAT plus AJD). On top of that comes the 20% down payment banks don't finance."
+        answer: "There is no single percentage: it depends on regional ITP and your eligibility, or IVA/IGIC/IPSI plus purchase AJD for a first supply. The calculator separates taxes, estimated fees and the down payment; it does not charge the lender’s mortgage AJD to the buyer."
       },
       {
         question: "Which costs does the bank pay and which does the buyer pay?",

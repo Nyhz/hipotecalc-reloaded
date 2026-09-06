@@ -1,4 +1,5 @@
 ---
+import { REVIEWED } from '../fiscal/sources';
 import Layout from '../layouts/Layout.astro';
 import Byline from '../components/seo/Byline.astro';
 import { resolverAutoria } from '../data/authors';
@@ -11,7 +12,7 @@ import { t } from '../utils/i18n';
 const autoria = resolverAutoria('calculadora');
 // La página muestra los tipos de comunidades.ts a través del motor de ITP:
 // su última revisión avanza también cuando se revisan esos ficheros
-const actualizado = ultimaModificacionConjunta('src/pages/calculadora-hipotecaria.astro', 'src/constants/comunidades.ts', 'src/utils/calculadora-itp.ts');
+const actualizado = new Date(Math.max(Date.parse(REVIEWED), ultimaModificacionConjunta('src/pages/calculadora-hipotecaria.astro', 'src/constants/comunidades.ts', 'src/utils/calculadora-itp.ts')?.getTime() ?? 0));
 const publicado = fechaPublicacion('src/pages/calculadora-hipotecaria.astro');
 
 ---
@@ -54,8 +55,8 @@ const publicado = fechaPublicacion('src/pages/calculadora-hipotecaria.astro');
       </p>
       <p>
         Además, puedes calcular el <strong>ITP (Impuesto de Transmisiones Patrimoniales)</strong> según tu comunidad autónoma,
-        con las bonificaciones aplicables para jóvenes menores de 35 años, familias numerosas o personas con discapacidad.
-        Para viviendas de obra nueva, la calculadora aplica automáticamente el <strong>IVA</strong> correspondiente.
+        comprobando la edad, renta, discapacidad y demás requisitos que exige cada comunidad.
+        Para obra nueva, desglosa <strong>IVA, IGIC o IPSI</strong> y el AJD de la adquisición por separado.
         Si quieres conocer todos los tipos y requisitos de tu comunidad, consulta nuestra
         <a href="/itp" class="underline text-brand-blue">guía del ITP por comunidades autónomas</a>.
       </p>
@@ -76,7 +77,7 @@ const publicado = fechaPublicacion('src/pages/calculadora-hipotecaria.astro');
       },
       {
         question: "¿Qué es el ITP y cuánto se paga al comprar una vivienda de segunda mano?",
-        answer: "El Impuesto de Transmisiones Patrimoniales (ITP) es el impuesto que se paga al comprar una vivienda de segunda mano en España. El porcentaje varía entre el 4% y el 10% según la comunidad autónoma, con bonificaciones para jóvenes, familias numerosas y otros supuestos."
+        answer: "El Impuesto de Transmisiones Patrimoniales (ITP) es el impuesto que se paga al comprar una vivienda de segunda mano en España. La tarifa depende de la comunidad, la fecha, la base fiscal y los requisitos personales: puede haber tipos reducidos, bonificaciones, tramos progresivos y supuestos agravados del 20 %. La calculadora desglosa la norma aplicada."
       },
       {
         question: `¿Es mejor una hipoteca fija o variable en ${new Date().getFullYear()}?`,

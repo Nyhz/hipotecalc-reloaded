@@ -4,7 +4,7 @@ description: "Cuánto ITP se paga al comprar vivienda usada en Castilla-La Manch
 comunidad: "Castilla-La Mancha"
 tipoGeneral: "9 %"
 resumen: "Desde marzo de 2026: 6 % primera vivienda ≤240.000 €; 3 % menores de 36; 5 % familias numerosas, monoparentales y discapacidad; 5/4/3 % en zonas despobladas"
-updatedDate: 2026-08-23
+updatedDate: 2026-09-06
 ---
 
 Quien compra una vivienda de segunda mano en Castilla-La Mancha paga, como comprador, el Impuesto sobre Transmisiones Patrimoniales Onerosas (ITP-TPO). El tipo general es del 9 %, uno de los más altos de España, pero 2026 ha traído una rebaja importante para la primera vivienda habitual: la Ley 1/2026, de 26 de marzo, de Medidas Administrativas y Tributarias (DOCM núm. 61, de 30 de marzo de 2026), en vigor para devengos desde el **31 de marzo de 2026**, elevó el límite de valor de la vivienda de 180.000 a 240.000 euros, simplificó los requisitos y creó un tipo del 3 % para menores de 36 años.
@@ -74,6 +74,12 @@ Tipo del **5 %** para la primera vivienda habitual cuando el sujeto pasivo tenga
 ## Bonificaciones y deducciones de la cuota
 
 Para el comprador particular de vivienda **no existe** en Castilla-La Mancha una bonificación general de la cuota: el beneficio se articula por tipos reducidos. Las deducciones y bonificaciones vigentes en TPO tienen destinatarios específicos: explotaciones agrarias (art. 23), comunidades de regantes (art. 26.1) y una bonificación del 100 % en la constitución y ejecución de opciones de compra de contratos de arrendamiento derivados de la dación de la vivienda en pago del préstamo hipotecario (art. 27).
+
+## Fechas, valoración y AJD de la compraventa
+
+La calculadora distingue los devengos anteriores y posteriores al 31 de marzo de 2026. Antes, el límite de primera vivienda era 180.000 €, el ITP para jóvenes era del 5 %, la hipoteca no podía superar el valor declarado y el valor de la vivienda debía cubrir la tasación. Desde la reforma, el límite es 240.000 € y el ITP para menores de 36 es del 3 %. La financiación debe superar estrictamente el 50 %: exactamente el 50 % no cumple.
+
+En primera vivienda habitual nueva elegible, el AJD de adquisición es del 0,75 %; 0,50 % para discapacidad/familia numerosa o monoparental; 0,25 % para menores de 36; y 0,50 % / 0,25 % / 0,15 % en zonas oficiales de riesgo/intensa/extrema despoblación. Se mantienen los demás requisitos de financiación, valoración y primera vivienda (arts. 21–22, reformados por la [Ley 1/2026](https://www.boe.es/ccaa/docm/2026/061/q10660-10683.pdf)). El AJD general de compra sigue en el 1,50 %; una exención de VPO acreditada se trata por separado y tiene prioridad.
 
 ## Cómo se paga: modelo y plazo
 

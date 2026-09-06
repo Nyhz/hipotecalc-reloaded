@@ -4,12 +4,12 @@ description: "How much ITP you pay when buying a resale home in Catalonia in 202
 comunidad: "Cataluña"
 tipoGeneral: "10–13% scale"
 resumen: "Bracketed scale from 10% to 13% (20% large holders); 5% young buyers ≤35, large and single-parent families, disability and victims; 7% VPO; 4/3% rural"
-updatedDate: 2026-08-23
+updatedDate: 2026-09-06
 ---
 
 If you buy a second-hand home in Catalonia, the tax you will pay is not IVA but the Impuesto sobre Transmisiones Patrimoniales y Actos Jurídicos Documentados in its Transmisiones Patrimoniales Onerosas modality (ITP-TPO, the property transfer tax). It is always paid by the buyer and administered by the Agència Tributària de Catalunya (ATC, the Catalan tax agency).
 
-Catalonia overhauled this tax in 2025. Decreto ley 5/2025, de 25 de marzo (DOGC núm. 9379, de 26-3-2025), ratified by Resolución 201/XV del Parlamento de Cataluña, de 7 de mayo de 2025, replaced the old 10%-11% rate with a bracketed scale from 10% to 13%, created an increased 20% rate for large holders and purchases of entire buildings, expanded the reduced rates and abolished the 70% rebate for real estate companies (abolition in force since 27 March 2025). The remaining measures have been in force since 27 June 2025 and are incorporated into libro sexto of the Código tributario de Cataluña (Decreto legislativo 1/2024). On top of that, since August 2025 there has been a special regime for rural municipalities (Ley 8/2025). Everything that follows is the regime in force today, 8 July 2026.
+Catalonia overhauled this tax in 2025. Decreto ley 5/2025, de 25 de marzo (DOGC núm. 9379, de 26-3-2025), ratified by Resolución 201/XV del Parlamento de Cataluña, de 7 de mayo de 2025, replaced the old 10%-11% rate with a bracketed scale from 10% to 13%, created an increased 20% rate for large holders and purchases of entire buildings, expanded the reduced rates and abolished the 70% rebate for real estate companies (abolition in force since 27 March 2025). The remaining measures have been in force since 27 June 2025 and are incorporated into libro sexto of the Código tributario de Cataluña (Decreto legislativo 1/2024). On top of that, since August 2025 there has been a special regime for rural municipalities (Ley 8/2025). Everything that follows is the regime in force 6 September 2026.
 
 ## The essentials at a glance
 
@@ -76,7 +76,9 @@ In all the following cases, the income cap is measured the same way: the **sum o
 - Transfers of officially protected homes and rights in rem over them, except security rights (art. 641-1.2).
 
 ### Primary residence in a rural municipality: 4% (3% in special-attention municipalities)
-- A temporary measure under Ley 8/2025, de 30 de julio, del Estatuto de los municipios rurales (in force since 20-8-2025, for a 4-year period). It requires being a member of a family unit with children up to 16 years old schooled in the rural municipality (or an affiliated school; not required for children up to 3) and income not exceeding €36,000 (art. 62). There is a variant for buying and **renovating** homes built before 1-1-1970, also at 4%/3%, with the same income cap for the taxpayer (art. 63). These are provisional rates conditional on meeting the requirements.
+- A temporary measure under Ley 8/2025, de 30 de julio, del Estatuto de los municipios rurales (in force since 20-8-2025, until 16 July 2029 according to the ATC). It requires being a member of a family unit with children up to 16 years old schooled in the rural municipality (or an affiliated school; not required for children up to 3) and income not exceeding €36,000 (art. 62). There is a variant for buying and **renovating** homes built before 1-1-1970, also at 4%/3%, with the same income cap for the taxpayer (art. 63). These are provisional rates conditional on meeting the requirements.
+
+The [ATC rate guidance](https://atc.gencat.cat/ca/tributs/itpajd/tpo/tarifes-tipus/) specifies the end date; it is not four years from the date the law was published. The current municipality list is Resolution PRE/415/2026. In Artesa de Segre and Tremp, check the listed locality: the designation does not automatically cover the entire municipality. Rehabilitation requires qualifying structural works costing more than 25% of the relevant value excluding land, completion within two years and the subsequent statutory occupation/residence periods.
 
 ## Rebates and deductions on the tax due
 

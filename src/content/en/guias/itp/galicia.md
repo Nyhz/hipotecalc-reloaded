@@ -4,7 +4,7 @@ description: "How much ITP you pay when buying a resale home in Galicia in 2026:
 comunidad: "Galicia"
 tipoGeneral: "8 %"
 resumen: "7% primary residence; 3% under-36s, large and single-parent families, disability ≥65% and victims; 100% deduction in sparsely populated parishes"
-updatedDate: 2026-08-23
+updatedDate: 2026-09-06
 ---
 
 If you are going to buy a second-hand home in Galicia, the tax that will shape your budget is the ITP (Impuesto sobre Transmisiones Patrimoniales Onerosas, the property transfer tax, TPO modality). It is always paid by the buyer and calculated on the value of the home, not on the cost of the mortgage.
@@ -92,6 +92,12 @@ Galicia has no special rate for the purchase of homes by real estate companies f
 - **100% deduction on the tax due in sparsely populated areas** (art. 16.Siete TR, as amended by Ley 5/2025): those entitled to the 3% rate (disability, large family, under-36s, victims of gender-based violence and, since 2026, single-parent families) who buy their primary residence in a parish classified as a sparsely populated or rural area pay no tax: an effective ITP of 0%.
 - **100% deduction for the 2025 forest fires** (art. 16.Doce TR): for properties of up to €250,000 replacing others that were damaged. It only covered acts executed between 28-7-2025 and 30-6-2026, so it no longer applies to purchases signed today.
 - **Deduction of the prior-valuation fee** (art. 26.2 TR): if you asked the administration for a binding prior valuation of the property, the fee paid is deducted from the tax due.
+
+## Purchase AJD, rural deduction and multiple buyers
+
+For new housing, the calculator separates IVA from acquisition AJD: ordinarily 1.50%, or 1% for an eligible main residence; 0.50% for qualifying young, large-family, single-parent, disability or gender-violence cases. The requirements are those of art. 15, not a generic family checkbox. Art. 17.Ocho extends the 100% rural deduction to qualifying purchases in the official parish list, including single-parent households in 2026.
+
+If only one buyer qualifies, the relief applies to that person's share where the law permits. For example, on a €300,000 resale property, one eligible single-parent buyer acquiring 50% at 3% and a second non-main-residence buyer acquiring 50% at 8% pay €4,500 + €12,000 = €16,500. Each profile has separate household, wealth and certification answers; one person's missing data never inherits the other's eligibility.
 
 ## How to pay: form and deadline
 

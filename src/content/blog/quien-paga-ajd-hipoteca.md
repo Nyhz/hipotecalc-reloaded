@@ -9,7 +9,7 @@ faq:
   - question: "¿El comprador no paga ningún AJD al comprar vivienda?"
     answer: "Depende de la vivienda. En obra nueva, el comprador paga el AJD de la escritura de compraventa (además del IVA); lo que asumió el banco es solo el AJD de la escritura del préstamo hipotecario. En vivienda usada no hay cuota gradual de AJD en la compra, porque tributa por ITP."
   - question: "¿Cuánto es el AJD y quién fija el porcentaje?"
-    answer: "La cuota gradual del AJD la fija cada comunidad autónoma, generalmente entre el 0,5 % y el 1,5 % sobre la responsabilidad hipotecaria o el valor escriturado, con tipos reducidos para casos como la vivienda habitual o la VPO. Ceuta y Melilla aplican el régimen estatal con bonificación."
+    answer: "La cuota gradual del AJD la fija cada comunidad autónoma, con tipos y beneficios distintos para la adquisición y el préstamo. No existe un intervalo universal del 0,5 % al 1,5 %: hay exenciones, tipos inferiores y tipos superiores. La base del préstamo es la responsabilidad hipotecaria; la compra tiene su propia base fiscal. Ceuta y Melilla aplican el régimen estatal con bonificación."
   - question: "¿Puede el banco repercutirme el AJD en las comisiones?"
     answer: "No puede cobrártelo como tal: el impuesto es suyo por ley y el Real Decreto-ley 17/2018 impidió además que se lo deduzca en el Impuesto sobre Sociedades. Otra cosa es el precio global de la hipoteca: los costes del banco acaban reflejados en los tipos y comisiones del mercado, por eso conviene comparar TAE entre entidades."
 ---
@@ -32,7 +32,7 @@ contenido económico inscribibles en un registro — como una compraventa de obr
 nueva o la constitución de una hipoteca.
 
 Esa cuota gradual es la que duele: cada comunidad autónoma fija su tipo,
-normalmente **entre el 0,5 % y el 1,5 %**, y en una hipoteca no se aplica sobre
+con reglas distintas para la compra y para el préstamo, y en una hipoteca no se aplica sobre
 el capital prestado sino sobre la **responsabilidad hipotecaria** (capital más
 intereses, costas y gastos garantizados), que suele rondar el 130-150 % del
 préstamo. Para una hipoteca de 200.000 €, el AJD podía suponer fácilmente entre

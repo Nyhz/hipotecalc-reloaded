@@ -4,7 +4,7 @@ description: "How much ITP you pay when buying a resale home in Extremadura in 2
 comunidad: "Extremadura"
 tipoGeneral: "8/10/11% scale"
 resumen: "7% primary residence ≤€200,000; 4% under-36s, large family and disability; 4% VPO and rural areas"
-updatedDate: 2026-08-23
+updatedDate: 2026-09-06
 ---
 
 Buying a second-hand home in Extremadura means paying the ITP-TPO (Impuesto sobre Transmisiones Patrimoniales Onerosas, the property transfer tax), which is always borne by the buyer. Extremadura is one of the few regions with a **bracketed scale**: the general rate starts at 8% and can reach 11% on the part of the value exceeding €600,000.
@@ -47,7 +47,7 @@ The total tax is the sum of the amounts for each bracket. Example: a €400,000 
 
 ## Reduced rates in force in 2026
 
-Common rules (art. 52 TR): the primary residence is defined under the IRPF rules; the income limits refer to the IRPF return for the last period whose filing deadline had passed by the accrual date; unmarried couples registered in the regional registry are treated as spouses; and — very important — applying any regional tax benefit requires that payment be made through banking channels (card, transfer, nominative cheque or deposit into an account), never in cash (art. 52.3 TR).
+Common rules (art. 52 TR): the primary residence is defined under the IRPF rules; the income limits refer to the IRPF return for the last period whose filing deadline had passed by the accrual date; unmarried couples registered in the regional registry are treated as spouses; and — very important — applying any regional tax benefit requires that payment be made through banking channels (card, transfer, nominative cheque or deposit into an account), except cash deposits between private parties of up to €3,000 (art. 52.3 TR).
 
 **Transitional regime:** Ley 2/2026, de 3 de agosto, unified from **5 August 2026** the limits of the reduced rates of arts. 39 and 44 bis with the rest (value ≤ €200,000 and income ≤ €30,000 individual / €55,000 joint). Purchases accrued **before that date** are governed by the previous requirements: for the rural 4% rate, value ≤ €180,000, income ≤ €19,000/€24,000 and an additional aggregate family income limit; for the 4% VPO rate, no value or income limits.
 
@@ -80,6 +80,12 @@ Extremadura, unlike other regions, has **no special rate** for the acquisition o
 ## Rebates and deductions on the tax due
 
 Under the TPO modality **there is no rebate or deduction on the tax due** in Extremadura (as expressly stated in Capítulo IV of «Tributación Autonómica. Medidas 2026»). All tax savings for buyers are channelled through the reduced rates described.
+
+## Acquisition AJD and the 5 August 2026 change
+
+For a new home, IVA and the purchase-deed AJD are separate. From 5 August 2026, art. 47 sets AJD at 0.50% for a qualifying main residence worth no more than €200,000, with IRPF limits of €30,000 individual / €55,000 joint. Art. 47 bis sets 0.10% for a qualifying protected home with a statutory maximum price and the same limits. This is not an automatic reduction for any VPO label. Mortgage-loan AJD is payable by the lender, not included in this buyer's calculation.
+
+For earlier 2026 purchases, art. 47 used 0.75%, a €122,000 value cap and the previous income limits; the rural 0.50% regime under art. 50 bis ended on 4 August. The calculator selects the applicable version by accrual date. Qualifying VPO may instead be exempt under art. 45.I.B.12 of the national law: definitive classification and its legal scope must be evidenced.
 
 ## How to pay: form and deadline
 

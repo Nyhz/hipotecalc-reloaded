@@ -1,7 +1,7 @@
 ---
 title: "Gastos de compraventa de una vivienda: cuánto cuesta de verdad comprar casa"
 description: "Todos los gastos al comprar una vivienda en España: notaría, registro, gestoría, tasación e impuestos (ITP o IVA y AJD). Quién paga cada cosa y cuánto suma en total."
-updatedDate: 2026-07-12
+updatedDate: 2026-09-06
 calculadora: hipoteca
 faq:
   - question: "¿Cuánto suman los gastos de compraventa de una vivienda?"
@@ -24,15 +24,12 @@ salga a la primera.
 
 - **Vivienda de segunda mano: ITP.** El Impuesto de Transmisiones Patrimoniales
   depende de tu comunidad autónoma: desde el 3 % efectivo de Ceuta y Melilla o el
-  4 % del País Vasco hasta tarifas del 10-13 % en Cataluña o Baleares. Es la
+  4 % ordinario de vivienda en el País Vasco hasta tarifas del 10-13 % en Cataluña o Baleares. Existen beneficios inferiores y tipos agravados del 20 % en supuestos específicos de Cataluña y Asturias. Es la
   partida que más varía y donde más se puede ahorrar con las bonificaciones
   (jóvenes, familias numerosas, discapacidad). Consulta tu caso en la
   [guía del ITP por comunidades](/itp) o directamente en la
   [calculadora de ITP](/calculadora-itp).
-- **Obra nueva: IVA + AJD.** Pagas el 10 % de IVA (4 % en VPO de régimen
-  especial; en Canarias, IGIC) más el impuesto de Actos Jurídicos Documentados
-  de la escritura, que también fija cada comunidad (entre el 0,5 % y el 1,5 %
-  aproximadamente).
+- **Obra nueva: IVA + AJD.** El IVA ordinario de primera entrega es del 10 %; el 4 % exige VPO especial o de promoción pública entregada por el promotor. En Canarias corresponde IGIC y en Ceuta/Melilla, IPSI. El AJD de adquisición se calcula aparte: su tipo, reducciones y exenciones dependen de la comunidad. No está limitado al intervalo 0,5-1,5 % ni es el AJD del préstamo, que paga el prestamista.
 
 ## Los gastos "de papeleo" de la compraventa
 

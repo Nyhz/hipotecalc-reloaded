@@ -1,4 +1,5 @@
 ---
+import { REVIEWED } from '../../fiscal/sources';
 import Layout from '../../layouts/Layout.astro';
 import Byline from '../../components/seo/Byline.astro';
 import { resolverAutoria } from '../../data/authors';
@@ -11,7 +12,7 @@ import { t } from '../../utils/i18n';
 const autoria = resolverAutoria('calculadora');
 // La página muestra los tipos de comunidades.ts:
 // su última revisión avanza también cuando se revisan esos ficheros
-const actualizado = ultimaModificacionConjunta('src/pages/en/rental-calculator.astro', 'src/constants/comunidades.ts');
+const actualizado = new Date(Math.max(Date.parse(REVIEWED), ultimaModificacionConjunta('src/pages/en/rental-calculator.astro', 'src/constants/comunidades.ts')?.getTime() ?? 0));
 const publicado = fechaPublicacion('src/pages/en/rental-calculator.astro');
 
 ---

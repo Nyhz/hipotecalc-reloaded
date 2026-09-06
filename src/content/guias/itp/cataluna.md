@@ -4,12 +4,12 @@ description: "Calcula tu ITP exacto en Cataluña: pon el precio y te decimos lo 
 comunidad: "Cataluña"
 tipoGeneral: "Tarifa 10–13 %"
 resumen: "Tarifa por tramos del 10 al 13 % (20 % grandes tenedores); 5 % jóvenes ≤35, familias numerosas y monoparentales, discapacidad y víctimas; 7 % VPO; 4/3 % rural"
-updatedDate: 2026-08-23
+updatedDate: 2026-09-06
 ---
 
 Si compras una vivienda de segunda mano en Cataluña, el impuesto que pagarás no es el IVA, sino el Impuesto sobre Transmisiones Patrimoniales y Actos Jurídicos Documentados en su modalidad de Transmisiones Patrimoniales Onerosas (ITP-TPO). Lo paga siempre el comprador y lo gestiona la Agència Tributària de Catalunya (ATC).
 
-Cataluña reformó a fondo este impuesto en 2025. El Decreto ley 5/2025, de 25 de marzo (DOGC núm. 9379, de 26-3-2025), convalidado por la Resolución 201/XV del Parlamento de Cataluña, de 7 de mayo de 2025, sustituyó el antiguo tipo del 10 %-11 % por una tarifa por tramos del 10 % al 13 %, creó un tipo agravado del 20 % para grandes tenedores y compras de edificios enteros, amplió los tipos reducidos y suprimió la bonificación del 70 % de las empresas inmobiliarias (supresión en vigor desde el 27 de marzo de 2025). El resto de medidas está en vigor desde el 27 de junio de 2025 y se integra en el libro sexto del Código tributario de Cataluña (Decreto legislativo 1/2024). A ello se sumó, desde agosto de 2025, un régimen especial para municipios rurales (Ley 8/2025). Todo lo que sigue es el régimen vigente hoy, 8 de julio de 2026.
+Cataluña reformó a fondo este impuesto en 2025. El Decreto ley 5/2025, de 25 de marzo (DOGC núm. 9379, de 26-3-2025), convalidado por la Resolución 201/XV del Parlamento de Cataluña, de 7 de mayo de 2025, sustituyó el antiguo tipo del 10 %-11 % por una tarifa por tramos del 10 % al 13 %, creó un tipo agravado del 20 % para grandes tenedores y compras de edificios enteros, amplió los tipos reducidos y suprimió la bonificación del 70 % de las empresas inmobiliarias (supresión en vigor desde el 27 de marzo de 2025). El resto de medidas está en vigor desde el 27 de junio de 2025 y se integra en el libro sexto del Código tributario de Cataluña (Decreto legislativo 1/2024). A ello se sumó, desde agosto de 2025, un régimen especial para municipios rurales (Ley 8/2025). Todo lo que sigue es el régimen vigente 6 de septiembre de 2026.
 
 ## Lo esencial en un vistazo
 
@@ -76,7 +76,9 @@ En todos los casos siguientes, el límite de renta se mide igual: la **suma de l
 - Transmisión de viviendas con protección oficial y derechos reales sobre ellas, salvo garantía (art. 641-1.2).
 
 ### Vivienda habitual en municipio rural: 4 % (3 % en municipios de atención especial)
-- Medida temporal de la Ley 8/2025, de 30 de julio, del Estatuto de los municipios rurales (en vigor desde el 20-8-2025, con vigencia de 4 años). Requiere ser miembro de una unidad familiar con hijos de hasta 16 años escolarizados en el municipio rural (o centro adscrito; no se exige para los menores de hasta 3 años) y renta no superior a 36.000 € (art. 62). Existe una variante para comprar y **rehabilitar** vivienda construida antes del 1-1-1970, también al 4 %/3 %, con el mismo límite de renta del contribuyente (art. 63). Son tipos provisionales condicionados al cumplimiento de los requisitos.
+- Medida temporal de la Ley 8/2025, de 30 de julio, del Estatuto de los municipios rurales (en vigor desde el 20-8-2025, hasta el 16-7-2029 según la ATC). Requiere ser miembro de una unidad familiar con hijos de hasta 16 años escolarizados en el municipio rural (o centro adscrito; no se exige para los menores de hasta 3 años) y renta no superior a 36.000 € (art. 62). Existe una variante para comprar y **rehabilitar** vivienda construida antes del 1-1-1970, también al 4 %/3 %, con el mismo límite de renta del contribuyente (art. 63). Son tipos provisionales condicionados al cumplimiento de los requisitos.
+
+La [guía de tarifas de la ATC](https://atc.gencat.cat/ca/tributs/itpajd/tpo/tarifes-tipus/) concreta esa fecha final: no son cuatro años desde la publicación de la ley. La lista municipal vigente es la Resolución PRE/415/2026. En Artesa de Segre y Tremp debe comprobarse el núcleo incluido, sin dar por elegible todo el municipio. La rehabilitación exige obras estructurales cualificadas por más del 25 % del valor correspondiente sin suelo, finalización en dos años y cumplimiento posterior de los plazos de ocupación y residencia.
 
 ## Bonificaciones y deducciones de la cuota
 

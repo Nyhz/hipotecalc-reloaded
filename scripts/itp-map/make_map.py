@@ -10,7 +10,6 @@ Label placement is computed rather than hand-tuned:
      outside the map and join it with a leader line.
 """
 import sys, math
-sys.path.insert(0, '/home/claude/seo/img')
 import shapefile
 import matplotlib
 matplotlib.use("Agg")
@@ -19,10 +18,11 @@ from matplotlib.patches import Polygon as MplPoly, Rectangle
 from matplotlib.collections import PatchCollection
 from shapely.geometry import shape, MultiPolygon, Point, Polygon as ShPoly
 from shapely.ops import unary_union
-from itp_data import (ITP, KEEP_PROVINCE, TXT, INK, INK2, MUTED, SURFACE, SEA,
+from itp_data import (BASE, ITP, KEEP_PROVINCE, TXT, INK, INK2, MUTED, SURFACE, SEA,
                       color_for, text_on, eur, pct, FOOTNOTES_ES, FOOTNOTES_EN)
 
-SHP = '/home/claude/seo/ne10m/ne_10m_admin_1_states_provinces'
+from pathlib import Path
+SHP = str(Path(__file__).parent / 'ne10m' / 'ne_10m_admin_1_states_provinces')
 GRIDC = "#e1e0d9"
 LEADC = "#a9a7a0"
 LAT0, LON0, LAT1, LAT2 = 40.0, -3.7, 37.0, 43.0
@@ -405,11 +405,11 @@ def build(lang, report=False):
 
     fig.add_artist(plt.Line2D([0.035, 0.965], [0.182, 0.182], color=GRIDC, lw=1.0))
     fig.text(0.035, 0.156, T["spread_lbl"], fontsize=11.5, color=INK2, ha="left", va="top")
-    fig.text(0.035, 0.120, eur(14000, lang), fontsize=36, color=INK, ha="left",
+    lo, hi = min(v[2] for v in ITP.values()), max(v[2] for v in ITP.values())
+    fig.text(0.035, 0.120, eur(BASE * (hi - lo) / 100, lang), fontsize=36, color=INK, ha="left",
              va="top", fontweight="bold")
-    detail = (f"{pct(3, lang)} en Ceuta y Melilla\n{pct(10, lang)} en Cataluña"
-              if lang == "es" else
-              f"{pct(3, lang)} in Ceuta and Melilla\n{pct(10, lang)} in Catalonia")
+    names = lambda rate: ', '.join(sorted({v[0 if lang == 'es' else 1] for v in ITP.values() if v[2] == rate}))
+    detail = f"{pct(lo, lang)}: {names(lo)}\n{pct(hi, lang)}: {names(hi)}"
     fig.text(0.035, 0.070, detail, fontsize=11.5, color=MUTED, ha="left",
              va="top", linespacing=1.6)
 
@@ -464,7 +464,15 @@ if __name__ == "__main__":
     for lang in ("es", "en"):
         print(f"[{lang}]")
         f = build(lang, report=(lang == "es"))
-        out = f"/home/claude/seo/img/itp-mapa-espana-2026-{lang}.png"
+        filename = "itp-mapa-espana-2026.png" if lang == "es" else "itp-map-spain-by-region-2026.png"
+        out = str(Path(__file__).resolve().parents[2] / "public" / "img" / filename)
         f.savefig(out, dpi=150, facecolor=SURFACE)
         plt.close(f)
+        from PIL import Image
+        im = Image.open(out).convert('RGB')
+        im = im.resize((1800, round(im.height * 1800 / im.width)), Image.LANCZOS)
+        im.quantize(colors=256, method=Image.MEDIANCUT).save(out, optimize=True)
+        for width in (800, 1200, 1800):
+            variant = im.resize((width, round(im.height * width / im.width)), Image.LANCZOS)
+            variant.save(out[:-4] + f'-{width}.webp', 'WEBP', quality=82, method=6)
         print("  wrote", out)

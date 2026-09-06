@@ -4,12 +4,12 @@ description: "How much ITP you pay when buying a resale home in the Balearic Isl
 comunidad: "Baleares"
 tipoGeneral: "8–13% scale"
 resumen: "4% main residence (threshold by island); 2% under-36s, disability and large families; 100% rebate <30s or disability"
-updatedDate: 2026-08-23
+updatedDate: 2026-09-06
 ---
 
 In the Balearic Islands, the purchase of a resale (second-hand) home is taxed under the Impuesto sobre Transmisiones Patrimoniales Onerosas (ITP-TPO, the Spanish property transfer tax), which is paid by the buyer and administered by the Agència Tributària de les Illes Balears (ATIB, the Balearic tax agency). The regional rules are contained in the consolidated text of devolved taxes approved by Decreto Legislativo 1/2014, de 6 de junio.
 
-The Balearic Islands combine one of the most progressive rate scales in Spain (from 8% to 13%) with very powerful benefits for a main residence: a 4% rate, a 2% rate for buyers under 36, large and single-parent families or people with disabilities, and a **100% rebate** — zero ITP — for under-30s and people with disabilities buying their first home. These benefits depend on value thresholds that have moved twice in 2026: Orden 5/2026 set higher amounts by island with effect from 1 March, and Ley 4/2026, de 11 de junio (BOIB núm. 74, de 13-6-2026, in force since 14-6-2026) has adjusted the system again, raising the floor of those amounts to €331,859.70 and changing the cap for large families. Here is the full picture as of 8 July 2026.
+The Balearic Islands combine one of the most progressive rate scales in Spain (from 8% to 13%) with very powerful benefits for a main residence: a 4% rate, a 2% rate for buyers under 36, large and single-parent families or people with disabilities, and a **100% rebate** on the legally eligible portion for under-30s and people with disabilities buying their first home. These benefits depend on value thresholds that have moved twice in 2026: Orden 5/2026 set higher amounts by island with effect from 1 March, and Ley 4/2026, de 11 de junio (BOIB núm. 74, de 13-6-2026, in force since 14-6-2026) has adjusted the system again, raising the floor of those amounts to €331,859.70 and changing the cap for large families. Legislation reviewed on 6 September 2026. The ATIB correction dated 23 June fixes the Eivissa/Formentera ceiling at €378,211.68; it must not be rounded upwards.
 
 ## The essentials at a glance
 
@@ -18,8 +18,8 @@ The Balearic Islands combine one of the most progressive rate scales in Spain (f
 | General rate | Bracketed scale: 8% - 9% - 10% - 12% - 13% (art. 10.a TR) |
 | Main residence (any buyer) | 4% if the value does not exceed the threshold for its island (art. 10.c TR) |
 | Under-36s (first home), disability, large/single-parent families | 2% up to the threshold (art. 10.d TR) |
-| Under-30s and disability ≥33% (first main residence) | 100% rebate: zero ITP (art. 14 quater TR) |
-| Value thresholds by island | Mallorca and Menorca: €331,859.70; Eivissa and Formentera: €378,212 (Orden 5/2026 + Ley 4/2026, confirmed by the ATIB) |
+| Under-30s and disability ≥33% (first main residence) | 100% rebate on the first €270,151.20 (art. 14 quater TR) |
+| Value thresholds by island | Mallorca and Menorca: €331,859.70; Eivissa and Formentera: €378,211.68 (Orden 5/2026 + Ley 4/2026, confirmed by the ATIB) |
 | Price-capped housing (VPL) | 50% rebate (art. 14 septies TR, since 14-6-2026) |
 | Deadline and form | 1 month from the act or contract, modelo 600 (ATIB) |
 
@@ -35,13 +35,13 @@ The taxable base is the Catastro **reference value** (valor de referencia) or, i
 
 Scale in force since 2023 (art. 10.a TR, as worded by Ley 11/2022):
 
-| Property value from (€) | Tax on lower bracket (€) | Remaining value up to (€) | Rate (%) |
-|---:|---:|---:|---:|
-| 0 | 0 | 400,000 | 8 |
-| 400,000.01 | 32,000 | 200,000 | 9 |
-| 600,000.01 | 50,000 | 400,000 | 10 |
-| 1,000,000.01 | 90,000 | 2,000,000 | 12 |
-| 2,000,000.01 | 210,000 | Above | 13 |
+| Band of whole-property value (€) | Rate on that band |
+|---|---:|
+| Up to 400,000 | 8% |
+| Above 400,000 up to 600,000 | 9% |
+| Above 600,000 up to 1,000,000 | 10% |
+| Above 1,000,000 up to 2,000,000 | 12% |
+| Above 2,000,000 | 13% |
 
 The tax due is calculated using an "average rate": the scale is applied to the total value of the property and the resulting percentage (to two decimal places) is applied to your net taxable base, so buying a share does not change the bracket (art. 10 TR and the ATIB's official explanation). Stand-alone parking spaces (other than up to two annexed to the home) have their own scale: 8% up to €30,000 and 9% above (art. 10.b TR).
 
@@ -49,8 +49,8 @@ The tax due is calculated using an "average rate": the scale is applied to the t
 
 The main-residence benefits start from a base amount of **€270,151.20**. The fifth additional provision of the TR allows the conseller for Finance (regional finance minister) to raise it by order by up to 40% in the islands or areas with the highest prices:
 
-- **Orden 5/2026, de 16 de marzo** (BOIB núm. 34, de 17-3-2026), with effect from 1-3-2026: **Mallorca €307,089, Menorca €270,151.20, Eivissa €378,212, Formentera €378,212**.
-- **Ley 4/2026, de 11 de junio** (DF sexagésimo séptima, in force since 14-6-2026): the amounts set by that order **may not be lower than €331,859.70** (the value at 1-1-2026 of a price-capped home of 90 m² of usable floor area, type 2, municipality A and energy rating A). The ATIB itself, in its official notice of 13-6-2026 on the tax measures of Ley 4/2026, confirms the resulting operative thresholds: **€331,859.70 for homes located in Mallorca and Menorca** and **€378,212 for those in Eivissa and Formentera**.
+- **Orden 5/2026, de 16 de marzo** (BOIB núm. 34, de 17-3-2026), with effect from 1-3-2026: **Mallorca €307,089, Menorca €270,151.20, Eivissa €378,211.68, Formentera €378,211.68**.
+- **Ley 4/2026, de 11 de junio** (DF sexagésimo séptima, in force since 14-6-2026): the amounts set by that order **may not be lower than €331,859.70** (the value at 1-1-2026 of a price-capped home of 90 m² of usable floor area, type 2, municipality A and energy rating A). The ATIB itself, in its official notice of 13-6-2026 on the tax measures of Ley 4/2026, confirms the resulting operative thresholds: **€331,859.70 for homes located in Mallorca and Menorca** and **€378,211.68 for those in Eivissa and Formentera**.
 
 Common rule (DA quinta.2 TR): where the value of the home exceeds €270,151.20 but fits within the threshold for its island, the reduced rate (4% or 2%) applies only to the **first €270,151.20** and the excess is taxed at **8%**; the 100% rebate likewise applies only to the first €270,151.20.
 
@@ -75,7 +75,7 @@ Registered office or workplace of newly created companies: 3.5% (art. 11 TR); pr
 
 ## Rebates and deductions on the tax due
 
-### Under-30s and people with a disability ≥33%: 100% rebate (zero ITP)
+### Under-30s and people with a disability ≥33%: 100% rebate on the eligible portion
 Full requirements (art. 14 quater TR, introduced by Decreto ley 4/2023 and amended by Leyes 11/2023 and 12/2023):
 - Habitual residence in the Balearic Islands for the **3 years** before the purchase.
 - It must be the **first home** of which at least 50% of full ownership is acquired, and the buyer must not own or co-own (≥50%) any other.
@@ -94,9 +94,13 @@ There is also a 100% deduction for excess inheritance allotments compensated wit
 
 The tax is self-assessed using **modelo 600** (form 600). The deadline for paying and filing the self-assessment, together with the document giving rise to the taxable event, is **one month from the date on which the act or contract is executed** (source: ATIB, modelo 600 fact sheet). Filing can be done online or at ATIB offices by appointment.
 
+A developer’s first supply of special-regime/public-promotion VPO can qualify for 4% IVA; not every VPO does. Purchase AJD has separate reliefs: from 14/06/2026, art. 19 quater offers a 100% rebate on the eligible portion when all its requirements are met, and art. 19 quinquies a 50% VPL rebate. The national VPO exemption requires definitive classification and, where relevant, equivalent national parameters. This is separate from mortgage-loan AJD, which is paid by the lender.
+
 ## Applicable legislation (official links)
 
-- Consolidated text of devolved taxes of the Balearic Islands (Decreto Legislativo 1/2014, de 6 de junio), consolidated in the BOE — not yet incorporating Ley 4/2026: https://www.boe.es/buscar/act.php?id=BOE-A-2014-6925
+- [ATIB correction of island ceilings, 23/06/2026](https://www.atib.es/General/Novedad.aspx?idTexto=16988&idTipoTexto=1&lang=es).
+
+- Consolidated text of devolved taxes of the Balearic Islands (Decreto Legislativo 1/2014, de 6 de junio), consolidated in the BOE including Ley 4/2026: https://www.boe.es/buscar/act.php?id=BOE-A-2014-6925
 - ATIB notice of 13-6-2026 with the tax measures of Ley 4/2026 and the thresholds by island: https://atib.es/General/Novedad.aspx?idTexto=16987&idTipoTexto=1&lang=es
 - Orden 5/2026, de 16 de marzo (BOIB núm. 34, de 17-3-2026): https://www.caib.es/eboibfront/pdf/es/2026/34/1215137
 - Ley 4/2026, de 11 de junio (BOIB núm. 74, de 13-6-2026; DF sexagésimo séptima): https://www.boe.es/ccaa/boib/2026/074/i31968-32097.pdf

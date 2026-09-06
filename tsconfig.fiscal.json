@@ -1,0 +1,11 @@
+{
+  "extends": "./tsconfig.json",
+  "include": [
+    "src/fiscal/**/*.ts",
+    "src/components/fiscal/**/*.tsx",
+    "src/utils/calculadora-itp.ts",
+    "tests/**/*.ts"
+  ],
+  "exclude": ["dist", "node_modules"],
+  "compilerOptions": { "checkJs": false, "types": ["node", "react"] }
+}

@@ -27,7 +27,7 @@ const { guia } = Astro.props;
 const { Content } = await render(guia);
 
 const formatDate = (d: Date) =>
-  d.toLocaleDateString('en-US', { day: 'numeric', month: 'long', year: 'numeric' });
+  d.toLocaleDateString('en-US', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' });
 
 const SITE_BASE = 'https://www.hipotecalc.com';
 const canonical = `${SITE_BASE}/en/itp/${guia.id}`;
@@ -60,7 +60,7 @@ const articleSchema = JSON.stringify({
 });
 
 const nombre = guia.id === 'ceuta-melilla' ? 'Ceuta and Melilla' : regionNameEn(guia.data.comunidad);
-const altMapa = `Map of ITP transfer tax by Spanish region in 2026 with ${nombre} highlighted: ${guia.data.tipoGeneral} versus the rest of Spain, on a €200,000 resale home`;
+const altMapa = `ITP comparison for a €200,000 resale main home in 2026, with ${nombre} highlighted; calculations use the example conditions stated on the map`;
 
 const esForal = ['Navarra', 'País Vasco'].includes(guia.data.comunidad);
 const tipoEnFrase = guia.data.tipoGeneral.charAt(0).toLowerCase() + guia.data.tipoGeneral.slice(1);
@@ -70,7 +70,7 @@ const impuestoObraNueva =
     ? 'No. The first sale of a new home in the Canary Islands pays neither ITP nor VAT: it is subject to the IGIC (the Canary Islands indirect tax). The ITP only applies to resale homes.'
     : guia.id === 'ceuta-melilla'
       ? 'No. New homes in Ceuta and Melilla pay neither ITP nor VAT: they are subject to the IPSI (the local indirect tax). The ITP only applies to resale homes.'
-      : `No. A new home bought from the developer is subject to 10% VAT (4% for special-regime subsidised housing) plus stamp duty (AJD). The ITP only applies to resale homes in ${nombre}.`;
+      : `No. A new home bought from the developer is subject to 10% VAT (4% for special-regime/public-promotion VPO supplied by the developer) plus stamp duty (AJD). The ITP only applies to resale homes in ${nombre}.`;
 
 // Filing deadline: each territory has a single deadline, the same one the
 // body of each guide documents with its official source (Cantabria: the

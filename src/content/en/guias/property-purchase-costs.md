@@ -1,7 +1,7 @@
 ---
 title: "Costs of buying a home in Spain: what buying a house really costs"
 description: "All the costs of buying a home in Spain: notary, land registry, gestoría, valuation and taxes (ITP or IVA plus AJD). Who pays what and how much it all adds up to."
-updatedDate: 2026-07-12
+updatedDate: 2026-09-06
 calculadora: hipoteca
 faq:
   - question: "How much do the costs of buying a home add up to?"
@@ -25,15 +25,12 @@ up the first time.
 - **Resale homes: ITP.** The Impuesto de Transmisiones Patrimoniales (the
   property transfer tax) depends on your autonomous region: from the effective
   3% in Ceuta and Melilla or 4% in the Basque Country to rates of 10-13% in
-  Catalonia or the Balearic Islands. It is the item that varies the most and
+  Catalonia or the Balearic Islands; qualifying relief may be lower, and exceptional 20% surcharges exist in Cataluña and Asturias. It is the item that varies the most and
   where the biggest savings can be made through reduced rates (young buyers,
   large families, disability). Check your case in the
   [ITP guide by region](/en/itp) or go straight to the
   [ITP calculator](/en/itp-calculator).
-- **New builds: IVA + AJD.** You pay 10% IVA (Spain's VAT; 4% for
-  special-regime VPO subsidized housing; in the Canary Islands, IGIC) plus the
-  AJD (Actos Jurídicos Documentados, stamp duty) on the deed, which each region
-  also sets (roughly between 0.5% and 1.5%).
+- **New builds: IVA + AJD.** Ordinary first-supply IVA is 10%; 4% requires special-regime or public-promotion VPO supplied by its developer. Canarias uses IGIC; Ceuta/Melilla use IPSI. Purchase-deed AJD is calculated separately with regional rates, reliefs and exemptions, not a universal 0.5–1.5% range. Mortgage-loan AJD is paid by the lender.
 
 ## The "paperwork" costs of the purchase
 

@@ -4,7 +4,7 @@ description: "How much ITP you pay when buying a resale home in Castilla-La Manc
 comunidad: "Castilla-La Mancha"
 tipoGeneral: "9 %"
 resumen: "From March 2026: 6% first home ≤€240,000; 3% under-36s; 5% large families, single-parent families and disability; 5/4/3% in depopulated areas"
-updatedDate: 2026-08-23
+updatedDate: 2026-09-06
 ---
 
 Anyone buying a second-hand home in Castilla-La Mancha pays, as the buyer, the ITP-TPO (Impuesto sobre Transmisiones Patrimoniales Onerosas, the property transfer tax). The general rate is 9%, one of the highest in Spain, but 2026 brought a major reduction for first primary residences: Ley 1/2026, de 26 de marzo, de Medidas Administrativas y Tributarias (DOCM núm. 61, de 30 de marzo de 2026), in force for tax events accruing from **31 March 2026**, raised the property value cap from €180,000 to €240,000, simplified the requirements and created a 3% rate for buyers under 36.
@@ -74,6 +74,12 @@ A **5%** rate for the first primary residence when the taxpayer has an officiall
 ## Rebates and deductions on the tax due
 
 For the private homebuyer there is **no** general rebate on the tax due in Castilla-La Mancha: the benefit is delivered through reduced rates. The deductions and rebates in force under TPO target specific groups: agricultural holdings (art. 23), irrigation communities (art. 26.1) and a 100% rebate on the creation and exercise of purchase options in rental agreements arising from handing over the home in payment of the mortgage loan (dación en pago) (art. 27).
+
+## Dates, valuation and purchase-deed AJD
+
+The calculator distinguishes purchases before and from 31 March 2026. Previously, the main first-home ceiling was €180,000, the young-buyer ITP rate was 5%, the mortgage could not exceed the declared value and the property value had to cover the appraisal. Since the reform, the ceiling is €240,000 and the under-36 ITP rate is 3%. Mortgage funding must be strictly above 50%; exactly 50% does not qualify.
+
+For a qualifying first new main home, acquisition AJD is 0.75%; 0.50% for qualifying disability/large or single-parent family; 0.25% for under-36s; and 0.50% / 0.25% / 0.15% in officially designated risk/intense/extreme depopulation zones. All remaining funding, valuation and first-home conditions still apply (arts. 21–22, amended by [Ley 1/2026](https://www.boe.es/ccaa/docm/2026/061/q10660-10683.pdf)). The ordinary purchase AJD remains 1.50%; a separately established VPO exemption takes precedence.
 
 ## How to pay: form and deadline
 

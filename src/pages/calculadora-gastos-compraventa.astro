@@ -1,4 +1,5 @@
 ---
+import { REVIEWED } from '../fiscal/sources';
 import Layout from '../layouts/Layout.astro';
 import Byline from '../components/seo/Byline.astro';
 import { resolverAutoria } from '../data/authors';
@@ -14,7 +15,7 @@ const description =
 const autoria = resolverAutoria('calculadora');
 // La página muestra los tipos de comunidades.ts:
 // su última revisión avanza también cuando se revisan esos ficheros
-const actualizado = ultimaModificacionConjunta('src/pages/calculadora-gastos-compraventa.astro', 'src/constants/comunidades.ts');
+const actualizado = new Date(Math.max(Date.parse(REVIEWED), ultimaModificacionConjunta('src/pages/calculadora-gastos-compraventa.astro', 'src/constants/comunidades.ts')?.getTime() ?? 0));
 const publicado = fechaPublicacion('src/pages/calculadora-gastos-compraventa.astro');
 
 ---
@@ -34,8 +35,8 @@ const publicado = fechaPublicacion('src/pages/calculadora-gastos-compraventa.ast
       </h1>
       <div class="mt-2 mb-1"><Byline autoria={autoria} lang="es" updated={actualizado} /></div>
       <p class="text-ink-soft max-w-3xl mx-auto text-base md:text-lg">
-        Al precio del piso hay que sumarle entre un 8 % y un 14 % en impuestos y
-        gastos. Elige tu comunidad y el tipo de vivienda y obtén el desglose
+        Al precio del piso hay que sumarle los impuestos y gastos que correspondan
+        a tu operación. Elige tu comunidad y el tipo de vivienda y obtén el desglose
         completo: impuestos, notaría, registro, gestoría y tasación.
       </p>
     </header>
@@ -47,17 +48,17 @@ const publicado = fechaPublicacion('src/pages/calculadora-gastos-compraventa.ast
       <div class="text-ink-soft space-y-4 leading-relaxed">
         <p>
           El desglose cubre los gastos <strong>de la compraventa</strong>: el impuesto
-          (ITP al tipo general de tu comunidad en vivienda usada; IVA del 10 % más AJD
-          en obra nueva), la notaría y el registro —aranceles regulados que crecen con
+          (ITP en vivienda usada; IVA, IGIC o IPSI más AJD en la primera entrega de
+          obra nueva), la notaría y el registro —aranceles regulados que crecen con
           el precio— y, si compras con hipoteca, la gestoría y la tasación. Desde la
           Ley 5/2019, los gastos del <em>préstamo</em> (su notaría, registro, gestoría
           y AJD) los paga el banco, así que no se suman aquí: el detalle está en la
           <a href="/guias/gastos-compraventa" class="underline text-brand-blue"> guía de gastos de compraventa</a>.
         </p>
         <p>
-          El ITP aplicado es el tipo general: si eres joven, familia numerosa o tienes
-          derecho a otras bonificaciones, tu impuesto puede ser bastante menor —
-          compruébalo en la <a href="/calculadora-itp" class="underline text-brand-blue">calculadora de ITP</a>
+          Sin datos suficientes no se concede un beneficio fiscal. Abre «Fecha, base fiscal y beneficios»
+          para comprobar tus requisitos personales; es el mismo motor de la
+          <a href="/calculadora-itp" class="underline text-brand-blue">calculadora de ITP</a>
           o en la <a href="/itp" class="underline text-brand-blue">guía de tu comunidad</a>.
           Y si aún no sabes cuánto te prestaría el banco, empieza por
           <a href="/cuanto-me-prestan" class="underline text-brand-blue"> ¿cuánto me prestan?</a>.
@@ -69,7 +70,7 @@ const publicado = fechaPublicacion('src/pages/calculadora-gastos-compraventa.ast
       <h2 class="font-heading text-2xl font-semibold text-ink mb-4">Un ejemplo con números: piso de 250.000&nbsp;€ en Madrid</h2>
       <div class="text-ink-soft space-y-4 leading-relaxed">
         <p>
-          Segunda mano, comprado con hipoteca. Este es el desglose que obtendrías de
+          Segunda mano, comprado con hipoteca, sin aplicar beneficios personales ni de vivienda habitual. Este es el desglose que obtendrías de
           la calculadora, partida a partida:
         </p>
         <div class="pl-card p-5">
@@ -89,7 +90,7 @@ const publicado = fechaPublicacion('src/pages/calculadora-gastos-compraventa.ast
           comunidad importa tanto — el mismo piso en Cataluña, con un tipo general
           del 10&nbsp;%, pagaría 25.000&nbsp;€ solo de ITP — y por eso, en obra nueva, la
           cuenta sube: 10&nbsp;% de IVA (25.000&nbsp;€) más el AJD autonómico
-          (entre el 0,5 y el 1,5&nbsp;%: 1.250–3.750&nbsp;€).
+          según comunidad y beneficios acreditados. Existen exenciones, tipos inferiores al 0,5&nbsp;% y el 2&nbsp;% balear desde 1.000.000&nbsp;€. En Canarias, Ceuta y Melilla se aplica IGIC o IPSI, no IVA.
         </p>
       </div>
     </section>
@@ -103,9 +104,9 @@ const publicado = fechaPublicacion('src/pages/calculadora-gastos-compraventa.ast
         </p>
         <ul class="list-disc pl-6 space-y-2">
           <li>
-            <strong>Tipos reducidos del ITP.</strong> Menores de 35 años, familias
-            numerosas, personas con discapacidad o VPO pagan menos en casi todas las
-            comunidades — en algunas, la mitad. Comprueba tu caso en la
+            <strong>Tipos reducidos del ITP.</strong> La edad, familia, discapacidad y
+            protección de la vivienda pueden permitir beneficios, con requisitos
+            distintos en cada territorio. Comprueba tu caso en la
             <a href="/calculadora-itp" class="underline text-brand-blue">calculadora de ITP</a>.
           </li>
           <li>
@@ -135,7 +136,7 @@ const publicado = fechaPublicacion('src/pages/calculadora-gastos-compraventa.ast
     items={[
       {
         question: "¿Cuánto suman los gastos de comprar una vivienda?",
-        answer: "Entre un 8 % y un 12 % del precio en vivienda usada (el grueso es el ITP autonómico, del 3 % efectivo al 13 %) y un 12-14 % en obra nueva (IVA del 10 % más AJD). A eso se añade la entrada del 20 % que el banco no financia."
+        answer: "No hay un porcentaje único: depende del ITP autonómico y tus requisitos, o de IVA/IGIC/IPSI más AJD en primera entrega. La calculadora separa impuestos, gastos estimados y entrada, sin cargar al comprador el AJD del préstamo hipotecario."
       },
       {
         question: "¿Qué gastos paga el banco y cuáles el comprador?",

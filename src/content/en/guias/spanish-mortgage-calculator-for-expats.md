@@ -1,7 +1,7 @@
 ---
 title: "Spanish mortgage calculator for expats: run your numbers the way a bank will"
 description: "How to simulate a Spanish mortgage as an expat or foreign buyer: the inputs that differ (LTV, taxes by region, foreign income), and the calculator to do it."
-updatedDate: 2026-07-15
+updatedDate: 2026-09-06
 calculadora: hipoteca
 faq:
   - question: "How is a Spanish mortgage calculated?"
@@ -22,11 +22,10 @@ that does it for you.
 
 ## What's different about the Spanish numbers
 
-1. **The taxes are inside the operation.** In Spain you'll pay roughly 4-13%
-   in transfer tax depending on the region ([see the map](/en/itp)) — charged
+1. **The taxes are inside the operation.** In Spain you'll pay regional ITP
+   depending on the region and eligibility ([see the map](/en/itp)) — charged
    on the higher of the price and the official cadastral *valor de referencia*
-   — or, on new builds, 10% VAT plus your region's AJD stamp duty (0.5-1.5%;
-   in the Canary Islands, 7% IGIC instead of VAT). If you finance the purchase, that tax bill shapes
+   — or, on new builds, ordinary 10% IVA plus regional purchase AJD, with separate reliefs. Canarias applies IGIC (ordinary 7%); Ceuta/Melilla apply IPSI instead of IVA. There is no universal 0.5–1.5% AJD range. If you finance the purchase, that tax bill shapes
    how much savings you need. Our calculator adds it automatically per region.
 2. **Loan-to-value depends on your residence status.** Residents: typically up
    to 80% of the lower of price and valuation. **Non-residents: 60-70%** — the

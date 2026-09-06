@@ -1,4 +1,5 @@
 ---
+import { REVIEWED } from '../fiscal/sources';
 import { getCollection } from 'astro:content';
 import Byline from '../components/seo/Byline.astro';
 import { resolverAutoria } from '../data/authors';
@@ -19,7 +20,7 @@ const description =
 const autoria = resolverAutoria('calculadora');
 // La página muestra los tipos de comunidades.ts a través del motor de ITP:
 // su última revisión avanza también cuando se revisan esos ficheros
-const actualizado = ultimaModificacionConjunta('src/pages/calculadora-itp.astro', 'src/constants/comunidades.ts', 'src/utils/calculadora-itp.ts');
+const actualizado = new Date(Math.max(Date.parse(REVIEWED), ultimaModificacionConjunta('src/pages/calculadora-itp.astro', 'src/constants/comunidades.ts', 'src/utils/calculadora-itp.ts')?.getTime() ?? 0));
 const publicado = fechaPublicacion('src/pages/calculadora-itp.astro');
 
 ---
@@ -41,7 +42,7 @@ const publicado = fechaPublicacion('src/pages/calculadora-itp.astro');
       <p class="text-ink-soft max-w-3xl mx-auto text-base md:text-lg">
         Elige tu comunidad autónoma, indica el precio y tu situación (edad, familia,
         discapacidad…) y obtén al instante el ITP estimado con las bonificaciones que
-        te corresponden. Para obra nueva, calcula el IVA equivalente.
+        te corresponden. En una primera entrega de vivienda nueva no se paga ITP: consulta por separado IVA, IGIC o IPSI y el AJD de la adquisición.
       </p>
     </header>
 
@@ -73,19 +74,19 @@ const publicado = fechaPublicacion('src/pages/calculadora-itp.astro');
     items={[
       {
         question: "¿Qué es el ITP y cuándo se paga?",
-        answer: "El Impuesto de Transmisiones Patrimoniales grava la compra de vivienda de segunda mano y lo paga siempre el comprador. El plazo de autoliquidación depende de la comunidad y se cuenta desde la fecha de la escritura o del contrato: dos meses en Andalucía y Navarra, un mes en ocho comunidades (Cataluña, Comunitat Valenciana, Galicia, Extremadura, entre otras) y 30 días hábiles en la mayoría de las restantes. La vivienda nueva no paga ITP: tributa por IVA al 10 % (por IGIC en Canarias y por IPSI en Ceuta y Melilla)."
+        answer: "El Impuesto de Transmisiones Patrimoniales grava la compra de vivienda de segunda mano y lo paga siempre el comprador. El plazo de autoliquidación depende de la comunidad y se cuenta desde la fecha de la escritura o del contrato: dos meses en Andalucía y Navarra, un mes en ocho comunidades (Cataluña, Comunitat Valenciana, Galicia, Extremadura, entre otras) y 30 días hábiles en la mayoría de las restantes. La primera entrega de vivienda nueva no paga ITP: el IVA ordinario es del 10 %, con el 4 % reservado a la VPO especial/pública entregada por el promotor (por IGIC en Canarias y por IPSI en Ceuta y Melilla)."
       },
       {
         question: "¿Sobre qué valor calcula el impuesto esta calculadora?",
-        answer: "Sobre el precio que introduzcas. Ten en cuenta que legalmente la base imponible es el valor de referencia de Catastro o el precio si es mayor: consulta el valor de referencia de la vivienda en la Sede del Catastro antes de firmar."
+        answer: "Precio y valores fiscales son entradas separadas. Para el ITP de régimen común se usa el mayor entre precio, valor declarado y referencia; sin referencia, también se considera el valor de mercado aportado. Las valoraciones forales se tratan aparte. IVA/IGIC/IPSI se calcula sobre el precio sin impuestos."
       },
       {
         question: "¿Incluye las bonificaciones de mi comunidad?",
-        answer: "Sí. La calculadora aplica los tipos reducidos y bonificaciones autonómicas más habituales: jóvenes, familia numerosa o monoparental, discapacidad, víctimas, vivienda protegida o zonas poco pobladas, seleccionando siempre el tipo más beneficioso aplicable a tu caso."
+        answer: "Sí. La calculadora aplica los tipos reducidos y bonificaciones autonómicas más habituales: jóvenes, familia numerosa o monoparental, discapacidad, víctimas, vivienda protegida o zonas poco pobladas, aplicando solo beneficios cuyos requisitos estén completos y respetando bases parciales, compatibilidades y fecha de devengo."
       },
       {
         question: "¿El resultado es exacto?",
-        answer: "Es una estimación rigurosa con los tipos vigentes en 2026, pero cada beneficio fiscal tiene requisitos finos (límites de renta o patrimonio, plazos de ocupación) que la herramienta simplifica. Verifica tu caso en la guía de tu comunidad o con un asesor fiscal."
+        answer: "Es una estimación rigurosa con los tipos vigentes en 2026, pero depende de respuestas correctas y de las acreditaciones oficiales. Verifica tu caso en la guía de tu comunidad o con un asesor fiscal."
       }
     ]}
   />

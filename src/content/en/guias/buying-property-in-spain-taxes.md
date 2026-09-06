@@ -1,11 +1,11 @@
 ---
 title: "Buying property in Spain: every tax you'll pay, explained"
 description: "The taxes when buying property in Spain: ITP by region on resale homes, 10% VAT plus AJD on new builds, who pays the plusvalía, and what it all adds up to."
-updatedDate: 2026-07-15
+updatedDate: 2026-09-06
 calculadora: itp
 faq:
   - question: "What taxes do you pay when buying a property in Spain?"
-    answer: "On a resale home: the regional transfer tax (ITP), from an effective 3% in Ceuta and Melilla up to 13% in the top brackets of Catalonia or the Balearics. On a new build: 10% VAT plus the AJD stamp duty (roughly 0.5-1.5% depending on the region). Fees for notary, registry and agency add around 1-2 percentage points more."
+    answer: "Resale homes incur regional ITP, with reduced rates, rebates and exceptional 20% surcharges in Cataluña/Asturias. A developer’s first supply generally incurs 10% IVA plus purchase AJD, except that Canarias uses IGIC and Ceuta/Melilla IPSI. The exact amount depends on the tax base, date and eligibility; notary and registry fees are separate."
   - question: "Do foreigners pay higher property taxes in Spain?"
     answer: "No — the purchase taxes are the same for residents, non-residents and foreigners. What changes for non-residents comes later: the annual non-resident income tax on the property and, when selling, a 3% retention on the price."
   - question: "What is the tax base — the price I pay or something else?"
@@ -53,11 +53,10 @@ Country apply their own foral valuation rules.
 
 Buying from a developer, you don't pay ITP. Instead:
 
-- **VAT (IVA) at 10%** of the price (4% for special-regime subsidised housing;
+- **VAT (IVA) at 10%** of the price (4% for qualifying special-regime/public-promotion VPO supplied by its developer;
   in the Canary Islands the local IGIC applies instead, and in Ceuta and
   Melilla the IPSI).
-- **AJD stamp duty** on the purchase deed, set by each region — generally
-  between **0.5% and 1.5%**.
+- **AJD stamp duty** on the purchase deed, with rates, reliefs and exemptions set by the applicable law. It is not always within 0.5–1.5% and is separate from the lender’s mortgage-loan AJD.
 
 So a new build usually carries a heavier tax load than a resale in the same
 region — around 11-12% combined versus, say, Madrid's 6% ITP.

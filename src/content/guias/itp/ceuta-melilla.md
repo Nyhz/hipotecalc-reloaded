@@ -4,7 +4,7 @@ description: "Cuánto ITP se paga al comprar vivienda usada en Ceuta y Melilla e
 comunidad: "Ceuta"
 tipoGeneral: "6 % con bonificación del 50 % → 3 % efectivo"
 resumen: "Bonificación del 50 % de la cuota (art. 57 bis TRLITPAJD); tipo estatal del 6 % gestionado ante la AEAT"
-updatedDate: 2026-08-23
+updatedDate: 2026-09-06
 ---
 
 Ceuta y Melilla no son comunidades autónomas, sino **ciudades con Estatuto de Autonomía**, y esa diferencia tiene una consecuencia fiscal directa: **no tienen capacidad para aprobar sus propios tipos** en el Impuesto sobre Transmisiones Patrimoniales y Actos Jurídicos Documentados (ITPyAJD). Al comprar una **vivienda usada** en cualquiera de las dos ciudades se aplica íntegramente la **normativa estatal**: el Texto Refundido aprobado por el Real Decreto Legislativo 1/1993, de 24 de septiembre (TRLITPAJD).
@@ -30,6 +30,8 @@ Como en el resto del país, el ITP-TPO lo paga el **comprador**, y solo se aplic
 ## Cuándo se paga ITP (y cuándo no)
 
 Pagas TPO al comprar una **vivienda usada** (una "segunda o ulterior transmisión", normalmente entre particulares) situada en Ceuta o en Melilla. No pagas TPO cuando compras **obra nueva** al promotor: en la península esa compra lleva IVA del 10 %, pero en Ceuta y Melilla el IVA no se aplica y en su lugar existe el **Impuesto sobre la Producción, los Servicios y la Importación (IPSI)**, regulado por la Ley 8/1991 y gestionado por cada ciudad autónoma; según la información oficial de la Ciudad de Melilla, sus tipos se mueven entre el 0,5 % y el 10 % (el tipo concreto de la vivienda nueva lo fijan las ordenanzas de cada ciudad). La escritura de obra nueva devenga además AJD, cuya cuota gradual también se bonifica al 50 % cuando el registro donde se inscribe radica en Ceuta o Melilla (art. 57 bis.1 TRLITPAJD).
+
+En la primera transmisión de vivienda, Ceuta aprobó un IPSI del 0,50 % en su reforma de 2025 ([comunicación oficial de la Ciudad](https://www.ceuta.es/gobiernodeceuta/index.php/noticia/8-hacienda/13709-la-asamblea-respalda-con-una-amplia-mayoria-el-ambicioso-plan-de-medidas-fiscales)). Melilla aplica el 4 %, o el 0,50 % a VPO oficialmente calificadas entregadas por el promotor ([información oficial inmobiliaria, actualizada en enero de 2026](https://www.melilla.es/melillaportal/contenedor.jsp?codMenu=764&codMenuPN=601&codMenuSN=1&codMenuTN=182&codbusqueda=801&seccion=s_fdes_d4_v1.jsp)). No deben confundirse esos tipos con los de servicios de construcción. El AJD de adquisición se muestra aparte: el 0,50 % estatal ordinario, con bonificación del 50 %, equivale al 0,25 %, salvo exención específica.
 
 ## La base imponible
 

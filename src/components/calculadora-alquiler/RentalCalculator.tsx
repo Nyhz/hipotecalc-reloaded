@@ -1,6 +1,10 @@
 import React, { useState, useMemo } from "react"
 import { COMUNIDADES } from "../../constants/comunidades"
-import { calcularITP } from "../../utils/calculadora-hipotecaria"
+import { calculatePurchaseTaxes, defaultPurchase } from "../../fiscal/engine"
+import type { Purchase, TaxResult } from "../../fiscal/types"
+import { REGIONS } from "../../fiscal/sources"
+import ITPCalculator from "../calculadora-hipotecaria/ITPCalculator"
+import TaxBreakdown from "../fiscal/TaxBreakdown"
 import Input from "./Input"
 import Select from "./Select"
 import RentalKPIs from "./RentalKPIs"
@@ -35,6 +39,18 @@ const RentalCalculator: React.FC<RentalCalculatorProps> = ({ lang = 'es' }) => {
   const { t } = useTranslations(lang)
   const [form, setForm] = useState(initialState)
 
+  const [fiscalInput,setFiscalInput]=useState<Purchase|null>(null)
+  const [showTax,setShowTax]=useState(false)
+  const fiscal=useMemo(()=>calculatePurchaseTaxes({
+    ...(fiscalInput??defaultPurchase(Number(form.precio),form.comunidad)),
+    precio:Number(form.precio),comunidad:form.comunidad,habitual:false,
+  }),[form.precio,form.comunidad,fiscalInput])
+  const onTaxResult=(_n:number,_rate?:number,_description?:string,detail?:TaxResult)=>{
+    if(!detail)return
+    setFiscalInput({...detail.input,habitual:false})
+    setForm(p=>({...p,precio:String(detail.input.precio),comunidad:REGIONS.find(([id])=>id===detail.input.comunidad)?.[1]??detail.input.comunidad}))
+  }
+
   // Cálculos memoizados que se recalculan automáticamente cuando cambian los inputs
   const calculations = useMemo(() => {
     const precioNum = Number(form.precio) || 0
@@ -45,10 +61,8 @@ const RentalCalculator: React.FC<RentalCalculatorProps> = ({ lang = 'es' }) => {
     const alquilerMensualNum = Number(form.alquilerMensual) || 0
     const gastosMensualesNum = Number(form.gastosMensuales) || 0
 
-    // Cálculo del ITP
-    const comunidadSeleccionada = COMUNIDADES.find(c => c.nombre === form.comunidad)
-    const porcentajeITP = comunidadSeleccionada?.ITP || 6
-    const itp = calcularITP(precioNum, porcentajeITP)
+    const itp = fiscal.total ?? 0
+    const porcentajeITP = fiscal.fiscalBase>0?itp/fiscal.fiscalBase*100:0
 
     // Cálculo de la hipoteca (sin permitir importes negativos si la entrada
     // supera el coste total, igual que en la calculadora hipotecaria)
@@ -107,12 +121,13 @@ const RentalCalculator: React.FC<RentalCalculatorProps> = ({ lang = 'es' }) => {
       interesTotal,
       precioTotal: precioNum + itp,
     }
-  }, [form])
+  }, [form, fiscal])
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
     const { name, value } = e.target
+    if(name==="comunidad")setFiscalInput(null)
 
     // Validación para prevenir valores negativos en campos numéricos
     if (
@@ -138,6 +153,12 @@ const RentalCalculator: React.FC<RentalCalculatorProps> = ({ lang = 'es' }) => {
       <div className="flex flex-col xl:flex-row gap-6 mt-4 items-start">
         {/* Formulario: 2 tarjetas en columna, ocupa el ancho restante */}
         <div className="flex-1 grid grid-cols-1 lg:grid-cols-2 gap-6 w-full">
+          <div className='lg:col-span-2 pl-card p-5'>
+            <button type='button' className='btn-outline px-4 py-2 mb-3' onClick={()=>setShowTax(true)}>{lang==='es'?'Impuestos de adquisición: fecha, valor y tipo de vivienda':'Purchase taxes: date, value and property type'}</button>
+            <p className='text-xs mb-3'>{lang==='es'?'Inversión para alquiler: no se aplican beneficios exclusivos de vivienda habitual.':'Rental investment: relief reserved for a main residence does not apply.'}</p>
+            <TaxBreakdown result={fiscal} lang={lang}/>
+            <ITPCalculator open={showTax} onClose={()=>setShowTax(false)} onResult={onTaxResult} initialPrecio={form.precio} comunidadSeleccionada={form.comunidad} initialFiscal={fiscal.input} lang={lang} investment/>
+          </div>
           {/* Datos de la Propiedad */}
           <div className="pl-card p-5 md:p-6">
             <h2 className="font-heading text-xl font-bold text-ink mb-6">
@@ -243,7 +264,7 @@ const RentalCalculator: React.FC<RentalCalculatorProps> = ({ lang = 'es' }) => {
         </div>
 
         {/* Recibo sticky */}
-        <aside className="w-full xl:w-[22rem] receipt p-6 flex flex-col gap-4 xl:sticky xl:top-24">
+        {fiscal.total!==null?<aside className="w-full xl:w-[22rem] receipt p-6 flex flex-col gap-4 xl:sticky xl:top-24">
           <div className="receipt-head">
             <span>{t('rental.results.receiptTitle')}</span>
             <span className="text-brand-blue">■</span>
@@ -274,11 +295,11 @@ const RentalCalculator: React.FC<RentalCalculatorProps> = ({ lang = 'es' }) => {
             />
           </div>
           <ContactButton variant="receipt" labelKey="rental.results.improveCta" lang={lang} source="rental_receipt" />
-        </aside>
+        </aside>:<aside className='w-full xl:w-[22rem] receipt p-6 text-sm' role='status'>{lang==='es'?'Completa los datos fiscales del inmueble para calcular la inversión y su rentabilidad.':'Complete the property tax details to calculate investment cost and returns.'}</aside>}
       </div>
 
       {/* KPIs y gráficas a lo ancho, debajo */}
-      <div className="mt-6">
+      {fiscal.total!==null&&<><div className="mt-6">
         <RentalKPIs calculations={calculations} lang={lang} />
       </div>
       <div className="mt-6">
@@ -294,9 +315,9 @@ const RentalCalculator: React.FC<RentalCalculatorProps> = ({ lang = 'es' }) => {
       </div>
       <div className="mt-6">
         <RentalCharts calculations={calculations} lang={lang} />
-      </div>
+      </div></>}
     </>
   )
 }
 
-export default RentalCalculator 
+export default RentalCalculator

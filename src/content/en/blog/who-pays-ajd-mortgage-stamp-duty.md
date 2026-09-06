@@ -9,7 +9,7 @@ faq:
   - question: "So the buyer pays no AJD at all when buying a home?"
     answer: "It depends on the home. On a new build, the buyer pays the AJD on the purchase deed (on top of VAT); what the bank took over is only the AJD on the mortgage loan deed. On a resale home there is no variable AJD on the purchase, because it is taxed under the ITP instead."
   - question: "How much is the AJD and who sets the rate?"
-    answer: "The variable AJD rate is set by each Spanish region, generally between 0.5% and 1.5%, applied to the mortgage liability or the deed value, with reduced rates for cases such as a primary residence or subsidised housing (VPO). Ceuta and Melilla apply the state regime with a relief."
+    answer: "The variable AJD rate is set by each Spanish region, with separate rates and relief for purchases and mortgage loans. There is no universal 0.5–1.5% range: exemptions, lower and higher rates exist. Mortgage AJD uses mortgage liability; a purchase has its own tax base. Ceuta and Melilla apply the state regime with a relief."
   - question: "Can the bank pass the AJD on to me through fees?"
     answer: "Not as such: the tax is legally the bank's, and Real Decreto-ley 17/2018 also barred banks from deducting it in corporate income tax. The overall price of the mortgage is another matter: banks' costs end up reflected in market rates and fees, which is why you should always compare offers by APR."
 ---
@@ -32,7 +32,7 @@ that can be registered — such as a new-build purchase or the creation of a
 mortgage.
 
 That variable fee is the one that hurts: each region sets its own rate,
-normally **between 0.5% and 1.5%**, and on a mortgage it is applied not to the
+with separate rules for purchases and loans, and on a mortgage it is applied not to the
 capital borrowed but to the **mortgage liability** (capital plus guaranteed
 interest, costs and expenses), which usually runs at 130–150% of the loan. For
 a €200,000 mortgage, the AJD could easily mean €2,000 to €4,000.

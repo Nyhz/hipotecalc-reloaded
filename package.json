@@ -8,7 +8,12 @@
     "build:analyze": "astro build --verbose",
     "build:dev": "astro build --mode development",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "test": "node scripts/test-fiscal.mjs",
+    "lint": "eslint src/fiscal src/components/fiscal tests src/utils/calculadora-itp.ts",
+    "typecheck": "astro check",
+    "typecheck:fiscal": "tsc --noEmit -p tsconfig.fiscal.json",
+    "maps:data": "node scripts/itp-map/export-data.mjs"
   },
   "overrides": {
     "@vercel/routing-utils": {
@@ -38,5 +43,14 @@
     "react-dom": "^19.1.0",
     "tailwindcss": "^4.1.11",
     "vite-plugin-pwa": "^1.0.1"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.10",
+    "esbuild": "^0.28.2",
+    "eslint": "^9.39.5",
+    "eslint-plugin-astro": "^1.7.0",
+    "prettier": "^3.9.6",
+    "typescript": "^6.0.3",
+    "typescript-eslint": "^8.69.0"
   }
 }

@@ -4,7 +4,7 @@ description: "How much ITP you pay when buying a resale home in Ceuta and Melill
 comunidad: "Ceuta"
 tipoGeneral: "6% with a 50% rebate → 3% effective"
 resumen: "50% rebate on the tax due (art. 57 bis TRLITPAJD); 6% state rate, filed with the AEAT"
-updatedDate: 2026-08-23
+updatedDate: 2026-09-06
 ---
 
 Ceuta and Melilla are not autonomous communities but **cities with a Statute of Autonomy**, and that difference has a direct tax consequence: **they have no power to approve their own rates** for the ITP (Impuesto sobre Transmisiones Patrimoniales y Actos Jurídicos Documentados, the property transfer tax; ITPyAJD). When buying a **resale home** in either city, the **state rules** apply in full: the Texto Refundido approved by Real Decreto Legislativo 1/1993, de 24 de septiembre (TRLITPAJD).
@@ -30,6 +30,8 @@ As in the rest of the country, ITP-TPO is paid by the **buyer**, and it applies 
 ## When ITP is due (and when it is not)
 
 You pay TPO when buying a **resale home** (a "second or subsequent transfer", normally between private individuals) located in Ceuta or Melilla. You do not pay TPO when buying a **new build** from the developer: on the mainland that purchase carries 10% IVA, but in Ceuta and Melilla IVA does not apply and in its place there is the **Impuesto sobre la Producción, los Servicios y la Importación (IPSI)**, governed by Ley 8/1991 and managed by each autonomous city; according to the official information of the City of Melilla, its rates range between 0.5% and 10% (the specific rate for new housing is set by each city's ordinances). The new-build deed also accrues AJD (stamp duty), whose graduated charge is likewise rebated at 50% when the registry where the property is registered is located in Ceuta or Melilla (art. 57 bis.1 TRLITPAJD).
+
+For the first transfer of a home, Ceuta approved a 0.50% IPSI rate in its 2025 reform ([official City announcement](https://www.ceuta.es/gobiernodeceuta/index.php/noticia/8-hacienda/13709-la-asamblea-respalda-con-una-amplia-mayoria-el-ambicioso-plan-de-medidas-fiscales)). Melilla applies 4%, or 0.50% to officially classified VPO supplied by the developer ([official property-tax guidance, updated January 2026](https://www.melilla.es/melillaportal/contenedor.jsp?codMenu=764&codMenuPN=601&codMenuSN=1&codMenuTN=182&codbusqueda=801&seccion=s_fdes_d4_v1.jsp)). Construction-service rates are not interchangeable with these first-transfer rates. Acquisition AJD is shown separately: the ordinary state 0.50% with the 50% local relief gives 0.25%, unless a specific exemption applies.
 
 ## The taxable base
 

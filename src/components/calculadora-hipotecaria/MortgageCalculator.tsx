@@ -6,8 +6,6 @@ import {
   interesTotal,
   importeTotal,
   calcularTIN,
-  calcularITP,
-  calcularIVA,
   getEuriborActual,
   getEuriborHistorico,
   calcularInteresVariable,
@@ -23,6 +21,10 @@ import ChartErrorBoundary from "../ui/ChartErrorBoundary"
 import { useGoogleAnalytics } from "../../hooks/useGoogleAnalytics"
 import { useTranslations } from "../../hooks/useTranslations"
 import { formatNumberByLang } from "../../utils/number-format"
+import { calculatePurchaseTaxes, defaultPurchase, resultDescription } from '../../fiscal/engine'
+import type { Purchase, TaxResult } from '../../fiscal/types'
+import { REGIONS } from '../../fiscal/sources'
+import TaxBreakdown from '../fiscal/TaxBreakdown'
 
 const inputClass = ""
 const inputReadOnlyClass = "cursor-not-allowed bg-paper-2 text-ink-soft"
@@ -76,17 +78,27 @@ const MortgageCalculator: React.FC<MortgageCalculatorProps> = ({ lang = 'es', in
   const [itpValorModal, setItpValorModal] = useState<number | null>(null)
   const [itpTipoAplicado, setItpTipoAplicado] = useState<number | null>(null)
   const [itpDescripcion, setItpDescripcion] = useState<string>("")
+  const [fiscalInput, setFiscalInput] = useState<Purchase | null>(null)
+  const fiscal = useMemo(() => calculatePurchaseTaxes({
+    ...(fiscalInput ?? defaultPurchase(Number(form.precio),form.comunidad,form.tipoVivienda==='Obra nueva'?'Obra nueva':'Segunda mano')),
+    precio:Number(form.precio),comunidad:form.comunidad,tipoVivienda:form.tipoVivienda==='Obra nueva'?'Obra nueva':'Segunda mano',
+  }),[form.precio,form.comunidad,form.tipoVivienda,fiscalInput])
 
   // Handler para recibir el resultado del ITPCalculator
   const handleItpResult = (
     valor: number,
     tipoAplicado?: number,
-    descripcion?: string
+    descripcion?: string,
+    detail?: TaxResult
   ) => {
     setItpValorModal(valor)
     setItpTipoAplicado(tipoAplicado ?? null)
     setItpDescripcion(descripcion || "")
     setItpCalculado(true)
+    if(detail){
+      setFiscalInput(detail.input)
+      setForm(prev=>({...prev,precio:String(detail.input.precio),comunidad:REGIONS.find(([id])=>id===detail.input.comunidad)?.[1]??detail.input.comunidad,tipoVivienda:detail.input.tipoVivienda}))
+    }
   }
 
   // Cálculos memoizados que se recalculan automáticamente cuando cambian los inputs
@@ -102,32 +114,8 @@ const MortgageCalculator: React.FC<MortgageCalculatorProps> = ({ lang = 'es', in
     const esObraNueva = form.tipoVivienda === "Obra nueva"
     const esHipotecaVariable = form.tipoHipoteca === "Variable"
 
-    // Si hay un cálculo previo del modal y es del tipo correcto, usarlo
-    let impuesto: number
-    let descripcionImpuesto: string
-
-    if (itpCalculado && itpValorModal !== null) {
-      // Usar el importe calculado en el modal tal cual: puede venir del VMA
-      // (País Vasco), de tramos progresivos o de bonificaciones, así que no
-      // puede re-derivarse como porcentaje del precio principal.
-      impuesto = itpValorModal
-      descripcionImpuesto =
-        itpDescripcion || `${esObraNueva ? "IVA" : "ITP"} ${itpTipoAplicado ?? ""}%`
-    } else {
-      // Cálculo automático por defecto
-      if (esObraNueva) {
-        impuesto = calcularIVA(precioNum, 10)
-        descripcionImpuesto = "IVA 10%"
-      } else {
-        // Obtener el porcentaje de ITP de la comunidad seleccionada
-        const comunidadSeleccionada = COMUNIDADES.find(
-          (c) => c.nombre === form.comunidad
-        )
-        const porcentajeITP = comunidadSeleccionada?.ITP || 6 // Porcentaje por defecto si no hay comunidad seleccionada
-        impuesto = calcularITP(precioNum, porcentajeITP)
-        descripcionImpuesto = `ITP ${porcentajeITP}%`
-      }
-    }
+    const impuesto = fiscal.total ?? 0 // Incomplete results are not displayed as a mortgage quote.
+    const descripcionImpuesto = resultDescription(fiscal,currentLang)
 
     const precioFinal = precioNum + otrosCostesNum + impuesto
     const cantidadHipoteca = Math.max(0, precioFinal - ahorroNum)
@@ -205,7 +193,7 @@ const MortgageCalculator: React.FC<MortgageCalculatorProps> = ({ lang = 'es', in
       cuotaMinima,
       cuotaMaxima,
     }
-  }, [form, itpCalculado, itpValorModal, itpTipoAplicado, itpDescripcion, currentLang]) // Incluir las dependencias del modal
+  }, [form, fiscal, currentLang])
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
@@ -243,6 +231,7 @@ const MortgageCalculator: React.FC<MortgageCalculatorProps> = ({ lang = 'es', in
       setItpValorModal(null)
       setItpTipoAplicado(null)
       setItpDescripcion("")
+      if(name==='comunidad'||name==='tipoVivienda')setFiscalInput(null)
       if (name === "tipoVivienda") {
         trackCalculatorUsage("mortgage", `property_type_changed_${value}`)
       }
@@ -253,9 +242,7 @@ const MortgageCalculator: React.FC<MortgageCalculatorProps> = ({ lang = 'es', in
 
   // Función para formatear el label del impuesto según el tipo de vivienda
   const getImpuestoLabel = () => {
-    return calculations.esObraNueva
-      ? "IVA (10%)"
-      : calculations.descripcionImpuesto
+    return lang==='es'?'Total impuestos de adquisición':'Total purchase taxes'
   }
 
   // Si el usuario edita el campo ITP manualmente, ocultar el aviso
@@ -267,6 +254,7 @@ const MortgageCalculator: React.FC<MortgageCalculatorProps> = ({ lang = 'es', in
 
   // Función para restablecer el campo de impuesto
   const handleResetImpuesto = () => {
+    setFiscalInput(null)
     setItpCalculado(false)
     setItpValorModal(null)
     setItpTipoAplicado(null)
@@ -359,9 +347,7 @@ const MortgageCalculator: React.FC<MortgageCalculatorProps> = ({ lang = 'es', in
                     htmlFor='impuesto'
                   >
                     <span>
-                      {itpTipoAplicado
-                        ? `ITP (${itpTipoAplicado}%)`
-                        : getImpuestoLabel()}
+                      {getImpuestoLabel()}
                     </span>
                     <button
                       type='button'
@@ -372,7 +358,7 @@ const MortgageCalculator: React.FC<MortgageCalculatorProps> = ({ lang = 'es', in
                       style={{ lineHeight: "1", height: "1.5em" }}
                       onClick={() => setShowItpModal(true)}
                     >
-                      {t(calculations.esObraNueva ? 'mortgage.form.calculateIVA' : 'mortgage.form.calculateITP')}
+                      {lang==='es'?'Fecha, base y beneficios':'Date, tax base and relief'}
                     </button>
                     {itpCalculado && (
                       <div className='text-xs text-green-700 bg-green-100 rounded px-2 ml-2 py-1 shadow-sm'>
@@ -385,7 +371,7 @@ const MortgageCalculator: React.FC<MortgageCalculatorProps> = ({ lang = 'es', in
                       id='impuesto'
                       name='impuesto'
                       type='number'
-                      value={calculations.impuesto}
+                      value={fiscal.total??''}
                       onChange={(e) => {
                         // Validar números negativos
                         const inputValue = e.target.value
@@ -458,14 +444,7 @@ const MortgageCalculator: React.FC<MortgageCalculatorProps> = ({ lang = 'es', in
                     )}
                   </div>
                 </div>
-                {itpDescripcion && itpCalculado && (
-                  <div className='text-green-800 bg-green-50 border border-green-200 rounded-lg px-3 py-2 mt-2 text-sm text-center'>
-                    <span className='font-semibold'>
-                      {t('mortgage.form.bonificationApplied')}
-                    </span>{" "}
-                    {itpDescripcion}
-                  </div>
-                )}
+                {Number(form.precio)>0&&<div className='mt-3'><TaxBreakdown result={fiscal} lang={lang}/></div>}
               </div>
               <Input
                 label={t('mortgage.form.otherCosts')}
@@ -636,16 +615,17 @@ const MortgageCalculator: React.FC<MortgageCalculatorProps> = ({ lang = 'es', in
         </div>
 
         {/* Sensitivity Table */}
-        <SensitivityTable
+        {fiscal.total!==null&&<SensitivityTable
+          fiscalInput={fiscal.input}
           form={form}
           calculations={calculations}
           itpCalculado={itpCalculado}
           itpTipoAplicado={itpTipoAplicado}
           itpDescripcion={itpDescripcion}
           lang={currentLang}
-        />
+        />}
       </form>
-      <aside className='w-full xl:w-[22rem] receipt p-6 flex flex-col gap-4 xl:sticky xl:top-24'>
+      {fiscal.total!==null?<aside className='w-full xl:w-[22rem] receipt p-6 flex flex-col gap-4 xl:sticky xl:top-24'>
         <div className='receipt-head'>
           <span>{t('mortgage.form.monthlyPayment')}</span>
           <span className='text-brand-blue'>■</span>
@@ -718,9 +698,10 @@ const MortgageCalculator: React.FC<MortgageCalculatorProps> = ({ lang = 'es', in
             <b>{formatNumberByLang(calculations.interes, currentLang)} €</b>
           </div>
         </div>
-      </aside>
+      </aside>:<aside className='w-full xl:w-[22rem] receipt p-6 text-sm' role='status'>{lang==='es'?'Completa los datos fiscales del inmueble para calcular el coste de compra y la financiación.':'Complete the property tax details to calculate purchase cost and financing.'}</aside>}
       {/* Modal Calculadora ITP */}
       <ITPCalculator
+        initialFiscal={fiscalInput?{...fiscal.input,habitual:fiscalInput.habitual}:undefined}
         open={showItpModal}
         onClose={() => setShowItpModal(false)}
         onResult={handleItpResult}

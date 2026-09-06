@@ -4,7 +4,7 @@ description: "Cuánto ITP se paga al comprar vivienda usada en Extremadura en 20
 comunidad: "Extremadura"
 tipoGeneral: "Tarifa 8/10/11 %"
 resumen: "7 % vivienda habitual ≤200.000 €; 4 % menores de 36, familia numerosa y discapacidad; 4 % VPO y zonas rurales"
-updatedDate: 2026-08-23
+updatedDate: 2026-09-06
 ---
 
 Comprar una vivienda de segunda mano en Extremadura obliga a pagar el Impuesto sobre Transmisiones Patrimoniales Onerosas (ITP-TPO), que corre siempre a cargo del comprador. Extremadura es una de las pocas comunidades con **tarifa por tramos**: el tipo general arranca en el 8 % y puede llegar al 11 % en la parte del valor que exceda de 600.000 €.
@@ -47,7 +47,7 @@ La cuota es la suma de las cuotas de cada tramo. Ejemplo: una segunda residencia
 
 ## Tipos reducidos vigentes en 2026
 
-Reglas comunes (art. 52 TR): la vivienda habitual se define según la normativa del IRPF; los límites de renta se refieren a la declaración del IRPF del último período cuyo plazo de presentación hubiera concluido a la fecha de devengo; las parejas de hecho inscritas en el registro autonómico se equiparan a los cónyuges; y —muy importante— la aplicación de cualquier beneficio fiscal autonómico exige que el pago se realice por medios bancarios (tarjeta, transferencia, cheque nominativo o ingreso en cuenta), nunca en efectivo (art. 52.3 TR).
+Reglas comunes (art. 52 TR): la vivienda habitual se define según la normativa del IRPF; los límites de renta se refieren a la declaración del IRPF del último período cuyo plazo de presentación hubiera concluido a la fecha de devengo; las parejas de hecho inscritas en el registro autonómico se equiparan a los cónyuges; y —muy importante— la aplicación de cualquier beneficio fiscal autonómico exige que el pago se realice por medios bancarios (tarjeta, transferencia, cheque nominativo o ingreso en cuenta), con la excepción de las arras entre particulares pagadas en efectivo hasta 3.000 € (art. 52.3 TR).
 
 **Régimen transitorio:** la Ley 2/2026, de 3 de agosto, unificó desde el **5 de agosto de 2026** los límites de los tipos reducidos de los arts. 39 y 44 bis con los del resto (valor ≤ 200.000 € y rentas ≤ 30.000 € individual / 55.000 € conjunta). Las compras devengadas **antes de esa fecha** se rigen por los requisitos anteriores: en el 4 % rural, valor ≤ 180.000 €, rentas ≤ 19.000/24.000 € y un límite adicional de renta familiar agregada; en el 4 % de VPO, sin límites de valor ni de renta.
 
@@ -80,6 +80,12 @@ Extremadura, a diferencia de otras comunidades, **no tiene un tipo especial** pa
 ## Bonificaciones y deducciones de la cuota
 
 En la modalidad de TPO **no existe ninguna bonificación ni deducción de la cuota** en Extremadura (así lo recoge expresamente el Capítulo IV de «Tributación Autonómica. Medidas 2026»). Todo el ahorro fiscal para compradores se canaliza a través de los tipos reducidos descritos.
+
+## AJD de adquisición y cambio del 5 de agosto de 2026
+
+En obra nueva se separan IVA y AJD de la compraventa. Desde el 5 de agosto de 2026, el art. 47 fija un AJD del 0,50 % para vivienda habitual de valor no superior a 200.000 €, con IRPF de hasta 30.000 € individual / 55.000 € conjunta. El art. 47 bis establece el 0,10 % para vivienda protegida con precio máximo legal que cumpla esos mismos límites. No basta con marcar cualquier vivienda como VPO. El AJD del préstamo hipotecario corresponde al prestamista y no se incluye como impuesto del comprador.
+
+Para devengos anteriores de 2026, el art. 47 aplicaba el 0,75 %, valor máximo de 122.000 € y los límites de renta anteriores; el régimen rural del 0,50 % del art. 50 bis terminó el 4 de agosto. La calculadora selecciona la versión por fecha de devengo. Una VPO puede estar exenta conforme al art. 45.I.B.12 estatal, pero deben acreditarse la calificación definitiva y su alcance legal.
 
 ## Cómo se paga: modelo y plazo
 

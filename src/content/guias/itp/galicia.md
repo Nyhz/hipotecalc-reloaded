@@ -4,7 +4,7 @@ description: "Cuánto ITP se paga al comprar vivienda usada en Galicia en 2026: 
 comunidad: "Galicia"
 tipoGeneral: "8 %"
 resumen: "7 % vivienda habitual; 3 % menores de 36, familias numerosas y monoparentales, discapacidad ≥65 % y víctimas; deducción 100 % en parroquias poco pobladas"
-updatedDate: 2026-08-23
+updatedDate: 2026-09-06
 ---
 
 Si vas a comprar una vivienda de segunda mano en Galicia, el impuesto que marcará tu presupuesto es el Impuesto sobre Transmisiones Patrimoniales Onerosas (ITP, modalidad TPO). Lo paga siempre el comprador y se calcula sobre el valor de la vivienda, no sobre lo que cueste la hipoteca.
@@ -92,6 +92,12 @@ Galicia no tiene un tipo especial para la compra de viviendas por empresas inmob
 - **Deducción del 100 % de la cuota en zonas poco pobladas** (art. 16.Siete TR, redacción Ley 5/2025): quienes tengan derecho al 3 % (discapacidad, familia numerosa, menores de 36, víctimas de violencia de género y, desde 2026, familias monoparentales) y compren su vivienda habitual en una parroquia calificada como zona poco poblada o área rural no pagan cuota: ITP efectivo del 0 %.
 - **Deducción del 100 % por los incendios forestales de 2025** (art. 16.Doce TR): para inmuebles de hasta 250.000 € que sustituyan a otros dañados. Solo cubrió actos otorgados entre el 28-7-2025 y el 30-6-2026, por lo que ya no alcanza a compras firmadas hoy.
 - **Deducción de la tasa de valoración previa** (art. 26.2 TR): si pediste a la Administración una valoración previa vinculante del inmueble, la tasa pagada se deduce de la cuota.
+
+## AJD de compra, deducción rural y varios compradores
+
+En obra nueva, la calculadora separa IVA y AJD de adquisición: normalmente 1,50 %, o 1 % para vivienda habitual elegible; 0,50 % para jóvenes, familias numerosas, monoparentales, discapacidad o violencia de género que cumplan su supuesto. Los requisitos son los del art. 15, no una casilla genérica de familia. El art. 17.Ocho extiende la deducción rural del 100 % a adquisiciones elegibles en las parroquias de la lista oficial, incluidas las familias monoparentales en 2026.
+
+Si solo un comprador cumple, el beneficio se aplica a su parte cuando la norma lo permite. Por ejemplo, en una vivienda usada de 300.000 €, un comprador monoparental elegible que adquiere el 50 % al 3 % y otro que adquiere el 50 % como segunda residencia al 8 % pagan 4.500 € + 12.000 € = 16.500 €. Cada perfil tiene respuestas separadas sobre familia, patrimonio y acreditación; los datos que faltan de uno no se heredan del otro.
 
 ## Cómo se paga: modelo y plazo
 

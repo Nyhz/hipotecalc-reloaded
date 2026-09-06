@@ -4,12 +4,12 @@ description: "Calcula tu ITP exacto en Baleares: pon el precio y te decimos lo q
 comunidad: "Baleares"
 tipoGeneral: "Tarifa 8–13 %"
 resumen: "4 % vivienda habitual (umbral por isla); 2 % menores de 36, discapacidad y familia numerosa; bonificación del 100 % <30 años o discapacidad"
-updatedDate: 2026-08-23
+updatedDate: 2026-09-06
 ---
 
 En las Illes Balears, la compra de una vivienda de segunda mano tributa por el Impuesto sobre Transmisiones Patrimoniales Onerosas (ITP-TPO), que paga el comprador y gestiona la Agència Tributària de les Illes Balears (ATIB). La normativa autonómica está en el Texto Refundido de tributos cedidos aprobado por el Decreto Legislativo 1/2014, de 6 de junio.
 
-Baleares combina una de las tarifas más progresivas de España (del 8 % al 13 %) con beneficios muy potentes para la vivienda habitual: un tipo del 4 %, un tipo del 2 % para menores de 36 años, familias numerosas y monoparentales o discapacidad, y una **bonificación del 100 %** —ITP cero— para menores de 30 años y personas con discapacidad que compran su primera vivienda. Estos beneficios dependen de umbrales de valor que se han movido dos veces en 2026: la Orden 5/2026 fijó desde el 1 de marzo cuantías más altas por islas, y la Ley 4/2026, de 11 de junio (BOIB núm. 74, de 13-6-2026, en vigor desde el 14-6-2026), ha vuelto a retocar el sistema, elevando el suelo de esas cuantías a 331.859,70 € y cambiando el tope de las familias numerosas. Aquí tienes el mapa completo a 8 de julio de 2026.
+Baleares combina una de las tarifas más progresivas de España (del 8 % al 13 %) con beneficios muy potentes para la vivienda habitual: un tipo del 4 %, un tipo del 2 % para menores de 36 años, familias numerosas y monoparentales o discapacidad, y una **bonificación del 100 %** sobre la parte legalmente bonificada para menores de 30 años y personas con discapacidad que compran su primera vivienda. Estos beneficios dependen de umbrales de valor que se han movido dos veces en 2026: la Orden 5/2026 fijó desde el 1 de marzo cuantías más altas por islas, y la Ley 4/2026, de 11 de junio (BOIB núm. 74, de 13-6-2026, en vigor desde el 14-6-2026), ha vuelto a retocar el sistema, elevando el suelo de esas cuantías a 331.859,70 € y cambiando el tope de las familias numerosas. Revisión normativa: 6 de septiembre de 2026. La corrección de la ATIB de 23 de junio fija Eivissa y Formentera en 378.211,68 €: no puede redondearse el límite al alza.
 
 ## Lo esencial en un vistazo
 
@@ -18,8 +18,8 @@ Baleares combina una de las tarifas más progresivas de España (del 8 % al 13 %
 | Tipo general | Tarifa por tramos: 8 % - 9 % - 10 % - 12 % - 13 % (art. 10.a TR) |
 | Vivienda habitual (cualquier comprador) | 4 % si el valor no supera el umbral de su isla (art. 10.c TR) |
 | Menores de 36 años (1.ª vivienda), discapacidad, familias numerosas/monoparentales | 2 % hasta el umbral (art. 10.d TR) |
-| Menores de 30 años y discapacidad ≥33 % (1.ª vivienda habitual) | Bonificación del 100 %: ITP cero (art. 14 quater TR) |
-| Umbrales de valor por isla | Mallorca y Menorca: 331.859,70 €; Eivissa y Formentera: 378.212 € (Orden 5/2026 + Ley 4/2026, confirmados por la ATIB) |
+| Menores de 30 años y discapacidad ≥33 % (1.ª vivienda habitual) | Bonificación del 100 % sobre los primeros 270.151,20 € (art. 14 quater TR) |
+| Umbrales de valor por isla | Mallorca y Menorca: 331.859,70 €; Eivissa y Formentera: 378.211,68 € (Orden 5/2026 + Ley 4/2026, confirmados por la ATIB) |
 | Viviendas de precio limitado (VPL) | Bonificación del 50 % (art. 14 septies TR, desde 14-6-2026) |
 | Plazo y modelo | 1 mes desde el acto o contrato, modelo 600 (ATIB) |
 
@@ -35,13 +35,13 @@ La base imponible es el **valor de referencia** de Catastro o, si son superiores
 
 Tarifa vigente desde 2023 (art. 10.a TR, redacción de la Ley 11/2022):
 
-| Valor del inmueble desde (€) | Cuota íntegra (€) | Resto de valor hasta (€) | Tipo (%) |
-|---:|---:|---:|---:|
-| 0 | 0 | 400.000 | 8 |
-| 400.000,01 | 32.000 | 200.000 | 9 |
-| 600.000,01 | 50.000 | 400.000 | 10 |
-| 1.000.000,01 | 90.000 | 2.000.000 | 12 |
-| 2.000.000,01 | 210.000 | En adelante | 13 |
+| Tramo del valor total (€) | Tipo sobre ese tramo |
+|---|---:|
+| Hasta 400.000 | 8 % |
+| Más de 400.000 hasta 600.000 | 9 % |
+| Más de 600.000 hasta 1.000.000 | 10 % |
+| Más de 1.000.000 hasta 2.000.000 | 12 % |
+| Exceso sobre 2.000.000 | 13 % |
 
 La cuota se calcula con un "tipo medio": la tarifa se aplica sobre el valor total del inmueble y el porcentaje resultante (con dos decimales) se aplica a tu base liquidable, de modo que comprar una participación no cambia el tramo (art. 10 TR y explicación oficial de la ATIB). Las plazas de garaje independientes (salvo hasta dos anexas a la vivienda) tienen tarifa propia: 8 % hasta 30.000 € y 9 % en adelante (art. 10.b TR).
 
@@ -49,8 +49,8 @@ La cuota se calcula con un "tipo medio": la tarifa se aplica sobre el valor tota
 
 Los beneficios de vivienda habitual parten de una cuantía base de **270.151,20 €**. La disposición adicional quinta del TR permite elevarla por orden del conseller de Hacienda hasta un 40 % en las islas o zonas con precios más altos:
 
-- **Orden 5/2026, de 16 de marzo** (BOIB núm. 34, de 17-3-2026), con efectos desde el 1-3-2026: **Mallorca 307.089 €, Menorca 270.151,20 €, Eivissa 378.212 €, Formentera 378.212 €**.
-- **Ley 4/2026, de 11 de junio** (DF sexagésimo séptima, en vigor desde el 14-6-2026): los importes fijados por esa orden **no pueden ser inferiores a 331.859,70 €** (valor a 1-1-2026 de una vivienda de precio limitado de 90 m² útiles, tipo 2, municipio A y calificación energética A). La propia ATIB, en su comunicado oficial de 13-6-2026 sobre las medidas fiscales de la Ley 4/2026, confirma los umbrales operativos resultantes: **331.859,70 € para las viviendas situadas en Mallorca y Menorca** y **378.212 € para las de Eivissa y Formentera**.
+- **Orden 5/2026, de 16 de marzo** (BOIB núm. 34, de 17-3-2026), con efectos desde el 1-3-2026: **Mallorca 307.089 €, Menorca 270.151,20 €, Eivissa 378.211,68 €, Formentera 378.211,68 €**.
+- **Ley 4/2026, de 11 de junio** (DF sexagésimo séptima, en vigor desde el 14-6-2026): los importes fijados por esa orden **no pueden ser inferiores a 331.859,70 €** (valor a 1-1-2026 de una vivienda de precio limitado de 90 m² útiles, tipo 2, municipio A y calificación energética A). La propia ATIB, en su comunicado oficial de 13-6-2026 sobre las medidas fiscales de la Ley 4/2026, confirma los umbrales operativos resultantes: **331.859,70 € para las viviendas situadas en Mallorca y Menorca** y **378.211,68 € para las de Eivissa y Formentera**.
 
 Regla común (DA quinta.2 TR): cuando el valor de la vivienda supera 270.151,20 € pero cabe en el umbral de su isla, el tipo reducido (4 % o 2 %) se aplica solo a los **primeros 270.151,20 €** y el exceso tributa al **8 %**; la bonificación del 100 % también se aplica solo a los primeros 270.151,20 €.
 
@@ -75,7 +75,7 @@ Sede o centro de trabajo de empresas de nueva creación: 3,5 % (art. 11 TR); inm
 
 ## Bonificaciones y deducciones de la cuota
 
-### Menores de 30 años y personas con discapacidad ≥33 %: bonificación del 100 % (ITP cero)
+### Menores de 30 años y personas con discapacidad ≥33 %: bonificación del 100 % sobre la parte beneficiada
 Requisitos completos (art. 14 quater TR, introducido por el Decreto ley 4/2023 y modificado por las Leyes 11/2023 y 12/2023):
 - Residencia habitual en las Illes Balears durante los **3 años** anteriores a la compra.
 - Ser la **primera vivienda** de la que se adquiere al menos el 50 % de la plena propiedad, sin ser titular o cotitular (≥50 %) de ninguna otra.
@@ -94,9 +94,13 @@ También existen una deducción del 100 % para excesos de adjudicación heredita
 
 Se autoliquida con el **modelo 600**. El plazo para pagar y presentar la autoliquidación, junto con el documento que origina el hecho imponible, es de **un mes contado desde la fecha en que se formalice el acto o contrato** (fuente: ATIB, ficha del modelo 600). La presentación puede hacerse telemáticamente o en las oficinas de la ATIB con cita previa.
 
+La primera entrega de VPO especial o de promoción pública por el promotor puede tributar al 4 % de IVA, no cualquier VPO. El AJD de adquisición tiene sus propios beneficios: desde el 14/06/2026, bonificación del 100 % del art. 19 quater sobre la parte beneficiada si se cumplen sus requisitos, y del 50 % para VPL (art. 19 quinquies). La exención estatal VPO exige la calificación definitiva y, si corresponde, equivalencia de parámetros con la norma estatal. No es el AJD del préstamo, que corresponde al prestamista.
+
 ## Normativa aplicable (enlaces oficiales)
 
-- Texto Refundido de tributos cedidos de las Illes Balears (Decreto Legislativo 1/2014, de 6 de junio), consolidado en el BOE —pendiente aún de incorporar la Ley 4/2026—: https://www.boe.es/buscar/act.php?id=BOE-A-2014-6925
+- [Corrección oficial ATIB de los límites insulares, 23/06/2026](https://www.atib.es/General/Novedad.aspx?idTexto=16988&idTipoTexto=1&lang=es).
+
+- Texto Refundido de tributos cedidos de las Illes Balears (Decreto Legislativo 1/2014, de 6 de junio), consolidado en el BOE con la Ley 4/2026 incorporada: https://www.boe.es/buscar/act.php?id=BOE-A-2014-6925
 - Comunicado de la ATIB de 13-6-2026 con las medidas fiscales de la Ley 4/2026 y los umbrales por isla: https://atib.es/General/Novedad.aspx?idTexto=16987&idTipoTexto=1&lang=es
 - Orden 5/2026, de 16 de marzo (BOIB núm. 34, de 17-3-2026): https://www.caib.es/eboibfront/pdf/es/2026/34/1215137
 - Ley 4/2026, de 11 de junio (BOIB núm. 74, de 13-6-2026; DF sexagésimo séptima): https://www.boe.es/ccaa/boib/2026/074/i31968-32097.pdf

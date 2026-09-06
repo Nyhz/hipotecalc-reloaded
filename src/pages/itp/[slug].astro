@@ -26,7 +26,7 @@ const { guia } = Astro.props;
 const { Content } = await render(guia);
 
 const formatDate = (d: Date) =>
-  d.toLocaleDateString('es-ES', { day: 'numeric', month: 'long', year: 'numeric' });
+  d.toLocaleDateString('es-ES', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' });
 
 const SITE_BASE = 'https://www.hipotecalc.com';
 const canonical = `${SITE_BASE}/itp/${guia.id}`;
@@ -60,7 +60,7 @@ const articleSchema = JSON.stringify({
 
 // Nombre corto para encabezados de sección
 const nombreCorto = guia.id === 'ceuta-melilla' ? 'Ceuta y Melilla' : guia.data.comunidad;
-const altMapa = `Mapa del ITP por comunidad autónoma en 2026 con ${nombreCorto} resaltada: ${guia.data.tipoGeneral} frente al resto de España, sobre una vivienda usada de 200.000 €`;
+const altMapa = `Comparativa del ITP para una vivienda usada habitual de 200.000 € en 2026, con ${nombreCorto} resaltada; cálculo según las condiciones del ejemplo indicadas en el mapa`;
 
 // FAQ con marcado FAQPage (bloques "Otras preguntas" de Google). Respuestas
 // construidas desde los datos verificados del frontmatter, con las
@@ -112,7 +112,7 @@ const impuestoObraNueva =
     ? 'No. La primera transmisión de una vivienda nueva en Canarias no paga ITP ni IVA: tributa por el IGIC (Impuesto General Indirecto Canario). El ITP solo grava las viviendas de segunda mano.'
     : guia.id === 'ceuta-melilla'
       ? 'No. La vivienda nueva en Ceuta y Melilla no paga ITP ni IVA: tributa por el IPSI (Impuesto sobre la Producción, los Servicios y la Importación). El ITP solo grava las viviendas de segunda mano.'
-      : `No. La vivienda nueva comprada al promotor tributa por IVA al 10 % (4 % si es VPO de régimen especial) más Actos Jurídicos Documentados. El ITP solo grava las viviendas de segunda mano en ${nombreCorto}.`;
+      : `No. La vivienda nueva comprada al promotor tributa por IVA al 10 % (4 % para VPO de régimen especial o promoción pública entregada por el promotor) más Actos Jurídicos Documentados. El ITP solo grava las viviendas de segunda mano en ${nombreCorto}.`;
 
 // Plazo de autoliquidación: cada territorio tiene un plazo único, el mismo
 // que documenta el cuerpo de cada guía con su fuente oficial (Cantabria:
