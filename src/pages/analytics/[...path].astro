@@ -1,0 +1,9 @@
+---
+import AnalyticsPage from '../../components/analytics/AnalyticsPage.astro';
+import { pages } from '../../analytics/pages';
+export function getStaticPaths() {
+  return pages('es').map(page=>({params:{path:page.path.replace(/^\/analytics\/?/,'')||undefined},props:{page}}));
+}
+const {page}=Astro.props;
+---
+<AnalyticsPage page={page}/>

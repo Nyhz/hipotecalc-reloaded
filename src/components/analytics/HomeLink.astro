@@ -1,0 +1,14 @@
+---
+import { latestQuarter, summary, quarterLabel, format } from '../../analytics/model';
+import { base, hub, reportsPath, type Lang } from '../../analytics/routes';
+interface Props { lang:Lang }
+const {lang}=Astro.props;
+const en=lang==='en', stats=summary(latestQuarter);
+---
+<section class="w-full max-w-5xl mx-auto my-12 rounded-xl bg-ink text-paper p-7 md:p-10">
+  <div class="grid md:grid-cols-[1fr_auto] gap-8 items-center">
+    <div><a href={hub(lang)} class="font-data text-xs uppercase tracking-widest text-lime">Hipotecalc Analytics</a><h2 class="font-heading text-2xl md:text-3xl font-semibold mt-3 mb-4">{en?'What does buying a home mean relative to income?':'¿Qué esfuerzo supone comprar una vivienda?'}</h2><p class="text-paper/75 text-sm leading-relaxed max-w-xl">{en?'Explore the IHEC: asking prices versus estimated household income in 100 Spanish municipalities, with quarterly rankings and historical reports.':'Explora el IHEC: precios ofertados frente a renta estimada del hogar en 100 municipios, con rankings trimestrales e informes históricos.'}</p><div class="flex flex-wrap gap-5 mt-5"><a href={base(lang)} class="text-lime text-sm font-medium underline">{en?'Explore the index':'Explorar el índice'} →</a><a href={reportsPath(lang)} class="text-paper text-sm underline">{en?'Historical reports':'Informes históricos'} →</a></div></div>
+    <div class="md:text-right"><span class="font-heading text-5xl font-semibold text-lime">{format(stats.median,lang)}×</span><p class="text-paper/75 text-xs mt-2">{en?'Sample median · estimated':'Mediana de la muestra · estimada'}</p><p class="font-data text-xs text-paper/65 mt-2">{quarterLabel(latestQuarter,lang)}</p></div>
+  </div>
+</section>
+<style>section h2 { color:var(--color-paper); }</style>

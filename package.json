@@ -13,7 +13,12 @@
     "lint": "eslint src/fiscal src/components/fiscal tests src/utils/calculadora-itp.ts",
     "typecheck": "astro check",
     "typecheck:fiscal": "tsc --noEmit -p tsconfig.fiscal.json",
-    "maps:data": "node scripts/itp-map/export-data.mjs"
+    "maps:data": "node scripts/itp-map/export-data.mjs",
+    "analytics:assets": "node scripts/analytics/generate-assets.mjs",
+    "prebuild": "npm run analytics:assets",
+    "test:analytics": "node scripts/analytics/test.mjs",
+    "qa:analytics": "python3 scripts/analytics/verify-build.py",
+    "typecheck:analytics": "tsc --noEmit -p tsconfig.analytics.json"
   },
   "overrides": {
     "@vercel/routing-utils": {
@@ -50,6 +55,7 @@
     "eslint": "^9.39.5",
     "eslint-plugin-astro": "^1.7.0",
     "prettier": "^3.9.6",
+    "sharp": "0.35.3",
     "typescript": "^6.0.3",
     "typescript-eslint": "^8.69.0"
   }

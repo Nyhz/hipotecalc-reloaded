@@ -1,6 +1,7 @@
 export const getTools = (lang: 'es' | 'en' = 'es') => {
   const tools = {
     es: [
+      { icon: 'lucide:chart-no-axes-combined', title: 'Hipotecalc Analytics', label: 'Analytics', description: 'Índice de esfuerzo de compra, datos municipales e informes trimestrales de vivienda.', href: '/analytics', nav: true, active: true, card: false },
       {
         icon: "lucide:house",
         title: "Calculadora Hipotecaria",
@@ -120,6 +121,7 @@ export const getTools = (lang: 'es' | 'en' = 'es') => {
       },
     ],
     en: [
+      { icon: 'lucide:chart-no-axes-combined', title: 'Hipotecalc Analytics', label: 'Analytics', description: 'Home purchase effort, municipal housing data and quarterly reports.', href: '/en/analytics', nav: true, active: true, card: false },
       {
         icon: "lucide:house",
         title: "Mortgage Calculator",

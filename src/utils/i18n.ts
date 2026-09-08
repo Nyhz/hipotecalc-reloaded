@@ -1,5 +1,6 @@
 import es from '../messages/es.json'
 import en from '../messages/en.json'
+import { analyticsAlternate } from '../analytics/routes'
 
 const messages = {
   es,
@@ -137,6 +138,8 @@ const RUTAS_SOLO_EN = new Set([
 
 export function getAlternatePath(pathname: string): string {
   const normalized = normalizePath(pathname)
+  const analyticsPath = analyticsAlternate(normalized)
+  if (analyticsPath) return analyticsPath
   const currentLang = getCurrentLang(normalized)
 
   if (RUTAS_SOLO_EN.has(normalized)) return pathname

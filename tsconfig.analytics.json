@@ -1,0 +1,6 @@
+{
+  "extends": "./tsconfig.json",
+  "include": ["src/analytics/**/*.ts", "src/components/analytics/**/*.tsx", "scripts/analytics/*.test.ts"],
+  "exclude": ["dist", "node_modules"],
+  "compilerOptions": { "checkJs": false, "types": ["node", "react"] }
+}

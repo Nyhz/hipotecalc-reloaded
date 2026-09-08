@@ -46,6 +46,7 @@ function gitDate(path) {
 }
 
 function buildLastmodMap() {
+  /** @type {Record<string, string>} */
   const map = {}
   const addDir = (dir, rutaBase) => {
     let max = null
@@ -141,6 +142,19 @@ function buildLastmodMap() {
   }
   for (const [ruta, fecha] of Object.entries(rutasConDatos)) {
     if (fecha && (!map[ruta] || fecha > map[ruta])) map[ruta] = fecha
+  }
+  // Analytics: observed quarter != publication date. Each archived report keeps its release.
+  const analyticsLatest = JSON.parse(readFileSync('src/data/analytics/2026-09-07-v1.json', 'utf8'))
+  const analyticsReports = JSON.parse(readFileSync('src/data/analytics/reports.json', 'utf8'))
+  for (const [root, slug, method, reports, letter] of [['/analytics','indice-esfuerzo-compra','metodologia','informes','t'],['/en/analytics','house-price-to-income','methodology','reports','q']]) {
+    const base = `${root}/${slug}`
+    for (const ruta of [root,base,`${base}/${method}`,`${base}/${reports}`,`${base}/madrid`,`${base}/barcelona`,`${base}/marbella`]) map[ruta] = analyticsLatest.modifiedAt
+    for (const [quarter,version] of Object.entries(analyticsReports)) {
+      const release = JSON.parse(readFileSync(`src/data/analytics/${version}.json`, 'utf8'))
+      map[`${base}/${reports}/${quarter.toLowerCase().replace('q',`-${letter}`)}`] = release.modifiedAt
+    }
+    const home = root.startsWith('/en') ? '/en' : '/'
+    if (!map[home] || map[home] < analyticsLatest.modifiedAt) map[home] = analyticsLatest.modifiedAt
   }
   // Google descarta el lastmod de todo el sitio si detecta fechas no fiables:
   // ninguna puede superar el momento del build (en UTC, que es como se publica)

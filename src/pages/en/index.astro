@@ -3,6 +3,7 @@ import { getCollection } from 'astro:content';
 import Herramientas from '../../components/home/Herramientas.astro';
 import { getTools } from '../../constants/tools';
 import Hero from '../../components/home/Hero.astro';
+import AnalyticsHomeLink from '../../components/analytics/HomeLink.astro';
 import StatsStrip from '../../components/home/StatsStrip.astro';
 import Layout from '../../layouts/Layout.astro';
 import EuriborChart from '../../components/home/EuriborChart';
@@ -24,6 +25,7 @@ const itpDestacadas = ['madrid', 'catalonia', 'andalusia', 'valencian-community'
   <Hero lang="en" />
   <StatsStrip lang="en" />
   <Herramientas tools={getTools('en')} lang="en" />
+  <AnalyticsHomeLink lang="en" />
 
   <section class="w-full max-w-5xl mx-auto py-14">
     <div class="text-center mb-8">

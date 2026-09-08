@@ -45,7 +45,7 @@ export default function Navbar({ lang = 'es', path = '/' }: NavbarProps) {
     <nav className="w-full sticky top-0 z-50 border-b border-line bg-paper/90 backdrop-blur-md">
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
         {/* Desktop */}
-        <div className="hidden lg:grid lg:grid-cols-[auto_1fr_auto] lg:items-center lg:gap-6 h-16">
+        <div className="hidden xl:grid xl:grid-cols-[auto_1fr_auto] xl:items-center xl:gap-3 h-16">
           <div className="flex justify-start">
             <a href={homeHref} className="font-heading text-[22px] font-bold text-ink tracking-tight">
               hipotecalc<span className="text-brand-blue">.</span>
@@ -56,7 +56,7 @@ export default function Navbar({ lang = 'es', path = '/' }: NavbarProps) {
               <li key={tool.href}>
                 <a
                   href={tool.href}
-                  className={`px-4 py-2 rounded-full text-[13.5px] font-medium whitespace-nowrap transition ${
+                  className={`px-3 py-2 rounded-full text-[13px] font-medium whitespace-nowrap transition ${
                     isActivePath(tool.href)
                       ? "bg-ink text-white"
                       : "text-ink-soft hover:bg-ink/5 hover:text-ink"
@@ -74,7 +74,7 @@ export default function Navbar({ lang = 'es', path = '/' }: NavbarProps) {
         </div>
 
         {/* Mobile */}
-        <div className="lg:hidden flex items-center justify-between h-14 gap-2">
+        <div className="xl:hidden flex items-center justify-between h-14 gap-2">
           <a href={homeHref} className="font-heading text-lg font-bold text-ink tracking-tight">
             hipotecalc<span className="text-brand-blue">.</span>
           </a>
@@ -117,7 +117,7 @@ export default function Navbar({ lang = 'es', path = '/' }: NavbarProps) {
       </div>
 
       {isMenuOpen && (
-        <div id="mobile-nav-menu" className="lg:hidden border-t border-line bg-paper">
+        <div id="mobile-nav-menu" className="xl:hidden border-t border-line bg-paper">
           <ul className="max-w-7xl mx-auto px-4 py-2 space-y-1">
             {tools.filter((tool) => tool.active && tool.nav !== false).map((tool) => (
               <li key={tool.href}>
