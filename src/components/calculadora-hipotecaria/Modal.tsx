@@ -1,70 +1,66 @@
-import React, { useEffect, useRef } from "react"
-import { useTranslations } from "../../hooks/useTranslations"
+import React, { useEffect, useId, useRef } from "react"
 
 interface ModalProps {
   open: boolean
   onClose: () => void
   children: React.ReactNode
+  title: string
+  lang?: 'es' | 'en'
   maxWidth?: string
 }
 
-const Modal: React.FC<ModalProps> = ({
-  open,
-  onClose,
-  children,
-  maxWidth = "max-w-3xl",
-}) => {
-  const { t } = useTranslations()
-  const dialogRef = useRef<HTMLDivElement>(null)
+export default function Modal({ open, onClose, children, title, lang = 'es', maxWidth = 'max-w-3xl' }: ModalProps) {
+  const titleId = useId()
+  const dialogRef = useRef<HTMLDialogElement>(null)
 
-  // Bloquear el scroll de la página y cerrar con Escape mientras esté abierto
   useEffect(() => {
     if (!open) return
-
+    const dialog = dialogRef.current
+    if (!dialog) return
+    const previousFocus = document.activeElement instanceof HTMLElement ? document.activeElement : null
     const previousOverflow = document.body.style.overflow
-    document.body.style.overflow = "hidden"
-
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === "Escape") onClose()
-    }
-    document.addEventListener("keydown", handleKeyDown)
-
-    // Llevar el foco al diálogo para que Tab no opere el formulario de fondo
-    dialogRef.current?.focus()
-
+    document.body.style.overflow = 'hidden'
+    // Native modal dialogs keep the background inert and contain keyboard focus.
+    dialog.showModal()
     return () => {
       document.body.style.overflow = previousOverflow
-      document.removeEventListener("keydown", handleKeyDown)
+      dialog.close()
+      if (previousFocus?.isConnected) previousFocus.focus()
     }
-  }, [open, onClose])
+  }, [open])
 
   if (!open) return null
   return (
-    <div
-      className='fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm'
-      onMouseDown={(e) => {
-        if (e.target === e.currentTarget) onClose()
+    <dialog
+      ref={dialogRef}
+      aria-labelledby={titleId}
+      aria-modal='true'
+      onCancel={e => { e.preventDefault(); onClose() }}
+      onKeyDown={e => {
+        if (e.key !== 'Tab') return
+        const items = Array.from(e.currentTarget.querySelectorAll<HTMLElement>('a[href], button, input, select, textarea, summary, [tabindex]'))
+          .filter(node => node.tabIndex >= 0 && !node.matches(':disabled') && node.getClientRects().length > 0)
+        const first = items[0], last = items[items.length - 1]
+        if (e.shiftKey && document.activeElement === first && last) {
+          e.preventDefault()
+          last.focus()
+        } else if (!e.shiftKey && document.activeElement === last && first) {
+          e.preventDefault()
+          first.focus()
+        }
+      }}
+      className={`pl-card shadow-2xl w-full ${maxWidth} p-0 fixed m-auto max-h-[80vh] overflow-hidden backdrop:bg-black/40 backdrop:backdrop-blur-sm`}
+      onMouseDown={e => {
+        const box = e.currentTarget.getBoundingClientRect()
+        if (e.target === e.currentTarget && (e.clientX < box.left || e.clientX > box.right || e.clientY < box.top || e.clientY > box.bottom)) onClose()
       }}
     >
-      <div
-        ref={dialogRef}
-        role='dialog'
-        aria-modal='true'
-        tabIndex={-1}
-        className={`pl-card shadow-2xl w-full ${maxWidth} p-0 relative max-h-[80vh] flex flex-col focus:outline-none`}
-        style={{ maxHeight: "80vh" }}
-      >
-        <button
-          className='absolute top-3 right-3 text-ink-soft hover:text-ink text-2xl font-bold z-10 cursor-pointer transition-colors'
-          onClick={onClose}
-          aria-label={t('common.closeModal') || 'Close modal'}
-        >
-          ×
-        </button>
-        <div className='p-8 overflow-y-auto w-full h-full'>{children}</div>
+      <button type='button' className='absolute top-3 right-3 text-ink-soft hover:text-ink text-2xl font-bold z-10 cursor-pointer transition-colors'
+        onClick={onClose} aria-label={lang === 'es' ? 'Cerrar modal' : 'Close modal'}>×</button>
+      <div className='p-6 sm:p-8 overflow-y-auto w-full max-h-[80vh]'>
+        <h2 id={titleId} className='font-heading text-xl mb-4 pr-6'>{title}</h2>
+        {children}
       </div>
-    </div>
+    </dialog>
   )
 }
-
-export default Modal

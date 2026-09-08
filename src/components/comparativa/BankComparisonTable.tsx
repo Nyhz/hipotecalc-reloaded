@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react"
+import React, { useId, useMemo, useState } from "react"
 import {
   OFERTAS_HIPOTECAS,
   ENTIDADES_SIN_OFERTA,
@@ -6,6 +6,7 @@ import {
 } from "../../constants/hipotecas-bancos"
 import { referalLink } from "../../constants/referal"
 import { useGoogleAnalytics } from "../../hooks/useGoogleAnalytics"
+import { offerText } from "../../utils/offer-translations"
 
 const TIPOS = ["Todas", "Fija", "Variable", "Mixta"] as const
 const CATEGORIAS = [
@@ -68,8 +69,7 @@ const RateTrend: React.FC<{ actual: string; anterior?: string; antesLabel: strin
   )
 }
 
-// Etiquetas de la interfaz. Los datos de las ofertas (vinculaciones,
-// comisiones, notas) proceden de las FIPRE en español y no se traducen.
+// UI labels; explanatory offer data has a separate English translation catalog.
 const LABELS = {
   es: {
     buscar: 'Buscar banco o producto',
@@ -87,6 +87,9 @@ const LABELS = {
     requisitos: 'Requisitos / notas',
     sinResultados: 'Ninguna oferta coincide con los filtros seleccionados.',
     antes: 'antes',
+    detalle: 'Detalle',
+    verDetalle: 'Ver condiciones de',
+    lcci: 'LCCI: Ley de contratos de crédito inmobiliario.',
     sinOferta: 'Entidades consultadas que no comercializan hipotecas',
     tipoValor: (v: string) => v,
     categoriaValor: (v: string) => v,
@@ -112,6 +115,9 @@ const LABELS = {
     requisitos: 'Requirements / notes',
     sinResultados: 'No offers match the selected filters.',
     antes: 'previously',
+    detalle: 'Details',
+    verDetalle: 'View terms for',
+    lcci: 'LCCI: Spanish Real Estate Credit Contracts Act; FEIN: European Standardised Information Sheet.',
     sinOferta: 'Institutions surveyed that do not sell mortgages',
     tipoValor: (v: string) => ({ Todas: 'All', Fija: 'Fixed', Variable: 'Variable', Mixta: 'Mixed', 'Fija/Variable': 'Fixed/Variable', 'Fija/Variable/Mixta': 'Fixed/Variable/Mixed', 'Variable/Mixta': 'Variable/Mixed' }[v] ?? v),
     categoriaValor: (v: string) => ({ Todas: 'All', Grande: 'Large', Online: 'Online', Mediano: 'Mid-size', Cooperativa: 'Cooperative', 'Banca ética': 'Ethical bank', Especialista: 'Specialist', Otro: 'Other', Extranjero: 'Foreign' }[v] ?? v),
@@ -133,7 +139,9 @@ const BankComparisonTable: React.FC<BankComparisonTableProps> = ({ lang = 'es' }
   const [tipo, setTipo] = useState<(typeof TIPOS)[number]>("Todas")
   const [categoria, setCategoria] = useState<(typeof CATEGORIAS)[number]>("Todas")
   const [busqueda, setBusqueda] = useState("")
-  const [expandida, setExpandida] = useState<number | null>(null)
+  const [expandida, setExpandida] = useState<string | null>(null)
+  const detailsId = useId()
+  const text = (value: string) => offerText(value, lang)
 
   const ofertas = useMemo(() => {
     const q = busqueda.trim().toLowerCase()
@@ -214,7 +222,7 @@ const BankComparisonTable: React.FC<BankComparisonTableProps> = ({ lang = 'es' }
                 <th className="text-left py-3 px-2 w-[14%]">{t.tae}</th>
                 <th className="text-left py-3 px-2 w-[11%]">{t.plazo}</th>
                 <th className="text-left py-3 px-2 w-[12%]">{t.financiacion}</th>
-                <th className="text-left py-3 px-2 w-[4%]" aria-label="Detalle"></th>
+                <th className="text-left py-3 px-2 w-[4%]" aria-label={t.detalle}></th>
               </tr>
             </thead>
             <tbody>
@@ -251,11 +259,15 @@ const BankComparisonTable: React.FC<BankComparisonTableProps> = ({ lang = 'es' }
                   </div>
                 </td>
               </tr>
-              {ofertas.map((o, i) => (
-                <React.Fragment key={`${o.banco}-${o.producto}-${i}`}>
+              {ofertas.map((o, i) => {
+                const key = `${o.banco}-${o.producto}`
+                const expanded = expandida === key
+                const detailId = `${detailsId}-${i}`
+                const toggle = () => setExpandida(expanded ? null : key)
+                return <React.Fragment key={key}>
                   <tr
                     className="border-b border-line/60 hover:bg-paper-2/40 cursor-pointer transition-colors"
-                    onClick={() => setExpandida(expandida === i ? null : i)}
+                    onClick={toggle}
                   >
                     <td className="py-3 px-3 font-semibold text-ink">
                       {o.banco}
@@ -271,64 +283,62 @@ const BankComparisonTable: React.FC<BankComparisonTableProps> = ({ lang = 'es' }
                         {lang === "en" ? t.tipoValor(o.tipo) : o.tipo}
                       </span>
                     </td>
-                    <td className="py-3 px-2 text-ink">{o.tin || "N/D"}<RateTrend actual={o.tin} anterior={o.tinAnterior} antesLabel={t.antes} /></td>
-                    <td className="py-3 px-2 text-ink">{o.tae || "N/D"}<RateTrend actual={o.tae} anterior={o.taeAnterior} antesLabel={t.antes} /></td>
-                    <td className="py-3 px-2 text-ink-soft">{corto(o.plazoMax) || "N/D"}</td>
-                    <td className="py-3 px-2 text-ink-soft">{corto(o.financiacionMax) || "N/D"}</td>
-                    <td className="py-3 px-3 text-ink-soft" aria-hidden="true">
-                      <span
-                        className={`inline-block transition-transform ${expandida === i ? "rotate-180" : ""}`}
-                      >
-                        ▾
-                      </span>
+                    <td className="py-3 px-2 text-ink">{text(o.tin)}<RateTrend actual={o.tin} anterior={o.tinAnterior ? text(o.tinAnterior) : undefined} antesLabel={t.antes} /></td>
+                    <td className="py-3 px-2 text-ink">{text(o.tae)}<RateTrend actual={o.tae} anterior={o.taeAnterior ? text(o.taeAnterior) : undefined} antesLabel={t.antes} /></td>
+                    <td className="py-3 px-2 text-ink-soft">{corto(text(o.plazoMax))}</td>
+                    <td className="py-3 px-2 text-ink-soft">{corto(text(o.financiacionMax))}</td>
+                    <td className="py-3 px-1 text-ink-soft">
+                      <button type="button" className="p-2 cursor-pointer rounded focus-visible:outline-2 focus-visible:outline-brand-blue"
+                        aria-label={`${t.verDetalle} ${o.banco} — ${o.producto}`} aria-expanded={expanded} aria-controls={detailId}
+                        onClick={e => { e.stopPropagation(); toggle() }}>
+                        <span aria-hidden="true" className={`inline-block transition-transform ${expanded ? "rotate-180" : ""}`}>▾</span>
+                      </button>
                     </td>
                   </tr>
-                  {expandida === i && (
-                    <tr className="border-b border-line/60 bg-paper-2/30">
+                    <tr id={detailId} hidden={!expanded} className="border-b border-line/60 bg-paper-2/30">
                       <td colSpan={8} className="py-4 px-4">
                         <dl className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-2 text-sm">
-                          {corto(o.plazoMax) !== o.plazoMax && (
+                          {corto(text(o.plazoMax)) !== text(o.plazoMax) && (
                             <div>
                               <dt className="font-data text-[10.5px] uppercase tracking-wide text-ink-soft">{t.plazo}</dt>
-                              <dd className="text-ink">{o.plazoMax}</dd>
+                              <dd className="text-ink">{text(o.plazoMax)}</dd>
                             </div>
                           )}
-                          {corto(o.financiacionMax) !== o.financiacionMax && (
+                          {corto(text(o.financiacionMax)) !== text(o.financiacionMax) && (
                             <div>
                               <dt className="font-data text-[10.5px] uppercase tracking-wide text-ink-soft">{t.financiacion}</dt>
-                              <dd className="text-ink">{o.financiacionMax}</dd>
+                              <dd className="text-ink">{text(o.financiacionMax)}</dd>
                             </div>
                           )}
                           {o.diferencial && (
                             <div>
                               <dt className="font-data text-[10.5px] uppercase tracking-wide text-ink-soft">{t.diferencial}</dt>
-                              <dd className="text-ink">{o.diferencial}</dd>
+                              <dd className="text-ink">{text(o.diferencial)}</dd>
                             </div>
                           )}
                           {o.vinculaciones && (
                             <div>
                               <dt className="font-data text-[10.5px] uppercase tracking-wide text-ink-soft">{t.vinculaciones}</dt>
-                              <dd className="text-ink">{o.vinculaciones}</dd>
+                              <dd className="text-ink">{text(o.vinculaciones)}</dd>
                             </div>
                           )}
                           {o.comisiones && (
                             <div>
                               <dt className="font-data text-[10.5px] uppercase tracking-wide text-ink-soft">{t.comisiones}</dt>
-                              <dd className="text-ink">{o.comisiones}</dd>
+                              <dd className="text-ink">{text(o.comisiones)}</dd>
                             </div>
                           )}
                           {o.requisitos && (
                             <div>
                               <dt className="font-data text-[10.5px] uppercase tracking-wide text-ink-soft">{t.requisitos}</dt>
-                              <dd className="text-ink">{o.requisitos}</dd>
+                              <dd className="text-ink">{text(o.requisitos)}</dd>
                             </div>
                           )}
                         </dl>
                       </td>
                     </tr>
-                  )}
                 </React.Fragment>
-              ))}
+              })}
               {ofertas.length === 0 && (
                 <tr>
                   <td colSpan={8} className="py-10 px-4 text-center text-ink-soft">
@@ -341,6 +351,7 @@ const BankComparisonTable: React.FC<BankComparisonTableProps> = ({ lang = 'es' }
         </div>
       </div>
 
+      <p className="mt-3 text-xs text-ink-soft">{t.lcci}</p>
       {/* Entidades sin oferta */}
       <details className="mt-8 pl-card p-5">
         <summary className="cursor-pointer font-heading font-semibold text-ink">
@@ -349,7 +360,7 @@ const BankComparisonTable: React.FC<BankComparisonTableProps> = ({ lang = 'es' }
         <ul className="mt-4 space-y-2 text-sm text-ink-soft list-disc pl-6">
           {ENTIDADES_SIN_OFERTA.map((e) => (
             <li key={e.banco}>
-              <strong className="text-ink">{e.banco}:</strong> {e.nota}
+              <strong className="text-ink">{e.banco}:</strong> {text(e.nota)}
             </li>
           ))}
         </ul>

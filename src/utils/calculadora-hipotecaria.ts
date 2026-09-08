@@ -30,6 +30,11 @@ interface MortgageParams {
 
 // Cuota mensual por el sistema de amortización francés. Guardas numéricas:
 // un plazo 0 dividiría por cero, y un tipo 0 es válido (capital / meses).
+export function isValidLoanTerm(value: string): boolean {
+  const years = Number(value)
+  return value.trim() !== '' && Number.isInteger(years) && years >= 1 && years <= 40
+}
+
 export function cuotaFrancesa(capital: number, tinAnual: number, anos: number): number {
   const numPagos = anos * 12
   if (!capital || capital <= 0 || numPagos <= 0 || !Number.isFinite(tinAnual)) return 0

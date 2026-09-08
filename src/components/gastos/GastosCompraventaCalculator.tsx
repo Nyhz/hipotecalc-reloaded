@@ -8,6 +8,7 @@ import TaxBreakdown from "../fiscal/TaxBreakdown"
 import Input from "../calculadora-hipotecaria/Input"
 import Select from "../calculadora-hipotecaria/Select"
 import { formatNumberByLang } from "../../utils/number-format"
+import { purchaseCosts } from "../../utils/purchase-costs"
 
 // Gastos de compraventa: impuestos (ITP autonómico o IVA+AJD en obra nueva)
 // más los gastos regulados (notaría, registro) y habituales (gestoría,
@@ -30,6 +31,7 @@ const LABELS = {
     total: "Total de gastos e impuestos",
     sobrePrecio: "sobre el precio",
     ahorro: "Ahorro total necesario (entrada 20 % + gastos)",
+    ahorroContado: "Ahorro total necesario (precio completo + gastos)",
     nota: "Estimación orientativa: notaría y registro son aranceles regulados que dependen del importe y del número de folios; la gestoría es tarifa libre. Con hipoteca, el banco paga la notaría, registro, gestoría y AJD del préstamo (Ley 5/2019) — aquí solo se cuentan los gastos de la compraventa. El motor muestra las reglas verificadas y los datos pendientes. Puedes comprobar tus circunstancias en este formulario o en la ",
     notaLink: "calculadora de ITP",
     itpHref: "/calculadora-itp",
@@ -50,6 +52,7 @@ const LABELS = {
     total: "Total costs and taxes",
     sobrePrecio: "of the price",
     ahorro: "Total savings needed (20% down payment + costs)",
+    ahorroContado: "Total savings needed (full price + costs)",
     nota: "Indicative estimate: notary and registry are regulated fees that depend on the amount and deed length; agency fees are unregulated. With a mortgage, the bank pays the loan's notary, registry, agency and AJD (Ley 5/2019) — only the purchase costs are counted here. The engine shows verified rules and outstanding data. Check your circumstances here or in the ",
     notaLink: "ITP calculator",
     itpHref: "/en/itp-calculator",
@@ -95,22 +98,23 @@ const GastosCompraventaCalculator: React.FC<GastosCompraventaCalculatorProps> = 
 
   const r = useMemo(() => {
     const precio = Number(form.precio) || 0
+    const costs = purchaseCosts(precio, fiscal.total ?? 0, form.conHipoteca)
     const filas: { etiqueta: string; importe: number }[] = []
     if (precio > 0) {
       for(const line of fiscal.lines)if(line.amount!==null)filas.push({etiqueta:line.tax==='AJD'?t.comunidad+' · AJD':line.tax,importe:line.amount})
       // Aranceles aproximados por tramos (notaría: RD 1426/1989; registro:
       // RD 1427/1989 — arancel de inscripción + IVA y conceptos menores)
-      filas.push({ etiqueta: t.notaria, importe: Math.min(1200, Math.max(650, Math.round(600 + precio * 0.0009))) })
-      filas.push({ etiqueta: t.registro, importe: Math.min(500, Math.max(250, Math.round(230 + precio * 0.0005))) })
+      filas.push({ etiqueta: t.notaria, importe: costs.notary })
+      filas.push({ etiqueta: t.registro, importe: costs.registry })
       if (form.conHipoteca) {
-        filas.push({ etiqueta: t.gestoria, importe: 350 })
-        filas.push({ etiqueta: t.tasacion, importe: 400 })
+        filas.push({ etiqueta: t.gestoria, importe: costs.agency })
+        filas.push({ etiqueta: t.tasacion, importe: costs.appraisal })
       }
     }
 
-    const total = filas.reduce((acc, f) => acc + f.importe, 0)
+    const total = costs.total
     const pct = precio > 0 ? (total / precio) * 100 : 0
-    const ahorro = precio * 0.2 + total
+    const ahorro = costs.savings
     return { filas, total, pct, ahorro }
   }, [form, t, fiscal])
 
@@ -162,7 +166,7 @@ const GastosCompraventaCalculator: React.FC<GastosCompraventaCalculatorProps> = 
               </span>
             </div>
             <div className='flex justify-between py-3'>
-              <span className='text-sm text-ink-soft'>{t.ahorro}</span>
+              <span className='text-sm text-ink-soft'>{form.conHipoteca ? t.ahorro : t.ahorroContado}</span>
               <b className='text-ink'>{fmt(r.ahorro)} €</b>
             </div>
           </>

@@ -27,8 +27,10 @@ const isDev = process.env.NODE_ENV !== "production"
 // - /comparativa-hipotecas: FECHA_DATOS del fichero de ofertas.
 // - Resto de páginas estáticas: fecha del último commit de su fichero fuente.
 // ---------------------------------------------------------------------------
+/** @type {Record<string, string>} */
 const MESES = { enero: '01', febrero: '02', marzo: '03', abril: '04', mayo: '05', junio: '06', julio: '07', agosto: '08', septiembre: '09', octubre: '10', noviembre: '11', diciembre: '12' }
 
+/** @param {string} path */
 function frontmatterDate(path) {
   try {
     const fm = readFileSync(path, 'utf8').match(/^---\n([\s\S]*?)\n---/)?.[1] ?? ''
@@ -38,6 +40,7 @@ function frontmatterDate(path) {
   } catch { return null }
 }
 
+/** @param {string} path */
 function gitDate(path) {
   try {
     const out = execSync(`git log -1 --format=%cs -- "${path}"`, { encoding: 'utf8' }).trim()
@@ -48,6 +51,7 @@ function gitDate(path) {
 function buildLastmodMap() {
   /** @type {Record<string, string>} */
   const map = {}
+  /** @param {string} dir @param {string} rutaBase */
   const addDir = (dir, rutaBase) => {
     let max = null
     for (const f of readdirSync(dir).filter((f) => f.endsWith('.md'))) {
@@ -129,6 +133,7 @@ function buildLastmodMap() {
   // (ultimaModificacionConjunta en cada página).
   const fechaComunidades = gitDate('src/constants/comunidades.ts')
   const fechaMotorITP = gitDate('src/utils/calculadora-itp.ts')
+  /** @param {...(string | null)} fechas */
   const maxFecha = (...fechas) => fechas.filter(Boolean).sort().pop() ?? null
   const rutasConDatos = {
     '/calculadora-itp': maxFecha(fechaComunidades, fechaMotorITP),

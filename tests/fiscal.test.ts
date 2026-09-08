@@ -1,6 +1,7 @@
 import test from "node:test";
 import "./rules-contract.test";
 import "./integration-cases.test";
+import "./calculators.test";
 import assert from "node:assert/strict";
 import { calculatePurchaseTaxes, defaultPurchase } from "../src/fiscal/engine";
 import { RULES } from "../src/fiscal/rules";

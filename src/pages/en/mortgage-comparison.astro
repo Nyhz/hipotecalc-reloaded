@@ -60,7 +60,7 @@ const datasetSchema = JSON.stringify({
         and fees. Click any row for the details.
       </p>
       <p class="font-data text-xs text-ink-soft mt-3">
-        Data: {FECHA_DATOS} · Reference Euribor {currentEuribor.value.toLocaleString('en-US')}% ({currentEuribor.labelEn})
+        Data: {fechaDatos?.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' }) ?? 'Date unavailable'} · Reference Euribor {currentEuribor.value.toLocaleString('en-US')}% ({currentEuribor.labelEn})
       </p>
     </div>
 
@@ -75,8 +75,8 @@ const datasetSchema = JSON.stringify({
         (payroll, insurance, cards…) whose cost you should weigh; the APR is the most
         comparable figure because it incorporates fees and bundles.
         Sources and review frequency are detailed in our
-        <a href="/en/methodology" class="underline text-brand-blue">methodology</a>. Product details are kept in Spanish as published in
-        each lender's official documentation.
+        <a href="/en/methodology" class="underline text-brand-blue">methodology</a>. Explanatory terms are translated into English;
+        lender and product names retain their official wording.
       </p>
       <p>
         All figures are indicative and change frequently. Before contracting, request

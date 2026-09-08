@@ -1,3 +1,4 @@
+import { isValidLoanTerm } from "../../utils/calculadora-hipotecaria"
 import React, { useState, useMemo, Suspense, lazy } from "react"
 import { COMUNIDADES } from "../../constants/comunidades"
 import {
@@ -280,11 +281,15 @@ const MortgageCalculator: React.FC<MortgageCalculatorProps> = ({ lang = 'es', in
     setForm((prev) => ({ ...prev, tipoVivienda }))
   }
 
+  const validTerm = isValidLoanTerm(form.plazo)
+  const canQuote = fiscal.total !== null && (calculations.cantidadHipoteca === 0 || validTerm)
+
   return (
     <div className='flex flex-col xl:flex-row gap-6 mt-4 items-start'>
       <form
         className='flex-1 pl-card p-5 md:p-6'
         autoComplete='off'
+        onSubmit={e => e.preventDefault()}
       >
         <div className='grid grid-cols-1 lg:grid-cols-2 gap-6'>
           <fieldset className='rounded-xl border border-line bg-paper/50 p-4'>
@@ -615,7 +620,7 @@ const MortgageCalculator: React.FC<MortgageCalculatorProps> = ({ lang = 'es', in
         </div>
 
         {/* Sensitivity Table */}
-        {fiscal.total!==null&&<SensitivityTable
+        {fiscal.total!==null&&validTerm&&<SensitivityTable
           fiscalInput={fiscal.input}
           form={form}
           calculations={calculations}
@@ -625,7 +630,7 @@ const MortgageCalculator: React.FC<MortgageCalculatorProps> = ({ lang = 'es', in
           lang={currentLang}
         />}
       </form>
-      {fiscal.total!==null?<aside className='w-full xl:w-[22rem] receipt p-6 flex flex-col gap-4 xl:sticky xl:top-24'>
+      {canQuote?<aside className='w-full xl:w-[22rem] receipt p-6 flex flex-col gap-4 xl:sticky xl:top-24'>
         <div className='receipt-head'>
           <span>{t('mortgage.form.monthlyPayment')}</span>
           <span className='text-brand-blue'>■</span>
@@ -698,7 +703,7 @@ const MortgageCalculator: React.FC<MortgageCalculatorProps> = ({ lang = 'es', in
             <b>{formatNumberByLang(calculations.interes, currentLang)} €</b>
           </div>
         </div>
-      </aside>:<aside className='w-full xl:w-[22rem] receipt p-6 text-sm' role='status'>{lang==='es'?'Completa los datos fiscales del inmueble para calcular el coste de compra y la financiación.':'Complete the property tax details to calculate purchase cost and financing.'}</aside>}
+      </aside>:<aside className='w-full xl:w-[22rem] receipt p-6 text-sm' role='status'>{fiscal.total === null ? (lang==='es'?'Completa los datos fiscales del inmueble para calcular el coste de compra y la financiación.':'Complete the property tax details to calculate purchase cost and financing.') : (lang==='es'?'Introduce un plazo de hipoteca de entre 1 y 40 años completos para calcular la cuota.':'Enter a mortgage term of 1 to 40 whole years to calculate payments.')}</aside>}
       {/* Modal Calculadora ITP */}
       <ITPCalculator
         initialFiscal={fiscalInput?{...fiscal.input,habitual:fiscalInput.habitual}:undefined}

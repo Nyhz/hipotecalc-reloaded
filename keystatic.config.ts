@@ -19,7 +19,7 @@ export default config({
       path: 'src/content/blog/*',
       format: { contentField: 'content' },
       entryLayout: 'content',
-      fields: {
+      schema: {
         title: fields.slug({
           name: { label: 'Título', validation: { isRequired: true } },
         }),
@@ -69,7 +69,7 @@ export default config({
       path: 'src/content/guias/*',
       format: { contentField: 'content' },
       entryLayout: 'content',
-      fields: {
+      schema: {
         title: fields.slug({
           name: { label: 'Título', validation: { isRequired: true } },
         }),
@@ -114,7 +114,7 @@ export default config({
       path: 'src/content/guias/itp/*',
       format: { contentField: 'content' },
       entryLayout: 'content',
-      fields: {
+      schema: {
         title: fields.slug({
           name: { label: 'Título', validation: { isRequired: true } },
         }),
@@ -152,7 +152,7 @@ export default config({
       path: 'src/content/en/blog/*',
       format: { contentField: 'content' },
       entryLayout: 'content',
-      fields: {
+      schema: {
         title: fields.slug({ name: { label: 'Title', validation: { isRequired: true } } }),
         description: fields.text({ label: 'Description (SEO)', multiline: true, validation: { isRequired: true } }),
         pubDate: fields.date({ label: 'Publish date', validation: { isRequired: true } }),
@@ -183,7 +183,7 @@ export default config({
       path: 'src/content/en/guias/*',
       format: { contentField: 'content' },
       entryLayout: 'content',
-      fields: {
+      schema: {
         title: fields.slug({ name: { label: 'Title', validation: { isRequired: true } } }),
         description: fields.text({ label: 'Description (SEO)', multiline: true, validation: { isRequired: true } }),
         updatedDate: fields.date({ label: 'Last updated', validation: { isRequired: true } }),
@@ -213,7 +213,7 @@ export default config({
       path: 'src/content/en/guias/itp/*',
       format: { contentField: 'content' },
       entryLayout: 'content',
-      fields: {
+      schema: {
         title: fields.slug({ name: { label: 'Title', validation: { isRequired: true } } }),
         description: fields.text({ label: 'Description (SEO)', multiline: true, validation: { isRequired: true } }),
         comunidad: fields.text({ label: 'Region (exact name from comunidades.ts, in Spanish, for the calculator)', validation: { isRequired: true } }),

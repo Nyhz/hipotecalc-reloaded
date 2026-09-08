@@ -55,5 +55,5 @@ export default function ITPCalculator(props:ITPCalculatorProps) {
   }
   const form=<PurchaseTaxForm value={value} onChange={change} onResult={result} lang={lang} investment={props.investment}/>
   if(inline)return <div className='pl-card p-5 md:p-6'>{form}</div>
-  return <Modal open={open} onClose={onClose}><h2 className='font-heading text-xl mb-4'>{lang==='es'?'Impuestos de adquisición':'Purchase taxes'}</h2>{form}</Modal>
+  return <Modal open={open} onClose={onClose} lang={lang} title={lang==='es'?'Impuestos de adquisición':'Purchase taxes'}>{form}</Modal>
 }

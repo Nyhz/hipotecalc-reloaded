@@ -1,6 +1,7 @@
 import React, { useMemo, useState } from "react"
 import Input from "../calculadora-hipotecaria/Input"
 import { formatNumberByLang } from "../../utils/number-format"
+import { calculatePlusvalia } from "../../utils/plusvalia"
 
 // Plusvalía municipal (IIVTNU) tras el RDL 26/2021: el contribuyente puede
 // elegir entre la base objetiva (valor catastral del suelo × coeficiente por
@@ -9,16 +10,21 @@ import { formatNumberByLang } from "../../utils/number-format"
 // Coeficientes: máximos estatales vigentes desde el 1-1-2024 (art. 24 del
 // RDL 8/2023), prorrogados en 2025 y 2026 al no convalidarse los RDL 9/2024
 // y 16/2025 que los sustituían. Los ayuntamientos pueden aplicar otros menores.
-const COEFICIENTES = [
-  0.15, 0.15, 0.14, 0.14, 0.16, 0.18, 0.19, 0.2, 0.19, 0.15, 0.12,
-  0.1, 0.09, 0.09, 0.09, 0.09, 0.1, 0.13, 0.17, 0.23, 0.4,
-]
 
 const LABELS = {
   es: {
     precioCompra: "Precio de compra (€)",
     precioVenta: "Precio de venta (€)",
-    anosTenencia: "Años entre compra y venta",
+    anosTenencia: "Años completos entre compra y venta",
+    meses: "Meses completos (si han pasado menos de 12 meses)",
+    mesesNota: "Introduce 0 años para una venta en menos de un año. Solo cuentan los meses completos; menos de un mes son 0 meses.",
+    errors: {
+      prices: "Introduce precios de compra y venta positivos.",
+      years: "Introduce los años completos como un número entero de 0 o más.",
+      months: "Introduce los meses completos entre 0 y 11 para una venta en menos de un año.",
+      cadastral: "Introduce valores catastrales positivos. El total debe ser igual o superior al valor del suelo.",
+      rate: "Introduce un tipo municipal entre 0 y 30 %.",
+    },
     vcSuelo: "Valor catastral del suelo (€)",
     vcTotal: "Valor catastral total (€)",
     tipo: "Tipo impositivo municipal (%)",
@@ -36,7 +42,16 @@ const LABELS = {
   en: {
     precioCompra: "Purchase price (€)",
     precioVenta: "Sale price (€)",
-    anosTenencia: "Years between purchase and sale",
+    anosTenencia: "Completed years between purchase and sale",
+    meses: "Completed months (when less than 12 months have elapsed)",
+    mesesNota: "Enter 0 years for a sale within one year. Only completed months count; less than one month is 0 months.",
+    errors: {
+      prices: "Enter positive purchase and sale prices.",
+      years: "Enter completed years as a whole number of 0 or more.",
+      months: "Enter completed months from 0 to 11 for a sale within one year.",
+      cadastral: "Enter positive cadastral values. The total must be at least the land value.",
+      rate: "Enter a municipal rate between 0 and 30%.",
+    },
     vcSuelo: "Cadastral land value (€)",
     vcTotal: "Total cadastral value (€)",
     tipo: "Municipal tax rate (%)",
@@ -63,6 +78,7 @@ const PlusvaliaCalculator: React.FC<PlusvaliaCalculatorProps> = ({ lang = "es" }
     precioCompra: "150000",
     precioVenta: "200000",
     anos: "10",
+    meses: "",
     vcSuelo: "30000",
     vcTotal: "80000",
     tipo: "30",
@@ -75,29 +91,7 @@ const PlusvaliaCalculator: React.FC<PlusvaliaCalculatorProps> = ({ lang = "es" }
     setForm((prev) => ({ ...prev, [name]: value }))
   }
 
-  const r = useMemo(() => {
-    const compra = Number(form.precioCompra) || 0
-    const venta = Number(form.precioVenta) || 0
-    const anos = Math.min(Math.max(Math.floor(Number(form.anos) || 0), 0), 20)
-    const vcSuelo = Number(form.vcSuelo) || 0
-    const vcTotal = Number(form.vcTotal) || 0
-    const tipo = (Number(form.tipo) || 0) / 100
-
-    const ganancia = venta - compra
-    if (venta > 0 && compra > 0 && ganancia <= 0) {
-      return { exenta: true }
-    }
-
-    const baseObjetiva = vcSuelo * COEFICIENTES[anos]
-    const cuotaObjetiva = Math.round(baseObjetiva * tipo * 100) / 100
-
-    const proporcionSuelo = vcTotal > 0 ? vcSuelo / vcTotal : 0
-    const baseReal = Math.max(0, ganancia) * proporcionSuelo
-    const cuotaReal = Math.round(baseReal * tipo * 100) / 100
-
-    const mejor = cuotaReal <= cuotaObjetiva ? "real" : "objetivo"
-    return { exenta: false, baseObjetiva, cuotaObjetiva, baseReal, cuotaReal, mejor, coef: COEFICIENTES[anos] }
-  }, [form])
+  const r = useMemo(() => calculatePlusvalia(form), [form])
 
   const fmt = (n: number) => formatNumberByLang(Math.round(n * 100) / 100, lang)
 
@@ -106,13 +100,17 @@ const PlusvaliaCalculator: React.FC<PlusvaliaCalculatorProps> = ({ lang = "es" }
       <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-6'>
         <Input label={t.precioCompra} name='precioCompra' value={form.precioCompra} onChange={handleChange} type='number' min={0} showEuroSymbol={true} />
         <Input label={t.precioVenta} name='precioVenta' value={form.precioVenta} onChange={handleChange} type='number' min={0} showEuroSymbol={true} />
-        <Input label={t.anosTenencia} name='anos' value={form.anos} onChange={handleChange} type='number' min={0} max={20} />
+        <div>
+          <Input label={t.anosTenencia} name='anos' value={form.anos} onChange={handleChange} type='number' min={0} step={1} />
+          <p className='text-xs text-ink-soft mt-2'>{t.mesesNota}</p>
+        </div>
+        {form.anos.trim() !== '' && Number(form.anos) === 0 && <Input label={t.meses} name='meses' value={form.meses} onChange={handleChange} type='number' min={0} max={11} step={1} />}
         <Input label={t.vcSuelo} name='vcSuelo' value={form.vcSuelo} onChange={handleChange} type='number' min={0} showEuroSymbol={true} />
         <Input label={t.vcTotal} name='vcTotal' value={form.vcTotal} onChange={handleChange} type='number' min={0} showEuroSymbol={true} />
         <Input label={t.tipo} name='tipo' value={form.tipo} onChange={handleChange} type='number' min={0} max={30} step={0.01} />
       </div>
 
-      {r.exenta ? (
+      {!r.valid ? <p role='status' className='text-sm text-negative'>{t.errors[r.error]}</p> : r.exenta ? (
         <div className='pl-card p-5 border-l-4 border-lime'>
           <div className='font-heading text-2xl font-bold text-positive mb-1' style={{ color: "var(--color-positive)" }}>
             {t.exenta}: 0 €

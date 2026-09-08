@@ -608,6 +608,7 @@ export default function PurchaseTaxForm({
                 : "¿Entrega realizada por el promotor?",
             )}
           {fields
+            .filter((f) => !(region === "pais-vasco" && f === "numeroViviendas"))
             .filter((f) => !PRIMARY.includes(f))
             .filter((f) => {
               const protectedField = [

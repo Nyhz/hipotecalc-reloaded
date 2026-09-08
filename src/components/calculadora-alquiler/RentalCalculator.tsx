@@ -1,3 +1,4 @@
+import { isValidLoanTerm } from "../../utils/calculadora-hipotecaria"
 import React, { useState, useMemo } from "react"
 import { COMUNIDADES } from "../../constants/comunidades"
 import { calculatePurchaseTaxes, defaultPurchase } from "../../fiscal/engine"
@@ -148,6 +149,9 @@ const RentalCalculator: React.FC<RentalCalculatorProps> = ({ lang = 'es' }) => {
     setForm((prev) => ({ ...prev, [name]: value }))
   }
 
+  const validTerm = isValidLoanTerm(form.plazo)
+  const canQuote = fiscal.total !== null && (calculations.cantidadHipoteca === 0 || validTerm)
+
   return (
     <>
       <div className="flex flex-col xl:flex-row gap-6 mt-4 items-start">
@@ -264,7 +268,7 @@ const RentalCalculator: React.FC<RentalCalculatorProps> = ({ lang = 'es' }) => {
         </div>
 
         {/* Recibo sticky */}
-        {fiscal.total!==null?<aside className="w-full xl:w-[22rem] receipt p-6 flex flex-col gap-4 xl:sticky xl:top-24">
+        {canQuote?<aside className="w-full xl:w-[22rem] receipt p-6 flex flex-col gap-4 xl:sticky xl:top-24">
           <div className="receipt-head">
             <span>{t('rental.results.receiptTitle')}</span>
             <span className="text-brand-blue">■</span>
@@ -295,14 +299,14 @@ const RentalCalculator: React.FC<RentalCalculatorProps> = ({ lang = 'es' }) => {
             />
           </div>
           <ContactButton variant="receipt" labelKey="rental.results.improveCta" lang={lang} source="rental_receipt" />
-        </aside>:<aside className='w-full xl:w-[22rem] receipt p-6 text-sm' role='status'>{lang==='es'?'Completa los datos fiscales del inmueble para calcular la inversión y su rentabilidad.':'Complete the property tax details to calculate investment cost and returns.'}</aside>}
+        </aside>:<aside className='w-full xl:w-[22rem] receipt p-6 text-sm' role='status'>{fiscal.total === null ? (lang==='es'?'Completa los datos fiscales del inmueble para calcular la inversión y su rentabilidad.':'Complete the property tax details to calculate investment cost and returns.') : (lang==='es'?'Introduce un plazo de hipoteca de entre 1 y 40 años completos para calcular la rentabilidad.':'Enter a mortgage term of 1 to 40 whole years to calculate returns.')}</aside>}
       </div>
 
       {/* KPIs y gráficas a lo ancho, debajo */}
-      {fiscal.total!==null&&<><div className="mt-6">
+      {canQuote&&<><div className="mt-6">
         <RentalKPIs calculations={calculations} lang={lang} />
       </div>
-      <div className="mt-6">
+      {validTerm && <div className="mt-6">
         <CashFlowEntradaChart
           precioTotal={calculations.precioTotal}
           interes={Number(form.interes) || 0}
@@ -312,7 +316,7 @@ const RentalCalculator: React.FC<RentalCalculatorProps> = ({ lang = 'es' }) => {
           entradaActual={Number(form.entrada) || 0}
           lang={lang}
         />
-      </div>
+      </div>}
       <div className="mt-6">
         <RentalCharts calculations={calculations} lang={lang} />
       </div></>}
