@@ -7,8 +7,6 @@
 Calculadoras financieras para España: hipoteca, ITP por comunidad autónoma
 y rentabilidad del alquiler. Gratis, sin registro y con datos oficiales al día.
 
-[hipotecalc.com](https://www.hipotecalc.com) · [English](https://www.hipotecalc.com/en/)
-
 </div>
 
 ---
