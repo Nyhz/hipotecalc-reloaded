@@ -2,11 +2,14 @@ import React, { useId, useMemo, useState } from "react"
 import {
   OFERTAS_HIPOTECAS,
   ENTIDADES_SIN_OFERTA,
+  OFERTAS_PENDIENTES,
+  fechaOferta,
   type OfertaHipoteca,
 } from "../../constants/hipotecas-bancos"
 import { referalLink } from "../../constants/referal"
 import { useGoogleAnalytics } from "../../hooks/useGoogleAnalytics"
 import { offerText } from "../../utils/offer-translations"
+import { filterMortgageOffers } from "../../utils/mortgage-comparison"
 
 const TIPOS = ["Todas", "Fija", "Variable", "Mixta"] as const
 const CATEGORIAS = [
@@ -28,6 +31,7 @@ const tipoBadgeClass: Record<OfertaHipoteca["tipo"], string> = {
   "Fija/Variable": "bg-paper-2 text-ink",
   "Fija/Variable/Mixta": "bg-paper-2 text-ink",
   "Variable/Mixta": "bg-paper-2 text-ink",
+  Consultar: "bg-paper-2 text-ink",
 }
 
 // Primer porcentaje numérico de una cadena de tipos ("2,96% / 3,96%" -> 2.96;
@@ -79,7 +83,7 @@ const LABELS = {
     oferta: 'oferta',
     ofertas: 'ofertas',
     banco: 'Banco', producto: 'Producto', tipo: 'Tipo',
-    tin: 'TIN (bonif. / sin)', tae: 'TAE (bonif. / sin)',
+    tin: 'TIN (bonif. / sin)', tae: 'TAE¹ (bonif. / sin)',
     plazo: 'Plazo máx.', financiacion: 'Financiación',
     diferencial: 'Diferencial / tramo fijo',
     vinculaciones: 'Vinculaciones / bonificaciones',
@@ -89,14 +93,24 @@ const LABELS = {
     antes: 'antes',
     detalle: 'Detalle',
     verDetalle: 'Ver condiciones de',
-    lcci: 'LCCI: Ley de contratos de crédito inmobiliario.',
-    sinOferta: 'Entidades consultadas que no comercializan hipotecas',
+    lcci: '¹ TAE variable en hipotecas variables y mixtas. E = euríbor a 12 meses. LCCI: Ley de contratos de crédito inmobiliario.',
+    sinOferta: 'Otras entidades y marcas consultadas',
+    pendientes: 'Entradas anteriores pendientes de confirmar',
+    pendientesTexto: 'Estas entradas se conservan como referencia de la revisión anterior. No se cuentan como ofertas actuales ni se muestran sus precios antiguos.',
+    otrasTexto: 'Cada nota muestra su fecha: una revisión anterior no confirma la disponibilidad actual.',
+    fuente: 'Fuente oficial',
+    revisada: 'Revisado',
+    publicada: 'Tipos publicados',
+    consultar: 'Consultar precio',
+    reiniciar: 'Limpiar filtros',
+    caption: 'Ofertas hipotecarias y condiciones publicadas por entidad',
+    desliza: 'Desliza horizontalmente para ver todas las columnas.',
     tipoValor: (v: string) => v,
     categoriaValor: (v: string) => v,
     promoTag: 'Nuestro servicio',
     promoTitulo: 'Mejora la hipoteca con nosotros',
     promoBadge: 'Fija · Variable · Mixta',
-    promoTexto: 'Nuestro bróker compara tu caso con todo el mercado y negocia por ti. Estudio gratuito y sin compromiso.',
+    promoTexto: 'Nuestro bróker estudia tu caso, compara ofertas y negocia por ti. Estudio gratuito y sin compromiso.',
     promoCta: 'Quiero mejorar mi hipoteca',
   },
   en: {
@@ -107,7 +121,7 @@ const LABELS = {
     oferta: 'offer',
     ofertas: 'offers',
     banco: 'Bank', producto: 'Product', tipo: 'Type',
-    tin: 'TIN (bonus / without)', tae: 'APR (bonus / without)',
+    tin: 'TIN (discounted / standard)', tae: 'APR¹ (discounted / standard)',
     plazo: 'Max. term', financiacion: 'Financing',
     diferencial: 'Spread / fixed period',
     vinculaciones: 'Bundled products / discounts',
@@ -117,14 +131,24 @@ const LABELS = {
     antes: 'previously',
     detalle: 'Details',
     verDetalle: 'View terms for',
-    lcci: 'LCCI: Spanish Real Estate Credit Contracts Act; FEIN: European Standardised Information Sheet.',
-    sinOferta: 'Institutions surveyed that do not sell mortgages',
-    tipoValor: (v: string) => ({ Todas: 'All', Fija: 'Fixed', Variable: 'Variable', Mixta: 'Mixed', 'Fija/Variable': 'Fixed/Variable', 'Fija/Variable/Mixta': 'Fixed/Variable/Mixed', 'Variable/Mixta': 'Variable/Mixed' }[v] ?? v),
+    lcci: '¹ Variable APR for variable and mixed mortgages. E = 12-month Euribor. LCCI: Spanish Real Estate Credit Contracts Act; FEIN: European Standardised Information Sheet (ESIS).',
+    sinOferta: 'Other institutions and brands surveyed',
+    pendientes: 'Previous listings awaiting confirmation',
+    pendientesTexto: 'These entries are retained as a record of the previous review. They are excluded from current offer counts and their old prices are not displayed.',
+    otrasTexto: 'Each note is dated: an earlier review does not confirm current availability.',
+    fuente: 'Official source',
+    revisada: 'Reviewed',
+    publicada: 'Published rates',
+    consultar: 'Request a quote',
+    reiniciar: 'Clear filters',
+    caption: 'Mortgage offers and published terms by lender',
+    desliza: 'Scroll horizontally to see all columns.',
+    tipoValor: (v: string) => ({ Todas: 'All', Fija: 'Fixed', Variable: 'Variable', Mixta: 'Mixed', Consultar: 'Enquire', 'Fija/Variable': 'Fixed/Variable', 'Fija/Variable/Mixta': 'Fixed/Variable/Mixed', 'Variable/Mixta': 'Variable/Mixed' }[v] ?? v),
     categoriaValor: (v: string) => ({ Todas: 'All', Grande: 'Large', Online: 'Online', Mediano: 'Mid-size', Cooperativa: 'Cooperative', 'Banca ética': 'Ethical bank', Especialista: 'Specialist', Otro: 'Other', Extranjero: 'Foreign' }[v] ?? v),
     promoTag: 'Our service',
     promoTitulo: 'Improve your mortgage with us',
     promoBadge: 'Fixed · Variable · Mixed',
-    promoTexto: 'Our broker benchmarks your case against the whole market and negotiates for you. Free, no-obligation review.',
+    promoTexto: 'Our broker reviews your circumstances, compares offers and negotiates for you. Free, no-obligation review.',
     promoCta: 'Improve my mortgage',
   },
 }
@@ -143,15 +167,10 @@ const BankComparisonTable: React.FC<BankComparisonTableProps> = ({ lang = 'es' }
   const detailsId = useId()
   const text = (value: string) => offerText(value, lang)
 
-  const ofertas = useMemo(() => {
-    const q = busqueda.trim().toLowerCase()
-    return OFERTAS_HIPOTECAS.filter((o) => {
-      if (tipo !== "Todas" && !o.tipo.split("/").includes(tipo)) return false
-      if (categoria !== "Todas" && o.categoria !== categoria) return false
-      if (q && !`${o.banco} ${o.producto}`.toLowerCase().includes(q)) return false
-      return true
-    })
-  }, [tipo, categoria, busqueda])
+  const ofertas = useMemo(() => filterMortgageOffers(OFERTAS_HIPOTECAS, {
+    query: busqueda, type: tipo, category: categoria,
+  }), [tipo, categoria, busqueda])
+  const resetFilters = () => { setBusqueda(''); setTipo('Todas'); setCategoria('Todas'); setExpandida(null) }
 
   return (
     <div className="w-full">
@@ -204,15 +223,20 @@ const BankComparisonTable: React.FC<BankComparisonTableProps> = ({ lang = 'es' }
             ))}
           </select>
         </div>
-        <div className="font-data text-xs text-ink-soft whitespace-nowrap pb-2">
+        <div className="font-data text-xs text-ink-soft whitespace-nowrap pb-2" role="status" aria-live="polite" aria-atomic="true">
           {ofertas.length} {ofertas.length === 1 ? t.oferta : t.ofertas}
         </div>
+        {(busqueda || tipo !== 'Todas' || categoria !== 'Todas') && (
+          <button type="button" onClick={resetFilters} className="text-sm text-brand-blue underline pb-2 cursor-pointer">{t.reiniciar}</button>
+        )}
       </div>
 
       {/* Tabla */}
+      <p className="mb-2 text-xs text-ink-soft lg:hidden">{t.desliza}</p>
       <div className="pl-card p-0 overflow-hidden">
-        <div className="overflow-x-auto">
-          <table className="w-full text-sm table-fixed min-w-[760px] lg:min-w-0">
+        <div className="overflow-x-auto focus-visible:outline-2 focus-visible:outline-brand-blue" role="region" aria-label={t.caption} tabIndex={0}>
+          <table className="w-full text-sm table-fixed min-w-[1000px]">
+            <caption className="sr-only">{t.caption}</caption>
             <thead>
               <tr className="border-b border-line bg-paper-2/60 font-data text-[11px] uppercase tracking-wider text-ink-soft">
                 <th className="text-left py-3 px-3 w-[15%]">{t.banco}</th>
@@ -275,12 +299,15 @@ const BankComparisonTable: React.FC<BankComparisonTableProps> = ({ lang = 'es' }
                         {lang === "en" ? t.categoriaValor(o.categoria) : o.categoria}
                       </div>
                     </td>
-                    <td className="py-3 px-2 text-ink-soft">{o.producto}</td>
+                    <td className="py-3 px-2 text-ink-soft">
+                      {o.producto}
+                      <div className="mt-1 text-[11px] font-data">{o.estado === 'publicada' ? t.publicada : t.consultar}</div>
+                    </td>
                     <td className="py-3 px-3">
                       <span
-                        className={`inline-block rounded-full px-2.5 py-0.5 font-data text-[11px] ${tipoBadgeClass[o.tipo]}`}
+                        className={`inline-block max-w-full rounded-xl px-2.5 py-0.5 font-data text-[11px] leading-snug ${tipoBadgeClass[o.tipo]}`}
                       >
-                        {lang === "en" ? t.tipoValor(o.tipo) : o.tipo}
+                        {(lang === "en" ? t.tipoValor(o.tipo) : o.tipo).replaceAll('/', ' / ')}
                       </span>
                     </td>
                     <td className="py-3 px-2 text-ink">{text(o.tin)}<RateTrend actual={o.tin} anterior={o.tinAnterior ? text(o.tinAnterior) : undefined} antesLabel={t.antes} /></td>
@@ -297,7 +324,15 @@ const BankComparisonTable: React.FC<BankComparisonTableProps> = ({ lang = 'es' }
                   </tr>
                     <tr id={detailId} hidden={!expanded} className="border-b border-line/60 bg-paper-2/30">
                       <td colSpan={8} className="py-4 px-4">
-                        <dl className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-2 text-sm">
+                        <dl className="sticky left-4 w-[calc(100vw-4.5rem)] max-w-full xl:w-auto grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-2 text-sm">
+                          <div>
+                            <dt className="font-data text-[10.5px] uppercase tracking-wide text-ink-soft">{t.fuente}</dt>
+                            <dd><a href={o.urlFuente} target="_blank" rel="noopener noreferrer" className="underline text-brand-blue">{text(o.fuente)} — {o.banco}</a></dd>
+                          </div>
+                          <div>
+                            <dt className="font-data text-[10.5px] uppercase tracking-wide text-ink-soft">{t.revisada}</dt>
+                            <dd className="text-ink"><time dateTime={o.fechaRevision}>{fechaOferta(o.fechaRevision, lang)}</time></dd>
+                          </div>
                           {corto(text(o.plazoMax)) !== text(o.plazoMax) && (
                             <div>
                               <dt className="font-data text-[10.5px] uppercase tracking-wide text-ink-soft">{t.plazo}</dt>
@@ -352,15 +387,25 @@ const BankComparisonTable: React.FC<BankComparisonTableProps> = ({ lang = 'es' }
       </div>
 
       <p className="mt-3 text-xs text-ink-soft">{t.lcci}</p>
+      <details className="mt-8 pl-card p-5">
+        <summary className="cursor-pointer font-heading font-semibold text-ink">{t.pendientes} ({OFERTAS_PENDIENTES.length})</summary>
+        <p className="mt-3 text-sm text-ink-soft">{t.pendientesTexto}</p>
+        <ul className="mt-4 space-y-2 text-sm text-ink-soft list-disc pl-6">
+          {OFERTAS_PENDIENTES.map(o => <li key={`${o.banco}-${o.producto}`}><strong className="text-ink">{o.banco} — {o.producto}:</strong> {text(o.nota)}</li>)}
+        </ul>
+      </details>
       {/* Entidades sin oferta */}
       <details className="mt-8 pl-card p-5">
         <summary className="cursor-pointer font-heading font-semibold text-ink">
           {t.sinOferta} ({ENTIDADES_SIN_OFERTA.length})
         </summary>
+        <p className="mt-3 text-sm text-ink-soft">{t.otrasTexto}</p>
         <ul className="mt-4 space-y-2 text-sm text-ink-soft list-disc pl-6">
           {ENTIDADES_SIN_OFERTA.map((e) => (
             <li key={e.banco}>
               <strong className="text-ink">{e.banco}:</strong> {text(e.nota)}
+              {' '}<time dateTime={e.fechaRevision} className="font-data text-xs">({fechaOferta(e.fechaRevision, lang)})</time>
+              {e.urlFuente && <> · <a href={e.urlFuente} target="_blank" rel="noopener noreferrer" className="underline text-brand-blue">{t.fuente}</a></>}
             </li>
           ))}
         </ul>

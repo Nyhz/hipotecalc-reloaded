@@ -4,18 +4,15 @@ import Breadcrumbs from '../../components/seo/Breadcrumbs.astro';
 import FAQSection from '../../components/seo/FAQSection.astro';
 import PageTracking from '../../components/PageTracking.tsx';
 import BankComparisonTable from '../../components/comparativa/BankComparisonTable.tsx';
-import { OFERTAS_HIPOTECAS, FECHA_DATOS } from '../../constants/hipotecas-bancos';
+import { OFERTAS_HIPOTECAS, FECHA_DATOS_ISO, fechaDatos, fechaOferta } from '../../constants/hipotecas-bancos';
 import { fechaPublicacion } from '../../utils/ultima-modificacion';
+import { comparisonFAQs } from '../../constants/mortgage-comparison-copy';
 import { currentEuribor } from '../../constants/euribor-values';
 
 const numBancos = new Set(OFERTAS_HIPOTECAS.map(o => o.banco)).size;
-const title = `Spanish Mortgage Comparison ${new Date().getFullYear()}: ${numBancos} banks side by side | Hipotecalc`;
-const description = `Compare fixed, variable and mixed mortgages from ${numBancos} Spanish banks: TIN, APR, term, financing, bundled products and fees, from official sources.`;
+const title = `Spanish Mortgage Comparison ${new Date().getFullYear()}: ${numBancos} lenders and brands | Hipotecalc`;
+const description = `Compare fixed, variable and mixed mortgages from ${numBancos} lenders and brands in Spain: TIN, APR, term, financing, bundled products and fees, from official sources.`;
 
-// Fechas para el schema: la extracción de datos marca la última modificación
-const MESES_NUM = { enero: 0, febrero: 1, marzo: 2, abril: 3, mayo: 4, junio: 5, julio: 6, agosto: 7, septiembre: 8, octubre: 9, noviembre: 10, diciembre: 11 } as const;
-const mFecha = FECHA_DATOS.match(/(\d{1,2}) de (\w+) de (\d{4})/);
-const fechaDatos = mFecha ? new Date(Date.UTC(Number(mFecha[3]), MESES_NUM[mFecha[2] as keyof typeof MESES_NUM], Number(mFecha[1]))) : undefined;
 const publicado = fechaPublicacion('src/pages/en/mortgage-comparison.astro');
 
 // Las ofertas de la tabla como Dataset: datos estructurados del activo principal
@@ -23,7 +20,7 @@ const datasetSchema = JSON.stringify({
   "@context": "https://schema.org",
   "@type": "Dataset",
   "name": `Spanish bank mortgage comparison dataset (${new Date().getFullYear()})`,
-  "description": `${OFERTAS_HIPOTECAS.length} mortgage offers (fixed, variable and mixed) from ${numBancos} Spanish banks and credit cooperatives: TIN, APR, term, maximum financing, bundled products and fees, compiled from official websites and FIPRE sheets.`,
+  "description": `${OFERTAS_HIPOTECAS.length} mortgage offers (fixed, variable and mixed) from ${numBancos} lenders, brands and groups in Spain: TIN, APR, term, maximum financing, bundled products and fees, compiled from official websites and FIPRE sheets.`,
   "url": "https://www.hipotecalc.com/en/mortgage-comparison",
   "creator": { "@id": "https://www.hipotecalc.com/#organization" },
   "publisher": { "@id": "https://www.hipotecalc.com/#organization" },
@@ -52,15 +49,15 @@ const datasetSchema = JSON.stringify({
     <div class="text-center mb-8 reveal-up">
       <span class="eyebrow">Mortgage comparison · Spain {new Date().getFullYear()}</span>
       <h1 class="font-heading text-3xl md:text-4xl lg:text-[44px] font-semibold tracking-[-1px] text-ink mt-4 mb-3">
-        {numBancos} banks, all their mortgages
+        Offers from {numBancos} lenders and brands
       </h1>
       <p class="text-ink-soft max-w-3xl mx-auto text-base md:text-lg">
-        The mortgage offers published by Spanish banks and credit cooperatives: fixed,
+        Compare offers published by Spanish banks and credit cooperatives: fixed,
         variable and mixed, with TIN, APR, terms, maximum financing, bundled products
         and fees. Click any row for the details.
       </p>
       <p class="font-data text-xs text-ink-soft mt-3">
-        Data: {fechaDatos?.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' }) ?? 'Date unavailable'} · Reference Euribor {currentEuribor.value.toLocaleString('en-US')}% ({currentEuribor.labelEn})
+        Reviewed: {fechaOferta(FECHA_DATOS_ISO, 'en')} · Latest monthly Euribor average {currentEuribor.value.toLocaleString('en-US')}% ({currentEuribor.labelEn})
       </p>
     </div>
 
@@ -70,17 +67,19 @@ const datasetSchema = JSON.stringify({
 
     <div class="max-w-3xl mx-auto mt-10 text-sm text-ink-soft space-y-3">
       <p>
-        <strong class="text-ink">How to read the table:</strong> rates are shown as
-        <em> with / without bonus</em>. The bonus rate requires bundled products
-        (payroll, insurance, cards…) whose cost you should weigh; the APR is the most
-        comparable figure because it incorporates fees and bundles.
+        <strong class="text-ink">How to read the table:</strong> rate pairs show
+        <em> discounted / standard</em> prices, unless different periods are specified. Check the
+        introductory period and subsequent spread in the details. A single figure does not imply that both prices are available.
+        APR includes the costs in the lender’s example; compare the same loan amount, term and bundled products.
+        Variable and mixed mortgages show variable APR under each lender’s assumptions, which may use
+        a different Euribor from the figure above. We do not recalculate published APRs.
         Sources and review frequency are detailed in our
         <a href="/en/methodology" class="underline text-brand-blue">methodology</a>. Explanatory terms are translated into English;
         lender and product names retain their official wording.
       </p>
       <p>
         All figures are indicative and change frequently. Before contracting, request
-        the personalised FIPRE/FEIN from each institution and read our
+        the FIPRE and personalised ESIS (FEIN) from each institution and read our
         <a href="/en/financial-disclaimer" class="underline text-brand-blue">financial disclaimer</a>.
         You can simulate the payment for any of these offers with the
         <a href="/en/mortgage-calculator" class="underline text-brand-blue">mortgage calculator</a>.
@@ -90,15 +89,6 @@ const datasetSchema = JSON.stringify({
 
   <FAQSection
     title="Frequently asked questions"
-    items={[
-      {
-        question: "Which is the best mortgage in Spain right now?",
-        answer: "There is no single best mortgage: it depends on your profile, savings and risk tolerance. Compare the APR (not just the TIN), the bundled products required and the fees, and simulate the payment with your own numbers before deciding."
-      },
-      {
-        question: "What is the difference between TIN and APR?",
-        answer: "The TIN is the nominal interest rate applied to the loan. The APR (TAE in Spanish) adds fees and the cost of bundled products, so it reflects the real annual cost and is the right figure for comparing offers."
-      }
-    ]}
+    items={comparisonFAQs.en}
   />
 </Layout>

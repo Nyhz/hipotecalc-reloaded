@@ -1,6 +1,6 @@
 ---
 import LegalLayout from '../../layouts/LegalLayout.astro';
-import { OFERTAS_HIPOTECAS, ENTIDADES_SIN_OFERTA, FECHA_DATOS } from '../../constants/hipotecas-bancos';
+import { OFERTAS_HIPOTECAS, ENTIDADES_SIN_OFERTA, FECHA_DATOS_ISO, fechaOferta } from '../../constants/hipotecas-bancos';
 import { currentEuribor } from '../../constants/euribor-values';
 
 const numBancos = new Set(OFERTAS_HIPOTECAS.map((o) => o.banco)).size;
@@ -9,11 +9,11 @@ const numSinOferta = ENTIDADES_SIN_OFERTA.length;
 ---
 <LegalLayout
   title="Methodology and editorial policy | Hipotecalc"
-  description={`Where Hipotecalc's data comes from: the ${numBancos}-bank mortgage comparison, the official ECB Euribor and the ITP guides, with sources and review frequency.`}
+  description={`Where Hipotecalc's data comes from: the ${numBancos}-lender mortgage comparison, the official ECB Euribor and the ITP guides, with sources and review frequency.`}
   heading="Methodology and editorial policy"
   path="/en/methodology"
   lang="en"
-  lastUpdated="July 2026"
+  lastUpdated="September 2026"
 >
   <p>
     Hipotecalc is an informational tool. Its usefulness depends on you being able
@@ -38,13 +38,13 @@ const numSinOferta = ENTIDADES_SIN_OFERTA.length;
   <h2>2. The mortgage comparison</h2>
   <p>
     The <a href="/en/mortgage-comparison">comparison</a> currently covers
-    {numOfertas} offers from {numBancos} Spanish banks and credit cooperatives
-    (plus {numSinOferta} institutions we surveyed that do not sell mortgages).
-    The data comes from the <strong>banks' own official websites</strong>: their
-    mortgage pages and, where published, their pre-contractual FIPRE documents.
-    When an institution does not publish its rates online, we fall back on
-    specialised comparison portals and flag it: the <em>Source / reliability</em>
-    column of each offer states exactly where the figure comes from.
+    {numOfertas} offers from {numBancos} lenders and brands
+    (plus {numSinOferta} notes on other institutions surveyed).
+    Current data comes from <strong>official lender websites</strong> and their
+    pre-contractual documents where available. Each row’s details show the source
+    link and review date. “Request terms” indicates a personalised price or a
+    figure we could not verify. Unconfirmed previous listings appear separately,
+    without their old prices, and are excluded from current offer counts.
   </p>
   <ul>
     <li>
@@ -52,12 +52,14 @@ const numSinOferta = ENTIDADES_SIN_OFERTA.length;
       <strong> at least once a month</strong>, alongside the publication of the
       monthly Euribor average, and whenever we detect a relevant change at an
       institution. The date of the latest extraction is shown in the table
-      header (currently: {FECHA_DATOS}, as published in the Spanish source data).
+      header (currently: {fechaOferta(FECHA_DATOS_ISO, 'en')}). Each additional note retains its own date.
     </li>
     <li>
-      <strong>Rate evolution:</strong> when updating the data we keep the values
-      from the previous extraction; the arrows in the table (red up, green down)
-      mark which offers changed, and the tooltip shows the previous value.
+      <strong>Rate evolution:</strong> arrows are shown only when the previous
+      and current values share the same product, term, discounts and source.
+      A different example or source does not establish a rate increase or decrease.
+      This review replaces earlier estimates with official sources and does not
+      present those replacements as trends.
     </li>
     <li>
       <strong>What we don't do:</strong> no bank pays to appear, for its
@@ -69,8 +71,7 @@ const numSinOferta = ENTIDADES_SIN_OFERTA.length;
     <li>
       <strong>Limits of the data:</strong> published rates are each bank's
       commercial starting point; your personalised offer (FEIN) may differ based
-      on your profile. That's why we always show both the bonus and non-bonus
-      rate, and recommend comparing by APR.
+      on your profile. We show discounted and standard rates when both have been verified. Compare APRs for equivalent amounts, terms and products. Variable APR is not a forecast of future costs, and the Euribor shown in the header does not replace the lender’s assumptions.
     </li>
   </ul>
 

@@ -4,7 +4,9 @@ import { calculatePurchaseTaxes, defaultPurchase } from '../src/fiscal/engine'
 import { purchaseCosts } from '../src/utils/purchase-costs'
 import { calculatePlusvalia, type PlusvaliaInput } from '../src/utils/plusvalia'
 import { isValidLoanTerm, cuotaFrancesa } from '../src/utils/calculadora-hipotecaria'
-import { OFERTAS_HIPOTECAS, ENTIDADES_SIN_OFERTA } from '../src/constants/hipotecas-bancos'
+import { OFERTAS_HIPOTECAS, ENTIDADES_SIN_OFERTA, OFERTAS_PENDIENTES, FECHA_DATOS_ISO, fechaOferta } from '../src/constants/hipotecas-bancos'
+import { filterMortgageOffers } from '../src/utils/mortgage-comparison'
+import { comparisonFAQs } from '../src/constants/mortgage-comparison-copy'
 import translations from '../src/constants/hipotecas-bancos.en.json'
 import { offerText } from '../src/utils/offer-translations'
 
@@ -69,14 +71,58 @@ test('loan terms reject empty, zero, fractional and out-of-range years without r
   assert.equal(cuotaFrancesa(160000, 3, 30), 674.57)
 })
 test('all explanatory offer fields have explicit English translations', () => {
-  const fields = ['tin', 'tae', 'tinAnterior', 'taeAnterior', 'plazoMax', 'financiacionMax', 'diferencial', 'vinculaciones', 'comisiones', 'requisitos'] as const
-  const texts = [...OFERTAS_HIPOTECAS.flatMap(o => fields.map(field => o[field] ?? '')), ...ENTIDADES_SIN_OFERTA.map(e => e.nota)]
+  const fields = ['tin', 'tae', 'tinAnterior', 'taeAnterior', 'plazoMax', 'financiacionMax', 'diferencial', 'vinculaciones', 'comisiones', 'requisitos', 'fuente'] as const
+  const texts = [...OFERTAS_HIPOTECAS.flatMap(o => fields.map(field => o[field] ?? '')), ...ENTIDADES_SIN_OFERTA.map(e => e.nota), ...OFERTAS_PENDIENTES.map(e => e.nota)]
   for (const value of texts) {
     if (/[a-záéíóúñ]/i.test(value)) assert.ok(Object.hasOwn(translations, value), `Missing English translation: ${value}`)
   }
   assert.equal(offerText('Nómina, seguro de vida, seguro de hogar', 'en'), 'Salary payments, life insurance, home insurance')
   assert.equal(offerText('30 años', 'en'), '30 years')
   assert.equal(offerText('2,85%', 'en'), '2.85%')
-  assert.equal(offerText('', 'en'), 'Not published')
+  assert.equal(offerText('', 'en'), 'Not verified')
   assert.equal(offerText('30 años', 'es'), '30 años')
+})
+
+test('comparison searches both languages, ignores accents, and combines filters', () => {
+  const spanish = filterMortgageOffers(OFERTAS_HIPOTECAS, { query: '  sabadell MÍXTA ' })
+  const english = filterMortgageOffers(OFERTAS_HIPOTECAS, { query: 'Sabadell mixed' })
+  assert.equal(spanish.length, 3)
+  assert.deepEqual(english, spanish)
+  assert.equal(filterMortgageOffers(OFERTAS_HIPOTECAS, { query: 'fixed', type: 'Mixta', category: 'Online' }).length, 0)
+  assert.ok(filterMortgageOffers(OFERTAS_HIPOTECAS, { type: 'Mixta' }).some(o => o.banco === 'Banco Mediolanum'))
+  assert.equal(filterMortgageOffers(OFERTAS_HIPOTECAS, { query: 'no matching bank' }).length, 0)
+})
+
+test('current offers are uniquely identified and have dated official sources', () => {
+  const keys = OFERTAS_HIPOTECAS.map(o => `${o.banco} — ${o.producto}`)
+  assert.equal(new Set(keys).size, keys.length)
+  for (const o of OFERTAS_HIPOTECAS) {
+    assert.equal(new URL(o.urlFuente).protocol, 'https:')
+    assert.match(o.fechaRevision, /^\d{4}-\d{2}-\d{2}$/)
+    assert.ok(o.fechaRevision <= FECHA_DATOS_ISO)
+    assert.ok(o.fuente)
+    if (o.estado === 'publicada') assert.match(o.tin, /\d/)
+  }
+  for (const o of OFERTAS_PENDIENTES) {
+    assert.ok(!keys.includes(`${o.banco} — ${o.producto}`))
+    assert.ok(!('tin' in o) && !('tae' in o), 'Unconfirmed listings must not advertise stale rates')
+  }
+})
+
+test('absorbed lenders and suspended products are separated from current mortgage offers', () => {
+  for (const bank of ['EVO Banco', 'Targobank', 'Cajasur Banco', 'Triodos Bank']) {
+    assert.ok(!OFERTAS_HIPOTECAS.some(o => o.banco === bank))
+    assert.ok(ENTIDADES_SIN_OFERTA.some(o => o.banco === bank && o.urlFuente))
+  }
+  assert.ok(OFERTAS_HIPOTECAS.some(o => o.banco === 'imagin (CaixaBank)'))
+  assert.ok(!ENTIDADES_SIN_OFERTA.some(o => o.banco === 'imagin'))
+  assert.ok(OFERTAS_HIPOTECAS.some(o => o.banco.startsWith('CBNK')))
+})
+
+test('dates and FAQ coverage stay aligned across languages', () => {
+  assert.equal(fechaOferta('2026-09-24', 'en'), '24 September 2026')
+  assert.equal(fechaOferta('2026-09-24', 'es'), '24 de septiembre de 2026')
+  assert.equal(comparisonFAQs.es.length, comparisonFAQs.en.length)
+  assert.ok(comparisonFAQs.es.every(f => f.question && f.answer))
+  assert.ok(comparisonFAQs.en.every(f => f.question && f.answer))
 })

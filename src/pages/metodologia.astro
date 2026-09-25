@@ -1,6 +1,6 @@
 ---
 import LegalLayout from '../layouts/LegalLayout.astro';
-import { OFERTAS_HIPOTECAS, ENTIDADES_SIN_OFERTA, FECHA_DATOS } from '../constants/hipotecas-bancos';
+import { OFERTAS_HIPOTECAS, ENTIDADES_SIN_OFERTA, FECHA_DATOS_ISO, fechaOferta } from '../constants/hipotecas-bancos';
 import { currentEuribor } from '../constants/euribor-values';
 
 const numBancos = new Set(OFERTAS_HIPOTECAS.map((o) => o.banco)).size;
@@ -9,11 +9,11 @@ const numSinOferta = ENTIDADES_SIN_OFERTA.length;
 ---
 <LegalLayout
   title="Metodología y política editorial | Hipotecalc"
-  description={`De dónde salen los datos de Hipotecalc: la comparativa de ${numBancos} bancos, el euríbor oficial del BCE y las guías del ITP, con sus fuentes y frecuencia de revisión.`}
+  description={`De dónde salen los datos de Hipotecalc: la comparativa de ${numBancos} entidades, el euríbor oficial del BCE y las guías del ITP, con sus fuentes y frecuencia de revisión.`}
   heading="Metodología y política editorial"
   path="/metodologia"
   lang="es"
-  lastUpdated="julio de 2026"
+  lastUpdated="septiembre de 2026"
 >
   <p>
     Hipotecalc es una herramienta informativa. Su utilidad depende de que puedas
@@ -37,14 +37,14 @@ const numSinOferta = ENTIDADES_SIN_OFERTA.length;
   <h2>2. La comparativa de hipotecas</h2>
   <p>
     La <a href="/comparativa-hipotecas">comparativa</a> recoge actualmente
-    {numOfertas} ofertas de {numBancos} bancos, cajas y cooperativas españolas
-    (más {numSinOferta} entidades consultadas que no comercializan hipotecas).
-    Los datos salen de las <strong>webs oficiales de los propios bancos</strong>:
-    sus páginas de hipotecas y, cuando están publicados, sus documentos
-    precontractuales FIPRE. Cuando una entidad no publica sus tipos online,
-    recurrimos a portales comparadores especializados y lo señalamos: la columna
-    <em> Fuente / fiabilidad</em> de cada oferta indica exactamente de dónde
-    procede la cifra.
+    {numOfertas} ofertas de {numBancos} entidades y marcas
+    (más {numSinOferta} notas sobre otras entidades consultadas).
+    Los datos actuales proceden de las <strong>webs oficiales de las entidades</strong>
+    y de sus documentos precontractuales cuando están disponibles. El detalle de cada
+    fila muestra un enlace a la fuente y la fecha de revisión. «Consultar condiciones»
+    indica un precio personalizado o una cifra que no hemos podido verificar.
+    Las entradas anteriores sin confirmación se conservan aparte, sin reutilizar
+    sus precios ni incluirlas en el número de ofertas actuales.
   </p>
   <ul>
     <li>
@@ -52,13 +52,14 @@ const numSinOferta = ENTIDADES_SIN_OFERTA.length;
       <strong> al menos una vez al mes</strong>, coincidiendo con la publicación
       de la media mensual del euríbor, y siempre que detectamos un cambio
       relevante de una entidad. La fecha de la última extracción figura en la
-      cabecera de la tabla (ahora mismo: {FECHA_DATOS}).
+      cabecera de la tabla (ahora mismo: {fechaOferta(FECHA_DATOS_ISO, 'es')}). Cada nota adicional conserva su propia fecha.
     </li>
     <li>
-      <strong>Evolución de los tipos:</strong> al actualizar los datos
-      conservamos los valores de la extracción anterior; las flechas de la tabla
-      (roja al alza, verde a la baja) marcan qué ofertas han cambiado y el
-      tooltip muestra el valor previo.
+      <strong>Evolución de los tipos:</strong> solo mostramos flechas cuando los
+      valores anteriores y actuales corresponden al mismo producto, plazo,
+      bonificaciones y fuente. Un cambio de ejemplo o de fuente no demuestra
+      una subida o bajada. Esta revisión sustituye estimaciones anteriores por
+      fuentes oficiales y no presenta esas sustituciones como tendencias.
     </li>
     <li>
       <strong>Qué no hacemos:</strong> ningún banco paga por aparecer, por su
@@ -69,8 +70,7 @@ const numSinOferta = ENTIDADES_SIN_OFERTA.length;
     <li>
       <strong>Límites del dato:</strong> los tipos publicados son el punto de
       partida comercial de cada entidad; tu oferta personalizada (FEIN) puede
-      diferir según tu perfil. Por eso mostramos siempre tipo bonificado y sin
-      bonificar, y recomendamos comparar por TAE.
+      diferir según tu perfil. Mostramos los tipos bonificado y sin bonificar cuando se han verificado ambos. La TAE debe compararse para importes, plazos y productos equivalentes. En variables y mixtas no es una previsión del coste futuro. La media del euríbor de la cabecera no sustituye las hipótesis del banco.
     </li>
   </ul>
 

@@ -27,9 +27,6 @@ const isDev = process.env.NODE_ENV !== "production"
 // - /comparativa-hipotecas: FECHA_DATOS del fichero de ofertas.
 // - Resto de páginas estáticas: fecha del último commit de su fichero fuente.
 // ---------------------------------------------------------------------------
-/** @type {Record<string, string>} */
-const MESES = { enero: '01', febrero: '02', marzo: '03', abril: '04', mayo: '05', junio: '06', julio: '07', agosto: '08', septiembre: '09', octubre: '10', noviembre: '11', diciembre: '12' }
-
 /** @param {string} path */
 function frontmatterDate(path) {
   try {
@@ -84,11 +81,10 @@ function buildLastmodMap() {
     }
   } catch { /* sin dato, sin lastmod */ }
 
-  // Comparativa: fecha de extracción de los datos ("13 de julio de 2026")
+  // Comparativa: fecha ISO compartida por ambos idiomas.
   try {
-    const m = readFileSync('src/constants/hipotecas-bancos.ts', 'utf8').match(/FECHA_DATOS = '(\d{1,2}) de (\w+) de (\d{4})'/)
-    if (m) {
-      const fecha = `${m[3]}-${MESES[m[2]]}-${m[1].padStart(2, '0')}`
+    const fecha = readFileSync('src/constants/hipotecas-bancos.ts', 'utf8').match(/FECHA_DATOS_ISO = '(\d{4}-\d{2}-\d{2})'/)?.[1]
+    if (fecha) {
       map['/comparativa-hipotecas'] = fecha
       map['/en/mortgage-comparison'] = fecha
     }
