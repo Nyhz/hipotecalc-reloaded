@@ -4,7 +4,7 @@ import { calculatePurchaseTaxes, defaultPurchase } from '../src/fiscal/engine'
 import { purchaseCosts } from '../src/utils/purchase-costs'
 import { calculatePlusvalia, type PlusvaliaInput } from '../src/utils/plusvalia'
 import { isValidLoanTerm, cuotaFrancesa } from '../src/utils/calculadora-hipotecaria'
-import { OFERTAS_HIPOTECAS, ENTIDADES_SIN_OFERTA, OFERTAS_PENDIENTES, FECHA_DATOS_ISO, fechaOferta } from '../src/constants/hipotecas-bancos'
+import { OFERTAS_HIPOTECAS, FECHA_DATOS_ISO, fechaOferta } from '../src/constants/hipotecas-bancos'
 import { filterMortgageOffers } from '../src/utils/mortgage-comparison'
 import { comparisonFAQs } from '../src/constants/mortgage-comparison-copy'
 import translations from '../src/constants/hipotecas-bancos.en.json'
@@ -72,7 +72,7 @@ test('loan terms reject empty, zero, fractional and out-of-range years without r
 })
 test('all explanatory offer fields have explicit English translations', () => {
   const fields = ['tin', 'tae', 'tinAnterior', 'taeAnterior', 'plazoMax', 'financiacionMax', 'diferencial', 'vinculaciones', 'comisiones', 'requisitos', 'fuente'] as const
-  const texts = [...OFERTAS_HIPOTECAS.flatMap(o => fields.map(field => o[field] ?? '')), ...ENTIDADES_SIN_OFERTA.map(e => e.nota), ...OFERTAS_PENDIENTES.map(e => e.nota)]
+  const texts = OFERTAS_HIPOTECAS.flatMap(o => fields.map(field => o[field] ?? ''))
   for (const value of texts) {
     if (/[a-záéíóúñ]/i.test(value)) assert.ok(Object.hasOwn(translations, value), `Missing English translation: ${value}`)
   }
@@ -101,22 +101,34 @@ test('current offers are uniquely identified and have dated official sources', (
     assert.match(o.fechaRevision, /^\d{4}-\d{2}-\d{2}$/)
     assert.ok(o.fechaRevision <= FECHA_DATOS_ISO)
     assert.ok(o.fuente)
-    if (o.estado === 'publicada') assert.match(o.tin, /\d/)
-  }
-  for (const o of OFERTAS_PENDIENTES) {
-    assert.ok(!keys.includes(`${o.banco} — ${o.producto}`))
-    assert.ok(!('tin' in o) && !('tae' in o), 'Unconfirmed listings must not advertise stale rates')
+    assert.equal(o.estado, 'publicada')
+    assert.match(o.tin, /\d+(?:,\d+)?%/)
+    assert.match(o.tae, /\d+(?:,\d+)?%/)
+    for (const field of ['tin', 'tae', 'diferencial', 'vinculaciones', 'comisiones', 'requisitos'] as const) {
+      assert.doesNotMatch(o[field], /consultar|personalizad|pendiente de confirmar|no verificado/i)
+      assert.doesNotMatch(offerText(o[field], 'en'), /request terms|personalised|pending confirmation/i)
+    }
   }
 })
 
-test('absorbed lenders and suspended products are separated from current mortgage offers', () => {
-  for (const bank of ['EVO Banco', 'Targobank', 'Cajasur Banco', 'Triodos Bank']) {
+test('only lenders with verifiable mortgage prices appear in the comparison', () => {
+  for (const bank of ['EVO Banco', 'Targobank', 'Cajasur Banco', 'Triodos Bank', 'Deutsche Bank España', 'Hipotecas.com / UCI', 'Laboral Kutxa', 'CBNK (Banco Caminos / Bancofar)', 'Grupo Caja Rural (Ruralvía)', 'Caixa Ontinyent', 'Colonya Caixa Pollença']) {
     assert.ok(!OFERTAS_HIPOTECAS.some(o => o.banco === bank))
-    assert.ok(ENTIDADES_SIN_OFERTA.some(o => o.banco === bank && o.urlFuente))
   }
-  assert.ok(OFERTAS_HIPOTECAS.some(o => o.banco === 'imagin (CaixaBank)'))
-  assert.ok(!ENTIDADES_SIN_OFERTA.some(o => o.banco === 'imagin'))
-  assert.ok(OFERTAS_HIPOTECAS.some(o => o.banco.startsWith('CBNK')))
+  for (const bank of ['imagin (CaixaBank)', 'Banco Mediolanum', 'Caja de Ingenieros', 'Arquia Banca']) {
+    assert.ok(OFERTAS_HIPOTECAS.some(o => o.banco === bank))
+  }
+})
+
+test('ING includes each published term and keeps discounted APRs even when higher', () => {
+  const ing = OFERTAS_HIPOTECAS.filter(o => o.banco === 'ING')
+  assert.deepEqual(ing.map(o => o.producto), [
+    'Hipoteca Naranja Fija', 'Hipoteca Naranja Variable 1', 'Hipoteca Naranja Variable 3',
+    'Hipoteca Naranja Mixta 5', 'Hipoteca Naranja Mixta 10', 'Hipoteca Naranja Mixta 15', 'Hipoteca Naranja Mixta 20',
+  ])
+  assert.equal(ing[0].tin, '3,80% / 4,30%')
+  assert.equal(ing[0].tae, '4,53% / 4,41%')
+  assert.ok(ing.every(o => o.urlFuente.endsWith('.pdf')))
 })
 
 test('dates and FAQ coverage stay aligned across languages', () => {

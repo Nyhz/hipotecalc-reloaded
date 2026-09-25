@@ -10,8 +10,8 @@ export const comparisonFAQs = {
       answer: 'El tipo bonificado exige cumplir condiciones como domiciliar ingresos o contratar seguros. La pareja de cifras muestra primero el precio bonificado y después el no bonificado, salvo que el texto indique periodos distintos. Un TIN menor no garantiza una TAE menor: compara el coste de los productos y el ahorro en intereses.',
     },
     {
-      question: '¿Por qué algunas ofertas indican «Consultar condiciones»?',
-      answer: 'La entidad puede ofrecer un precio personalizado o su página puede no permitir verificar una cifra completa. No sustituimos esa información por un cero ni por una estimación antigua. Cada oferta enlaza su fuente y fecha de revisión; las entradas anteriores no confirmadas se muestran aparte y no cuentan como ofertas actuales.',
+      question: '¿Qué ofertas se incluyen en la comparativa?',
+      answer: 'Incluimos ofertas con TIN y TAE verificables en la web del banco, sus documentos precontractuales o su simulador. El detalle recoge los periodos, bonificaciones y condiciones del ejemplo publicado. Los productos sin precios verificables quedan fuera. La fecha de actualización figura en la cabecera.',
     },
     {
       question: '¿Puedo negociar estas condiciones con el banco?',
@@ -28,8 +28,8 @@ export const comparisonFAQs = {
       answer: 'A discounted rate requires conditions such as salary payments or insurance. A pair of figures shows the discounted price first and the standard price second, unless the text specifies different periods. A lower TIN does not guarantee a lower APR: compare product costs with the interest saving.',
     },
     {
-      question: 'Why do some offers say “Request terms”?',
-      answer: 'The lender may quote a personalised price or its page may not allow a complete figure to be verified. We do not replace that information with zero or an old estimate. Each offer links to its source and review date; unconfirmed previous listings appear separately and are excluded from current offer counts.',
+      question: 'Which offers are included in the comparison?',
+      answer: 'We include offers with TIN and APR that can be verified on the lender’s website, in its pre-contractual documents or in its calculator. Each offer’s details describe the periods, discounts and conditions of the published example. Products without verifiable prices are excluded. The update date appears in the header.',
     },
     {
       question: 'Can I negotiate these terms with the lender?',

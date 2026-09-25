@@ -1,28 +1,39 @@
 # Mortgage comparison review — 24 September 2026
 
-Both comparison pages use the same offer dataset and review date. English explanatory text lives in `src/constants/hipotecas-bancos.en.json`; bank and product names retain their Spanish wording.
+Both comparison pages use the same 60 offers from 20 lender/brand labels. These are product variants, not 60 independent mortgages or a census of the Spanish market. Explanatory text is translated in `src/constants/hipotecas-bancos.en.json`; lender and product names retain their Spanish wording.
 
-## Coverage
+## Publication rules
 
-- 57 current entries across 27 lender, brand and group labels. Some entries represent product families or a banking group; this is not a count of independent banks or the entire Spanish market.
-- Each current entry carries an official source URL and an individual review date in `src/constants/hipotecas-bancos.ts`. The source is visible in its expanded conditions.
-- 11 previous listings remain separately recorded because current availability or terms could not be confirmed. Their old numerical terms are not displayed or included in offer counts.
-- 18 other institution/brand notes remain available. Older notes retain their 24 August date, so this review does not imply they were all reverified.
+- Every displayed offer has a verifiable numerical TIN and APR. No quote-request or personalised-price placeholders remain.
+- Official source URLs and extraction dates remain in `src/constants/hipotecas-bancos.ts` for internal auditing. The comparison has one review date in its header; expanded rows show conditions without source links or repeated editorial dates.
+- Removed the previous-listings and other-institutions sections, their datasets and their obsolete translations. Neither section is rendered in either language.
+- Removed unpriced entries for Deutsche Bank, UCI, Laboral Kutxa, CBNK, the aggregate Grupo Caja Rural listing, Caixa Ontinyent and Colonya, plus Kutxabank’s fixed product. Kutxabank’s priced variable offer remains. Official product and tariff searches did not provide a current complete comparable price for these removed entries; old tariffs are not advertised as current offers.
+- EVO, Targobank, Cajasur and Triodos are not counted as separate current offers. Earlier integration and suspension research is available in repository history.
 
-## Editorial decisions
+## Sources and examples resolved in this follow-up
 
-- Refreshed published TIN/APR examples, fixed periods, subsequent Euribor spreads, borrowing terms, financing limits, bundles and fees where verifiable on official pages.
-- BBVA and Bankinter pages did not expose complete, consistently verifiable prices. These entries request a quote. The same rule applies to other personalised or incomplete offers.
-- Cajamar exposes fixed and mixed TIN figures but incomplete APR values in the reviewed page content. TIN is retained; APR explicitly requests confirmation.
-- Avantio figures use its official simulator consistently because product-page examples differed.
-- Split Sabadell's 3/5/7-year mixed offers and Ibercaja's 5/10-year mixed offers into separate rows. Preserved differences between advertised examples and maximum terms, including ABANCA and COINC.
-- Added imagin's verified fixed offer; renamed Banco Caminos/Bancofar to CBNK; split Caixa Ontinyent and Colonya into separate institutions.
-- Moved EVO, Targobank and Cajasur to integration notes and Triodos to a lending-suspension note, each with its official source.
-- Removed previous-rate values because the old examples and sources were not consistently comparable. Trend arrows must only return with equivalent products, terms and discount assumptions.
-- Published APR figures are not recalculated using the Euribor in the page header. Discounted APR may exceed standard APR because of bundled costs.
+| Lender | Official evidence and treatment |
+| --- | --- |
+| ING | [Fixed FIPRE](https://www.ing.es/sobre-ing/pdf/InfPrecontractualFIPRE-HipotecaFija.pdf), [variable FIPRE](https://www.ing.es/sobre-ing/pdf/InfPrecontractualFIPRE.pdf), [mixed FIPRE](https://www.ing.es/sobre-ing/pdf/InfPrecontractualFIPRE-Mixta.pdf), dated 4 September 2026. Read and visually checked the current example tables. Seven rows: fixed, variable with 1/3-year initial periods, and mixed with 5/10/15/20-year fixed periods. Discounted and standard rates remain in the same order even where insurance makes the discounted APR higher. |
+| BBVA | [Fixed](https://www.bbva.es/personas/productos/hipotecas/hipoteca-fija.html) and [variable](https://www.bbva.es/personas/productos/hipotecas/hipoteca-variable.html) pages, including their dynamically loaded representative-example dialogs. €150,000 over 25 years; offers valid through 30 September. No personal-data form submission was needed. |
+| Bankinter | Current live [fixed](https://www.bankinter.com/banca/hipotecas-prestamos/hipotecas/hipoteca-fija), [variable](https://www.bankinter.com/banca/hipotecas-prestamos/hipotecas/hipoteca-variable) and [mixed](https://www.bankinter.com/banca/hipotecas-prestamos/hipotecas/hipoteca-mixta) examples. The older prices in the linked FIPRE were not substituted for current live prices. Fixed example uses 30 years; variable and mixed examples use 25. Mixed 5/10/15-year periods have separate rows. |
+| Mediolanum | [Freedom Variable](https://www.bancomediolanum.es/es/w/financiacion/hipotecas/hipoteca-freedom-variable) and [Freedom Mixta](https://www.bancomediolanum.es/es/w/financiacion/hipotecas/hipoteca-freedom-mixta). September campaign, €150,000 over 25 years. The mixed example distinguishes its first year from years 2–5 and the variable period. |
+| Caja de Ingenieros | Current [fixed](https://www.caixaenginyers.com/es/hipoteca-fija) and [mixed](https://www.caixaenginyers.com/es/hipoteca-mixta) pages. Six fixed examples distinguish 15/20/30-year terms and 60%/80% financing. Two mixed examples distinguish 5/10-year fixed periods. Used fresh page figures rather than older search snippets. |
+| Arquia | [Mixed](https://www.arquia.com/particulares/hipotecas/hipoteca-mixta/) and [variable](https://www.arquia.com/particulares/hipotecas/hipoteca-variable/) examples. The mixed legal example specifies 36 initial fixed months and a €750 opening fee; variable specifies 12 months and no opening fee. APR examples use Euribor of 2.855%. |
+| Cajamar | Loaded the complete dynamic [fixed](https://www.cajamar.es/es/particulares/productos-y-servicios/financiacion/hipotecas/hipoteca-tipo-fijo/) and [mixed](https://www.cajamar.es/es/particulares/productos-y-servicios/financiacion/hipotecas/hipoteca-tipo-mixto/) examples: €100,000 over 30 years. Fixed APR 3.72%/3.91%; mixed 3.96%/4.17%. Opening and published early-repayment conditions are included. |
+| MyInvestor | Loaded the [variable new-purchase calculator](https://myinvestor.es/hipotecas/hipoteca-variable/): €100,000 over 30 years, first-year 2.75%, then Euribor +0.79%, APR 3.96%. The page’s older static legal example/headline has APR 3.49% with different assumptions; it is not mixed with the loaded calculator’s example. |
 
-## Maintenance
+Santander’s income/card/insurance discount example and repayment fees, Kutxabank’s income/pension/home-insurance requirements, and Avantio’s 0.70-point discount breakdown were also made concrete. Where only an opening fee could be verified, the fee field states that known fee without implying that all other fees are zero.
 
-Review the source linked on each entry before replacing its figures or advancing its date. Preserve introductory periods, discounted/standard ordering and the lender's example assumptions. Do not infer zero fees, current availability, borrowing limits or missing APRs from an empty field. Add an explicit English translation for any new explanatory text; the test suite checks coverage.
+## Retained decisions
 
-The shared FAQ, methodology pages, comparison metadata, structured data and sitemap review dates were aligned with these rules. Search supports both languages and accent-insensitive matching; combined product families participate in each applicable type filter.
+- Sabadell’s 3/5/7-year mixed offers and Ibercaja’s 5/10-year offers remain separate.
+- ABANCA and COINC examples retain their stated example terms, which differ from the maximum available terms. Avantio uses its official simulator consistently where product-page examples differ.
+- APR is not recalculated using the Euribor in the page header. Each lender’s example has its own amount, term and assumptions.
+- Historical trend arrows require genuinely comparable earlier products, terms and discount conditions. None were inferred from the replacement of old estimates.
+
+## Maintenance and verification
+
+Review the source recorded on each entry before changing its figures or extraction date. Preserve introductory periods, discounted/standard order and the example’s assumptions. Do not infer missing APRs or zero fees. Add English translations for all new explanatory text.
+
+The shared FAQs and both methodology pages describe the current publication rules. Automated checks require numerical TIN/APR, source provenance, translation coverage and the complete ING term variants. Search remains bilingual and accent-insensitive. Visual checks cover desktop and mobile layouts, expandable conditions, the single header review date, and absence of the removed sections and lender source links.

@@ -1,9 +1,6 @@
 import React, { useId, useMemo, useState } from "react"
 import {
   OFERTAS_HIPOTECAS,
-  ENTIDADES_SIN_OFERTA,
-  OFERTAS_PENDIENTES,
-  fechaOferta,
   type OfertaHipoteca,
 } from "../../constants/hipotecas-bancos"
 import { referalLink } from "../../constants/referal"
@@ -94,14 +91,6 @@ const LABELS = {
     detalle: 'Detalle',
     verDetalle: 'Ver condiciones de',
     lcci: '¹ TAE variable en hipotecas variables y mixtas. E = euríbor a 12 meses. LCCI: Ley de contratos de crédito inmobiliario.',
-    sinOferta: 'Otras entidades y marcas consultadas',
-    pendientes: 'Entradas anteriores pendientes de confirmar',
-    pendientesTexto: 'Estas entradas se conservan como referencia de la revisión anterior. No se cuentan como ofertas actuales ni se muestran sus precios antiguos.',
-    otrasTexto: 'Cada nota muestra su fecha: una revisión anterior no confirma la disponibilidad actual.',
-    fuente: 'Fuente oficial',
-    revisada: 'Revisado',
-    publicada: 'Tipos publicados',
-    consultar: 'Consultar precio',
     reiniciar: 'Limpiar filtros',
     caption: 'Ofertas hipotecarias y condiciones publicadas por entidad',
     desliza: 'Desliza horizontalmente para ver todas las columnas.',
@@ -132,14 +121,6 @@ const LABELS = {
     detalle: 'Details',
     verDetalle: 'View terms for',
     lcci: '¹ Variable APR for variable and mixed mortgages. E = 12-month Euribor. LCCI: Spanish Real Estate Credit Contracts Act; FEIN: European Standardised Information Sheet (ESIS).',
-    sinOferta: 'Other institutions and brands surveyed',
-    pendientes: 'Previous listings awaiting confirmation',
-    pendientesTexto: 'These entries are retained as a record of the previous review. They are excluded from current offer counts and their old prices are not displayed.',
-    otrasTexto: 'Each note is dated: an earlier review does not confirm current availability.',
-    fuente: 'Official source',
-    revisada: 'Reviewed',
-    publicada: 'Published rates',
-    consultar: 'Request a quote',
     reiniciar: 'Clear filters',
     caption: 'Mortgage offers and published terms by lender',
     desliza: 'Scroll horizontally to see all columns.',
@@ -301,7 +282,6 @@ const BankComparisonTable: React.FC<BankComparisonTableProps> = ({ lang = 'es' }
                     </td>
                     <td className="py-3 px-2 text-ink-soft">
                       {o.producto}
-                      <div className="mt-1 text-[11px] font-data">{o.estado === 'publicada' ? t.publicada : t.consultar}</div>
                     </td>
                     <td className="py-3 px-3">
                       <span
@@ -325,14 +305,6 @@ const BankComparisonTable: React.FC<BankComparisonTableProps> = ({ lang = 'es' }
                     <tr id={detailId} hidden={!expanded} className="border-b border-line/60 bg-paper-2/30">
                       <td colSpan={8} className="py-4 px-4">
                         <dl className="sticky left-4 w-[calc(100vw-4.5rem)] max-w-full xl:w-auto grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-2 text-sm">
-                          <div>
-                            <dt className="font-data text-[10.5px] uppercase tracking-wide text-ink-soft">{t.fuente}</dt>
-                            <dd><a href={o.urlFuente} target="_blank" rel="noopener noreferrer" className="underline text-brand-blue">{text(o.fuente)} — {o.banco}</a></dd>
-                          </div>
-                          <div>
-                            <dt className="font-data text-[10.5px] uppercase tracking-wide text-ink-soft">{t.revisada}</dt>
-                            <dd className="text-ink"><time dateTime={o.fechaRevision}>{fechaOferta(o.fechaRevision, lang)}</time></dd>
-                          </div>
                           {corto(text(o.plazoMax)) !== text(o.plazoMax) && (
                             <div>
                               <dt className="font-data text-[10.5px] uppercase tracking-wide text-ink-soft">{t.plazo}</dt>
@@ -387,29 +359,6 @@ const BankComparisonTable: React.FC<BankComparisonTableProps> = ({ lang = 'es' }
       </div>
 
       <p className="mt-3 text-xs text-ink-soft">{t.lcci}</p>
-      <details className="mt-8 pl-card p-5">
-        <summary className="cursor-pointer font-heading font-semibold text-ink">{t.pendientes} ({OFERTAS_PENDIENTES.length})</summary>
-        <p className="mt-3 text-sm text-ink-soft">{t.pendientesTexto}</p>
-        <ul className="mt-4 space-y-2 text-sm text-ink-soft list-disc pl-6">
-          {OFERTAS_PENDIENTES.map(o => <li key={`${o.banco}-${o.producto}`}><strong className="text-ink">{o.banco} — {o.producto}:</strong> {text(o.nota)}</li>)}
-        </ul>
-      </details>
-      {/* Entidades sin oferta */}
-      <details className="mt-8 pl-card p-5">
-        <summary className="cursor-pointer font-heading font-semibold text-ink">
-          {t.sinOferta} ({ENTIDADES_SIN_OFERTA.length})
-        </summary>
-        <p className="mt-3 text-sm text-ink-soft">{t.otrasTexto}</p>
-        <ul className="mt-4 space-y-2 text-sm text-ink-soft list-disc pl-6">
-          {ENTIDADES_SIN_OFERTA.map((e) => (
-            <li key={e.banco}>
-              <strong className="text-ink">{e.banco}:</strong> {text(e.nota)}
-              {' '}<time dateTime={e.fechaRevision} className="font-data text-xs">({fechaOferta(e.fechaRevision, lang)})</time>
-              {e.urlFuente && <> · <a href={e.urlFuente} target="_blank" rel="noopener noreferrer" className="underline text-brand-blue">{t.fuente}</a></>}
-            </li>
-          ))}
-        </ul>
-      </details>
     </div>
   )
 }

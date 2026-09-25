@@ -1,11 +1,10 @@
 ---
 import LegalLayout from '../layouts/LegalLayout.astro';
-import { OFERTAS_HIPOTECAS, ENTIDADES_SIN_OFERTA, FECHA_DATOS_ISO, fechaOferta } from '../constants/hipotecas-bancos';
+import { OFERTAS_HIPOTECAS, FECHA_DATOS_ISO, fechaOferta } from '../constants/hipotecas-bancos';
 import { currentEuribor } from '../constants/euribor-values';
 
 const numBancos = new Set(OFERTAS_HIPOTECAS.map((o) => o.banco)).size;
 const numOfertas = OFERTAS_HIPOTECAS.length;
-const numSinOferta = ENTIDADES_SIN_OFERTA.length;
 ---
 <LegalLayout
   title="Metodología y política editorial | Hipotecalc"
@@ -37,14 +36,12 @@ const numSinOferta = ENTIDADES_SIN_OFERTA.length;
   <h2>2. La comparativa de hipotecas</h2>
   <p>
     La <a href="/comparativa-hipotecas">comparativa</a> recoge actualmente
-    {numOfertas} ofertas de {numBancos} entidades y marcas
-    (más {numSinOferta} notas sobre otras entidades consultadas).
+    {numOfertas} ofertas de {numBancos} entidades y marcas.
     Los datos actuales proceden de las <strong>webs oficiales de las entidades</strong>
-    y de sus documentos precontractuales cuando están disponibles. El detalle de cada
-    fila muestra un enlace a la fuente y la fecha de revisión. «Consultar condiciones»
-    indica un precio personalizado o una cifra que no hemos podido verificar.
-    Las entradas anteriores sin confirmación se conservan aparte, sin reutilizar
-    sus precios ni incluirlas en el número de ofertas actuales.
+    y de sus documentos precontractuales o simuladores. Solo incluimos productos
+    con TIN y TAE verificables. El detalle muestra los periodos, bonificaciones,
+    comisiones y requisitos que hemos podido comprobar. Conservamos las fuentes
+    en nuestro registro editorial para poder contrastar cada cifra.
   </p>
   <ul>
     <li>
@@ -52,7 +49,7 @@ const numSinOferta = ENTIDADES_SIN_OFERTA.length;
       <strong> al menos una vez al mes</strong>, coincidiendo con la publicación
       de la media mensual del euríbor, y siempre que detectamos un cambio
       relevante de una entidad. La fecha de la última extracción figura en la
-      cabecera de la tabla (ahora mismo: {fechaOferta(FECHA_DATOS_ISO, 'es')}). Cada nota adicional conserva su propia fecha.
+      cabecera de la tabla (ahora mismo: {fechaOferta(FECHA_DATOS_ISO, 'es')}).
     </li>
     <li>
       <strong>Evolución de los tipos:</strong> solo mostramos flechas cuando los
@@ -64,8 +61,8 @@ const numSinOferta = ENTIDADES_SIN_OFERTA.length;
     <li>
       <strong>Qué no hacemos:</strong> ningún banco paga por aparecer, por su
       posición ni por sus cifras. Incluimos las entidades por relevancia en el
-      mercado español, tengan o no relación comercial con nosotros, y también
-      las que no comercializan hipotecas, para que no las busques en vano.
+      mercado español y la disponibilidad de precios verificables, tengan o no
+      relación comercial con nosotros.
     </li>
     <li>
       <strong>Límites del dato:</strong> los tipos publicados son el punto de
