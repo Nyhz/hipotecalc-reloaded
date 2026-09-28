@@ -18,7 +18,7 @@ const LABELS = {
     interes: 'Tu interés',
     cuota: 'Cuota mensual',
     diferencia: 'Diferencia',
-    hoy: 'Hoy',
+    hoy: 'Media mensual',
     puntos: 'puntos',
     mes: '€/mes',
     nota: 'Cálculo orientativo por el sistema francés con revisión inmediata del índice. En una hipoteca real, el nuevo euríbor se aplica en tu próxima fecha de revisión (anual o semestral). ¿Quieres el cálculo completo con impuestos y gastos? Usa el ',
@@ -34,7 +34,7 @@ const LABELS = {
     interes: 'Your rate',
     cuota: 'Monthly payment',
     diferencia: 'Difference',
-    hoy: 'Today',
+    hoy: 'Monthly average',
     puntos: 'points',
     mes: '€/month',
     nota: 'Indicative calculation using the French amortization system with an immediate index reset. In a real mortgage, the new Euribor applies at your next review date (annual or semi-annual). Want the full calculation with taxes and costs? Use the ',
@@ -49,6 +49,7 @@ interface EuriborImpactCalculatorProps {
 
 const EuriborImpactCalculator: React.FC<EuriborImpactCalculatorProps> = ({ lang = 'es' }) => {
   const t = LABELS[lang]
+  const formatRate = (value: number) => value.toLocaleString(lang === 'en' ? 'en-US' : 'es-ES', { minimumFractionDigits: 3, maximumFractionDigits: 3 })
   const [form, setForm] = useState({
     capital: "150000",
     plazo: "25",
@@ -70,7 +71,7 @@ const EuriborImpactCalculator: React.FC<EuriborImpactCalculatorProps> = ({ lang 
     const cuotaActual = cuotaFrancesa(capital, euribor + diferencial, plazo)
 
     return ESCENARIOS.map((delta) => {
-      const euriborEscenario = Math.round((euribor + delta) * 100) / 100
+      const euriborEscenario = Math.round((euribor + delta) * 1000) / 1000
       const cuota = cuotaFrancesa(capital, euriborEscenario + diferencial, plazo)
       return {
         delta,
@@ -135,9 +136,9 @@ const EuriborImpactCalculator: React.FC<EuriborImpactCalculatorProps> = ({ lang 
                     ? `${t.hoy} (${lang === 'en' ? currentEuribor.labelEn : currentEuribor.labelEs})`
                     : `${fila.delta > 0 ? "+" : ""}${fila.delta.toFixed(1)} ${t.puntos}`}
                 </td>
-                <td className='py-2 px-2 text-right text-ink'>{fila.euribor.toFixed(2)} %</td>
+                <td className='py-2 px-2 text-right text-ink'>{formatRate(fila.euribor)} %</td>
                 <td className='py-2 px-2 text-right text-ink-soft'>
-                  {(fila.euribor + (Number(form.diferencial) || 0)).toFixed(2)} %
+                  {formatRate(fila.euribor + (Number(form.diferencial) || 0))} %
                 </td>
                 <td className='py-2 px-2 text-right text-ink'>
                   {formatNumberByLang(fila.cuota, lang)} €

@@ -9,7 +9,7 @@ const posts = (await getCollection('blogEn')).sort(
 );
 
 const formatDate = (d: Date) =>
-  d.toLocaleDateString('en-US', { day: 'numeric', month: 'long', year: 'numeric' });
+  d.toLocaleDateString('en-US', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' });
 
 const title = 'Blog | Hipotecalc';
 const description = 'Guides and analysis on mortgages, the Euribor, taxes and housing in Spain. No fluff: official data and calculations you can reproduce.';

@@ -1,59 +1,70 @@
 ---
-title: "The Euribor closes July 2026 at 2.86%: highest since September 2024"
-description: "Monthly Euribor analysis: the July average rises to 2.86% (2.855% in the official series), the highest reading in almost two years. What it means for your mortgage review and how to work out your new payment."
+title: "July 2026 Euribor: a 2.855% close and the effect on your mortgage"
+description: "July closes with Euribor at 2.855%. Compare it with July 2025 and see the payment change on a €150,000 mortgage with 25 years remaining."
 pubDate: 2026-08-09
+updatedDate: 2026-09-27
 serie: euribor
+author: equipo
+reviewedBy: none
 ---
 
-The monthly average of the 12-month Euribor for **July 2026 came in at 2.86%**
-(2.855% in the official series, published in Spain's BOE on 4 August). It is
-the **highest reading since September 2024** and the seventh month of 2026
-without a breather: the gentle upward trend that started early in the year
-remains intact.
+The 12-month Euribor closed **July 2026 at a monthly average of 2.855%**.
+The Bank of Spain published this official reference rate in Spain’s BOE on
+4 August 2026, under resolution BOE-A-2026-16997.
 
-## The figure in context
+The index rose **0.057 percentage points from June** and **0.776 points from
+July 2025**. The second comparison matters for a mortgage with an annual
+rate review that uses July as its reference month.
 
-- **July 2026: 2.86%** (monthly average; 2.855% in the official series)
-- 2026 so far: January 2.25 · February 2.22 · March 2.57 · April 2.75 · May 2.80 · June 2.80 · **July 2.86**
-- Partial 2026 average: ~2.60%
-- 2025 annual average: 2.22%
-- Previous cycle's peak: 3.87% (2023) · All-time low: −0.49% (2021)
+## July compared with the reference months
 
-The first days of August point the same way: the month's provisional average
-is around **2.92%** with only a handful of trading sessions, so August could
-set another high if the market doesn't change tone. We remain far from 2023's
-3.87%, but the falling phase is over: markets are no longer pricing in quick
-ECB cuts.
+- **July 2026: 2.855%.** This is the final monthly average.
+- **June 2026: 2.798%.** The monthly increase was 0.057 points.
+- **July 2025: 2.079%.** The annual increase was 0.776 points.
+- **January 2026: 2.245%.** The increase over six months was 0.610 points.
 
-## What it means if your mortgage resets now
+The index did not rise every month in 2026: February fell from January and
+June was slightly below May. A mortgage review uses the reference month
+specified in your contract, rather than an annual average or a single day’s
+fixing.
 
-If your variable mortgage resets against the July average, your new rate will
-be 2.86% plus your spread. For the typical loan of **€150,000 outstanding over
-25 years with a 1% spread** (resulting rate: 3.86%):
+## How an annual review changes the payment
 
-- Payment at last year's Euribor (around the 2025 average): about **€729/month**
-- Payment at the July 2026 average: about **€780/month**
+Our example uses **€150,000 outstanding, 25 years remaining and a spread of
+1 percentage point**. Payments use the French amortisation system. We keep
+capital and term unchanged to isolate the effect of the interest rate:
 
-That's a rise of roughly **€50 a month** at the annual reset for that profile
-— about €5 more than last month's equivalent reset. Every case depends on the
-outstanding capital, remaining term and spread: work out yours in a minute
-with the [Euribor impact calculator](/en/euribor) or simulate the full
-operation in the [mortgage calculator](/en/mortgage-calculator).
+- Using July 2025: Euribor of 2.079% + 1 point = **3.079% TIN**;
+  payment of **€717.50/month**.
+- Using July 2026: Euribor of 2.855% + 1 point = **3.855% TIN**;
+  payment of **€779.80/month**.
+- Difference: **€62.30 more per month**, or **€747.60 across 12 payments**.
 
-## And the next resets?
+The example excludes insurance and fees. The rates are nominal rates (TIN),
+not APR. Your actual change depends on the balance and term remaining at the
+review date, your spread and the agreed conditions.
 
-Nobody knows where the index will be in a year — distrust anyone who claims
-otherwise. With the Euribor at two-year highs, two practical ideas:
+Enter your figures in the [mortgage calculator](/en/mortgage-calculator).
+The [Euribor page](/en/euribor) uses the latest available monthly average,
+which may be more recent than the month covered by this article.
 
-1. **If your reset is coming in the next few months**, budget with today's
-   figure, not last year's: the year's direction is clearly upward.
-2. **If you're weighing a switch from variable to fixed or mixed**, it's a
-   reasonable moment to compare: our guide to
-   [mortgage types](/en/blog/mortgage-types-fixed-variable-mixed) explains
-   when each option pays off, and the
-   [mortgage comparison](/en/mortgage-comparison) lists the live offers of 39
-   banks, updated with this same reference Euribor.
+## What to check before the review
 
-> **Notice:** this analysis is informational content, not financial advice.
-> The data comes from the official ECB series and can also be checked at the
-> Bank of Spain and EMMI, the index administrator.
+Check the reference month, the date the new rate takes effect and whether
+your contract specifies annual or six-monthly reviews. July’s closing rate
+does not change every mortgage payment on the same day: each loan follows
+its own contractual schedule.
+
+When comparing a renegotiation or a switch to another lender, include fees
+and the cost of associated products alongside the interest saving. Our
+[mortgage comparison](/en/mortgage-comparison) brings together published
+terms to help you explore alternatives; each lender retains its own APR
+example assumptions.
+
+The [August 2026 closing analysis](/en/blog/euribor-august-2026) is now
+available, with a monthly average of 2.954%.
+
+**Sources and calculation:** Bank of Spain, BOE-A-2026-16997 and ECB monthly
+series FM.M.U2.EUR.RT.MM.EURIBOR1YD_.HSTA. Payments calculated by Hipotecalc
+using rates to three decimal places, with the final payment rounded to cents.
+Our [methodology](/en/methodology) explains how the data is updated.

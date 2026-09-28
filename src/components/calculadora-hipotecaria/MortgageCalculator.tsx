@@ -589,10 +589,10 @@ const MortgageCalculator: React.FC<MortgageCalculatorProps> = ({ lang = 'es', in
                                   {escenario.escenario}
                                 </td>
                                 <td className='py-2 px-2 text-right text-gray-700'>
-                                  {escenario.euribor.toFixed(2)}
+                                  {escenario.euribor.toLocaleString(currentLang === 'en' ? 'en-US' : 'es-ES', { minimumFractionDigits: 3, maximumFractionDigits: 3 })}
                                 </td>
                                 <td className='py-2 px-2 text-right font-medium text-gray-900'>
-                                  {escenario.interesTotal.toFixed(2)}
+                                  {escenario.interesTotal.toLocaleString(currentLang === 'en' ? 'en-US' : 'es-ES', { minimumFractionDigits: 3, maximumFractionDigits: 3 })}
                                 </td>
                               </tr>
                             )

@@ -32,6 +32,8 @@ async function fetchSeries(seriesKey, startPeriod) {
 }
 
 const round2 = (n) => Math.round(n * 100) / 100
+// El índice hipotecario mensual se publica con tres decimales en el BOE.
+const round3 = (n) => Math.round(n * 1000) / 1000
 
 const annual = await fetchSeries(SERIES_ANNUAL, START_YEAR)
 if (annual.length < 20) throw new Error(`Serie anual sospechosamente corta (${annual.length} filas)`)
@@ -68,7 +70,7 @@ for (const [year, values] of [...byYear.entries()].sort((a, b) => a[0] - b[0])) 
 const latest = monthly[monthly.length - 1]
 const [latestYear, latestMonth] = latest.period.split("-").map(Number)
 const currentEuribor = {
-  value: round2(latest.value),
+  value: round3(latest.value),
   period: latest.period,
   labelEs: `${MONTHS_ES[latestMonth - 1]} ${latestYear}`,
   labelEn: `${MONTHS_EN[latestMonth - 1]} ${latestYear}`,
@@ -93,7 +95,7 @@ export const euriborData: EuriborPoint[] = [
 ${dataLines}
 ]
 
-// Última media mensual publicada por el BCE.
+// Última media mensual publicada por el BCE, a tres decimales como en el BOE.
 export const currentEuribor = {
   value: ${currentEuribor.value},
   period: "${currentEuribor.period}",

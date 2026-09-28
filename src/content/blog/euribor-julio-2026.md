@@ -1,59 +1,70 @@
 ---
-title: "El euríbor cierra julio de 2026 en el 2,86 %: máximo desde septiembre de 2024"
-description: "Análisis mensual del euríbor: la media de julio sube al 2,86 % (2,855 % en la serie oficial), el nivel más alto en casi dos años. Qué significa para tu revisión y cómo calcular tu nueva cuota."
+title: "Euríbor de julio de 2026: cierre en el 2,855 % y efecto en tu hipoteca"
+description: "Julio cierra con un euríbor del 2,855 %. Comparamos con julio de 2025 y calculamos la revisión de una hipoteca de 150.000 € a 25 años."
 pubDate: 2026-08-09
+updatedDate: 2026-09-27
 serie: euribor
+author: equipo
+reviewedBy: none
 ---
 
-La media mensual del euríbor a 12 meses de **julio de 2026 ha quedado en el
-2,86 %** (2,855 % en la serie oficial, publicada en el BOE el 4 de agosto). Es
-la lectura **más alta desde septiembre de 2024** y el séptimo mes de 2026 sin
-que el índice dé un respiro: la tendencia suave al alza que arrancó a
-principios de año sigue intacta.
+El euríbor a 12 meses cerró **julio de 2026 en el 2,855 %** de media mensual.
+El Banco de España publicó este tipo oficial en el BOE del 4 de agosto de
+2026, mediante la resolución BOE-A-2026-16997.
 
-## El dato en contexto
+El índice subió **0,057 puntos porcentuales respecto a junio** y **0,776
+puntos frente a julio de 2025**. Esta segunda comparación es la relevante
+para una hipoteca con revisión anual que utilice julio como mes de referencia.
 
-- **Julio 2026: 2,86 %** (media mensual; 2,855 % en la serie oficial)
-- Serie de 2026: enero 2,25 · febrero 2,22 · marzo 2,57 · abril 2,75 · mayo 2,80 · junio 2,80 · **julio 2,86**
-- Media parcial de 2026: ~2,60 %
-- Media anual de 2025: 2,22 %
-- Máximo del ciclo anterior: 3,87 % (2023) · Mínimo histórico: −0,49 % (2021)
+## Julio frente a los meses de referencia
 
-Los primeros días de agosto apuntan en la misma dirección: la media provisional
-del mes ronda el **2,92 %** con muy pocas sesiones cotizadas, así que agosto
-puede marcar otro máximo si el mercado no cambia de tono. Seguimos lejos del
-3,87 % de 2023, pero la fase de bajadas quedó atrás: el mercado ya no descuenta
-recortes rápidos del BCE.
+- **Julio de 2026: 2,855 %.** Es la media mensual cerrada.
+- **Junio de 2026: 2,798 %.** La subida mensual fue de 0,057 puntos.
+- **Julio de 2025: 2,079 %.** La subida interanual fue de 0,776 puntos.
+- **Enero de 2026: 2,245 %.** Frente a seis meses antes, subió 0,610 puntos.
 
-## Qué significa si tu hipoteca se revisa ahora
+La evolución de 2026 no fue una subida ininterrumpida: febrero bajó respecto
+a enero y junio quedó ligeramente por debajo de mayo. Para calcular una
+revisión importa el mes que figura en tu contrato, no la media anual ni un
+dato diario aislado.
 
-Si tu hipoteca variable se revisa con la media de julio, el nuevo interés será
-el 2,86 % más tu diferencial. Para la hipoteca tipo de **150.000 € pendientes a
-25 años con diferencial del 1 %** (interés resultante: 3,86 %):
+## Cuánto cambia una cuota con revisión anual
 
-- Cuota con el euríbor de hace un año (en el entorno de la media de 2025): unos **729 €/mes**
-- Cuota con la media de julio de 2026: unos **780 €/mes**
+Tomamos **150.000 € de capital pendiente, 25 años de plazo restante y un
+diferencial de 1 punto porcentual**. Aplicamos el sistema francés, con pagos
+mensuales, manteniendo el mismo capital y plazo para aislar el efecto del tipo:
 
-Una subida en torno a los **50 € al mes** en la revisión anual para ese perfil
-— unos 5 € más que la revisión equivalente del mes pasado. Cada caso depende
-del capital pendiente, el plazo y el diferencial: calcula el tuyo en un minuto
-con la [calculadora de impacto del euríbor](/euribor) o simula la operación
-completa en el [simulador de hipoteca](/calculadora-hipotecaria).
+- Con julio de 2025: euríbor del 2,079 % + 1 punto = **TIN del 3,079 %**;
+  cuota de **717,50 €/mes**.
+- Con julio de 2026: euríbor del 2,855 % + 1 punto = **TIN del 3,855 %**;
+  cuota de **779,80 €/mes**.
+- Diferencia: **62,30 € más al mes**, equivalentes a **747,60 € en 12 cuotas**.
 
-## ¿Y las próximas revisiones?
+El ejemplo no incluye seguros ni comisiones y esos tipos son TIN, no TAE.
+Tu cambio real dependerá del capital y plazo que queden cuando se revise el
+préstamo, del diferencial y de las condiciones pactadas.
 
-Nadie sabe dónde estará el índice dentro de un año — y desconfía de quien te lo
-asegure. Con el euríbor en máximos de dos años, dos ideas prácticas:
+Puedes introducir tus cifras en la
+[calculadora hipotecaria](/calculadora-hipotecaria). La
+[página del euríbor](/euribor) utiliza la última media mensual disponible,
+que puede ser posterior a la de este artículo.
 
-1. **Si tu revisión llega en los próximos meses**, presupuesta con la cifra de
-   hoy, no con la del año pasado: la dirección del año es claramente al alza.
-2. **Si estás valorando pasar de variable a fija o mixta**, es un momento
-   razonable para comparar: en la guía de
-   [tipos de hipoteca](/blog/tipos-de-hipoteca-fija-variable-mixta) explicamos
-   cuándo compensa cada opción, y la
-   [comparativa de hipotecas](/comparativa-hipotecas) recoge las ofertas
-   vigentes de 39 bancos, actualizada con este mismo euríbor de referencia.
+## Qué comprobar antes de la revisión
 
-> **Aviso:** este análisis es contenido informativo, no asesoramiento financiero.
-> Los datos proceden de la serie oficial del BCE y pueden consultarse también en
-> el Banco de España y en EMMI, administrador del índice.
+Revisa el mes de referencia, la fecha de aplicación y si tu contrato establece
+una actualización anual o semestral. El cierre de julio no modifica todas las
+cuotas el mismo día: se aplica cuando corresponda según cada escritura.
+
+Si comparas una novación o una subrogación, suma las comisiones y el coste de
+los productos asociados al ahorro de intereses. La
+[comparativa de hipotecas](/comparativa-hipotecas) reúne condiciones publicadas
+para ayudarte a estudiar alternativas; cada banco mantiene las hipótesis de
+su propio ejemplo de TAE.
+
+Ya está disponible el [análisis del cierre de agosto de 2026](/blog/euribor-agosto-2026),
+con una media del 2,954 %.
+
+**Fuentes y cálculo:** Banco de España, BOE-A-2026-16997 y serie mensual
+FM.M.U2.EUR.RT.MM.EURIBOR1YD_.HSTA del BCE. Cuotas calculadas por Hipotecalc
+con los tipos a tres decimales y redondeo final a céntimos. Los criterios de
+actualización se explican en nuestra [metodología](/metodologia).

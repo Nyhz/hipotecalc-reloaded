@@ -3,7 +3,9 @@ import assert from 'node:assert/strict'
 import { calculatePurchaseTaxes, defaultPurchase } from '../src/fiscal/engine'
 import { purchaseCosts } from '../src/utils/purchase-costs'
 import { calculatePlusvalia, type PlusvaliaInput } from '../src/utils/plusvalia'
-import { isValidLoanTerm, cuotaFrancesa } from '../src/utils/calculadora-hipotecaria'
+import { isValidLoanTerm, cuotaFrancesa, getEuriborActual } from '../src/utils/calculadora-hipotecaria'
+import { currentEuribor } from '../src/constants/euribor-values'
+import { getAlternatePath } from '../src/utils/i18n'
 import { OFERTAS_HIPOTECAS, FECHA_DATOS_ISO, fechaOferta } from '../src/constants/hipotecas-bancos'
 import { filterMortgageOffers } from '../src/utils/mortgage-comparison'
 import { comparisonFAQs } from '../src/constants/mortgage-comparison-copy'
@@ -69,6 +71,21 @@ test('loan terms reject empty, zero, fractional and out-of-range years without r
   for (const value of ['1', '30', '40']) assert.equal(isValidLoanTerm(value), true, value)
   assert.equal(cuotaFrancesa(240000, 0, 30), 240000 / 360)
   assert.equal(cuotaFrancesa(160000, 3, 30), 674.57)
+})
+test('Euribor examples use the exact monthly rate and matching prior-year month', () => {
+  assert.equal(getEuriborActual(), currentEuribor.value)
+  assert.equal(cuotaFrancesa(150000, 2.079 + 1, 25), 717.50)
+  assert.equal(cuotaFrancesa(150000, 2.855 + 1, 25), 779.80)
+  assert.equal(cuotaFrancesa(150000, 2.114 + 1, 25), 720.24)
+  assert.equal(cuotaFrancesa(150000, 2.954 + 1, 25), 787.95)
+  assert.equal(cuotaFrancesa(150000, 2.221 + 1, 25), 728.68)
+  assert.notEqual(cuotaFrancesa(150000, 2.954 + 1, 25), cuotaFrancesa(150000, 2.95 + 1, 25))
+})
+test('monthly Euribor articles switch to their translated URLs in both directions', () => {
+  for (const [es, en] of [['euribor-julio-2026', 'euribor-july-2026'], ['euribor-agosto-2026', 'euribor-august-2026']]) {
+    assert.equal(getAlternatePath(`/blog/${es}`), `/en/blog/${en}`)
+    assert.equal(getAlternatePath(`/en/blog/${en}`), `/blog/${es}`)
+  }
 })
 test('all explanatory offer fields have explicit English translations', () => {
   const fields = ['tin', 'tae', 'tinAnterior', 'taeAnterior', 'plazoMax', 'financiacionMax', 'diferencial', 'vinculaciones', 'comisiones', 'requisitos', 'fuente'] as const

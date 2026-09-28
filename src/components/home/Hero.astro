@@ -3,9 +3,11 @@ export interface Props { lang?: 'es' | 'en'; }
 const { lang = 'es' } = Astro.props;
 import { t } from '../../utils/i18n';
 import { currentEuribor } from '../../constants/euribor-values';
+import { cuotaFrancesa } from '../../utils/calculadora-hipotecaria';
 const calcHref = lang === 'en' ? '/en/mortgage-calculator' : '/calculadora-hipotecaria';
 const rentHref = lang === 'en' ? '/en/rental-calculator' : '/calculadora-alquiler';
-const variableRate = (currentEuribor.value + 1).toLocaleString(lang === 'en' ? 'en-US' : 'es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+const variableRate = (currentEuribor.value + 1).toLocaleString(lang === 'en' ? 'en-US' : 'es-ES', { minimumFractionDigits: 3, maximumFractionDigits: 3 });
+const examplePayment = Math.round(cuotaFrancesa(300000 - 60000, currentEuribor.value + 1, 25));
 ---
 <section class="w-full grid lg:grid-cols-[1.12fr_.88fr] gap-12 items-center pt-14 pb-12 lg:pt-20 lg:pb-16">
   <div class="text-center lg:text-left">
@@ -37,7 +39,7 @@ const variableRate = (currentEuribor.value + 1).toLocaleString(lang === 'en' ? '
       <div class="receipt-row"><span>{t('home.hero.receiptTerm', lang)}</span><b>{t('home.hero.receiptTermValue', lang)}</b></div>
       <div class="receipt-total">
         <span class="receipt-label">{t('home.hero.receiptTotal', lang)}</span>
-        <span class="receipt-num" data-countup="1247" data-suffix=" €">0 €</span>
+        <span class="receipt-num" data-countup={examplePayment} data-suffix=" €">0 €</span>
       </div>
     </div>
   </div>

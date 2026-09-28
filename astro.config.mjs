@@ -66,14 +66,18 @@ function buildLastmodMap() {
   addDir('src/content/guias/itp', '/itp')
   addDir('src/content/en/guias/itp', '/en/itp')
 
-  // Euríbor: el periodo "YYYY-MM" es la media publicada a primeros del mes
-  // siguiente, que es cuando cambió la página
+  // Euríbor: además del periodo publicado, cuentan las correcciones del dato
+  // y los nuevos análisis mensuales que aparecen en la página.
   try {
     const periodo = readFileSync('src/constants/euribor-values.ts', 'utf8').match(/period:\s*"(\d{4})-(\d{2})"/)
     if (periodo) {
       const [_, y, m] = periodo
-      const fecha = m === '12' ? `${Number(y) + 1}-01-01` : `${y}-${String(Number(m) + 1).padStart(2, '0')}-01`
-      for (const ruta of ['/euribor', '/en/euribor']) map[ruta] = fecha
+      const publicacion = m === '12' ? `${Number(y) + 1}-01-01` : `${y}-${String(Number(m) + 1).padStart(2, '0')}-01`
+      const fecha = [publicacion, gitDate('src/constants/euribor-values.ts')].filter(Boolean).sort().pop() ?? publicacion
+      for (const [ruta, dir] of [['/euribor', 'src/content/blog'], ['/en/euribor', 'src/content/en/blog']]) {
+        const analisis = readdirSync(dir).filter(f => f.endsWith('.md') && /^serie:\s*euribor\s*$/m.test(readFileSync(`${dir}/${f}`, 'utf8')))
+        map[ruta] = [fecha, ...analisis.map(f => frontmatterDate(`${dir}/${f}`))].filter(Boolean).sort().pop() ?? fecha
+      }
       // Las portadas muestran el dato del euríbor: cambian al menos cada mes
       const gitHome = gitDate('src/pages/index.astro')
       map['/'] = gitHome && gitHome > fecha ? gitHome : fecha
@@ -143,6 +147,21 @@ function buildLastmodMap() {
   }
   for (const [ruta, fecha] of Object.entries(rutasConDatos)) {
     if (fecha && (!map[ruta] || fecha > map[ruta])) map[ruta] = fecha
+  }
+  // El valor mensual también se muestra o se usa para calcular en estas rutas.
+  const fechaEuribor = gitDate('src/constants/euribor-values.ts')
+  if (fechaEuribor) {
+    const rutasEuribor = [
+      '/calculadora-hipotecaria', '/en/mortgage-calculator',
+      '/comparativa-hipotecas', '/en/mortgage-comparison', '/metodologia', '/en/methodology',
+      ...Object.keys(map).filter(ruta => ruta.startsWith('/itp/') || ruta.startsWith('/en/itp/')),
+    ]
+    for (const [dir, base] of [['src/content/guias', '/guias'], ['src/content/en/guias', '/en/guides']]) {
+      for (const f of readdirSync(dir).filter(f => f.endsWith('.md'))) {
+        if (/^calculadora:\s*hipoteca\s*$/m.test(readFileSync(`${dir}/${f}`, 'utf8'))) rutasEuribor.push(`${base}/${f.replace(/\.md$/, '')}`)
+      }
+    }
+    for (const ruta of rutasEuribor) if (!map[ruta] || fechaEuribor > map[ruta]) map[ruta] = fechaEuribor
   }
   // Analytics: observed quarter != publication date. Each archived report keeps its release.
   const analyticsLatest = JSON.parse(readFileSync('src/data/analytics/2026-09-07-v1.json', 'utf8'))

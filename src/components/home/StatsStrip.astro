@@ -13,7 +13,7 @@ const euriborPeriod = lang === 'en' ? currentEuribor.labelEn : currentEuribor.la
     aria-label={lang === 'en' ? 'See the Euribor analysis' : 'Ver el análisis del euríbor'}
   >
     <div class="font-heading text-2xl font-bold text-brand-blue">
-      <span data-countup={euribor} data-decimals="2" data-suffix="%">0%</span>
+      <span data-countup={euribor} data-decimals="3" data-suffix="%">0%</span>
     </div>
     <div class="font-data text-[10.5px] uppercase tracking-widest text-ink-soft mt-1">{t('home.stats.euriborLabel', lang).replace('{period}', euriborPeriod)} →</div>
   </a>

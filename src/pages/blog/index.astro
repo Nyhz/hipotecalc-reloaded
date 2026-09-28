@@ -9,7 +9,7 @@ const posts = (await getCollection('blog')).sort(
 );
 
 const formatDate = (d: Date) =>
-  d.toLocaleDateString('es-ES', { day: 'numeric', month: 'long', year: 'numeric' });
+  d.toLocaleDateString('es-ES', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' });
 
 const title = 'Blog | Hipotecalc';
 const description = 'Guías y análisis sobre hipotecas, euríbor, impuestos y vivienda en España. Sin humo: datos oficiales y cálculos que puedes reproducir.';

@@ -12,7 +12,7 @@ import { t } from '../utils/i18n';
 const autoria = resolverAutoria('calculadora');
 // La página muestra los tipos de comunidades.ts a través del motor de ITP:
 // su última revisión avanza también cuando se revisan esos ficheros
-const actualizado = new Date(Math.max(Date.parse(REVIEWED), ultimaModificacionConjunta('src/pages/calculadora-hipotecaria.astro', 'src/constants/comunidades.ts', 'src/utils/calculadora-itp.ts')?.getTime() ?? 0));
+const actualizado = new Date(Math.max(Date.parse(REVIEWED), ultimaModificacionConjunta('src/pages/calculadora-hipotecaria.astro', 'src/constants/comunidades.ts', 'src/utils/calculadora-itp.ts', 'src/constants/euribor-values.ts')?.getTime() ?? 0));
 const publicado = fechaPublicacion('src/pages/calculadora-hipotecaria.astro');
 
 ---

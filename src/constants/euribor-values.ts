@@ -39,9 +39,9 @@ export const euriborData: EuriborPoint[] = [
   { year: 2026, value: 2.65, partial: true },
 ]
 
-// Última media mensual publicada por el BCE.
+// Última media mensual publicada por el BCE, a tres decimales como en el BOE.
 export const currentEuribor = {
-  value: 2.95,
+  value: 2.954,
   period: "2026-08",
   labelEs: "ago 2026",
   labelEn: "Aug 2026",
