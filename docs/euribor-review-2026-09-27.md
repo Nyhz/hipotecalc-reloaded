@@ -2,7 +2,7 @@
 
 La última media mensual cerrada disponible es agosto de 2026: **2,954 %**. Septiembre todavía no ha cerrado. El dato compartido, su descarga mensual y las simulaciones conservan tres decimales. Las medias anuales históricas mantienen su precisión anterior.
 
-Julio ya existía en los dos idiomas: se corrigieron sus comparaciones y cuotas. Agosto se creó en español e inglés, con fecha real de publicación del artículo el 27 de septiembre. El BOE publicó el dato de agosto el 2 de septiembre; son fechas distintas. Los artículos identifican las fuentes sin añadir enlaces externos a su contenido.
+Julio ya existía en los dos idiomas: se corrigieron sus comparaciones y cuotas. Agosto se creó en español e inglés, con fecha de publicación mostrada del 10 de septiembre por indicación editorial. El BOE publicó el dato de agosto el 2 de septiembre; son fechas distintas. Los artículos identifican las fuentes sin añadir enlaces externos a su contenido.
 
 ## Datos contrastados
 

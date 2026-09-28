@@ -1,7 +1,7 @@
 ---
 title: "August 2026 Euribor: a 2.954% close and higher mortgage payments"
 description: "August closes with Euribor at 2.954%, up 0.840 percentage points from a year earlier. See the effect on a €150,000 mortgage with 25 years remaining."
-pubDate: 2026-09-27
+pubDate: 2026-09-10
 serie: euribor
 author: equipo
 reviewedBy: none
@@ -52,7 +52,7 @@ Your mortgage uses the average for the agreed reference month at the
 scheduled review date. A higher daily fixing does not automatically change
 your next payment.
 
-**As of 27 September 2026, August remains the latest final official monthly
+**As of 10 September 2026, August remains the latest final official monthly
 average.** September’s average is still provisional. Hipotecalc’s simulations
 use the latest published month and identify it alongside the rate.
 

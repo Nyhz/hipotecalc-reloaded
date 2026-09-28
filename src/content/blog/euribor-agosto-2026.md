@@ -1,7 +1,7 @@
 ---
 title: "Euríbor de agosto de 2026: cierre en el 2,954 % y cuánto sube la cuota"
 description: "Agosto cierra con un euríbor del 2,954 %, 0,840 puntos más que un año antes. Calculamos el efecto en una hipoteca de 150.000 € a 25 años."
-pubDate: 2026-09-27
+pubDate: 2026-09-10
 serie: euribor
 author: equipo
 reviewedBy: none
@@ -51,7 +51,7 @@ El dato aplicable es la media del mes de referencia acordado, en la fecha
 de revisión prevista. Un valor diario más alto no se traslada automáticamente
 a la siguiente cuota.
 
-**A 27 de septiembre de 2026, agosto sigue siendo la última media mensual
+**A 10 de septiembre de 2026, agosto sigue siendo la última media mensual
 oficial cerrada.** La media de septiembre todavía es provisional. Las
 simulaciones de Hipotecalc usan el último mes publicado y lo identifican
 junto al valor.
